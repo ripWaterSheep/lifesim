@@ -1,14 +1,7 @@
 import Geometry.Point;
-import Geometry.Triangle;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import static java.awt.event.KeyEvent.*;
-import static java.awt.event.KeyEvent.VK_DOWN;
 
 public class Main {
     public static void main(String[] args) {
@@ -34,29 +27,28 @@ class OurPanel extends JPanel{
     private Point startingRight = new Point(30,30);
     
     private Player ourPlayer = new Player(startingTop, startingLeft, startingRight, Color.GREEN);
-    
+    private Background ourBackground = new Background(800, 800);
+
+
+
+
     public OurPanel() {
+
+
         setFocusable(true);
         requestFocusInWindow();
 
-        addMouseListener(ourPlayer.mouseListener);
-        addKeyListener(ourPlayer.ourListener);
+        addMouseMotionListener(ourPlayer.ourMouseMotionAdapter);
+        addKeyListener(ourPlayer.ourKeyAdapter);
+        addMouseListener(ourPlayer.ourMouseAdapter);
     }
-
-
-
-
-
-
-
 
 
     @Override
     public void paintComponent(Graphics g) {
-        g.setColor(Color.BLACK);
-        g.fillRect(0,0,getWidth(),getHeight()); // clear the screen
+        super.paintComponent(g);
 
-
+        ourBackground.run(g);
         ourPlayer.run(g);
 
         try { Thread.sleep(15); } catch (Exception ignored) {}

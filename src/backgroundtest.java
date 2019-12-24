@@ -20,7 +20,7 @@ class BackgroundPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        g.setColor(Color.BLACK);
+     //   g.setColor(Color.BLACK);
         background.initPoints(100);
         background.run(g);
 

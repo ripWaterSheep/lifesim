@@ -10,47 +10,22 @@ import java.util.Arrays;
 import static java.awt.event.KeyEvent.*;
 
 public class Player extends Triangle implements Subsystem {
-    Telemetry telemetry = new Telemetry();
+    private Telemetry telemetry = new Telemetry();
+    private Color ourColor;
 
+    private double clickAngle = 0;
 
-    Color color;
-
-    public int movementX = 0;
-    public int movementY = 0;
-
-    public double heading = 0;
-    public double headingChanger;
-    public double lastHeading = 0;
-    double angle;
-    Point clickPoint = new Point(100,100);
+    // translation
+    private int movementX = 0;
+    private int movementY = 0;
 
 
 
 
-
-
-
-
-    public MouseAdapter mouseListener = new MouseAdapter() {
-
-        public void mouseDragged(MouseEvent e) {
-            System.out.println("Mouse dragged called");
-
-            angle = -Math.toDegrees(Math.atan2(e.getPoint().x - clickPoint.x, e.getPoint().y - clickPoint.y)) + 180;
-
-
-        }
-    };
-
-
-
-
-
-
-
-    public KeyListener ourListener = new KeyAdapter() {
+    public KeyAdapter ourKeyAdapter = new KeyAdapter() {
         @Override
         public void keyPressed(KeyEvent e) {
+            System.out.println("key pressed: " + e.toString());
             switch (e.getKeyCode()) {
                 case VK_D :
                     movementX = 5;
@@ -67,19 +42,12 @@ public class Player extends Triangle implements Subsystem {
                 case VK_S:
                     movementY = 5;
                     break;
-
-                case VK_F:
-                    headingChanger = 1;
-                    break;
-
-                case VK_G:
-                    headingChanger = -1;
-                    break;
             }
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
+            System.out.println("key released: " + e.toString());
             switch (e.getKeyCode()) {
                 case VK_D :
                     movementX = 0;
@@ -97,18 +65,29 @@ public class Player extends Triangle implements Subsystem {
                     movementY = 0;
                     break;
 
-                case VK_F:
-                    headingChanger = 0;
-                    break;
-
-                case VK_G:
-                    headingChanger = 0;
-                    break;
             }
         }
     };
 
 
+
+
+    public MouseMotionAdapter ourMouseMotionAdapter = new MouseMotionAdapter() {
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            clickAngle = -Math.toDegrees(Math.atan2(e.getX() - (top.x + left.x + right.x)/3f, e.getY() - (top.x + left.x + right.x)/3f)) + 90;
+        }
+    };
+
+
+
+
+    public MouseAdapter ourMouseAdapter = new MouseAdapter() {
+        @Override
+        public void mousePressed(MouseEvent e) {
+            clickAngle = -Math.toDegrees(Math.atan2(e.getX() - (top.x + left.x + right.x)/3f, e.getY() - (top.x + left.x + right.x)/3f)) + 90;
+        }
+    };
 
 
 
@@ -125,9 +104,8 @@ public class Player extends Triangle implements Subsystem {
 
     public Player(Point top, Point left, Point right, Color color) {
         super(top,left,right);
-        this.color = color;
+        ourColor = color;
     }
-
 
 
 
@@ -138,55 +116,40 @@ public class Player extends Triangle implements Subsystem {
 
 // draws from the point numbers
     private void draw(Graphics g) {
-        int[] xPoints = { top.x, left.x, right.x};
-        int[] yPoints = { top.y, left.y, right.y };
-
-        // find size of triangle
-        int maxX = 0;
-        int maxY = 0;
-        for (int index = 0; index < xPoints.length; index++) {
-            maxX = Math.max(maxX, xPoints[index]);
-        }
-        for (int index = 0; index < yPoints.length; index++) {
-            maxY = Math.max(maxY, yPoints[index]);
-        }
-
-        Dimension triangleDimension = new Dimension(maxX, maxY);
-
-
-
+        offsetMovement();
 
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setColor(Color.GREEN);
         AffineTransform at = new AffineTransform();
-        int x =  (triangleDimension.width / 2);
-        int y =  (triangleDimension.height / 2);
-        at.translate(x, y);
-        at.rotate(Math.toRadians(angle), x, y);
+
+
+        int xE = (top.x + left.x + right.x)/3;
+        int yE = (top.y + left.y + right.y)/3;
+
+
+
+        int[] xPoints = {
+                left.x,
+                top.x,
+                right.x
+        };
+
+        int[] yPoints = {
+                left.y,
+                top.y,
+                right.y
+        };
+
+
+        at.setToRotation(Math.toRadians(clickAngle+90), xE, yE);
         g2d.setTransform(at);
+        g2d.setColor(ourColor);
         g2d.drawPolygon(xPoints, yPoints, 3);
+
+
         // Guide
         g2d.setColor(Color.RED);
-        g2d.drawLine(triangleDimension.width / 2, 0, triangleDimension.width / 2, triangleDimension.height / 2);
-        g2d.dispose();
-
-
-
-
-
-
-        telemetry.clear();
-        telemetry.addData("heading", heading);
-        telemetry.addData("last heading", lastHeading);
-        telemetry.addData("movementX,Y,Turn", movementX + " , " + movementY + " , " + headingChanger);
-        telemetry.addData("xPoints", Arrays.toString(xPoints));
-        telemetry.addData("yPoints", Arrays.toString(yPoints));
-        telemetry.addData("maxX,Y", maxX + " , " + maxY);
-}
-
-
-
-
+        g2d.drawLine(xE, yE, top.x, top.y);
+    }
 
 
 
@@ -196,27 +159,12 @@ public class Player extends Triangle implements Subsystem {
     }
 
 
-    private double AngleWrap(double angle) {
-        while(angle >= Math.PI * 2) {
-            angle -= Math.PI * 2;
-        }
-
-        while(angle < 0) {
-            angle += Math.PI * 2;
-        }
-        return angle;
-    }
-
 
 
 
     @Override
     public void run(Graphics g) {
-        offsetMovement();
         draw(g);
-        lastHeading = heading;
-
-
         telemetry.run(g);
     }
 }
