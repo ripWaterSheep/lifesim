@@ -2,7 +2,6 @@ package Subsystems;
 
 import Geometry.Point;
 import Geometry.Triangle;
-import Subsystems.Subsystem;
 import Util.Telemetry;
 
 import javax.swing.*;
@@ -25,25 +24,56 @@ public class Player extends Triangle implements Subsystem {
 
 
 
+
+
+
+
+    private boolean leftKeyPressed = false;
+    private boolean topKeyPressed = false;
+    private boolean rightKeyPressed = false;
+    private boolean bottomKeyPressed = false;
+
+    private long leftKeyReadTime = 0;
+    private long rightKeyReadTime = 0;
+    private long topKeyReadTime = 0;
+    private long bottomKeyReadTime = 0;
+
+    private long getCurrentTime() { return System.currentTimeMillis(); }
+
+    /**
+     * Explanation of why we have to create booleans that we write to when we get inputs instead of writing to the actual used vars ( movementX & Y)
+     *                                  ------------------------------------------------------------------------
+     *      So previously, movementX and Y were changed directly from the inputs that we get from the keyboard. This was fine, but because of how key events are
+     *      taken as 1 input, previous inputs are NOT saved; only the current input(1) input is read. Because of this, when you hold down a key, and then press another key, the 2nd key will be
+     *      read, but because the 1st key is no longer the one who was pressed down. To solve this normal keyboards have this thing called rollover, but we have to program
+     *      it in since KeyAdapter sucks that way. So we just assign values to booleans and have a logic method that sorts out movementX and movementY. Kinda dumb but whatever lol.
+     *      I'm pretty sure im over complicating it since it actually doesn't really matter that much since the key that is held down after the 2nd key is released is actually read by KeyAdapter,
+     *      but there is so much lag it annoys me.
+     */
+
     private KeyAdapter ourKeyAdapter = new KeyAdapter() {
         @Override
         public void keyPressed(KeyEvent e) {
             System.out.println("key pressed: " + e.toString());
             switch (e.getKeyCode()) {
                 case VK_D :
-                    movementX = 5;
+                    rightKeyReadTime = getCurrentTime();
+                    rightKeyPressed = true;
                     break;
 
                 case VK_A:
-                    movementX = -5;
+                    leftKeyReadTime = getCurrentTime();
+                    leftKeyPressed = true;
                     break;
 
                 case VK_W:
-                    movementY = -5;
+                    topKeyReadTime = getCurrentTime();
+                    topKeyPressed = true;
                     break;
 
                 case VK_S:
-                    movementY = 5;
+                    bottomKeyReadTime = getCurrentTime();
+                    bottomKeyPressed = true;
                     break;
             }
         }
@@ -53,19 +83,19 @@ public class Player extends Triangle implements Subsystem {
             System.out.println("key released: " + e.toString());
             switch (e.getKeyCode()) {
                 case VK_D :
-                    movementX = 0;
+                    rightKeyPressed = false;
                     break;
 
                 case VK_A:
-                    movementX = 0;
+                    leftKeyPressed = false;
                     break;
 
                 case VK_W:
-                    movementY = 0;
+                    topKeyPressed = false;
                     break;
 
                 case VK_S:
-                    movementY = 0;
+                    bottomKeyPressed = false;
                     break;
 
             }
@@ -74,11 +104,35 @@ public class Player extends Triangle implements Subsystem {
 
 
 
+    private void movementLogic() {
+        if(leftKeyPressed && rightKeyPressed) {
+            if(leftKeyReadTime > rightKeyReadTime) movementX = -5;
+            else movementX = 5;
+        }
+        
+        else if(leftKeyPressed) movementX = -5;
+        else if(rightKeyPressed) movementX = 5;
+        else movementX = 0;
+
+        if(topKeyPressed && bottomKeyPressed) {
+            if(topKeyReadTime > bottomKeyReadTime) movementY = -5;
+            else movementY = 5;
+        }
+
+        else if(topKeyPressed) movementY = -5;
+        else if(bottomKeyPressed) movementY = 5;
+        else movementY = 0;
+    }
+
+
+
+
+
 
     private MouseMotionAdapter ourMouseMotionAdapter = new MouseMotionAdapter() {
         @Override
         public void mouseDragged(MouseEvent e) {
-            clickAngle = -Math.toDegrees(Math.atan2(e.getX() - (top.x + left.x + right.x)/3f, e.getY() - (top.x + left.x + right.x)/3f)) + 90;
+            clickAngle = -Math.toDegrees(Math.atan2(e.getX() - (top.x + left.x + right.x)/3f, e.getY() - (top.y + left.y + right.y)/3f)) + 90;
         }
     };
 
@@ -88,7 +142,7 @@ public class Player extends Triangle implements Subsystem {
     private MouseAdapter ourMouseAdapter = new MouseAdapter() {
         @Override
         public void mousePressed(MouseEvent e) {
-            clickAngle = -Math.toDegrees(Math.atan2(e.getX() - (top.x + left.x + right.x)/3f, e.getY() - (top.x + left.x + right.x)/3f)) + 90;
+            clickAngle = -Math.toDegrees(Math.atan2(e.getX() - (top.x + left.x + right.x)/3f, e.getY() - (top.y + left.y + right.y)/3f)) + 90;
         }
     };
 
@@ -182,6 +236,7 @@ public class Player extends Triangle implements Subsystem {
 
     @Override
     public void run(Graphics g) {
+        movementLogic();
         draw(g);
         telemetry.run(g);
     }
