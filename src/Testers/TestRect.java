@@ -1,3 +1,5 @@
+package Testers;
+
 import Geometry.Point;
 import Geometry.Rectangle;
 

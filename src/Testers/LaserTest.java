@@ -1,4 +1,8 @@
+package Testers;
+
 import Geometry.Line;
+import Subsystems.Laser;
+import Util.UtilMethods;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +30,7 @@ class LaserPanel extends JPanel {
 
 
         laser.run(g);
-        Util.sleep(15);
+        UtilMethods.sleep(15);
 
         repaint();
     }

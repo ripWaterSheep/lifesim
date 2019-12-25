@@ -1,11 +1,14 @@
+package Subsystems;
+
 import Geometry.Point;
 import Geometry.Triangle;
+import Subsystems.Subsystem;
+import Util.Telemetry;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
-import java.util.Arrays;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -22,7 +25,7 @@ public class Player extends Triangle implements Subsystem {
 
 
 
-    public KeyAdapter ourKeyAdapter = new KeyAdapter() {
+    private KeyAdapter ourKeyAdapter = new KeyAdapter() {
         @Override
         public void keyPressed(KeyEvent e) {
             System.out.println("key pressed: " + e.toString());
@@ -72,7 +75,7 @@ public class Player extends Triangle implements Subsystem {
 
 
 
-    public MouseMotionAdapter ourMouseMotionAdapter = new MouseMotionAdapter() {
+    private MouseMotionAdapter ourMouseMotionAdapter = new MouseMotionAdapter() {
         @Override
         public void mouseDragged(MouseEvent e) {
             clickAngle = -Math.toDegrees(Math.atan2(e.getX() - (top.x + left.x + right.x)/3f, e.getY() - (top.x + left.x + right.x)/3f)) + 90;
@@ -82,7 +85,7 @@ public class Player extends Triangle implements Subsystem {
 
 
 
-    public MouseAdapter ourMouseAdapter = new MouseAdapter() {
+    private MouseAdapter ourMouseAdapter = new MouseAdapter() {
         @Override
         public void mousePressed(MouseEvent e) {
             clickAngle = -Math.toDegrees(Math.atan2(e.getX() - (top.x + left.x + right.x)/3f, e.getY() - (top.x + left.x + right.x)/3f)) + 90;
@@ -106,6 +109,21 @@ public class Player extends Triangle implements Subsystem {
         super(top,left,right);
         ourColor = color;
     }
+
+
+
+
+
+    // link up with panel
+    public void initListeners(JPanel panel) {
+        panel.addMouseListener(ourMouseAdapter);
+        panel.addMouseMotionListener(ourMouseMotionAdapter);
+        panel.addKeyListener(ourKeyAdapter);
+    }
+
+
+
+
 
 
 

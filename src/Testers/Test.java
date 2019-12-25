@@ -1,11 +1,11 @@
+package Testers;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 
-import Geometry.Point;
 import static java.awt.event.KeyEvent.*;
-import static java.awt.event.KeyEvent.VK_G;
 
 public class Test {
 

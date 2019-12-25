@@ -1,3 +1,5 @@
+package Subsystems;
+
 import java.awt.*;
 
 public interface Subsystem {

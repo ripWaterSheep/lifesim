@@ -1,9 +1,12 @@
+package Subsystems;
+
 import Geometry.Point;
+import Subsystems.Subsystem;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Background implements Subsystem{
+public class Background implements Subsystem {
     private int width,height;
     public ArrayList<Point> allPoints = new ArrayList<>();
 
