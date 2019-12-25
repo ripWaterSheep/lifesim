@@ -24,4 +24,11 @@ public class Point {
         y = deltaY;
     }
 
+
+
+
+    @Override
+    public String toString() {
+        return " (" + x + "," + y + ")";
+    }
 }
