@@ -22,6 +22,9 @@ public class Player extends Triangle implements Subsystem {
     private int movementY = 0;
 
 
+    // wrap around
+    private int screenWidth = 800;
+    private int screenHeight = 800;
 
 
 
@@ -165,6 +168,14 @@ public class Player extends Triangle implements Subsystem {
     }
 
 
+    public Player(Point top, Point left, Point right, Color color, int screenWidth, int screenHeight) {
+        super(top,left,right);
+        ourColor = color;
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
+    }
+
+
 
 
 
@@ -232,11 +243,37 @@ public class Player extends Triangle implements Subsystem {
 
 
 
+    private void wrapAroundLogic() {
+
+        // make them super big/small since they r arbitrary
+        int biggestX = -100000;
+        int biggestY = -100000;
+        int smallestX = 100000;
+        int smallestY = 100000;
+        for(Point p : allVertices()) {
+            biggestX = Math.max(biggestX, p.x);
+            biggestY = Math.max(biggestY, p.y);
+
+            smallestX = Math.min(smallestX, p.x);
+            smallestY = Math.min(smallestY, p.y);
+        }
+
+
+        if(biggestX < 0) { offset((screenWidth - 20) - biggestX, 0); }
+        if(biggestY < 0 ) { offset( 0, (screenHeight - 20) - biggestY); }
+
+        if(smallestX > screenWidth) { offset(-smallestX + 20, 0); }
+        if(smallestY > screenHeight) { offset(0, -smallestY + 20); }
+    }
+
+
+
 
 
     @Override
     public void run(Graphics g) {
         movementLogic();
+        wrapAroundLogic();
         draw(g);
         telemetry.run(g);
     }
