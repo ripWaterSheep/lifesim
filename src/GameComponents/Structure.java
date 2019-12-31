@@ -1,13 +1,11 @@
 package GameComponents;
 
 import Util.WindowSize;
-import Util.Callback;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class Structure extends GameComponent {

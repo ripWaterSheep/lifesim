@@ -224,24 +224,6 @@ public class Player extends GameComponent {
                     usedGameLayout.playerTapInteraction(structure);
                 }
             }
-
-            /*for (Structure structure : getTouching()) {
-
-                if (getInteractKeyTyped() && !structure.getCommandsOnTap().isEmpty()) {
-                    for (Callback command : structure.getCommandsOnTap()) {
-                        if (command != null)
-                            command.call();
-                    }
-                } else if (!structure.getCommandsOnTouch().isEmpty()) {
-                    for (Callback command : structure.getCommandsOnTouch()) {
-                        if (command != null)
-                            command.call();
-                    }
-                }
-                if (structure.getRandomPosOnTouch()) {
-                    structure.randomizePos();
-                }
-            }*/
         }
     }
 

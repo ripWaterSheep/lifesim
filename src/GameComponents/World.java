@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static Util.MyMath.clamp;
 
 
 public class World extends GameComponent {

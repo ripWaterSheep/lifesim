@@ -105,7 +105,7 @@ public class Stat {
             int barX = LEFT_PADDING;
             int barY = MyMath.betterRound(y + (0.5 * VERTICAL_SPACING)) - 32;
             int barWidth = MyMath.betterRound(((value)/(1)) * BAR_LENGTH_SCALE);
-            //System.out
+
             g.setColor(barColor);
             g.fillRect(barX, barY, MyMath.betterRound(barWidth), VERTICAL_SPACING);
 
