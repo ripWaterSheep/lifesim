@@ -3,22 +3,24 @@ package Controls;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+
 import static Util.MiscUtil.getCurrentTime;
 import static java.awt.event.KeyEvent.*;
 
 public class KeyboardControls {
+
+
+    public final static int SPRINT_KEY = VK_SPACE;
+    public final static int INTERACT_KEY = VK_E;
 
     private static boolean upPressed = false;
     private static boolean downPressed = false;
     private static boolean leftPressed = false;
     private static boolean rightPressed = false;
 
-    private final static int sprintKey = VK_SPACE;
-    private final static int interactKey = VK_E;
-
     private static boolean sprintToggle = false;
     private static boolean interactKeyPressed = false;
-    private static boolean interactKeyTyped = false;
+    private static boolean interactTyped = false;
 
 
     public static boolean getUpPressed() { return upPressed; }
@@ -34,7 +36,7 @@ public class KeyboardControls {
 
     public static boolean getInteractKeyPressed() { return interactKeyPressed; }
 
-    public static boolean getInteractKeyTyped() { return interactKeyTyped; }
+    public static boolean getInteractKeyTyped() { return interactTyped; }
 
 
     private static long leftReadTime = 0;
@@ -81,12 +83,12 @@ public class KeyboardControls {
                     rightPressed = true;
                     break;
 
-                case interactKey:
+                case INTERACT_KEY:
                     interactKeyPressed = true;
-                    interactKeyTyped = true;
+                    interactTyped = true;
                     break;
 
-                case sprintKey:
+                case SPRINT_KEY:
                     sprintToggle = !getSprintToggled();
                     break;
             }
@@ -117,7 +119,7 @@ public class KeyboardControls {
                     rightPressed = false;
                     break;
 
-                case interactKey:
+                case INTERACT_KEY:
                     interactKeyPressed = false;
                     break;
             }
@@ -126,8 +128,9 @@ public class KeyboardControls {
     };
 
 
+    // Reset in the beginning of each frame
     public static void resetKeys() {
-        interactKeyTyped = false; // Reset in the beginning of each frame
+        interactTyped = false;
     }
 
 

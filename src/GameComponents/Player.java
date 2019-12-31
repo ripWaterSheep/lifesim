@@ -1,7 +1,10 @@
 package GameComponents;
 
 import Controls.KeyboardControls;
-import Util.Callback;
+import Controls.MiscControlStuff;
+import GameSession.GameLayout;
+import Main.EventLoop;
+import Util.MyMath;
 import Util.WindowSize;
 
 import javax.swing.*;
@@ -10,13 +13,12 @@ import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import static Controls.KeyboardControls.*;
-import static Util.MyMath.clamp;
 import static java.lang.Math.*;
 
 
 public class Player extends GameComponent {
 
-    private static Player instance = DefaultInstances.player;
+    private static Player instance;
 
     /** Gets the player instance because there can only be one player character.
      * This is pretty much a singleton design pattern.
@@ -115,40 +117,53 @@ public class Player extends GameComponent {
 
     public double getHealth() { return health; }
 
-    public void heal(float amount) {
-        health += amount;
-        //health = clamp(health, 0, 1000);
-    }
+
+    public void heal(double amount) { health += amount;health = MyMath.clamp(health, 0, 1000+strength); }
 
 
     private double energy = 1000;
 
     public double getEnergy() { return energy; }
 
-    public void energize(float amount) {
-        energy += amount;
-        //energy = clamp(energy, 0, 1000);
-    }
+    public void energize(double amount) { energy += amount; }
+
+    public void tire(double amount) { energy -= amount; }
 
 
-    private double money = 1000;
+    private double money = 0;
 
     public double getMoney() { return money; }
 
-    public void pay(float amount) {
-        money += amount;
-        money = max(0, money);
-    }
+    public boolean hasMoney() { return money > 0; }
+
+    public boolean hasEnoughMoney(double amount) { return money > amount; }
+
+    public void gainMoney(double amount) { money += amount; }
+
+    public void loseMoney(double amount) { money -= amount; }
+
+
+    private double strength = 0;
+
+    public double getStrength() { return strength; }
+
+    public void strengthen(double amount) { strength += amount; }
+
+    public void weaken(double amount) { strength -= amount; }
+
+
+    /** Calculate the cap for the many stats whose caps increase when strength increases.
+     */
+    public double getStrengthDependentStatCap() { return strength+1000; }
 
 
 
-    public Player(int x, int y, int radius, World world, Color color) {
+    public Player(int x, int y, int radius, Color color) {
         Player.instance = this;
 
         String label = "Player";
         this.x = x;
         this.y = y;
-        this.world = world;
         this.radius = radius;
         this.color = color;
     }
@@ -191,14 +206,26 @@ public class Player extends GameComponent {
 
 
     private void borderLogic() {
-        x = clamp(x, -world.getMidWidth() + getRadius(), world.getMidWidth() - getRadius());
-        y = clamp(y, -world.getMidHeight() + getRadius(), world.getMidHeight() - getRadius());
+        x = MyMath.clamp(x, -world.getMidWidth() + getRadius(), world.getMidWidth() - getRadius());
+        y = MyMath.clamp(y, -world.getMidHeight() + getRadius(), world.getMidHeight() - getRadius());
     }
 
 
     public void commandLogic() {
+        GameLayout usedGameLayout = EventLoop.getUsedGameLayout();
+
         if (isTouchingAnything()) {
-            for (Structure structure : getTouching()) {
+            for (Structure structure: getTouching()) {
+                usedGameLayout.playerTouchInteraction(structure);
+                if (MiscControlStuff.getInteractPressed()) {
+                    usedGameLayout.playerPressInteraction(structure);
+                }
+                if (MiscControlStuff.getInteractTapped()) {
+                    usedGameLayout.playerTapInteraction(structure);
+                }
+            }
+
+            /*for (Structure structure : getTouching()) {
 
                 if (getInteractKeyTyped() && !structure.getCommandsOnTap().isEmpty()) {
                     for (Callback command : structure.getCommandsOnTap()) {
@@ -214,18 +241,24 @@ public class Player extends GameComponent {
                 if (structure.getRandomPosOnTouch()) {
                     structure.randomizePos();
                 }
-            }
+            }*/
         }
     }
 
 
     public void statLogic() {
-        energy -= 0.1;
+        tire(0.1);
+
+        health = MyMath.clamp(health, 0, getStrengthDependentStatCap());
+        energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());
+        money = max(money, 0);
+        strength = max(strength, 0);
     }
 
 
     @Override
     public void setup(JPanel panel) {
+        instance = EventLoop.getUsedGameLayout().player;
         world = World.instances.get(0);
     }
 

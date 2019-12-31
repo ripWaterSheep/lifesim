@@ -1,6 +1,7 @@
-package TextDisplay;
+package Drawing;
 
 import GameComponents.Player;
+import Util.MiscUtil;
 import Util.MyMath;
 import Util.WindowSize;
 
@@ -23,13 +24,17 @@ public class Stat {
     private static final int BOTTOM_PADDING = 5;
     private static final int VERTICAL_SPACING = 26;
 
-    public static final int FULL_BAR_LENGTH = 225;
+    public static final double BAR_LENGTH_SCALE = 0.125;
+
+    public static final int DEFAULT_OPACITY = 175;
 
 
     private String format(String label, Double data) {
         int roundedData = MyMath.betterRound(data);
         return label + ": " + roundedData;
     }
+
+
 
 
     public static void retrieveValues() {
@@ -39,10 +44,10 @@ public class Stat {
         Stat xStat = new Stat("X", player.getX());
         Stat yStat = new Stat("Y", player.getY());
 
-        Stat healthStat = new Stat("Health", player.getHealth(), 0, 1000, Color.RED);
-        Stat energyStat = new Stat("Energy", player.getEnergy(), 0, 1000, Color.ORANGE);
-        Stat moneyStat = new Stat("Cash", player.getMoney(), 0, 10000, Color.green);
-
+        Stat healthStat = new Stat("Health", player.getHealth(), 0, player.getStrengthDependentStatCap(), Color.RED);
+        Stat energyStat = new Stat("Energy", player.getEnergy(), 0, player.getStrengthDependentStatCap(), Color.ORANGE);
+        Stat strengthStat = new Stat("Strength", player.getStrength(), 0, Math.max(1000, player.getStrength()), Color.YELLOW);
+        Stat moneyStat = new Stat("Cash", player.getMoney(), 0, Math.max(player.getMoney()+100, 1000), Color.GREEN);
 
         Collections.reverse(instances);
 
@@ -86,7 +91,7 @@ public class Stat {
         this.minVal = minVal;
         this.maxVal = maxVal;
 
-        this.barColor = barColor;
+        this.barColor = MiscUtil.setTransparency(barColor, DEFAULT_OPACITY);
         this.showStatusBar = true;
     }
 
@@ -99,14 +104,13 @@ public class Stat {
         if (showStatusBar) {
             int barX = LEFT_PADDING;
             int barY = MyMath.betterRound(y + (0.5 * VERTICAL_SPACING)) - 32;
-            int barWidth = MyMath.betterRound(((value)/(maxVal)) * FULL_BAR_LENGTH);
-            barWidth = MyMath.clamp(barWidth, 0, FULL_BAR_LENGTH);
-
+            int barWidth = MyMath.betterRound(((value)/(1)) * BAR_LENGTH_SCALE);
+            //System.out
             g.setColor(barColor);
             g.fillRect(barX, barY, MyMath.betterRound(barWidth), VERTICAL_SPACING);
 
             g.setColor(Color.BLACK);
-            g.drawRect(barX, barY, FULL_BAR_LENGTH, VERTICAL_SPACING);
+            g.drawRect(barX, barY, MyMath.betterRound(maxVal*BAR_LENGTH_SCALE), VERTICAL_SPACING);
         }
 
         g.setColor(Color.WHITE);

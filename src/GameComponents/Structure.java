@@ -46,27 +46,6 @@ public class Structure extends GameComponent {
     public Rectangle getShape() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
 
 
-    private ArrayList<Callback> commandsOnTouch = new ArrayList<>();
-
-    public void addCommandOnTouch(Callback command) { commandsOnTouch.add(command); }
-
-    public ArrayList<Callback> getCommandsOnTouch() { return commandsOnTouch; }
-
-
-    private ArrayList<Callback> commandsOnTap = new ArrayList<>();
-
-    public void addCommandOnTap(Callback command) { System.out.println();
-        commandsOnTap.add(command); }
-
-    public ArrayList<Callback> getCommandsOnTap() { return commandsOnTap; }
-
-
-    private boolean randomPosOnTouch;
-
-    public boolean getRandomPosOnTouch() {
-        return  randomPosOnTouch;
-    }
-
 
 
     public Structure(String label, int x, int y, int width, int height, World world, Color color) {
@@ -80,21 +59,8 @@ public class Structure extends GameComponent {
 
         this.world = world;
         this.color = color;
-
-        this.randomPosOnTouch = false;
     }
 
-
-    public Structure(String label, int x, int y, int width, int height, World world, Color color, Callback[] commandsOnTouch, Callback[] commandsOnTap, boolean randomPosOnTouch) {
-        this(label, x, y, width, height, world, color);
-
-        if (commandsOnTouch != null)
-            this.commandsOnTouch = new ArrayList<>(Arrays.asList(commandsOnTouch));
-        if (commandsOnTap != null)
-            this.commandsOnTap = new ArrayList<>(Arrays.asList(commandsOnTap));
-
-        this.randomPosOnTouch = randomPosOnTouch;
-    }
 
 
     @Override

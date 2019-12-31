@@ -1,4 +1,4 @@
-package TextDisplay;
+package Drawing;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;

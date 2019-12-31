@@ -3,6 +3,7 @@ package Util;
 import GameComponents.GameComponent;
 import GameComponents.Structure;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -32,6 +33,15 @@ public class MiscUtil {
         final ArrayList<T> result = new ArrayList<>(list);
         Collections.reverse(result);
         return result;
+    }
+
+
+    public static Color setTransparency(Color color, int transparency) {
+        int r = color.getRed();
+        int g = color.getGreen();
+        int b = color.getBlue();
+
+        return new Color(r, g, b, transparency);
     }
 
 
