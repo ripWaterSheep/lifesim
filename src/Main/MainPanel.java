@@ -1,39 +1,39 @@
 package Main;
 
-import Geometry.Point;
-import Subsystems.Background;
-import Subsystems.Player;
-import static Util.UtilMethods.*;
+import Controls.KeyboardControls;
+import GameComponents.Player;
+
+import static Util.WindowSize.*;
+import static Util.MiscUtil.*;
 
 import javax.swing.*;
 import java.awt.*;
 
+
 public class MainPanel extends JPanel {
 
-    // init all our members
-    private Player ourPlayer = new Player(new Point(15,0), new Point(0,30), new Point(30,30), Color.GREEN);
-    private Background ourBackground = new Background(800, 800);
-
-
+    private EventLoop eventLoop = new EventLoop();
 
 
     public MainPanel() {
+        addKeyListener(KeyboardControls.keyAdapter);
         setFocusable(true);
         requestFocusInWindow();
+        setSize(defaultWidth, defaultHeight);
 
-        ourPlayer.initListeners(this);
+        eventLoop.init(this);
+
     }
 
 
     @Override
     public void paintComponent(Graphics g) {
+        setBackground(Player.getInstance().getWorld().getOuterColor());
         super.paintComponent(g);
-
-        ourBackground.run(g);
-        ourPlayer.run(g);
-
-
-        sleep(15);
+        eventLoop.loop(g);
+        sleep(10);
         repaint();
     }
+
+
 }
