@@ -1,6 +1,6 @@
-package Util;
+package util;
 
-import Main.Main;
+import main.Main;
 
 public class WindowSize {
 

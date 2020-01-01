@@ -1,11 +1,13 @@
-package Main;
+package gamesession;
 
-import Controls.MiscControlStuff;
-import GameComponents.*;
-import Drawing.Stat;
-import GameSession.DefaultLayout;
-import GameSession.GameLayout;
-import Util.MiscUtil;
+import gamesession.game.control.MiscControls;
+import gamesession.game.GameComponent;
+import gamesession.game.gamecomponents.*;
+import gamesession.game.gamecomponents.entities.Entity;
+import gamesession.game.overlay.Stat;
+import gamesession.game.gamecomponents.arrangement.GameLayout;
+import gamesession.game.gamecomponents.arrangement.layouts.DefaultLayout;
+import util.MiscUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-public class EventLoop {
+public class GameSession {
 
     /** Holds object with every instance used in the game */
     private static GameLayout usedGameLayout;
@@ -42,7 +44,7 @@ public class EventLoop {
 
         usedInstances = new ArrayList<>();
         usedInstances.add(Player.getInstance());
-        usedInstances.addAll(MiscUtil.reverse(Structure.getInstances()));
+        usedInstances.addAll(MiscUtil.reverse(Entity.getInstances()));
         usedInstances.addAll(World.getInstances());
 
         Collections.reverse(usedInstances);
@@ -60,7 +62,7 @@ public class EventLoop {
             instance.draw(g);
         Stat.drawAll(g);
         debug();
-        MiscControlStuff.resetControls();
+        MiscControls.resetControls();
     }
 
 

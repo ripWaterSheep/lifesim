@@ -1,4 +1,4 @@
-package Drawing;
+package util.drawing;
 
 import java.awt.*;
 

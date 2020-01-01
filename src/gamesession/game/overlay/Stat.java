@@ -1,9 +1,9 @@
-package Drawing;
+package gamesession.game.overlay;
 
-import GameComponents.Player;
-import Util.MiscUtil;
-import Util.MyMath;
-import Util.WindowSize;
+import gamesession.game.gamecomponents.Player;
+import util.MiscUtil;
+import util.MyMath;
+import util.WindowSize;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -33,8 +33,6 @@ public class Stat {
         int roundedData = MyMath.betterRound(data);
         return label + ": " + roundedData;
     }
-
-
 
 
     public static void retrieveValues() {

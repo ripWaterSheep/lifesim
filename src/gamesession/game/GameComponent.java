@@ -1,4 +1,4 @@
-package GameComponents;
+package gamesession.game;
 
 import javax.swing.*;
 import java.awt.*;

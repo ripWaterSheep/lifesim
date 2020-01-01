@@ -1,10 +1,12 @@
-package Main;
+package main;
 
-import Controls.KeyboardControls;
-import GameComponents.Player;
+import gamesession.game.control.KeyboardControls;
+import gamesession.game.control.MouseControls;
+import gamesession.game.gamecomponents.Player;
+import gamesession.GameSession;
 
-import static Util.WindowSize.*;
-import static Util.MiscUtil.*;
+import static util.WindowSize.*;
+import static util.MiscUtil.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,16 +14,17 @@ import java.awt.*;
 
 public class MainPanel extends JPanel {
 
-    private EventLoop eventLoop = new EventLoop();
+    private GameSession gameSession = new GameSession();
 
 
     public MainPanel() {
         addKeyListener(KeyboardControls.keyAdapter);
+        addMouseListener(MouseControls.mouseAdapter);
         setFocusable(true);
         requestFocusInWindow();
         setSize(defaultWidth, defaultHeight);
 
-        eventLoop.init(this);
+        gameSession.init(this);
 
     }
 
@@ -30,7 +33,7 @@ public class MainPanel extends JPanel {
     public void paintComponent(Graphics g) {
         setBackground(Player.getInstance().getWorld().getOuterColor());
         super.paintComponent(g);
-        eventLoop.loop(g);
+        gameSession.loop(g);
         sleep(10);
         repaint();
     }

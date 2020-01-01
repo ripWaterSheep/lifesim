@@ -1,11 +1,8 @@
-package Controls;
+package gamesession.game.control;
 
 
-public class MiscControlStuff {
+public class MiscControls {
 
-    public static boolean getInteractPressed() {
-        return (KeyboardControls.getInteractKeyPressed() || MouseControls.getLeftPressed());
-    }
 
     public static boolean getInteractTapped() {
         return (KeyboardControls.getInteractKeyTyped() || MouseControls.getLeftClicked());
@@ -16,5 +13,6 @@ public class MiscControlStuff {
         KeyboardControls.resetKeys();
         MouseControls.resetButtons();
     }
+
 
 }

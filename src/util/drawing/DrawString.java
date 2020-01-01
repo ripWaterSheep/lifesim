@@ -1,4 +1,4 @@
-package Drawing;
+package util.drawing;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
@@ -15,7 +15,7 @@ public class DrawString {
      * @param text The String to draw.
      * @param rect The Rectangle to center the text in.
      */
-    public static void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {
+    public static void drawCenteredString(Graphics g, String text, Rectangle rect, Font font, Color color) {
         // Get the FontMetrics
         FontMetrics metrics = g.getFontMetrics(font);
         // Determine the X coordinate for the text
@@ -24,6 +24,7 @@ public class DrawString {
         int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
         // Set the font
         g.setFont(font);
+        g.setColor(color);
         // Draw the String
         g.drawString(text, x, y);
     }
@@ -44,8 +45,8 @@ public class DrawString {
      * @see java.awt.Rectangle
      * @see java.lang.String
      */
-    public static void centerStringInRect(Graphics g, Rectangle r, String s,
-                             Font font) {
+    public static void centerStringInRect(Graphics g, String s, Rectangle r,
+                             Font font, Color color) {
         FontRenderContext frc =
                 new FontRenderContext(null, true, true);
 
@@ -59,6 +60,7 @@ public class DrawString {
         int b = (r.height / 2) - (rHeight / 2) - rY;
 
         g.setFont(font);
+        g.setColor(color);
         g.drawString(s, r.x + a, r.y + b);
     }
 

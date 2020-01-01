@@ -1,7 +1,6 @@
-package Util;
+package util;
 
-import GameComponents.GameComponent;
-import GameComponents.Structure;
+import gamesession.game.GameComponent;
 
 import java.awt.*;
 import java.util.ArrayList;

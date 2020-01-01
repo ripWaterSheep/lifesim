@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 
 import javax.swing.*;
@@ -11,7 +11,6 @@ public class Main {
 
     public static void main(String[] args) {
         panel = new MainPanel();
-
         frame = new JFrame("");
         frame.setSize(panel.getSize());
         frame.setLocation(0, 0);

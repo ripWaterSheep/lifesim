@@ -1,18 +1,20 @@
-package GameComponents;
+package gamesession.game.gamecomponents;
 
-import Controls.KeyboardControls;
-import Controls.MiscControlStuff;
-import GameSession.GameLayout;
-import Main.EventLoop;
-import Util.MyMath;
-import Util.WindowSize;
+import gamesession.game.control.KeyboardControls;
+import gamesession.game.control.MiscControls;
+import gamesession.game.GameComponent;
+import gamesession.game.gamecomponents.arrangement.GameLayout;
+import gamesession.GameSession;
+import gamesession.game.gamecomponents.entities.Entity;
+import util.MyMath;
+import util.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
-import static Controls.KeyboardControls.*;
+import static gamesession.game.control.KeyboardControls.*;
 import static java.lang.Math.*;
 
 
@@ -33,9 +35,9 @@ public class Player extends GameComponent {
         this.y = y;
     }
 
-    public void goTo(Structure structure) {
-        goTo(structure.getX(), structure.getY());
-        this.world = structure.getWorld();
+    public void goTo(Entity entity) {
+        goTo(entity.getX(), entity.getY());
+        this.world = entity.getWorld();
     }
 
 
@@ -57,9 +59,9 @@ public class Player extends GameComponent {
     public String getWorldLabel() { return world.getLabel(); }
 
 
-    public boolean isInSameWorld(Structure structure) {
+    public boolean isInSameWorld(Entity entity) {
         boolean sameWorld = false;
-        if (structure.getWorld() == this.world)
+        if (entity.getWorld() == this.world)
             sameWorld = true;
 
         return sameWorld;
@@ -89,12 +91,12 @@ public class Player extends GameComponent {
     public Ellipse2D.Double getShape() { return new Ellipse2D.Double(getDisplayX(), getDisplayY(), getDiameter(), getDiameter()); }
 
 
-    public ArrayList<Structure> getTouching() {
-        ArrayList<Structure> touching = new ArrayList<>();
+    public ArrayList<Entity> getTouching() {
+        ArrayList<Entity> touching = new ArrayList<>();
 
-        for (Structure structure : Structure.getInstances()) {
-            if (getShape().intersects(structure.getShape()) && isInSameWorld(structure)) {
-                touching.add(structure);
+        for (Entity entity : Entity.getInstances()) {
+            if (getShape().intersects(entity.getShape()) && isInSameWorld(entity)) {
+                touching.add(entity);
             }
         }
 
@@ -104,8 +106,8 @@ public class Player extends GameComponent {
 
     public boolean isTouchingAnything() { return !getTouching().isEmpty(); }
 
-    public Structure getTopTouching() {
-        Structure topTouching = null;
+    public Entity getTopTouching() {
+        Entity topTouching = null;
         if (isTouchingAnything())
             topTouching = getTouching().get(0);
 
@@ -212,16 +214,13 @@ public class Player extends GameComponent {
 
 
     public void commandLogic() {
-        GameLayout usedGameLayout = EventLoop.getUsedGameLayout();
+        GameLayout usedGameLayout = GameSession.getUsedGameLayout();
 
         if (isTouchingAnything()) {
-            for (Structure structure: getTouching()) {
-                usedGameLayout.playerTouchInteraction(structure);
-                if (MiscControlStuff.getInteractPressed()) {
-                    usedGameLayout.playerPressInteraction(structure);
-                }
-                if (MiscControlStuff.getInteractTapped()) {
-                    usedGameLayout.playerTapInteraction(structure);
+            for (Entity entity : getTouching()) {
+                usedGameLayout.playerTouchInteraction(entity);
+                if (MiscControls.getInteractTapped()) {
+                    usedGameLayout.playerTapInteraction(entity);
                 }
             }
         }
@@ -240,7 +239,7 @@ public class Player extends GameComponent {
 
     @Override
     public void setup(JPanel panel) {
-        instance = EventLoop.getUsedGameLayout().player;
+        instance = GameSession.getUsedGameLayout().player;
         world = World.instances.get(0);
     }
 

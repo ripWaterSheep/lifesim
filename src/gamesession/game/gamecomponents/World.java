@@ -1,10 +1,12 @@
-package GameComponents;
+package gamesession.game.gamecomponents;
 
-import Util.WindowSize;
+import gamesession.game.GameComponent;
+import util.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+
 
 
 
@@ -80,18 +82,6 @@ public class World extends GameComponent {
             Graphics2D g2d = (Graphics2D) g.create();
 
             g2d.setColor(color);
-
-/*
-            int displayX = clamp(getDisplayX(), 0, Player.getInstance().getX()+getMidWidth());
-            int displayY = //clamp(getDisplayY(), 0, getDisplayY());
-            int displayWidth = clamp(getWidth(), 0, Player.getInstance().getX()+getMidWidth());
-            System.out.println(-Player.getInstance().x);
-            int displayHeight = clamp(getHeight(), 0,getDisplayY());
-
-            //g2d.fillRect(displayX, displayY, displayWidth, displayHeight);
-*/
-
-
             g2d.fillRect(getDisplayX(), getDisplayY(), getWidth(), getHeight());
         }
     }
