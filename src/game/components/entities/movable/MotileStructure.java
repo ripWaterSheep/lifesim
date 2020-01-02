@@ -1,17 +1,13 @@
-package gamesession.game.gamecomponents.entities;
+package game.components.entities.movable;
 
-import gamesession.game.GameComponent;
-import gamesession.game.gamecomponents.Player;
-import gamesession.game.gamecomponents.World;
-import util.WindowSize;
-import util.drawing.DrawString;
+import game.components.entities.Structure;
+import game.components.world.World;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 
-public class MotileEntity extends Entity {
+public class MotileStructure extends Structure {
 
     //TODO: finish movement stuff
 
@@ -29,8 +25,8 @@ public class MotileEntity extends Entity {
 
 
 
-    public MotileEntity(String label, int x, int y, int width, int height, World world, Color color,
-                        MovementType movementType, int speed, int startAngle, int turnAngle, int range) {
+    public MotileStructure(String label, int x, int y, int width, int height, World world, Color color,
+                           MovementType movementType, int speed, int startAngle, int turnAngle, int range) {
 
         super(label, x, y, width, height, world, color);
 
@@ -85,20 +81,6 @@ public class MotileEntity extends Entity {
 
         }
 
-    }
-
-
-    @Override
-    public void draw(Graphics g) {
-        if (Player.getInstance().getWorld() == world) {
-            Graphics2D g2d = (Graphics2D) g.create();
-
-            g2d.setColor(color);
-            g2d.fill(getShape());
-
-            if (fontSize > 0)
-                DrawString.centerStringInRect(g, label, getShape(), labelFont, Color.WHITE);
-        }
     }
 
 }

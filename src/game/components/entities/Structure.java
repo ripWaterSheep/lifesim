@@ -1,10 +1,9 @@
-package gamesession.game.gamecomponents.entities;
+package game.components.entities;
 
-import gamesession.game.GameComponent;
-import gamesession.game.gamecomponents.Player;
-import gamesession.game.gamecomponents.World;
-import util.drawing.DrawString;
-import util.WindowSize;
+import game.components.GameComponent;
+import game.components.player.Player;
+import game.components.world.World;
+import util.DrawString;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,11 +11,12 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 
-public class Entity extends GameComponent {
 
-    protected static ArrayList<Entity> instances = new ArrayList<>();
+public class Structure extends GameComponent {
 
-    public static ArrayList<Entity> getInstances() { return instances; }
+    protected static ArrayList<Structure> instances = new ArrayList<>();
+
+    public static ArrayList<Structure> getInstances() { return instances; }
 
 
     protected final String label;
@@ -29,20 +29,6 @@ public class Entity extends GameComponent {
     public int fontSize = 0;
 
 
-    protected int width;
-    protected int height;
-
-    protected int getDisplayX() { return x - Player.getInstance().getX() - (width/2) + WindowSize.getMidWidth(); }
-
-    protected int getDisplayY() { return y - Player.getInstance().getY() - (height/2) + WindowSize.getMidHeight(); }
-
-
-    protected World world;
-
-    public World getWorld() {
-        return world;
-    }
-
     public void randomizePos() {
         x = world.getRandX();
         y = world.getRandY();
@@ -52,9 +38,8 @@ public class Entity extends GameComponent {
     public Rectangle getShape() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
 
 
-
-    public Entity(String label, int x, int y, int width, int height, World world, Color color) {
-        Entity.instances.add(this);
+    public Structure(String label, int x, int y, int width, int height, World world, Color color) {
+        Structure.instances.add(this);
 
         this.label = label;
         this.x = x;
@@ -64,10 +49,13 @@ public class Entity extends GameComponent {
 
         this.world = world;
         this.color = color;
+
+        isEllipse = false;
     }
 
 
-    public Entity(String label, int x, int y, int width, int height, World world, Color color, int fontSize) {
+
+    public Structure(String label, int x, int y, int width, int height, World world, Color color, int fontSize) {
         this(label, x, y, width, height, world, color);
         this.fontSize = fontSize;
         labelFont = new Font("Comic Sans MS", Font.PLAIN, fontSize);

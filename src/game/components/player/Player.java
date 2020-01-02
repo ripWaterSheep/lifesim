@@ -1,11 +1,10 @@
-package gamesession.game.gamecomponents;
+package game.components.player;
 
-import gamesession.game.control.KeyboardControls;
-import gamesession.game.control.MiscControls;
-import gamesession.game.GameComponent;
-import gamesession.game.gamecomponents.arrangement.GameLayout;
-import gamesession.GameSession;
-import gamesession.game.gamecomponents.entities.Entity;
+import game.components.entities.Structure;
+import game.components.world.World;
+import game.components.arrangement.GameLayout;
+import game.GameSession;
+import game.components.GameComponent;
 import util.MyMath;
 import util.WindowSize;
 
@@ -14,7 +13,7 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
-import static gamesession.game.control.KeyboardControls.*;
+import static game.components.player.Controls.*;
 import static java.lang.Math.*;
 
 
@@ -35,9 +34,9 @@ public class Player extends GameComponent {
         this.y = y;
     }
 
-    public void goTo(Entity entity) {
-        goTo(entity.getX(), entity.getY());
-        this.world = entity.getWorld();
+    public void goTo(Structure structure) {
+        goTo(structure.getX(), structure.getY());
+        this.world = structure.getWorld();
     }
 
 
@@ -56,47 +55,33 @@ public class Player extends GameComponent {
     public World getWorld() { return world; }
 
 
-    public String getWorldLabel() { return world.getLabel(); }
-
-
-    public boolean isInSameWorld(Entity entity) {
+    public boolean isInSameWorld(GameComponent component) {
         boolean sameWorld = false;
-        if (entity.getWorld() == this.world)
+        if (component.getWorld() == this.world)
             sameWorld = true;
 
         return sameWorld;
     }
 
 
+    @Override
     public int getDisplayX() {
-        return WindowSize.getMidWidth()-getRadius();
+        return WindowSize.getMidWidth()-getMidWidth();
     }
 
-    public int getDisplayY() {
-        return WindowSize.getMidHeight()-getRadius();
-    }
+    @Override
+    public int getDisplayY() { return WindowSize.getMidHeight()-getMidHeight();}
 
 
-    private int radius;
-
-    public int getRadius() {
-        return radius;
-    }
-
-    public int getDiameter() {
-        return radius*2;
-    }
+    public Ellipse2D.Double getShape() { return new Ellipse2D.Double(getDisplayX(), getDisplayY(), getWidth(), getHeight()); }
 
 
-    public Ellipse2D.Double getShape() { return new Ellipse2D.Double(getDisplayX(), getDisplayY(), getDiameter(), getDiameter()); }
+    public ArrayList<Structure> getTouching() {
+        ArrayList<Structure> touching = new ArrayList<>();
 
-
-    public ArrayList<Entity> getTouching() {
-        ArrayList<Entity> touching = new ArrayList<>();
-
-        for (Entity entity : Entity.getInstances()) {
-            if (getShape().intersects(entity.getShape()) && isInSameWorld(entity)) {
-                touching.add(entity);
+        for (Structure structure : Structure.getInstances()) {
+            if (getShape().intersects(structure.getShape()) && isInSameWorld(structure)) {
+                touching.add(structure);
             }
         }
 
@@ -106,8 +91,8 @@ public class Player extends GameComponent {
 
     public boolean isTouchingAnything() { return !getTouching().isEmpty(); }
 
-    public Entity getTopTouching() {
-        Entity topTouching = null;
+    public Structure getTopTouching() {
+        Structure topTouching = null;
         if (isTouchingAnything())
             topTouching = getTouching().get(0);
 
@@ -115,48 +100,58 @@ public class Player extends GameComponent {
     }
 
 
+
     private double health = 1000;
 
     public double getHealth() { return health; }
 
+    public void heal(double amount) { health += amount; }
 
-    public void heal(double amount) { health += amount;health = MyMath.clamp(health, 0, 1000+strength); }
+    public void damage(double amount) { health -= amount; }
 
 
     private double energy = 1000;
 
     public double getEnergy() { return energy; }
 
-    public void energize(double amount) { energy += amount; }
+    public void energize(double amount) { energy += Math.abs(amount); }
 
-    public void tire(double amount) { energy -= amount; }
+    public void tire(double amount) { energy -= Math.abs(amount); }
 
 
     private double money = 0;
 
     public double getMoney() { return money; }
 
-    public boolean hasMoney() { return money > 0; }
+    public boolean hasMoney() { return money >= 0; }
 
-    public boolean hasEnoughMoney(double amount) { return money > amount; }
+    public boolean canAfford(double moneyAmount) { return money > moneyAmount; }
 
-    public void gainMoney(double amount) { money += amount; }
+    public void gainMoney(double amount) { money += Math.abs(amount); }
 
-    public void loseMoney(double amount) { money -= amount; }
+    public void loseMoney(double amount) { money -= Math.abs(amount); }
 
 
     private double strength = 0;
 
     public double getStrength() { return strength; }
 
-    public void strengthen(double amount) { strength += amount; }
+    public void strengthen(double amount) { strength += Math.abs(amount); }
 
-    public void weaken(double amount) { strength -= amount; }
+
+    private double intellect =  0;
+
+    public double getIntellect() { return intellect; }
+
+    public void gainIntellect(double amount) { intellect += Math.abs(amount); }
+
+
 
 
     /** Calculate the cap for the many stats whose caps increase when strength increases.
      */
     public double getStrengthDependentStatCap() { return strength+1000; }
+
 
 
 
@@ -166,9 +161,13 @@ public class Player extends GameComponent {
         String label = "Player";
         this.x = x;
         this.y = y;
-        this.radius = radius;
+        this.width = radius*2;
+        this.height = radius*2;
         this.color = color;
+
+        isEllipse = true;
     }
+
 
 
     /** Gets the speed at which the player is currently intended to move at.
@@ -178,11 +177,14 @@ public class Player extends GameComponent {
      */
     public int getSpeed() {
         int speed = 10;
-        if (KeyboardControls.getSprintToggled()) {
+        if (Controls.getSprintToggled()) {
             speed *= 2;
         }
         return speed;
     }
+
+
+
 
 
     private void movementLogic() {
@@ -208,19 +210,19 @@ public class Player extends GameComponent {
 
 
     private void borderLogic() {
-        x = MyMath.clamp(x, -world.getMidWidth() + getRadius(), world.getMidWidth() - getRadius());
-        y = MyMath.clamp(y, -world.getMidHeight() + getRadius(), world.getMidHeight() - getRadius());
+        x = MyMath.clamp(x, -world.getMidWidth() + getMidWidth(), world.getMidWidth() - getMidWidth());
+        y = MyMath.clamp(y, -world.getMidHeight() + getMidHeight(), world.getMidHeight() - getMidHeight());
     }
 
 
-    public void commandLogic() {
-        GameLayout usedGameLayout = GameSession.getUsedGameLayout();
+    public void CollisionLogic() {
+        GameLayout usedGameLayout = GameSession.getUsedLayout();
 
         if (isTouchingAnything()) {
-            for (Entity entity : getTouching()) {
-                usedGameLayout.playerTouchInteraction(entity);
-                if (MiscControls.getInteractTapped()) {
-                    usedGameLayout.playerTapInteraction(entity);
+            for (Structure structure : getTouching()) {
+                usedGameLayout.playerTouchLogic(structure);
+                if (Controls.getInteracted()) {
+                    usedGameLayout.playerTapLogic(structure);
                 }
             }
         }
@@ -229,6 +231,7 @@ public class Player extends GameComponent {
 
     public void statLogic() {
         tire(0.1);
+
 
         health = MyMath.clamp(health, 0, getStrengthDependentStatCap());
         energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());
@@ -239,8 +242,11 @@ public class Player extends GameComponent {
 
     @Override
     public void setup(JPanel panel) {
-        instance = GameSession.getUsedGameLayout().player;
-        world = World.instances.get(0);
+        instance = GameSession.getUsedLayout().player;
+        world = World.getInstances().get(0);
+
+        Controls.initListeners(panel);
+
     }
 
 
@@ -248,8 +254,9 @@ public class Player extends GameComponent {
     public void act() {
         movementLogic();
         borderLogic();
-        commandLogic();
+        CollisionLogic();
         statLogic();
+        Controls.reset();
     }
 
 

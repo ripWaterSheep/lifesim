@@ -1,9 +1,7 @@
 package main;
 
-import gamesession.game.control.KeyboardControls;
-import gamesession.game.control.MouseControls;
-import gamesession.game.gamecomponents.Player;
-import gamesession.GameSession;
+import game.components.player.Player;
+import game.GameSession;
 
 import static util.WindowSize.*;
 import static util.MiscUtil.*;
@@ -18,14 +16,11 @@ public class MainPanel extends JPanel {
 
 
     public MainPanel() {
-        addKeyListener(KeyboardControls.keyAdapter);
-        addMouseListener(MouseControls.mouseAdapter);
         setFocusable(true);
         requestFocusInWindow();
         setSize(defaultWidth, defaultHeight);
 
         gameSession.init(this);
-
     }
 
 
