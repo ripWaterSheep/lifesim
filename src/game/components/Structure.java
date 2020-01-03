@@ -1,8 +1,6 @@
-package game.components.entities;
+package game.components;
 
-import game.components.GameComponent;
 import game.components.player.Player;
-import game.components.world.World;
 import util.DrawString;
 
 import javax.swing.*;
@@ -38,6 +36,7 @@ public class Structure extends GameComponent {
     public Rectangle getShape() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
 
 
+
     public Structure(String label, int x, int y, int width, int height, World world, Color color) {
         Structure.instances.add(this);
 
@@ -52,7 +51,6 @@ public class Structure extends GameComponent {
 
         isEllipse = false;
     }
-
 
 
     public Structure(String label, int x, int y, int width, int height, World world, Color color, int fontSize) {

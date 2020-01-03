@@ -3,8 +3,8 @@ package main;
 import game.components.player.Player;
 import game.GameSession;
 
-import static util.WindowSize.*;
-import static util.MiscUtil.*;
+import static main.WindowSize.*;
+import static util.TimeUtil.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,6 @@ public class MainPanel extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
         setSize(defaultWidth, defaultHeight);
-
         gameSession.init(this);
     }
 
@@ -29,7 +28,7 @@ public class MainPanel extends JPanel {
         setBackground(Player.getInstance().getWorld().getOuterColor());
         super.paintComponent(g);
         gameSession.loop(g);
-        sleep(10);
+        sleep(12);
         repaint();
     }
 

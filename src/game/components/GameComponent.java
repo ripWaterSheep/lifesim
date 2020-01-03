@@ -1,8 +1,7 @@
 package game.components;
 
 import game.components.player.Player;
-import game.components.world.World;
-import util.WindowSize;
+import main.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;

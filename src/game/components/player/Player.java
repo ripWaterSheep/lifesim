@@ -1,12 +1,11 @@
 package game.components.player;
 
-import game.components.entities.Structure;
-import game.components.world.World;
-import game.components.arrangement.GameLayout;
+import game.components.Structure;
+import game.components.World;
 import game.GameSession;
 import game.components.GameComponent;
 import util.MyMath;
-import util.WindowSize;
+import main.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
@@ -216,13 +215,12 @@ public class Player extends GameComponent {
 
 
     public void CollisionLogic() {
-        GameLayout usedGameLayout = GameSession.getUsedLayout();
 
         if (isTouchingAnything()) {
             for (Structure structure : getTouching()) {
-                usedGameLayout.playerTouchLogic(structure);
+                GameSession.getUsedLayout().playerTouchLogic(structure);
                 if (Controls.getInteracted()) {
-                    usedGameLayout.playerTapLogic(structure);
+                    GameSession.getUsedLayout().playerTapLogic(structure);
                 }
             }
         }

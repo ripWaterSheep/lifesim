@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MiscUtil {
+public class TimeUtil {
 
 
     public static void sleep(long time) {

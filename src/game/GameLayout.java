@@ -1,15 +1,16 @@
-package game.components.arrangement.layouts;
+package game;
 
-import game.components.arrangement.GameLayout;
-import game.components.entities.Structure;
-import game.components.world.World;
+import game.components.Structure;
+import game.components.World;
+import game.components.player.Player;
 import util.MyMath;
 
 import java.awt.*;
 
 import static java.awt.Color.*;
 
-public class DefaultLayout extends GameLayout {
+public class GameLayout {
+
 
 
     /** World instances */
@@ -65,7 +66,7 @@ public class DefaultLayout extends GameLayout {
     Structure horizontalStreet = new Structure("Horizontal Street", 0, 0, city.getWidth(), 250, city, new Color(50, 50, 50));
     Structure verticalStreet = new Structure("Vertical Street", 0, 0, 250, city.getHeight(), city, new Color(50, 50, 50));
     Structure bank = new Structure("Bank", 700, -600, 700, 500, city, new Color(25, 150, 75));
-    Structure apartment = new Structure("Apartment", -650, -650, 600, 600, city, new Color(220, 190, 120));
+    Structure apartment = new Structure("Apartment", -550, -650, 500, 650, city, apartmentInterior.getOuterColor());
     Structure university = new Structure("University", -650, 650, 600, 600, city, new Color(220, 190, 120));
     Structure museum = new Structure("Museum", 1550, 650, 600, 600, city, new Color(10, 10, 10));
     Structure cityMetro = new Structure("City Metro", -700, -1550, 600, 600, city, new Color(100, 100, 100));
@@ -75,8 +76,12 @@ public class DefaultLayout extends GameLayout {
 
 
 
+    /** Player instance */
+    public Player player = new Player(0, 0, 30, YELLOW);
 
-    @Override
+
+
+
     public void playerTouchLogic(Structure structure) {
         switch(structure.getLabel()) {
 
@@ -93,12 +98,12 @@ public class DefaultLayout extends GameLayout {
                 break;
 
             case "School":
-                player.gainIntellect(3);
+                player.gainIntellect(1);
                 player.tire(1);
                 break;
 
             case "Office":
-                player.gainMoney(1+(player.getIntellect()/100));
+                player.gainMoney(1+(player.getIntellect()/250));
                 player.tire(1);
                 break;
 
@@ -106,7 +111,7 @@ public class DefaultLayout extends GameLayout {
                 if (player.canAfford(5)) {
                     player.heal(2);
                     player.energize(2);
-                    player.loseMoney(5);
+                    player.loseMoney(3);
                 }
                 break;
 
@@ -130,7 +135,6 @@ public class DefaultLayout extends GameLayout {
 
 
 
-    @Override
     public void playerTapLogic(Structure structure) {
         switch(structure.getLabel()) {
 

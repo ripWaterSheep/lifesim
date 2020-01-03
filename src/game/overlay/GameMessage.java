@@ -1,8 +1,8 @@
-package game.overlay.overlays;
+package game.overlay;
 
 import java.awt.*;
 
-import static util.MiscUtil.getCurrentTime;
+import static util.TimeUtil.getCurrentTime;
 
 
 public class GameMessage {
@@ -19,7 +19,7 @@ public class GameMessage {
     private static long currentMessageStartTime = 0;
 
 
-    public static void drawLatest(Graphics g) {
+    static void drawLatest(Graphics g) {
 
         if (currentMessage.length() > 0) {
 

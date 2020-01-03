@@ -1,9 +1,5 @@
 package game.overlay;
 
-import game.overlay.overlays.GameMessage;
-import game.overlay.overlays.MiniMap;
-import game.overlay.overlays.Stat;
-
 import java.awt.*;
 
 public class Overlay {
@@ -13,7 +9,7 @@ public class Overlay {
         GameMessage.drawLatest(g);
         Stat.drawAll(g);
         MiniMap.draw(g);
-
+        DeathScreen.draw(g);
     }
 
 }

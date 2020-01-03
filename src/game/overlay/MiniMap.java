@@ -1,16 +1,16 @@
-package game.overlay.overlays;
+package game.overlay;
 
 import game.GameSession;
 import game.components.GameComponent;
 import game.components.player.Player;
-import game.components.world.World;
-import util.WindowSize;
+import game.components.World;
+import main.WindowSize;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
 
-import static util.ColorMethods.applyTransparency;
+import static util.ColorMethods.applyOpacity;
 import static util.MyMath.betterRound;
 
 
@@ -37,16 +37,16 @@ public class MiniMap {
 
 
 
-    private static final int TRANSPARENCY = betterRound(0.5 * 255);
+    private static final int OPACITY = betterRound(0.5 * 255);
 
-    private static Color frameColor = applyTransparency(new Color(50, 50, 50), TRANSPARENCY);
+    private static Color frameColor = applyOpacity(new Color(50, 50, 50), OPACITY);
 
 
 
     //public int getDisplayX() { return x-Player.getInstance().getX() - getMidWidth() + WindowSize.getMidWidth(); }
 
 
-    public static void draw(Graphics g) {
+    static void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
 
         g2d.setColor(frameColor);

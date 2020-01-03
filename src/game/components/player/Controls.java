@@ -1,16 +1,20 @@
 package game.components.player;
 
+import game.components.World;
+import util.TimeUtil;
+
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import static game.components.player.Controls.Cheats.cheatLogic;
 import static java.awt.event.KeyEvent.*;
 import static java.awt.event.KeyEvent.VK_CONTROL;
 import static java.awt.event.MouseEvent.BUTTON1;
 import static java.awt.event.MouseEvent.BUTTON3;
-import static util.MiscUtil.getCurrentTime;
+import static util.TimeUtil.getCurrentTime;
 
 
 public class Controls {
@@ -23,23 +27,35 @@ public class Controls {
     private static boolean leftPressed = false;
     private static boolean rightPressed = false;
 
-    static boolean getUpPressed() { return upPressed; }
+    static boolean getUpPressed() {
+        return upPressed;
+    }
 
-    static boolean getDownPressed() { return downPressed; }
+    static boolean getDownPressed() {
+        return downPressed;
+    }
 
-    static boolean getLeftPressed() { return leftPressed; }
+    static boolean getLeftPressed() {
+        return leftPressed;
+    }
 
-    static boolean getRightPressed() { return rightPressed; }
+    static boolean getRightPressed() {
+        return rightPressed;
+    }
 
 
     private static boolean sprintToggle = false;
 
-    public static boolean getSprintToggled() { return sprintToggle; }
+    static boolean getSprintToggled() {
+        return sprintToggle;
+    }
 
 
     private static boolean controlPressed;
 
-    static boolean getControlPressed() { return controlPressed; }
+    static boolean getControlPressed() {
+        return controlPressed;
+    }
 
 
     private static long leftReadTime = 0;
@@ -48,21 +64,28 @@ public class Controls {
     private static long downReadTime = 0;
 
 
-    public static long getUpReadTime() { return upReadTime; }
+    static long getUpReadTime() {
+        return upReadTime;
+    }
 
-    public static long getDownReadTime() { return downReadTime; }
+    static long getDownReadTime() {
+        return downReadTime;
+    }
 
-    public static long getLeftReadTime() { return leftReadTime; }
+    static long getLeftReadTime() {
+        return leftReadTime;
+    }
 
-    public static long getRightReadTime() { return rightReadTime; }
-
+    static long getRightReadTime() {
+        return rightReadTime;
+    }
 
 
     private static KeyAdapter keyAdapter = new KeyAdapter() {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            System.out.println("key pressed: " + e.getKeyChar());
+            //System.out.println("key pressed: " + e.getKeyChar());
             switch (e.getKeyCode()) {
                 case VK_W:
                 case VK_UP:
@@ -96,9 +119,8 @@ public class Controls {
                     controlPressed = true;
                     break;
             }
-            Cheats.cheatLogic(e.getKeyCode());
+            cheatLogic(e.getKeyCode());
         }
-
 
 
         @Override
@@ -134,23 +156,24 @@ public class Controls {
     };
 
 
-
     private final static int INTERACT_BUTTON = BUTTON1;
 
     private final static int FIRE_BUTTON = BUTTON3;
 
-    private static boolean fired =  false;
+    private static boolean fired = false;
     private static boolean interacted = false;
 
 
-    static boolean getInteracted() { return interacted; }
+    static boolean getInteracted() {
+        return interacted;
+    }
 
 
     private static MouseAdapter mouseAdapter = new MouseAdapter() {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            System.out.println("mouse pressed: " + e.getButton());
+            //System.out.println("mouse pressed: " + e.getButton());
             switch (e.getButton()) {
                 case INTERACT_BUTTON:
                     interacted = true;
@@ -179,4 +202,54 @@ public class Controls {
         panel.addMouseListener(mouseAdapter);
     }
 
+
+    static class Cheats {
+
+
+        static void cheatLogic(int key) {
+            Player player = Player.getInstance();
+            if (Controls.getControlPressed()) {
+                switch (key) {
+                    case VK_N:
+                        cycleWorlds(1);
+                        TimeUtil.sleep(45);
+                        break;
+                    case VK_B:
+                        cycleWorlds(-1);
+                        TimeUtil.sleep(45);
+                        break;
+
+                    case VK_1:
+                        player.gainMoney(1);
+
+                }
+            }
+        }
+
+
+        /**
+         * Make player go to the next world declared in the used game layout
+         */
+        static void cycleWorlds(int index) {
+            int currentIndex = World.getInstances().indexOf(Player.getInstance().getWorld());
+            World newWorld = Player.getInstance().getWorld();
+
+            try {
+                // Increment or decrement(if negative) current index and set player world to world at new index.
+                newWorld = World.getInstances().get(currentIndex + index);
+
+            } catch (IndexOutOfBoundsException e) {
+
+                if (index > 0) {
+                    newWorld = World.getInstances().get(index - 1); // Wraparound to the first world
+                } else if (index < 0) {
+                    newWorld = World.getInstances().get(World.getInstances().size() + index); // Wraparound to the last world
+                }
+            }
+
+            Player.getInstance().goTo(newWorld);
+        }
+
+
+    }
 }

@@ -1,6 +1,5 @@
-package game.components.world;
+package game.components;
 
-import game.components.GameComponent;
 import game.components.player.Player;
 
 import javax.swing.*;
