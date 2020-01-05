@@ -25,8 +25,7 @@ public class Structure extends GameComponent {
 
     protected Font labelFont;
     public int fontSize = 0;
-    
-    
+
 
     public void randomizePos() {
         x = world.getRandX();
@@ -54,7 +53,7 @@ public class Structure extends GameComponent {
     public Structure(String label, int x, int y, int width, int height, World world, Color color, int fontSize) {
         this(label, x, y, width, height, world, color);
         this.fontSize = fontSize;
-        labelFont = new Font("Comic Sans MS", Font.PLAIN, fontSize);
+        labelFont = new Font("StayPuft", Font.PLAIN, fontSize);
 
     }
 
@@ -79,10 +78,14 @@ public class Structure extends GameComponent {
             Graphics2D g2d = (Graphics2D) g.create();
 
             g2d.setColor(color);
-            g2d.fill(getShape());
+            if (isEllipse) {
+                g2d.fill(getEllipse());
+            } else {
+                g2d.fill(getRect());
+            }
 
             if (fontSize > 0)
-                DrawString.centerStringInRect(g, label, getShape(), labelFont, Color.WHITE);
+                DrawString.centerStringInRect(g, label, getRect(), labelFont, Color.WHITE);
         }
     }
 

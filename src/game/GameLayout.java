@@ -38,16 +38,16 @@ public class GameLayout {
     Structure verticalRoad = new Structure("Vertical Road", 0, 0, 200, town.getHeight(), town, DARK_GRAY);
 
 
-    Structure house = new Structure("House", 500, -400, 450, 350, town, new Color(100, 80, 50), 30);
+    Structure house = new Structure("House", 500, -400, 450, 350, town, new Color(100, 80, 50), 50);
 
 
-    Structure gym = new Structure("Gym", -1200, -450, 400, 500, town, new Color(100, 100, 100), 40);
+    Structure gym = new Structure("Gym", -1200, -450, 400, 500, town, new Color(100, 100, 100), 50);
 
-    Structure school = new Structure("School", 450, 500, 300, 400, town, new Color(180, 117, 84));
-    Structure office = new Structure("Office",  -500, 500, 400, 400, town, new Color(160, 180, 180));
-    Structure hospital = new Structure("Hospital", -600, -1200, 500, 500, town, new Color(210, 210, 210));
-    Structure shop = new Structure("Shop", -1350, 550, 600, 400, town, new Color(200, 110, 75));
-    Structure townMetro = new Structure("Metro - $100", 600, 2050, 500, 600, town, new Color(100,100, 100));
+    Structure school = new Structure("School", 450, 500, 300, 400, town, new Color(180, 117, 84), 50);
+    Structure office = new Structure("Office",  -500, 500, 400, 400, town, new Color(160, 180, 180), 50);
+    Structure hospital = new Structure("Hospital", -600, -1200, 500, 500, town, new Color(210, 210, 210),50);
+    Structure shop = new Structure("Shop", -1350, 550, 600, 400, town, new Color(200, 110, 75), 50);
+    Structure townMetro = new Structure("Metro - $100", 600, 2050, 500, 600, town, new Color(100,100, 100),50);
 
 
     Structure cave = new Structure("Cave", -2000,  -2000, 650, 300, town, new Color(190, 190, 190));
@@ -65,11 +65,11 @@ public class GameLayout {
 
     Structure horizontalStreet = new Structure("Horizontal Street", 0, 0, city.getWidth(), 250, city, new Color(50, 50, 50));
     Structure verticalStreet = new Structure("Vertical Street", 0, 0, 250, city.getHeight(), city, new Color(50, 50, 50));
-    Structure bank = new Structure("Bank", 700, -600, 700, 500, city, new Color(25, 150, 75));
-    Structure apartment = new Structure("Apartment", -550, -650, 500, 650, city, apartmentInterior.getOuterColor());
-    Structure university = new Structure("University", -650, 650, 600, 600, city, new Color(220, 190, 120));
-    Structure museum = new Structure("Museum", 1550, 650, 600, 600, city, new Color(10, 10, 10));
-    Structure cityMetro = new Structure("City Metro", -700, -1550, 600, 600, city, new Color(100, 100, 100));
+    Structure bank = new Structure("Bank", 700, -600, 700, 500, city, new Color(25, 150, 75), 50);
+    Structure apartment = new Structure("Apartment", -550, -650, 500, 650, city, apartmentInterior.getOuterColor(), 50);
+    Structure university = new Structure("University", -650, 650, 600, 600, city, new Color(220, 190, 120), 50);
+    Structure museum = new Structure("Museum", 1550, 650, 600, 600, city, new Color(10, 10, 10), 50);
+    Structure cityMetro = new Structure("City Metro", -700, -1550, 600, 600, city, new Color(100, 100, 100), 50);
 
 
     Structure creditCard = new Structure("VISA", city.getRandX(), city.getRandY(), 35, 25, city, new Color(227, 218, 159), 12);

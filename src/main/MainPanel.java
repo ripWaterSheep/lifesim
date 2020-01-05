@@ -2,6 +2,7 @@ package main;
 
 import game.components.player.Player;
 import game.GameSession;
+import util.MyFont;
 
 import static main.WindowSize.*;
 import static util.TimeUtil.*;
@@ -19,6 +20,7 @@ public class MainPanel extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
         setSize(defaultWidth, defaultHeight);
+        MyFont.initFonts();
         gameSession.init(this);
     }
 

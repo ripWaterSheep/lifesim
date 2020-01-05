@@ -6,7 +6,6 @@ import game.components.Structure;
 import game.components.World;
 import game.overlay.Overlay;
 import game.overlay.Stat;
-import util.ArrayListMethods;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,9 +22,9 @@ public class GameSession {
 
 
     /** Holds all instances used in the game */
-    private static ArrayList<GameComponent> usedComponentInstances;
+    private static ArrayList<ArrayList<? extends GameComponent>> usedComponentInstances;
 
-    public static ArrayList<Arraylist<GameComponent>> getUsedComponents() { return usedComponentInstances; }
+    public static ArrayList<ArrayList<? extends GameComponent >> getUsedComponents() { return usedComponentInstances; }
 
 
     private static int currentFrame = 0;
@@ -53,7 +52,6 @@ public class GameSession {
 		 * 
 		 */
 
-       
 		 
 		usedComponentInstances = new ArrayList<>();
         /*usedComponents.add(Player.getInstance());
@@ -66,15 +64,15 @@ public class GameSession {
 		 * objects are added as they are added mid game (like player created projectiles)
 		 */
 		 
-		 
+
 		usedComponentInstances.add(Player.getInstances());
-		Collections.reverse(Structure.getInstances);
-		usedComponentInstances.add(Player.getInstances());
+		Collections.reverse(Structure.getInstances());
+		usedComponentInstances.add(Structure.getInstances());
 		usedComponentInstances.add(World.getInstances());
 		
-        Collections.reverse(usedComponents);
+        Collections.reverse(usedComponentInstances);
         
-        for (instances: usedComponentInstances) {
+        for (ArrayList<? extends GameComponent> instances: usedComponentInstances) {
 			for (GameComponent instance : instances) {
 				instance.setup(panel);
 			}
@@ -84,14 +82,14 @@ public class GameSession {
 
 
     public void loop(Graphics g) {
-		for (instances: usedComponentInstances) {
-			for (GameComponent instance : usedComponents.)
+		for (ArrayList<? extends GameComponent> instances: usedComponentInstances) {
+			for (GameComponent instance : instances)
 				instance.act();
 		}
         Stat.retrieveValues();
 
-		for (instanes:usedComponentInstances) {
-			for (GameComponent instance : usedComponents)
+		for (ArrayList<? extends GameComponent> instances:usedComponentInstances) {
+			for (GameComponent instance : instances)
 				instance.draw(g);
 		}
 		

@@ -1,5 +1,6 @@
 package game.components.player;
 
+import game.components.MobileEntity;
 import game.components.Structure;
 import game.components.World;
 import game.GameSession;
@@ -9,14 +10,15 @@ import main.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import static game.components.player.Controls.*;
 import static java.lang.Math.*;
+import static util.MiscUtil.testIntersection;
 
 
 public class Player extends GameComponent {
+
 
     private static Player instance;
 
@@ -26,15 +28,17 @@ public class Player extends GameComponent {
      * @return first defined instance of player if one exists already.
      */
     public static Player getInstance() { return instance; }
-    
-    
-    public static Player getInstances() {
-		
-		/* Because game session polymorphizes the other objects with an arraylist of instance arraylists
-		 * this function was needed in order to return an arraylist to match.
-		 */
+
+
+    /** Because game session polymorphizes the other objects with an arraylist of instance arraylists
+     * this function was needed in order to return an arraylist to match.
+     */
+
+
+    public static ArrayList<Player> getInstances() {
+
 		ArrayList<Player> instanceList = new ArrayList<>();
-		ArrayList.add(getInstance());
+		instanceList.add(getInstance());
 		return instanceList;
 	}
    
@@ -83,11 +87,11 @@ public class Player extends GameComponent {
     public int getDisplayY() { return WindowSize.getMidHeight()-getMidHeight();}
 
 
-    public ArrayList<GameComponent> getTouching() {
-        ArrayList<GameComponent> touching = new ArrayList<>();
-
-        for (GameComponent component : Structure.getInstances()) {
-            if ((getEllipse().intersects(component.getRect() && component instanceof Structure) || (getEllipse().intersects(component.getEllipse() && component instanceof MobileEntity)) && isInSameWorld(component)) {
+    public ArrayList<Structure> getTouching() {
+        ArrayList<Structure> touching = new ArrayList<>();
+        for (Structure structure: Structure.getInstances()) {
+            if (((testIntersection(this.getEllipse(), structure.getRect()) && !structure.isEllipse) ||
+                    (testIntersection(this.getEllipse(), structure.getEllipse()) && structure.isEllipse)) && isInSameWorld(structure)) {
                 touching.add(structure);
             }
         }
@@ -225,7 +229,7 @@ public class Player extends GameComponent {
     public void CollisionLogic() {
 
         if (isTouchingAnything()) {
-            for (Structure structure : getTouching()) {
+            for (Structure structure: getTouching()) {
                 GameSession.getUsedLayout().playerTouchLogic(structure);
                 if (Controls.getInteracted()) {
                     GameSession.getUsedLayout().playerTapLogic(structure);
@@ -249,7 +253,7 @@ public class Player extends GameComponent {
     @Override
     public void setup(JPanel panel) {
         instance = GameSession.getUsedLayout().player;
-        world = World.getInstances().get(0);
+        world = (World)World.getInstances().get(0);
 
         Controls.initListeners(panel);
 
@@ -270,7 +274,7 @@ public class Player extends GameComponent {
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(color);
-        g2d.fill(getShape());
+        g2d.fill(getEllipse());
     }
 
 

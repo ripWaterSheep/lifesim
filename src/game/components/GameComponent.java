@@ -5,6 +5,8 @@ import main.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
 
 public abstract class GameComponent {
@@ -20,6 +22,11 @@ public abstract class GameComponent {
 
     public int getY() { return y; }
 
+
+    /** Since player position indicates the position of everything relative
+     * to the player instead of the player itself, the world must be translated based on the player's position
+     * as well as the display size to keep the player in the same place when windows is resized.
+     */
     public int getDisplayX() { return x-Player.getInstance().getX() - getMidWidth() + WindowSize.getMidWidth(); }
 
     public int getDisplayY() { return y-Player.getInstance().getY() - getMidHeight() + WindowSize.getMidHeight(); }
@@ -41,12 +48,13 @@ public abstract class GameComponent {
     
     public Rectangle getRect() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
     
-    public Ellipse getEllipse() { return new Ellipse.Double(getDisplayX(), getDisplayY(), width, height); }
+    public Ellipse2D getEllipse() { return new Ellipse2D.Double(getDisplayX(), getDisplayY(), width, height); }
+
 
 
     public boolean onScreen() { // If the component is visible in the window, then return true
 		if (isEllipse) {
-			return getEllipse().intersects(world.getRect());
+			return getEllipse().intersects(world.getX(), world.getY(), world.getWidth(), world.getHeight());
 		} else {
 			return getRect().intersects(world.getRect());
 		}

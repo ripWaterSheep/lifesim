@@ -5,7 +5,7 @@ import java.awt.*;
 import static util.TimeUtil.getCurrentTime;
 
 
-public class GameMessage {
+public class DamageDisplay {
 
     private static String currentMessage = "";
 
@@ -24,9 +24,10 @@ public class GameMessage {
         if (currentMessage.length() > 0) {
 
             Graphics2D g2d = (Graphics2D) g.create();
-            Font font = new Font("Comic Sans MS", Font.PLAIN, 50);
+            Font font = new Font("StayPuft.tff", Font.PLAIN, 50);
 
             //centerStringInRect(g2d, currentMessage, WindowSize.getRect(), font, color);
+
             g2d.setFont(font);
             g2d.drawString(currentMessage, 125, 75);
         }

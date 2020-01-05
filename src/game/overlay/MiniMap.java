@@ -8,6 +8,7 @@ import main.WindowSize;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
 
 import static util.ColorMethods.applyOpacity;
@@ -56,22 +57,23 @@ public class MiniMap {
         g2d.setColor(Player.getInstance().getWorld().getOuterColor());
         g2d.fill(getMapShape());
 
-        for (GameComponent component: GameSession.getUsedComponents()) {
+        for (ArrayList<? extends  GameComponent> components: GameSession.getUsedComponents()) {
+            for (GameComponent component: components) {
 
-            if (Player.getInstance().isInSameWorld(component)) {
-                // Scale features to fit on mini map
-                int x = scale(component.getDisplayX()- WindowSize.getMidWidth()) + getRadius()+PADDING;
-                int y = scale(component.getDisplayY()- WindowSize.getMidHeight()) + getRadius()+PADDING;
-                int width = scale(component.getWidth());
-                int height = scale(component.getHeight());
-                g2d.setColor(component.getColor());
+                if (Player.getInstance().isInSameWorld(component)) {
+                    // Scale features to fit on mini map
+                    int x = scale(component.getDisplayX() - WindowSize.getMidWidth()) + getRadius() + PADDING;
+                    int y = scale(component.getDisplayY() - WindowSize.getMidHeight()) + getRadius() + PADDING;
+                    int width = scale(component.getWidth());
+                    int height = scale(component.getHeight());
+                    g2d.setColor(component.getColor());
 
-                if (component.isEllipse) {
-                    g2d.fillOval(x, y, width, height);
-                } else {
-                    g2d.fillRect(x, y, width, height);
+                    if (component.isEllipse) {
+                        g2d.fillOval(x, y, width, height);
+                    } else {
+                        g2d.fillRect(x, y, width, height);
+                    }
                 }
-
             }
         }
 

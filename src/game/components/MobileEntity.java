@@ -14,7 +14,7 @@ public class MobileEntity extends Structure {
     //TODO: finish movement stuff
     
     /* Since mobile entity extends structure, each instance is added to the Structures class instance Arraylist because they share the same constructor lol
-     * 
+     * I'm not completely sure how to fix this but it works, so...
      */
 
     public enum MovementType { LINEAR, FOLLOW, AVOID }

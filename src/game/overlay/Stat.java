@@ -16,11 +16,11 @@ public class Stat {
     static ArrayList<Stat> shownStats = new ArrayList<>();
 
 
-    private static final Font STAT_FONT = new Font("TimesRoman", Font.PLAIN, 20);
+    private static final Font STAT_FONT = new Font("StayPuft", Font.PLAIN, 25);
 
     private static final int LEFT_PADDING = 3;
     private static final int BOTTOM_PADDING = 5;
-    private static final int VERTICAL_SPACING = 26;
+    private static final int VERTICAL_SPACING = 30;
 
     private static final double BAR_LENGTH_SCALE = 0.12;
 
@@ -103,7 +103,7 @@ public class Stat {
 
         if (showStatusBar) {
             int barX = LEFT_PADDING;
-            int barY = betterRound(y + (0.5 * VERTICAL_SPACING)) - 33;
+            int barY = betterRound(y - (1 * VERTICAL_SPACING))+5;
             int barWidth = betterRound((value-minVal) * BAR_LENGTH_SCALE);
 
             g2d.setColor(barColor);

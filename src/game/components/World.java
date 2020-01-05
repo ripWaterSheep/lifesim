@@ -11,16 +11,9 @@ import java.util.ArrayList;
 
 public class World extends GameComponent {
 
-    private static ArrayList<World> instances = new ArrayList<>();
+    protected static ArrayList<World> instances = new ArrayList<>();
 
     public static ArrayList<World> getInstances() { return instances; }
-
-
-
-    /** Since player position indicates the position of everything relative
-     * to the player instead of the player itself, the world must be translated based on the player's position
-     * as well as the display size to keep the player in the same place when windows is resized.
-     */
 
 
     public int getRandX() { return (int)(Math.random() * width)-getMidWidth(); }

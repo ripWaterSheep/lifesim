@@ -236,14 +236,14 @@ public class Controls {
 
             try {
                 // Increment or decrement(if negative) current index and set player world to world at new index.
-                newWorld = World.getInstances().get(currentIndex + index);
+                newWorld = (World) World.getInstances().get(currentIndex + index);
 
             } catch (IndexOutOfBoundsException e) {
 
                 if (index > 0) {
-                    newWorld = World.getInstances().get(index - 1); // Wraparound to the first world
+                    newWorld = (World) World.getInstances().get(index - 1); // Wraparound to the first world
                 } else if (index < 0) {
-                    newWorld = World.getInstances().get(World.getInstances().size() + index); // Wraparound to the last world
+                    newWorld = (World) World.getInstances().get(World.getInstances().size() + index); // Wraparound to the last world
                 }
             }
 
