@@ -1,20 +1,21 @@
 package game.components.player;
 
-import game.components.MobileEntity;
-import game.components.Structure;
+import game.components.structures.Structure;
 import game.components.World;
 import game.GameSession;
 import game.components.GameComponent;
+import game.overlay.GameMessage;
 import util.MyMath;
 import main.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import static game.components.player.Controls.*;
 import static java.lang.Math.*;
-import static util.MiscUtil.testIntersection;
+import static util.ShapeUtil.testIntersection;
 
 
 public class Player extends GameComponent {
@@ -69,14 +70,6 @@ public class Player extends GameComponent {
     public World getWorld() { return world; }
 
 
-    public boolean isInSameWorld(GameComponent component) {
-        boolean sameWorld = false;
-        if (component.getWorld() == this.world)
-            sameWorld = true;
-
-        return sameWorld;
-    }
-
 
     @Override
     public int getDisplayX() {
@@ -87,15 +80,20 @@ public class Player extends GameComponent {
     public int getDisplayY() { return WindowSize.getMidHeight()-getMidHeight();}
 
 
+    // Override superclass getShape() return type, because subclasses can override method return type if new return type is a subclass of overridden type.
+    // Pretty cool.
+    @Override
+    public Ellipse2D getShape() { return new Ellipse2D.Double(getDisplayX(), getDisplayY(), width, height); }
+
+
     public ArrayList<Structure> getTouching() {
         ArrayList<Structure> touching = new ArrayList<>();
         for (Structure structure: Structure.getInstances()) {
-            if (((testIntersection(this.getEllipse(), structure.getRect()) && !structure.isEllipse) ||
-                    (testIntersection(this.getEllipse(), structure.getEllipse()) && structure.isEllipse)) && isInSameWorld(structure)) {
+            if (testIntersection(getShape(), structure.getShape()) && world == structure.getWorld()) {
                 touching.add(structure);
             }
         }
-        
+
         return touching;
     }
 
@@ -134,9 +132,19 @@ public class Player extends GameComponent {
 
     public double getMoney() { return money; }
 
-    public boolean hasMoney() { return money >= 0; }
+    public boolean hasMoney() {
+        boolean has = money > 0;
+        if (!has)
+            GameMessage.NeedMoneyMessage();
+        return has;
+    }
 
-    public boolean canAfford(double moneyAmount) { return money > moneyAmount; }
+    public boolean canAfford(double moneyAmount) {
+        boolean can = money > moneyAmount;
+        if (!can)
+            GameMessage.NeedMoneyMessage();
+        return money > moneyAmount;
+    }
 
     public void gainMoney(double amount) { money += Math.abs(amount); }
 
@@ -157,8 +165,6 @@ public class Player extends GameComponent {
     public void gainIntellect(double amount) { intellect += Math.abs(amount); }
 
 
-
-
     /** Calculate the cap for the many stats whose caps increase when strength increases.
      */
     public double getStrengthDependentStatCap() { return strength+1000; }
@@ -166,7 +172,7 @@ public class Player extends GameComponent {
 
 
 
-    public Player(int x, int y, int radius, Color color) {
+    public Player(int x, int y, int radius, World world, Color color) {
         Player.instance = this;
 
         String label = "Player";
@@ -174,9 +180,8 @@ public class Player extends GameComponent {
         this.y = y;
         this.width = radius*2;
         this.height = radius*2;
+        this.world = world;
         this.color = color;
-
-        isEllipse = true;
     }
 
 
@@ -195,18 +200,17 @@ public class Player extends GameComponent {
     }
 
 
-
-
-
+    /** Move in a direction according to which keys are pressed.
+     * If two keys of opposing directions are pressed, move in the direction of the first key pressed.
+     *
+     */
     private void movementLogic() {
-
         int speed = getSpeed();
 
         if(getLeftPressed() && getRightPressed()) {
             if(getLeftReadTime() > getRightReadTime()) x -= speed;
             else x += speed;
         }
-        
         else if(getLeftPressed()) x -= speed;
         else if(getRightPressed()) x += speed;
 
@@ -214,9 +218,22 @@ public class Player extends GameComponent {
             if(getUpReadTime() > getDownReadTime()) y -= speed;
             else y += speed;
         }
-
         else if(getUpPressed()) y -= speed;
         else if(getDownPressed()) y += speed;
+    }
+
+    /** Interact with
+     */
+    private void collisionLogic() {
+
+        if (isTouchingAnything()) {
+            Structure structure = getTopTouching(); // Use the top structure so you can stand on something above lava to stay safe and stuff
+
+            GameSession.getUsedLayout().playerTouchLogic(structure);
+            if (Controls.getInteracted()) {
+                GameSession.getUsedLayout().playerInteractLogic(structure);
+            }
+        }
     }
 
 
@@ -226,22 +243,8 @@ public class Player extends GameComponent {
     }
 
 
-    public void CollisionLogic() {
-
-        if (isTouchingAnything()) {
-            for (Structure structure: getTouching()) {
-                GameSession.getUsedLayout().playerTouchLogic(structure);
-                if (Controls.getInteracted()) {
-                    GameSession.getUsedLayout().playerTapLogic(structure);
-                }
-            }
-        }
-    }
-
-
     public void statLogic() {
         tire(0.1);
-
 
         health = MyMath.clamp(health, 0, getStrengthDependentStatCap());
         energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());
@@ -252,11 +255,8 @@ public class Player extends GameComponent {
 
     @Override
     public void setup(JPanel panel) {
-        instance = GameSession.getUsedLayout().player;
-        world = (World)World.getInstances().get(0);
-
+        instance = this;
         Controls.initListeners(panel);
-
     }
 
 
@@ -264,7 +264,7 @@ public class Player extends GameComponent {
     public void act() {
         movementLogic();
         borderLogic();
-        CollisionLogic();
+        collisionLogic();
         statLogic();
         Controls.reset();
     }
@@ -274,7 +274,7 @@ public class Player extends GameComponent {
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(color);
-        g2d.fill(getEllipse());
+        g2d.fill(getShape());
     }
 
 

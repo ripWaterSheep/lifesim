@@ -2,7 +2,7 @@ package game;
 
 import game.components.player.Player;
 import game.components.GameComponent;
-import game.components.Structure;
+import game.components.structures.Structure;
 import game.components.World;
 import game.overlay.Overlay;
 import game.overlay.Stat;
@@ -34,6 +34,7 @@ public class GameSession {
 
     public void debug() {
         currentFrame++;
+		//System.out.println(Player.getInstance().getTopTouching().getLabel());
     }
 
 
@@ -48,33 +49,26 @@ public class GameSession {
 		 * a separate arraylist for MobileEntity instances. it works. The thing is, MobileEntity uses the Structure class
 		 * constructor inside its constructor to fill in inherited fields (using super()) so i don't have to rewrite it,
 		 * but in the constructor the instance just gets added to Structure.instances. Not a big deal. Just be aware that
-		 * Structures and MobileEntities are both found in Structure.instances.
-		 * 
+		 * Structures and MobileEntities are both found in Structure.instances. MobileEntity has its own instance arraylist
+		 * but that's just for using polymorphism with non-inherited functions (idk if it can be cast to avoid needing this
+		 * cause it breaks when I try).
+		 * It's the same thing with all other Structure Subtypes.
 		 */
-
 		 
 		usedComponentInstances = new ArrayList<>();
-        /*usedComponents.add(Player.getInstance());
-        
-        usedComponents.addAll(ArrayListMethods.getReverse(Structure.getInstances()));
-        usedComponents.addAll(World.getInstances());
-		*/
-		
-		/* Arraylists of instances are passed to usedInstances to keep references the lists to which new
-		 * objects are added as they are added mid game (like player created projectiles)
+		/* Arraylists of instances are passed to usedInstances to keep references the ArrayLists so that new
+		 * objects that are added mid game will be referenced (like player created projectiles).
 		 */
-		 
 
 		usedComponentInstances.add(Player.getInstances());
-		Collections.reverse(Structure.getInstances());
 		usedComponentInstances.add(Structure.getInstances());
 		usedComponentInstances.add(World.getInstances());
 		
         Collections.reverse(usedComponentInstances);
         
         for (ArrayList<? extends GameComponent> instances: usedComponentInstances) {
-			for (GameComponent instance : instances) {
-				instance.setup(panel);
+			for (GameComponent component : instances) {
+				component.setup(panel);
 			}
 		}
 		
@@ -83,14 +77,16 @@ public class GameSession {
 
     public void loop(Graphics g) {
 		for (ArrayList<? extends GameComponent> instances: usedComponentInstances) {
-			for (GameComponent instance : instances)
-				instance.act();
+			for (GameComponent component : instances)
+				component.act();
 		}
         Stat.retrieveValues();
 
 		for (ArrayList<? extends GameComponent> instances:usedComponentInstances) {
-			for (GameComponent instance : instances)
-				instance.draw(g);
+			for (GameComponent component : instances) {
+				if (component.onScreen())
+					component.draw(g);
+			}
 		}
 		
         Overlay.drawOverlays(g);

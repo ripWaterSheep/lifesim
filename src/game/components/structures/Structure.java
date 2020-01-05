@@ -1,17 +1,20 @@
-package game.components;
+package game.components.structures;
 
+import game.components.GameComponent;
+import game.components.World;
 import game.components.player.Player;
 import util.DrawString;
+import util.MyFonts;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 
 
 
 public class Structure extends GameComponent {
 
+    // Contains all subclass instances as well as Structure instances
     protected static ArrayList<Structure> instances = new ArrayList<>();
 
     public static ArrayList<Structure> getInstances() { return instances; }
@@ -31,7 +34,10 @@ public class Structure extends GameComponent {
         x = world.getRandX();
         y = world.getRandY();
     }
-    
+
+
+    @Override
+    public Rectangle getShape() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
 
 
     public Structure(String label, int x, int y, int width, int height, World world, Color color) {
@@ -46,14 +52,13 @@ public class Structure extends GameComponent {
         this.world = world;
         this.color = color;
 
-        isEllipse = false;
     }
 
 
     public Structure(String label, int x, int y, int width, int height, World world, Color color, int fontSize) {
         this(label, x, y, width, height, world, color);
         this.fontSize = fontSize;
-        labelFont = new Font("StayPuft", Font.PLAIN, fontSize);
+        labelFont = new Font(MyFonts.getMainFont(), Font.PLAIN, fontSize);
 
     }
 
@@ -78,14 +83,10 @@ public class Structure extends GameComponent {
             Graphics2D g2d = (Graphics2D) g.create();
 
             g2d.setColor(color);
-            if (isEllipse) {
-                g2d.fill(getEllipse());
-            } else {
-                g2d.fill(getRect());
-            }
+            g2d.fill(getShape());
 
             if (fontSize > 0)
-                DrawString.centerStringInRect(g, label, getRect(), labelFont, Color.WHITE);
+                DrawString.drawCenteredString(g, label, getShape(), labelFont, Color.WHITE);
         }
     }
 

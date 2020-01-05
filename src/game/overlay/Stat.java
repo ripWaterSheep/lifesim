@@ -16,13 +16,13 @@ public class Stat {
     static ArrayList<Stat> shownStats = new ArrayList<>();
 
 
-    private static final Font STAT_FONT = new Font("StayPuft", Font.PLAIN, 25);
+    private static final Font STAT_FONT = new Font("StayPuft", Font.PLAIN, 23);
 
     private static final int LEFT_PADDING = 3;
     private static final int BOTTOM_PADDING = 5;
     private static final int VERTICAL_SPACING = 30;
 
-    private static final double BAR_LENGTH_SCALE = 0.12;
+    private static final double BAR_LENGTH_SCALE = 0.123;
 
     private static final int DEFAULT_OPACITY = betterRound(0.5*255);
 
@@ -40,11 +40,11 @@ public class Stat {
         Stat xStat = new Stat("X", player.getX());
         Stat yStat = new Stat("Y", player.getY());
 
-        Stat healthStat = new Stat("Health", player.getHealth(), 0, player.getStrengthDependentStatCap(), Color.RED);
-        Stat energyStat = new Stat("Energy", player.getEnergy(), 0, player.getStrengthDependentStatCap(), Color.ORANGE);
-        Stat strengthStat = new Stat("Strength", player.getStrength(), 0, Math.max(1000, player.getStrength()), Color.YELLOW);
-        Stat moneyStat = new Stat("Cash", player.getMoney(), 0, Math.max(player.getMoney(), 1000), Color.GREEN);
-        Stat intellectStat = new Stat("Intellect", player.getIntellect(), 0, Math.max(1000, player.getIntellect()), Color.BLUE);
+        Stat healthStat = new Stat("Health", player.getHealth(), 0, player.getStrengthDependentStatCap(), 1, Color.RED);
+        Stat energyStat = new Stat("Energy", player.getEnergy(), 0, player.getStrengthDependentStatCap(), 1, Color.ORANGE);
+        Stat strengthStat = new Stat("Strength", player.getStrength(), 0, Math.max(1000, player.getStrength()), 1, Color.YELLOW);
+        Stat moneyStat = new Stat("Cash", player.getMoney(), 0, Math.max(player.getMoney(), 10000), 0.1, Color.GREEN);
+        Stat intellectStat = new Stat("Intellect", player.getIntellect(), 0, Math.max(1000, player.getIntellect()), 1, Color.BLUE);
 
         Collections.reverse(shownStats);
 
@@ -66,6 +66,7 @@ public class Stat {
     private double maxVal;
 
     private final boolean showStatusBar;
+    private double scale;
 
     private Color barColor;
 
@@ -81,13 +82,14 @@ public class Stat {
 
 
 
-    public Stat(String label, double value, double minVal, double maxVal, Color barColor) {
+    public Stat(String label, double value, double minVal, double maxVal, double scale, Color barColor) {
         Stat.shownStats.add(this);
 
         this.label = label;
         this.value = value;
         this.minVal = minVal;
         this.maxVal = maxVal;
+        this.scale = scale;
 
         this.barColor = ColorMethods.applyOpacity(barColor, DEFAULT_OPACITY);
         this.showStatusBar = true;
@@ -103,14 +105,16 @@ public class Stat {
 
         if (showStatusBar) {
             int barX = LEFT_PADDING;
-            int barY = betterRound(y - (1 * VERTICAL_SPACING))+5;
-            int barWidth = betterRound((value-minVal) * BAR_LENGTH_SCALE);
+            int barY = betterRound(y - (0.85 * VERTICAL_SPACING));
+            int barWidth = betterRound((value-minVal) * BAR_LENGTH_SCALE*scale);
 
+            // Draw bar showing data amount
             g2d.setColor(barColor);
             g2d.fillRect(barX, barY, betterRound(barWidth), VERTICAL_SPACING);
 
+            //Draw bar outline
             g2d.setColor(Color.BLACK);
-            g2d.drawRect(barX, barY, betterRound((maxVal-minVal)*BAR_LENGTH_SCALE), VERTICAL_SPACING);
+            g2d.drawRect(barX, barY, betterRound((maxVal-minVal)*BAR_LENGTH_SCALE*scale), VERTICAL_SPACING);
         }
 
         g2d.setColor(Color.WHITE);

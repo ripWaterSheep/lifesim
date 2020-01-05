@@ -5,7 +5,12 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class MyFont {
+public class MyFonts {
+
+    public static String getMainFont() {
+        return "StayPuft";
+    }
+
 
     private static void createFont(String fontName) {
         final String FILE_PATH = "assets/Fonts/";

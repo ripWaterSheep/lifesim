@@ -160,13 +160,16 @@ public class Controls {
 
     private final static int FIRE_BUTTON = BUTTON3;
 
+
     private static boolean fired = false;
     private static boolean interacted = false;
 
 
-    static boolean getInteracted() {
-        return interacted;
-    }
+    public static boolean getInteracted() { return interacted; }
+    public static boolean getFired() { return fired; }
+
+    private static int lastClickX = 0;
+    private static int lastClickY = 0;
 
 
     private static MouseAdapter mouseAdapter = new MouseAdapter() {
@@ -174,6 +177,9 @@ public class Controls {
         @Override
         public void mousePressed(MouseEvent e) {
             //System.out.println("mouse pressed: " + e.getButton());
+
+            lastClickX = e.getXOnScreen();
+            lastClickY = e.getYOnScreen();
             switch (e.getButton()) {
                 case INTERACT_BUTTON:
                     interacted = true;
@@ -183,6 +189,7 @@ public class Controls {
                     fired = true;
                     break;
             }
+
         }
 
 
@@ -203,8 +210,8 @@ public class Controls {
     }
 
 
-    static class Cheats {
 
+    static class Cheats {
 
         static void cheatLogic(int key) {
             Player player = Player.getInstance();

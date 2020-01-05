@@ -1,13 +1,13 @@
 package game;
 
-import game.components.Structure;
+import game.components.structures.subtypes.MobileEntity;
+import game.components.structures.Structure;
 import game.components.World;
 import game.components.player.Player;
 import util.MyMath;
 
 import java.awt.*;
 
-import static java.awt.Color.*;
 
 public class GameLayout {
 
@@ -15,7 +15,7 @@ public class GameLayout {
 
     /** World instances */
 
-    World town = new World("Town",6000, 6000, new Color(86, 200, 93), new Color(220, 200, 140));
+    World town = new World("Town",6500, 6500, new Color(86, 200, 93), new Color(220, 200, 140));
     World houseInterior = new World("House Interior", 1000, 850, new Color(230, 210, 140), new Color(100, 80, 50));
     World city = new World("City", 4500, 4500, new Color(180, 182, 168), new Color(138, 255, 150));
     World apartmentInterior = new World("Apartment Interior", 1125, 1575, new Color(220, 200, 140), new Color(200, 140, 50));
@@ -34,31 +34,32 @@ public class GameLayout {
 
     /** Structure instances */
 
-    Structure horizontalRoad = new Structure("Vertical Road", 0, 0, town.getWidth(), 200, town, DARK_GRAY);
-    Structure verticalRoad = new Structure("Vertical Road", 0, 0, 200, town.getHeight(), town, DARK_GRAY);
+    Structure horizontalRoad = new Structure("Vertical Road", 0, 0, town.getWidth(), 200, town, Color.DARK_GRAY);
+    Structure verticalRoad = new Structure("Vertical Road", 0, 0, 200, town.getHeight(), town, Color.DARK_GRAY);
 
 
     Structure house = new Structure("House", 500, -400, 450, 350, town, new Color(100, 80, 50), 50);
 
 
-    Structure gym = new Structure("Gym", -1200, -450, 400, 500, town, new Color(100, 100, 100), 50);
+    Structure gym = new Structure("Gym", -1200, -500, 400, 500, town, new Color(100, 100, 100), 50);
 
-    Structure school = new Structure("School", 450, 500, 300, 400, town, new Color(180, 117, 84), 50);
+    Structure school = new Structure("School", 450, 550, 300, 500, town, new Color(180, 117, 84), 50);
     Structure office = new Structure("Office",  -500, 500, 400, 400, town, new Color(160, 180, 180), 50);
-    Structure hospital = new Structure("Hospital", -600, -1200, 500, 500, town, new Color(210, 210, 210),50);
-    Structure shop = new Structure("Shop", -1350, 550, 600, 400, town, new Color(200, 110, 75), 50);
+    Structure hospital = new Structure("Hospital", -500, -1200, 500, 500, town, new Color(210, 210, 210),50);
+    Structure restaurant = new Structure("Restaurant", -500, -450, 500, 400, town, new Color(255, 213, 125), 50);
+    Structure shop = new Structure("Shop", -1350, 500, 600, 400, town, new Color(200, 110, 75), 50);
     Structure townMetro = new Structure("Metro - $100", 600, 2050, 500, 600, town, new Color(100,100, 100),50);
 
 
     Structure cave = new Structure("Cave", -2000,  -2000, 650, 300, town, new Color(190, 190, 190));
-    Structure lavaPit = new Structure("Lava Pit", 1000, 1000, 300, 300, town, new Color(255, 159, 0));
+    Structure lavaPit = new Structure("Lava Pit", 2000, 2000, 1000, 1000, town, new Color(255, 159, 0));
 
 
-    Structure cash = new Structure("$", town.getRandX(), town.getRandY(), 55, 35, town, new Color(100, 150, 100), 20);
+    Structure cash = new Structure("$", town.getRandX(), town.getRandY(), 55, 30, town, new Color(100, 150, 100), 20);
 
 
 
-    Structure houseDoor = new Structure("House Door", houseInterior.getMidWidth(), 0, 20, 150, houseInterior, new Color(190, 170, 80));
+    Structure houseDoor = new Structure("House Door", houseInterior.getMidWidth() , 0, 20, 150, houseInterior, new Color(190, 170, 80));
     Structure houseBed = new Structure("House Bed", 200, 300, 200, 100, houseInterior, new Color(0, 114, 168));
 
 
@@ -76,8 +77,15 @@ public class GameLayout {
 
 
 
+    /** MobileEntity instances */
+
+    MobileEntity zombie = new MobileEntity("Zombie", 1000, 1000, 50, 50, town, Color.LIGHT_GRAY, MobileEntity.MovementType.FOLLOW, 1, 50, 10, 1, true, true);
+
+
+
+
     /** Player instance */
-    public Player player = new Player(0, 0, 30, YELLOW);
+    public Player player = new Player(0, 0, 30, town, Color.YELLOW);
 
 
 
@@ -86,7 +94,7 @@ public class GameLayout {
         switch(structure.getLabel()) {
 
             case "House Bed":
-                player.energize(1);
+                player.energize(2);
                 break;
 
             case "Gym":
@@ -104,7 +112,7 @@ public class GameLayout {
 
             case "Office":
                 player.gainMoney(1+(player.getIntellect()/250));
-                player.tire(1);
+                player.tire(1.5);
                 break;
 
             case "Hospital":
@@ -126,7 +134,7 @@ public class GameLayout {
                 break;
 
             case "VISA":
-                player.gainMoney(MyMath.getRandRange(1, 1000));
+                player.gainMoney(MyMath.getRandInRange(1, 1000));
                 creditCard.randomizePos();
                 break;
 
@@ -135,7 +143,7 @@ public class GameLayout {
 
 
 
-    public void playerTapLogic(Structure structure) {
+    public void playerInteractLogic(Structure structure) {
         switch(structure.getLabel()) {
 
             case "House":

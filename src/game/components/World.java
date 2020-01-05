@@ -4,6 +4,7 @@ import game.components.player.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 
@@ -19,6 +20,9 @@ public class World extends GameComponent {
     public int getRandX() { return (int)(Math.random() * width)-getMidWidth(); }
 
     public int getRandY() { return (int)(Math.random() * height)-getMidHeight(); }
+
+    @Override
+    public Rectangle getShape() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
 
 
     private Color outerColor;
@@ -39,7 +43,6 @@ public class World extends GameComponent {
         this.color = color;
         this.outerColor = outerColor;
 
-        isEllipse = false;
     }
 
 

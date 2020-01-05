@@ -6,8 +6,6 @@ import main.WindowSize;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
-
 
 public abstract class GameComponent {
 
@@ -44,20 +42,11 @@ public abstract class GameComponent {
     public int getMidHeight() { return height/2; }
 
 
-    public boolean isEllipse;
-    
-    public Rectangle getRect() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
-    
-    public Ellipse2D getEllipse() { return new Ellipse2D.Double(getDisplayX(), getDisplayY(), width, height); }
-
-
+    public Shape getShape() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
 
     public boolean onScreen() { // If the component is visible in the window, then return true
-		if (isEllipse) {
-			return getEllipse().intersects(world.getX(), world.getY(), world.getWidth(), world.getHeight());
-		} else {
-			return getRect().intersects(world.getRect());
-		}
+		return getShape().intersects(WindowSize.getRect());
+
 	}
 
 
