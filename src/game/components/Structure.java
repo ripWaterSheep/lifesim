@@ -25,20 +25,18 @@ public class Structure extends GameComponent {
 
     protected Font labelFont;
     public int fontSize = 0;
-
+    
+    
 
     public void randomizePos() {
         x = world.getRandX();
         y = world.getRandY();
     }
-
-
-    public Rectangle getShape() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
-
+    
 
 
     public Structure(String label, int x, int y, int width, int height, World world, Color color) {
-        Structure.instances.add(this);
+        Structure.instances.add(0, this);
 
         this.label = label;
         this.x = x;

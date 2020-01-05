@@ -26,7 +26,18 @@ public class Player extends GameComponent {
      * @return first defined instance of player if one exists already.
      */
     public static Player getInstance() { return instance; }
-
+    
+    
+    public static Player getInstances() {
+		
+		/* Because game session polymorphizes the other objects with an arraylist of instance arraylists
+		 * this function was needed in order to return an arraylist to match.
+		 */
+		ArrayList<Player> instanceList = new ArrayList<>();
+		ArrayList.add(getInstance());
+		return instanceList;
+	}
+   
 
     public void goTo(int x, int y) {
         this.x = x;
@@ -72,18 +83,15 @@ public class Player extends GameComponent {
     public int getDisplayY() { return WindowSize.getMidHeight()-getMidHeight();}
 
 
-    public Ellipse2D.Double getShape() { return new Ellipse2D.Double(getDisplayX(), getDisplayY(), getWidth(), getHeight()); }
+    public ArrayList<GameComponent> getTouching() {
+        ArrayList<GameComponent> touching = new ArrayList<>();
 
-
-    public ArrayList<Structure> getTouching() {
-        ArrayList<Structure> touching = new ArrayList<>();
-
-        for (Structure structure : Structure.getInstances()) {
-            if (getShape().intersects(structure.getShape()) && isInSameWorld(structure)) {
+        for (GameComponent component : Structure.getInstances()) {
+            if ((getEllipse().intersects(component.getRect() && component instanceof Structure) || (getEllipse().intersects(component.getEllipse() && component instanceof MobileEntity)) && isInSameWorld(component)) {
                 touching.add(structure);
             }
         }
-
+        
         return touching;
     }
 

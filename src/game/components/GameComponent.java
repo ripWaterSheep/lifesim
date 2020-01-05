@@ -36,7 +36,21 @@ public abstract class GameComponent {
 
     public int getMidHeight() { return height/2; }
 
+
     public boolean isEllipse;
+    
+    public Rectangle getRect() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
+    
+    public Ellipse getEllipse() { return new Ellipse.Double(getDisplayX(), getDisplayY(), width, height); }
+
+
+    public boolean onScreen() { // If the component is visible in the window, then return true
+		if (isEllipse) {
+			return getEllipse().intersects(world.getRect());
+		} else {
+			return getRect().intersects(world.getRect());
+		}
+	}
 
 
     protected World world;

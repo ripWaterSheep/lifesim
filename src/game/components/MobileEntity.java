@@ -12,6 +12,10 @@ import static util.MyMath.clamp;
 public class MobileEntity extends Structure {
 
     //TODO: finish movement stuff
+    
+    /* Since mobile entity extends structure, each instance is added to the Structures class instance Arraylist because they share the same constructor lol
+     * 
+     */
 
     public enum MovementType { LINEAR, FOLLOW, AVOID }
 
@@ -94,7 +98,8 @@ public class MobileEntity extends Structure {
             break;
 
         case AVOID:
-
+            x -= clamp(player.getX()-x,0.1,speed);
+            y -= clamp(player.getY()-y,0.1,speed);
             break;
         }
 

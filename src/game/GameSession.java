@@ -23,9 +23,9 @@ public class GameSession {
 
 
     /** Holds all instances used in the game */
-    private static ArrayList<GameComponent> usedComponents;
+    private static ArrayList<GameComponent> usedComponentInstances;
 
-    public static ArrayList<GameComponent> getUsedComponents() { return usedComponents; }
+    public static ArrayList<Arraylist<GameComponent>> getUsedComponents() { return usedComponentInstances; }
 
 
     private static int currentFrame = 0;
@@ -39,28 +39,65 @@ public class GameSession {
 
 
     public void init(JPanel panel) {
+		
+		/* Create arraylist of arraylists of all components separated by class.
+		 * In the beginning of each constructor for every GameComponent subclass,
+		 * the instance is added to the static arraylist "instances" which holds
+		 * all object references of the class
+		 * 
+		 * Since MobileEntity is a subclass of structure I just went frick it and didn't put any effort to make
+		 * a separate arraylist for MobileEntity instances. it works. The thing is, MobileEntity uses the Structure class
+		 * constructor inside its constructor to fill in inherited fields (using super()) so i don't have to rewrite it,
+		 * but in the constructor the instance just gets added to Structure.instances. Not a big deal. Just be aware that
+		 * Structures and MobileEntities are both found in Structure.instances.
+		 * 
+		 */
 
-        usedComponents = new ArrayList<>();
-        usedComponents.add(Player.getInstance());
+       
+		 
+		usedComponentInstances = new ArrayList<>();
+        /*usedComponents.add(Player.getInstance());
+        
         usedComponents.addAll(ArrayListMethods.getReverse(Structure.getInstances()));
         usedComponents.addAll(World.getInstances());
-
+		*/
+		
+		/* Arraylists of instances are passed to usedInstances to keep references the lists to which new
+		 * objects are added as they are added mid game (like player created projectiles)
+		 */
+		 
+		 
+		usedComponentInstances.add(Player.getInstances());
+		Collections.reverse(Structure.getInstances);
+		usedComponentInstances.add(Player.getInstances());
+		usedComponentInstances.add(World.getInstances());
+		
         Collections.reverse(usedComponents);
-        for (GameComponent instance : usedComponents) {
-            instance.setup(panel);
-        }
+        
+        for (instances: usedComponentInstances) {
+			for (GameComponent instance : instances) {
+				instance.setup(panel);
+			}
+		}
+		
     }
 
 
     public void loop(Graphics g) {
-        for (GameComponent instance : usedComponents)
-            instance.act();
+		for (instances: usedComponentInstances) {
+			for (GameComponent instance : usedComponents.)
+				instance.act();
+		}
         Stat.retrieveValues();
 
-        for (GameComponent instance : usedComponents)
-            instance.draw(g);
+		for (instanes:usedComponentInstances) {
+			for (GameComponent instance : usedComponents)
+				instance.draw(g);
+		}
+		
         Overlay.drawOverlays(g);
         debug();
+        
     }
 
 
