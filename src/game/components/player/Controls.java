@@ -221,6 +221,7 @@ public class Controls {
                         cycleWorlds(1);
                         TimeUtil.sleep(45);
                         break;
+
                     case VK_B:
                         cycleWorlds(-1);
                         TimeUtil.sleep(45);
@@ -229,6 +230,8 @@ public class Controls {
                     case VK_1:
                         player.gainMoney(1);
 
+                    case VK_K:
+                        player.damage(1000);
                 }
             }
         }

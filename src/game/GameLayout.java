@@ -79,7 +79,7 @@ public class GameLayout {
 
     /** MobileEntity instances */
 
-    MobileEntity zombie = new MobileEntity("Zombie", 1000, 1000, 50, 50, town, Color.LIGHT_GRAY, MobileEntity.MovementType.FOLLOW, 1, 50, 10, 1, true, true);
+    MobileEntity zombie = new MobileEntity("Zombie", 1000, 1000, 50, 50, town, Color.LIGHT_GRAY, MobileEntity.MovementType.FOLLOW, 1, 50, 10, 90, 1, true, true);
 
 
 
@@ -90,7 +90,7 @@ public class GameLayout {
 
 
 
-    public void playerTouchLogic(Structure structure) {
+    public void playerCollisionLogic(Structure structure) {
         switch(structure.getLabel()) {
 
             case "House Bed":

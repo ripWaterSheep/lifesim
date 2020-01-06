@@ -1,6 +1,9 @@
 package util;
 
+import java.awt.*;
 import java.util.Random;
+
+import static java.lang.Math.*;
 
 
 public class MyMath {
@@ -45,4 +48,20 @@ public class MyMath {
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
     }
+
+
+
+    /** Uses trig to find angle between two points
+     * @return in degrees
+     */
+    public static int angleBetweenPoints(int x1, int y1, int x2, int y2) {
+        int dy = y2 - y1;
+        int dx = x2 - x1;
+
+        double rad = atan2(dy, dx);
+        double deg = toDegrees(rad);
+        return betterRound(deg);
+    }
+
+
 }

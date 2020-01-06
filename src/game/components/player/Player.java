@@ -4,6 +4,7 @@ import game.components.structures.Structure;
 import game.components.World;
 import game.GameSession;
 import game.components.GameComponent;
+import game.overlay.DeathScreen;
 import game.overlay.GameMessage;
 import util.MyMath;
 import main.WindowSize;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 import static game.components.player.Controls.*;
 import static java.lang.Math.*;
+import static util.MyMath.betterRound;
 import static util.ShapeUtil.testIntersection;
 
 
@@ -109,6 +111,12 @@ public class Player extends GameComponent {
     }
 
 
+    private double speedMultiplier = 1;
+
+    public void multiplySpeed(double speedFactor) { speedMultiplier *= speedFactor; }
+
+
+    private boolean alive = true;
 
     private double health = 1000;
 
@@ -175,11 +183,13 @@ public class Player extends GameComponent {
     public Player(int x, int y, int radius, World world, Color color) {
         Player.instance = this;
 
-        String label = "Player";
+        label = "Player";
+
         this.x = x;
         this.y = y;
         this.width = radius*2;
         this.height = radius*2;
+
         this.world = world;
         this.color = color;
     }
@@ -192,9 +202,11 @@ public class Player extends GameComponent {
      * in a direction per frame if appropriate key is pressed.
      */
     public int getSpeed() {
-        int speed = 10;
+        int speed = betterRound(10*speedMultiplier);
+
         if (Controls.getSprintToggled()) {
             speed *= 2;
+            tire(0.1);
         }
         return speed;
     }
@@ -202,11 +214,10 @@ public class Player extends GameComponent {
 
     /** Move in a direction according to which keys are pressed.
      * If two keys of opposing directions are pressed, move in the direction of the first key pressed.
-     *
      */
     private void movementLogic() {
         int speed = getSpeed();
-
+        speedMultiplier = 1;
         if(getLeftPressed() && getRightPressed()) {
             if(getLeftReadTime() > getRightReadTime()) x -= speed;
             else x += speed;
@@ -222,14 +233,15 @@ public class Player extends GameComponent {
         else if(getDownPressed()) y += speed;
     }
 
-    /** Interact with
+
+    /** Interact with GameComponents
      */
     private void collisionLogic() {
 
         if (isTouchingAnything()) {
-            Structure structure = getTopTouching(); // Use the top structure so you can stand on something above lava to stay safe and stuff
+            Structure structure = getTopTouching(); // Use the top structure only so you can stand on something above lava to stay safe and stuff
 
-            GameSession.getUsedLayout().playerTouchLogic(structure);
+            GameSession.getUsedLayout().playerCollisionLogic(structure);
             if (Controls.getInteracted()) {
                 GameSession.getUsedLayout().playerInteractLogic(structure);
             }
@@ -245,6 +257,21 @@ public class Player extends GameComponent {
 
     public void statLogic() {
         tire(0.1);
+
+        if (energy <= 0) {
+            GameMessage.send("Get energy quickly!");
+            damage(15);
+        }
+
+        if (health <= 0) alive = false;
+
+        if (!alive) {
+            GameMessage.send("Oof!");
+            DeathScreen.show();
+            health = 0;
+            energy = 0;
+        }
+
 
         health = MyMath.clamp(health, 0, getStrengthDependentStatCap());
         energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());
