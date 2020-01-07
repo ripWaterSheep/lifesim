@@ -41,7 +41,7 @@ public class Structure extends GameComponent {
 
 
     public Structure(String label, int x, int y, int width, int height, World world, Color color) {
-        Structure.instances.add(0, this);
+        Structure.instances.add(this);
 
         this.label = label;
         this.x = x;

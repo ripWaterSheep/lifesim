@@ -4,6 +4,7 @@ import game.components.structures.Structure;
 import game.components.World;
 import game.GameSession;
 import game.components.GameComponent;
+import game.components.structures.subtypes.MobileEntity;
 import game.overlay.DeathScreen;
 import game.overlay.GameMessage;
 import util.MyMath;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 import static game.components.player.Controls.*;
 import static java.lang.Math.*;
+import static util.MyMath.angleBetweenPoints;
 import static util.MyMath.betterRound;
 import static util.ShapeUtil.testIntersection;
 
@@ -202,10 +204,10 @@ public class Player extends GameComponent {
      * in a direction per frame if appropriate key is pressed.
      */
     public int getSpeed() {
-        int speed = betterRound(10*speedMultiplier);
+        int speed = betterRound(12*speedMultiplier);
 
-        if (Controls.getSprintToggled()) {
-            speed *= 2;
+        if (Controls.getSprinting()) {
+            speed *= 1.5;
             tire(0.1);
         }
         return speed;
@@ -270,6 +272,7 @@ public class Player extends GameComponent {
             DeathScreen.show();
             health = 0;
             energy = 0;
+            speedMultiplier = 0;
         }
 
 
@@ -278,6 +281,21 @@ public class Player extends GameComponent {
         money = max(money, 0);
         strength = max(strength, 0);
     }
+
+
+    private void projectileLogic() {
+
+        if (Controls.getFired()) {
+            int radius = 25;
+            Color color = new Color(120, 50, 20);
+            int damage = betterRound(Math.ceil(strength/1000));
+            int angle = angleBetweenPoints(Controls.getLastClickX(), Controls.getLastClickY(), x, y);
+
+            MobileEntity projectile = new MobileEntity("Projectile", x, y, radius, radius, world, color,
+                    MobileEntity.MovementType.LINEAR, 1, 1000, angle, damage, false);
+        }
+    }
+
 
 
     @Override
@@ -293,6 +311,7 @@ public class Player extends GameComponent {
         borderLogic();
         collisionLogic();
         statLogic();
+        projectileLogic();
         Controls.reset();
     }
 

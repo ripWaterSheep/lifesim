@@ -44,10 +44,10 @@ public class Controls {
     }
 
 
-    private static boolean sprintToggle = false;
+    private static boolean sprinting = false;
 
-    static boolean getSprintToggled() {
-        return sprintToggle;
+    static boolean getSprinting() {
+        return sprinting;
     }
 
 
@@ -112,7 +112,8 @@ public class Controls {
                     break;
 
                 case SPRINT_KEY:
-                    sprintToggle = !getSprintToggled();
+                    sprinting = true;
+                    //sprintToggle = !getSprintToggled();
                     break;
 
                 case VK_CONTROL:
@@ -147,6 +148,11 @@ public class Controls {
                     rightPressed = false;
                     break;
 
+                case SPRINT_KEY:
+                    sprinting = false;
+                    //sprintToggle = !getSprintToggled();
+                    break;
+
                 case VK_CONTROL:
                     controlPressed = false;
                     break;
@@ -171,6 +177,10 @@ public class Controls {
     private static int lastClickX = 0;
     private static int lastClickY = 0;
 
+    static int getLastClickX() { return lastClickX; }
+
+    static int getLastClickY() { return lastClickY; }
+
 
     private static MouseAdapter mouseAdapter = new MouseAdapter() {
 
@@ -180,6 +190,7 @@ public class Controls {
 
             lastClickX = e.getXOnScreen();
             lastClickY = e.getYOnScreen();
+            System.out.println(Controls.getLastClickX() + "  " + Controls.getLastClickY());
             switch (e.getButton()) {
                 case INTERACT_BUTTON:
                     interacted = true;

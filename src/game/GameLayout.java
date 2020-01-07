@@ -79,14 +79,14 @@ public class GameLayout {
 
     /** MobileEntity instances */
 
-    MobileEntity zombie = new MobileEntity("Zombie", 1000, 1000, 50, 50, town, Color.LIGHT_GRAY, MobileEntity.MovementType.FOLLOW, 1, 50, 10, 90, 1, true, true);
+    MobileEntity zombie = new MobileEntity("Zombie", 1000, 1000, 50, 50, town, Color.LIGHT_GRAY, MobileEntity.MovementType.FOLLOW, 1, 1000, 10, 5, 1, true);
 
+    MobileEntity boyo = new MobileEntity("Boyo", 500, 500, 50, 50, town, Color.BLUE, MobileEntity.MovementType.AVOID, 6, 1000, 10, 0, 10, false);
 
 
 
     /** Player instance */
     public Player player = new Player(0, 0, 30, town, Color.YELLOW);
-
 
 
 
