@@ -21,8 +21,6 @@ public class World extends GameComponent {
 
     public int getRandY() { return (int)(Math.random() * height)-getMidHeight(); }
 
-    @Override
-    public Rectangle getShape() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
 
 
     private Color outerColor;
@@ -35,7 +33,6 @@ public class World extends GameComponent {
 
     public World(String label, int width, int height, Color color, Color outerColor) {
         World.instances.add(this);
-
         this.label = label;
         this.width = width;
         this.height = height;
@@ -61,7 +58,7 @@ public class World extends GameComponent {
 
     @Override
     public void draw(Graphics g) {
-        if (Player.getInstance().getWorld() == this) {
+        if (this == Player.getInstance().getWorld()) {
             Graphics2D g2d = (Graphics2D) g.create();
 
             g2d.setColor(color);

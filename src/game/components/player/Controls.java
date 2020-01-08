@@ -186,11 +186,9 @@ public class Controls {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            //System.out.println("mouse pressed: " + e.getButton());
-
-            lastClickX = e.getXOnScreen();
-            lastClickY = e.getYOnScreen();
-            System.out.println(Controls.getLastClickX() + "  " + Controls.getLastClickY());
+            lastClickX = e.getX();
+            lastClickY = e.getY();
+            //System.out.println(Controls.getLastClickX() + "  " + Controls.getLastClickY());
             switch (e.getButton()) {
                 case INTERACT_BUTTON:
                     interacted = true;

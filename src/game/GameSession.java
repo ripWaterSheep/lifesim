@@ -76,6 +76,7 @@ public class GameSession {
 
 
     public void loop(Graphics g) {
+
 		for (ArrayList<? extends GameComponent> instances: usedComponentInstances) {
 			for (GameComponent component : instances)
 				component.act();
@@ -84,12 +85,12 @@ public class GameSession {
 
 		for (ArrayList<? extends GameComponent> instances:usedComponentInstances) {
 			for (GameComponent component : instances) {
-				if (component.onScreen())
+				if (component.onScreen() && component.isVisible())
 					component.draw(g);
 			}
 		}
-		
         Overlay.drawOverlays(g);
+
         debug();
         
     }

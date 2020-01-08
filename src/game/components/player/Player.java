@@ -12,14 +12,13 @@ import main.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import static game.components.player.Controls.*;
 import static java.lang.Math.*;
-import static util.MyMath.angleBetweenPoints;
-import static util.MyMath.betterRound;
-import static util.ShapeUtil.testIntersection;
+import static util.MyMath.*;
 
 
 public class Player extends GameComponent {
@@ -83,11 +82,6 @@ public class Player extends GameComponent {
     @Override
     public int getDisplayY() { return WindowSize.getMidHeight()-getMidHeight();}
 
-
-    // Override superclass getShape() return type, because subclasses can override method return type if new return type is a subclass of overridden type.
-    // Pretty cool.
-    @Override
-    public Ellipse2D getShape() { return new Ellipse2D.Double(getDisplayX(), getDisplayY(), width, height); }
 
 
     public ArrayList<Structure> getTouching() {
@@ -191,6 +185,7 @@ public class Player extends GameComponent {
         this.y = y;
         this.width = radius*2;
         this.height = radius*2;
+        elliptical = true;
 
         this.world = world;
         this.color = color;
@@ -284,15 +279,14 @@ public class Player extends GameComponent {
 
 
     private void projectileLogic() {
-
         if (Controls.getFired()) {
             int radius = 25;
             Color color = new Color(120, 50, 20);
             int damage = betterRound(Math.ceil(strength/1000));
-            int angle = angleBetweenPoints(Controls.getLastClickX(), Controls.getLastClickY(), x, y);
-
+            double angle = getAngle(WindowSize.getMidWidth(), WindowSize.getMidHeight(), Controls.getLastClickX(), Controls.getLastClickY());
+            //System.out.println(angle);
             MobileEntity projectile = new MobileEntity("Projectile", x, y, radius, radius, world, color,
-                    MobileEntity.MovementType.LINEAR, 1, 1000, angle, damage, false);
+                    MobileEntity.MovementType.LINEAR, 5, 800, 180.0+angle, damage, false);
         }
     }
 
@@ -320,7 +314,14 @@ public class Player extends GameComponent {
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(color);
-        g2d.fill(getShape());
+        //g2d.fill(getShape());
+
+        g2d.setColor(new Color(0, 0, 0));
+
+        g2d.drawLine(0, WindowSize.getMidHeight(), WindowSize.getWidth(), WindowSize.getMidHeight());
+        g2d.drawLine(WindowSize.getMidWidth(), 0, WindowSize.getMidWidth(), WindowSize.getHeight());
+
+        g2d.drawLine(WindowSize.getMidWidth(), WindowSize.getMidHeight(), getLastClickX(), getLastClickY());
     }
 
 

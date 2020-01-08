@@ -61,7 +61,7 @@ public class MiniMap {
                     int height = scale(component.getHeight());
                     g2d.setColor(component.getColor());
 
-                    if (component.getShape() instanceof Ellipse2D) {
+                    if (component.isElliptical()) {
                         g2d.fillOval(x, y, width, height);
                     } else {
                         g2d.fillRect(x, y, width, height);

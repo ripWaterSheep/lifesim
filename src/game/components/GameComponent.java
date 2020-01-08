@@ -5,6 +5,7 @@ import main.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 
 public abstract class GameComponent {
@@ -42,7 +43,18 @@ public abstract class GameComponent {
     public int getMidHeight() { return height/2; }
 
 
-    public Shape getShape() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
+    protected boolean elliptical = false;
+
+    public boolean isElliptical() { return elliptical; }
+
+
+    public Area getShape() {
+        Area shape;
+        if (elliptical) shape = new Area (new Ellipse2D.Double(getDisplayX(), getDisplayY(), width, height));
+        else shape = new Area (new Rectangle(getDisplayX(), getDisplayY(), width, height));
+        return shape;
+    }
+
 
     public boolean onScreen() { // If the component is visible in the window, then return true
 		return getShape().intersects(WindowSize.getRect());
@@ -58,6 +70,10 @@ public abstract class GameComponent {
     protected Color color;
 
     public Color getColor() { return color; }
+
+    protected boolean visible = true;
+
+    public boolean isVisible() { return visible; }
 
 
     /** Set up instances once before event loop. This is when instances can refer to other instances

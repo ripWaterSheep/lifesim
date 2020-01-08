@@ -13,8 +13,6 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import static util.MyMath.*;
-import static util.ShapeUtil.testIntersection;
-
 
 public class MobileEntity extends Structure {
 
@@ -26,25 +24,22 @@ public class MobileEntity extends Structure {
 
 
     public enum MovementType {
-        LINEAR, // Go back and forth in a straight line.
-        RANDOM, // Go in a random direction, changing direction when at end of range.
-        FOLLOW, // Try to get close to player.
-        AVOID // Try to get far from player.
+        LINEAR, // Go forward in a straight line and die at end of range.
+        RECIPROCATING, // Go in a straight line, turn around when reached end of range.
+        RANDOM, // Go in a random direction, change direction when at end of range.
+        FOLLOW, // Try to get close to player if player is within range.
+        AVOID // Try to get far from player if player is within range.
     }
 
     private MovementType movementType;
 
 
-    private int angle;
+    private double angle;
     private boolean currentlyReversed = false;
 
 
     private int randomX = 0; // Random movement direction and speed needs to be preserved with variable until changed when at end of range
     private int randomY = 0;
-
-
-    private final int startX;
-    private final int startY;
 
 
     private int currentDistance = 0;
@@ -63,8 +58,6 @@ public class MobileEntity extends Structure {
     private int health = 1;
     private boolean alive = true;
 
-    // TODO: find a way to make getShape() return ellipse because Ellipse2D doesn't extend Rectangle cause that wouldn't make any sense so I can't override it bruh.
-    // Probably want to use generics
 
     // This needs to be an actual variable instead of just a function because it needs memory to know if an item was in it previously
     private ArrayList<GameComponent> touching = new ArrayList<>();
@@ -74,21 +67,23 @@ public class MobileEntity extends Structure {
     private boolean playerIsInRange() { return (Math.abs(getDistanceBetween(this, Player.getInstance())) <= range); }
 
 
+    private double getAngleToPlayer() { return getAngle(x, y, Player.getInstance().getX(), Player.getInstance().getY()); }
+
+
 
     public MobileEntity(String label, int x, int y, int width, int height, World world, Color color,
-                        MovementType movementType, int speed, int range, int angle,
+                        MovementType movementType, int speed, int range, double angle,
                         int damage, boolean canDamagePlayer) {
 
         super(label, x, y, width, height, world, color);
 
         instances.add(this);
-        startX = x;
-        startY = y;
 
         this.movementType = movementType;
         this.speed = speed;
         this.angle = angle;
         this.range = range;
+        elliptical = true;
 
         this.damage = damage;
         this.canDamagePlayer = canDamagePlayer;
@@ -98,7 +93,7 @@ public class MobileEntity extends Structure {
 
 
     public MobileEntity(String label, int x, int y, int width, int height, World world, Color color,
-                        MovementType movementType, int speed, int range, int angle,
+                        MovementType movementType, int speed, int range, double angle,
                         int damage, int health, boolean canDamagePlayer) {
 
         this(label, x, y, width, height, world, color, movementType, speed, range, angle, damage, canDamagePlayer);
@@ -110,21 +105,37 @@ public class MobileEntity extends Structure {
 
 
 
+    private void moveTowardsAngle(double angle) {
+        x -= speed*Math.cos(Math.toRadians(angle));
+        y -= speed*Math.sin(Math.toRadians(angle));
+        System.out.println(speed*Math.cos(Math.toRadians(angle)) + "  " + (double)speed*Math.cos(Math.toRadians(angle)));
+    }
+
+
+
     private void movementLogic() {
-        Player player = Player.getInstance();
         switch (movementType) {
             case LINEAR:
                 // Entity reciprocate along single line in specific angle
-                x = (currentDistance * (betterRound(Math.sin(Math.toRadians(angle))))) + startX;
-                y = (currentDistance * (betterRound(Math.cos(Math.toRadians(angle))))) + startY;
+                moveTowardsAngle(angle);
+                // Flip around when at edge of range
+                if (Math.abs(currentDistance) >= range) {
+                    visible = false;
+                    cumulativeDamage = 0;
+                } else currentDistance += speed;
+                break;
 
-                if (currentlyReversed)
-                    currentDistance += speed;
+            case RECIPROCATING:
+                // Entity reciprocate along single line in specific angle
+
+
+                if (!currentlyReversed)
+                    moveTowardsAngle(angle);
                 else
-                    currentDistance -= speed;
+                    moveTowardsAngle(180-angle);
 
                 // Flip around when at edge of range
-                if (Math.abs(currentDistance) <= 0 || Math.abs(currentDistance) >= range) {
+                if (Math.abs(currentDistance) < 0 || Math.abs(currentDistance) >= range) {
                     currentlyReversed = !currentlyReversed;
                     cumulativeDamage = 0;
                 }
@@ -149,16 +160,17 @@ public class MobileEntity extends Structure {
             case FOLLOW:
                 // Stay touching outside of player so it doesn't overlap because that's just unnecessary.
                 if (playerIsInRange() && !isTouchingPlayer()) {
-                    x += clampSigned(player.getX() - x, 1, speed);
-                    y += clampSigned(player.getY() - y, 1, speed);
+                    // Entity reciprocate along single line in specific angle
+                    moveTowardsAngle(180+getAngleToPlayer());
+                     //System.out.println(speed*Math.sin(Math.toRadians(getAngleToPlayer())));
+
                 }
                 break;
 
             case AVOID:
-                System.out.println(Math.abs(getDistanceBetween(this, Player.getInstance())));
+                //System.out.println(Math.abs(getDistanceBetween(this, Player.getInstance())));
                 if (playerIsInRange() && !isTouchingPlayer()) {
-                    x -= clampSigned(player.getX() - x, speed, speed);
-                    y -= clampSigned(player.getY() - y, speed, speed);
+                    moveTowardsAngle(getAngleToPlayer());
                 }
                 break;
         }
@@ -167,9 +179,8 @@ public class MobileEntity extends Structure {
 
 
     private void collisionLogic() {
-
         for (MobileEntity entity : instances) {
-            if (testIntersection(getShape(), entity.getShape())) {
+            if (testIntersection(getShape(),entity.getShape())) {
                 if (!touching.contains(entity)) {
                     touching.add(entity);
                     entity.health -= damage;

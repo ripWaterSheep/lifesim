@@ -8,6 +8,7 @@ import util.MyFonts;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Area;
 import java.util.ArrayList;
 
 
@@ -35,9 +36,6 @@ public class Structure extends GameComponent {
         y = world.getRandY();
     }
 
-
-    @Override
-    public Rectangle getShape() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
 
 
     public Structure(String label, int x, int y, int width, int height, World world, Color color) {
@@ -86,7 +84,7 @@ public class Structure extends GameComponent {
             g2d.fill(getShape());
 
             if (fontSize > 0)
-                DrawString.drawCenteredString(g, label, getShape(), labelFont, Color.WHITE);
+                DrawString.drawCenteredString(g, label, getShape().getBounds(), labelFont, Color.WHITE);
         }
     }
 
