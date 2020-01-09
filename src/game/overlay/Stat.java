@@ -22,7 +22,7 @@ public class Stat {
     private static final int BOTTOM_PADDING = 5;
     private static final int VERTICAL_SPACING = 30;
 
-    private static final double BAR_LENGTH_SCALE = 0.123;
+    private static final double BAR_LENGTH_SCALE = 0.13;
 
     private static final int DEFAULT_OPACITY = betterRound(0.5*255);
 
@@ -44,7 +44,7 @@ public class Stat {
         Stat energyStat = new Stat("Energy", player.getEnergy(), 0, player.getStrengthDependentStatCap(), 1, Color.ORANGE);
         Stat strengthStat = new Stat("Strength", player.getStrength(), 0, Math.max(1000, player.getStrength()), 1, Color.YELLOW);
         Stat moneyStat = new Stat("Cash", player.getMoney(), 0, Math.max(player.getMoney(), 10000), 0.1, Color.GREEN);
-        Stat intellectStat = new Stat("Intellect", player.getIntellect(), 0, Math.max(1000, player.getIntellect()), 1, Color.BLUE);
+        Stat intellectStat = new Stat("Intellect", player.getIntellect(), 0, Math.max(10000, player.getIntellect()), 0.1, Color.BLUE);
 
         Collections.reverse(shownStats);
 

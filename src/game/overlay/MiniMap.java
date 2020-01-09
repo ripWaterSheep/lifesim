@@ -26,7 +26,7 @@ public class MiniMap {
 
     private static final double MAP_SCALE = 0.03;
 
-    private static int scale(int dimension) { return betterRound(dimension * MAP_SCALE); }
+    private static double scale(double dimension) { return dimension * MAP_SCALE; }
 
 
     private static Ellipse2D.Double getFrameShape() { return new Ellipse2D.Double(0, 0, DIAMETER+(PADDING*2), DIAMETER+(PADDING*2)); }
@@ -34,9 +34,7 @@ public class MiniMap {
     private static Ellipse2D.Double getMapShape() { return new Ellipse2D.Double(PADDING, PADDING, DIAMETER, DIAMETER); }
 
 
-    private static final int OPACITY = betterRound(0.5 * 255);
-
-    private static Color frameColor = applyOpacity(new Color(50, 50, 50), OPACITY);
+    private static Color frameColor = new Color(0, 0, 0);
 
 
 
@@ -55,16 +53,16 @@ public class MiniMap {
 
                 if (Player.getInstance().getWorld() == component.getWorld()) {
                     // Scale features to fit on mini map
-                    int x = scale(component.getDisplayX() - WindowSize.getMidWidth()) + getRadius() + PADDING;
-                    int y = scale(component.getDisplayY() - WindowSize.getMidHeight()) + getRadius() + PADDING;
-                    int width = scale(component.getWidth());
-                    int height = scale(component.getHeight());
+                    double x = scale(component.getDisplayX() - WindowSize.getMidWidth()) + getRadius() + PADDING;
+                    double y = scale(component.getDisplayY() - WindowSize.getMidHeight()) + getRadius() + PADDING;
+                    int width = betterRound(scale(component.getWidth()));
+                    int height = betterRound(scale(component.getHeight()));
                     g2d.setColor(component.getColor());
 
                     if (component.isElliptical()) {
-                        g2d.fillOval(x, y, width, height);
+                        g2d.fillOval(betterRound(x), betterRound(y), width, height);
                     } else {
-                        g2d.fillRect(x, y, width, height);
+                        g2d.fillRect(betterRound(x), betterRound(y), width, height);
                     }
                 }
             }

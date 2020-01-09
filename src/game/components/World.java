@@ -17,9 +17,9 @@ public class World extends GameComponent {
     public static ArrayList<World> getInstances() { return instances; }
 
 
-    public int getRandX() { return (int)(Math.random() * width)-getMidWidth(); }
+    public double getRandX() { return (int)(Math.random()*width) - getMidWidth(); }
 
-    public int getRandY() { return (int)(Math.random() * height)-getMidHeight(); }
+    public double getRandY() { return (int)(Math.random()*height) - getMidHeight(); }
 
 
 
@@ -62,7 +62,7 @@ public class World extends GameComponent {
             Graphics2D g2d = (Graphics2D) g.create();
 
             g2d.setColor(color);
-            g2d.fillRect(getDisplayX(), getDisplayY(), getWidth(), getHeight());
+            g2d.fill(getShape());
         }
     }
 

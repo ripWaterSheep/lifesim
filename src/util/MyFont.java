@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class MyFonts {
+public class MyFont {
 
     static final String FILE_PATH = "assets/Fonts/";
     static final String FILE_ENDING = ".ttf";
@@ -19,22 +19,29 @@ public class MyFonts {
     }
 
 
-    private static void createFont(String fontName) {
-        try {
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(FILE_PATH + fontName + FILE_ENDING)));
-        } catch (IOException|FontFormatException e) {
-            //Handle exception
-            e.printStackTrace();
-        }
+    public static void initFonts() {
+        new MyFont("StayPuft");
+        new MyFont("Blood Cyrillic");
+    }
+
+
+    private String name;
+
+    private MyFont (String name) {
+        this.name = name;
+        loadFont();
     }
 
 
 
-    public static void initFonts() {
-        createFont("StayPuft");
-        createFont("Blood Cyrillic");
-
+    private void loadFont() {
+        try {
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(FILE_PATH + name + FILE_ENDING)));
+        } catch (IOException|FontFormatException e) {
+            //Handle exception
+            e.printStackTrace();
+        }
     }
 
 }

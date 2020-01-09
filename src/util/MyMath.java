@@ -107,7 +107,7 @@ public class MyMath {
     }
 
 
-    public static double getAngle(int x1, int y1, int x2, int y2) {
+    public static double getAngle(double x1, double y1, double x2, double y2) {
         double angle = betterRound(Math.toDegrees(Math.atan2(y2 - y1, x2 - x1)));
         angle = angleWrap(angle);
 

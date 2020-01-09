@@ -1,14 +1,10 @@
 package game.overlay;
 
 import main.WindowSize;
-import util.ColorMethods;
 import util.DrawString;
-import util.MyFonts;
+import util.MyFont;
 
 import java.awt.*;
-
-import static util.MyMath.*;
-
 
 
 public class DeathScreen {
@@ -18,7 +14,7 @@ public class DeathScreen {
     private static Color bgColor = new Color(215, 30, 40, 215);
     private static Color textColor = new Color(150, 20, 30, 255);
 
-    private static Font font = new Font(MyFonts.getBloodFont(), Font.BOLD, 80);
+    private static Font font = new Font(MyFont.getBloodFont(), Font.BOLD, 80);
 
 
     public static void show() {

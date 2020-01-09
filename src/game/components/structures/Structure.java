@@ -4,11 +4,10 @@ import game.components.GameComponent;
 import game.components.World;
 import game.components.player.Player;
 import util.DrawString;
-import util.MyFonts;
+import util.MyFont;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Area;
 import java.util.ArrayList;
 
 
@@ -38,7 +37,7 @@ public class Structure extends GameComponent {
 
 
 
-    public Structure(String label, int x, int y, int width, int height, World world, Color color) {
+    public Structure(String label, double x, double y, double width, double height, World world, Color color) {
         Structure.instances.add(this);
 
         this.label = label;
@@ -53,10 +52,10 @@ public class Structure extends GameComponent {
     }
 
 
-    public Structure(String label, int x, int y, int width, int height, World world, Color color, int fontSize) {
+    public Structure(String label, double x, double y, double width, double height, World world, Color color, int fontSize) {
         this(label, x, y, width, height, world, color);
         this.fontSize = fontSize;
-        labelFont = new Font(MyFonts.getMainFont(), Font.PLAIN, fontSize);
+        labelFont = new Font(MyFont.getMainFont(), Font.PLAIN, fontSize);
 
     }
 

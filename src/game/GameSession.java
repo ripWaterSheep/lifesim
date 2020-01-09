@@ -4,8 +4,10 @@ import game.components.player.Player;
 import game.components.GameComponent;
 import game.components.structures.Structure;
 import game.components.World;
+import game.components.structures.subtypes.MobileEntity;
 import game.overlay.Overlay;
 import game.overlay.Stat;
+import util.GarbageCollection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -85,14 +87,14 @@ public class GameSession {
 
 		for (ArrayList<? extends GameComponent> instances:usedComponentInstances) {
 			for (GameComponent component : instances) {
-				if (component.onScreen() && component.isVisible())
+				if (component.onScreen())
 					component.draw(g);
 			}
 		}
         Overlay.drawOverlays(g);
+		//GarbageCollection.removeExpiredEntities();
 
         debug();
-        
     }
 
 

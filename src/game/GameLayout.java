@@ -54,6 +54,9 @@ public class GameLayout {
     Structure cave = new Structure("Cave", -2000,  -2000, 650, 300, town, new Color(190, 190, 190));
     Structure lavaPit = new Structure("Lava Pit", 2000, 2000, 1000, 1000, town, new Color(255, 159, 0));
 
+    Structure platform = new Structure("Platform", 2000, 2000, 300, 300, town, new Color(104, 100, 65));
+
+
 
     Structure cash = new Structure("$", town.getRandX(), town.getRandY(), 55, 30, town, new Color(100, 150, 100), 20);
 
@@ -70,7 +73,7 @@ public class GameLayout {
     Structure apartment = new Structure("Apartment", -550, -650, 500, 650, city, apartmentInterior.getOuterColor(), 50);
     Structure university = new Structure("University", -650, 650, 600, 600, city, new Color(220, 190, 120), 50);
     Structure museum = new Structure("Museum", 1550, 650, 600, 600, city, new Color(10, 10, 10), 50);
-    Structure cityMetro = new Structure("City Metro", -700, -1550, 600, 600, city, new Color(100, 100, 100), 50);
+    Structure cityMetro = new Structure("Metro - $100", -700, -1550, 600, 600, city, new Color(100, 100, 100), 50);
 
 
     Structure creditCard = new Structure("VISA", city.getRandX(), city.getRandY(), 35, 25, city, new Color(227, 218, 159), 12);
@@ -80,10 +83,9 @@ public class GameLayout {
     /** MobileEntity instances */
 
     MobileEntity zombie = new MobileEntity("Zombie", 1000, 1000, 50, 50, town, Color.LIGHT_GRAY, MobileEntity.MovementType.FOLLOW, 10, 1000, 45, 5, 1000, true);
-
     MobileEntity boyo = new MobileEntity("Boyo", 500, 500, 50, 50, town, Color.BLUE, MobileEntity.MovementType.AVOID, 6, 1000, 10, 0, 100, false);
 
-    MobileEntity bruh = new MobileEntity("Bruh", 500, 100, 50, 50, town, Color.RED, MobileEntity.MovementType.RECIPROCATING, 10, 300, 0, 5, 1000, true);
+    //MobileEntity bruh = new MobileEntity("Bruh", 500, 100, 50, 50, town, Color.RED, MobileEntity.MovementType.RECIPROCATING, 10, 300, 0, 5, 1000, true);
 
 
 
@@ -96,7 +98,7 @@ public class GameLayout {
         switch(structure.getLabel()) {
 
             case "House Bed":
-                player.energize(2);
+                player.energize(1);
                 break;
 
             case "Gym":
@@ -107,26 +109,35 @@ public class GameLayout {
                 }
                 break;
 
+
+            case "Restaurant":
+                if (player.hasMoney()) {
+                    player.grow(0.15);
+                    player.loseMoney(1);
+                    player.energize(1);
+                }
+                break;
+
             case "School":
-                player.gainIntellect(1);
-                player.tire(1);
+                player.gainIntellect(1.5);
+                player.tire(0.5);
                 break;
 
             case "Office":
-                player.gainMoney(1+(player.getIntellect()/250));
-                player.tire(1.5);
+                player.gainMoney(1+(player.getIntellect()/500));
+                player.tire(0.75);
                 break;
 
             case "Hospital":
                 if (player.canAfford(5)) {
                     player.heal(2);
                     player.energize(2);
-                    player.loseMoney(3);
+                    player.loseMoney(2);
                 }
                 break;
 
             case "Lava Pit":
-                player.damage(6);
+                player.damage(5);
                 break;
 
 
@@ -155,6 +166,16 @@ public class GameLayout {
             case "House Door":
                 player.goTo(house);
                 break;
+
+
+            case "Metro - $100":
+                if (player.canAfford(100)) {
+                    player.loseMoney(100);
+                    if (player.getWorld() == town)
+                        player.goTo(cityMetro);
+                    else if (player.getWorld() == city)
+                        player.goTo(townMetro);
+                }
         }
     }
 

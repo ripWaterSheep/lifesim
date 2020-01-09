@@ -10,6 +10,7 @@ public class Overlay {
         Stat.drawAll(g);
         MiniMap.draw(g);
         DeathScreen.draw(g);
+
     }
 
 }

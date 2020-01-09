@@ -177,9 +177,9 @@ public class Controls {
     private static int lastClickX = 0;
     private static int lastClickY = 0;
 
-    static int getLastClickX() { return lastClickX; }
+    public static int getLastClickX() { return lastClickX; }
 
-    static int getLastClickY() { return lastClickY; }
+    public static int getLastClickY() { return lastClickY; }
 
 
     private static MouseAdapter mouseAdapter = new MouseAdapter() {
@@ -237,10 +237,16 @@ public class Controls {
                         break;
 
                     case VK_1:
-                        player.gainMoney(1);
+                        player.gainMoney(1000);
+
+                    case VK_2:
+                        player.heal(1000);
+
+                    case VK_3:
+                        player.energize(1000);
 
                     case VK_K:
-                        player.damage(1000);
+                        player.damage(100000);
                 }
             }
         }

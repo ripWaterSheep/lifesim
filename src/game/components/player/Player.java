@@ -12,8 +12,6 @@ import main.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import static game.components.player.Controls.*;
@@ -47,7 +45,7 @@ public class Player extends GameComponent {
 	}
    
 
-    public void goTo(int x, int y) {
+    public void goTo(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -65,7 +63,7 @@ public class Player extends GameComponent {
         this.world = world;
     }
 
-    public void goTo(int x, int y, World world) {
+    public void goTo(double x, double y, World world) {
         goTo(x, y);
         this.world = world;
     }
@@ -75,13 +73,23 @@ public class Player extends GameComponent {
 
 
     @Override
-    public int getDisplayX() {
+    public double getDisplayX() {
         return WindowSize.getMidWidth()-getMidWidth();
     }
 
     @Override
-    public int getDisplayY() { return WindowSize.getMidHeight()-getMidHeight();}
+    public double getDisplayY() { return WindowSize.getMidHeight()-getMidHeight();}
 
+
+    public void grow(double amount) {
+        width += amount;
+        height += amount;
+    }
+
+    public void shrink(double amount) {
+        width -= amount;
+        height -= amount;
+    }
 
 
     public ArrayList<Structure> getTouching() {
@@ -101,7 +109,7 @@ public class Player extends GameComponent {
     public Structure getTopTouching() {
         Structure topTouching = null;
         if (isTouchingAnything())
-            topTouching = getTouching().get(0);
+            topTouching = getTouching().get(getTouching().size()-1);
 
         return topTouching;
     }
@@ -139,14 +147,14 @@ public class Player extends GameComponent {
     public boolean hasMoney() {
         boolean has = money > 0;
         if (!has)
-            GameMessage.NeedMoneyMessage();
+            GameMessage.needMoneyMessage();
         return has;
     }
 
     public boolean canAfford(double moneyAmount) {
         boolean can = money > moneyAmount;
         if (!can)
-            GameMessage.NeedMoneyMessage();
+            GameMessage.needMoneyMessage();
         return money > moneyAmount;
     }
 
@@ -171,12 +179,14 @@ public class Player extends GameComponent {
 
     /** Calculate the cap for the many stats whose caps increase when strength increases.
      */
-    public double getStrengthDependentStatCap() { return strength+1000; }
+    public double getStrengthDependentStatCap() { return 1000 + (strength/10); }
+
+
+    public boolean getInteracted() { return Controls.getInteracted(); }
 
 
 
-
-    public Player(int x, int y, int radius, World world, Color color) {
+    public Player(double x, double y, int radius, World world, Color color) {
         Player.instance = this;
 
         label = "Player";
@@ -237,7 +247,7 @@ public class Player extends GameComponent {
 
         if (isTouchingAnything()) {
             Structure structure = getTopTouching(); // Use the top structure only so you can stand on something above lava to stay safe and stuff
-
+            System.out.println(getTopTouching());
             GameSession.getUsedLayout().playerCollisionLogic(structure);
             if (Controls.getInteracted()) {
                 GameSession.getUsedLayout().playerInteractLogic(structure);
@@ -256,14 +266,14 @@ public class Player extends GameComponent {
         tire(0.1);
 
         if (energy <= 0) {
-            GameMessage.send("Get energy quickly!");
-            damage(15);
+            new GameMessage("Get energy quickly!");
+            damage(2);
         }
 
         if (health <= 0) alive = false;
 
         if (!alive) {
-            GameMessage.send("Oof!");
+            new GameMessage("Oof!");
             DeathScreen.show();
             health = 0;
             energy = 0;
@@ -281,12 +291,11 @@ public class Player extends GameComponent {
     private void projectileLogic() {
         if (Controls.getFired()) {
             int radius = 25;
-            Color color = new Color(120, 50, 20);
+            Color color = new Color(100, 75, 35);
             int damage = betterRound(Math.ceil(strength/1000));
-            double angle = getAngle(WindowSize.getMidWidth(), WindowSize.getMidHeight(), Controls.getLastClickX(), Controls.getLastClickY());
-            //System.out.println(angle);
+            double angle = getAngle(Controls.getLastClickX(), Controls.getLastClickY(), WindowSize.getMidWidth(), WindowSize.getMidHeight());
             MobileEntity projectile = new MobileEntity("Projectile", x, y, radius, radius, world, color,
-                    MobileEntity.MovementType.LINEAR, 5, 800, 180.0+angle, damage, false);
+                    MobileEntity.MovementType.LINEAR, 15, 800, angle, damage, false);
         }
     }
 
@@ -301,11 +310,14 @@ public class Player extends GameComponent {
 
     @Override
     public void act() {
-        movementLogic();
+        if (alive) {
+            movementLogic();
+            collisionLogic();
+            projectileLogic();
+        }
+
         borderLogic();
-        collisionLogic();
         statLogic();
-        projectileLogic();
         Controls.reset();
     }
 
@@ -314,14 +326,10 @@ public class Player extends GameComponent {
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(color);
-        //g2d.fill(getShape());
+        g2d.fill(getShape());
 
         g2d.setColor(new Color(0, 0, 0));
 
-        g2d.drawLine(0, WindowSize.getMidHeight(), WindowSize.getWidth(), WindowSize.getMidHeight());
-        g2d.drawLine(WindowSize.getMidWidth(), 0, WindowSize.getMidWidth(), WindowSize.getHeight());
-
-        g2d.drawLine(WindowSize.getMidWidth(), WindowSize.getMidHeight(), getLastClickX(), getLastClickY());
     }
 
 

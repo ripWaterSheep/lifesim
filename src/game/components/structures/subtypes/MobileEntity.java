@@ -8,8 +8,6 @@ import util.MyMath;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import static util.MyMath.*;
@@ -21,6 +19,8 @@ public class MobileEntity extends Structure {
     // Not actually used for iterating in the GameSession loop.
     // This is actually just used for other things like collisionLogic() in this class to allow use of uninherited fields and methods
     protected static ArrayList<MobileEntity> instances = new ArrayList<>();
+
+    public static ArrayList<MobileEntity> getEntityInstances() { return instances; }
 
 
     public enum MovementType {
@@ -37,26 +37,26 @@ public class MobileEntity extends Structure {
     private double angle;
     private boolean currentlyReversed = false;
 
+    private double randomX = 0; // Random movement direction and speed needs to be preserved with variable until changed when at end of range
+    private double randomY = 0;
 
-    private int randomX = 0; // Random movement direction and speed needs to be preserved with variable until changed when at end of range
-    private int randomY = 0;
+    private double currentDistance = 0;
 
+    private double speed; // Pixels to move per frame
+    private final double range; // How far to go before turning
 
-    private int currentDistance = 0;
-
-    private int speed; // Pixels to move per frame
-    private final int range; // How far to go before turning
-
-    private final int damage;
+    private final double damage;
     private final boolean canDamagePlayer;
     private int cumulativeDamage;
 
 
-    private enum HealthType { VULNERABLE, INVULNERABLE }
+    private enum Vulnerability { VULNERABLE, INVULNERABLE }
 
-    private HealthType healthType;
-    private int health = 1;
+    private Vulnerability vulnerability;
+    private double health = 1;
     private boolean alive = true;
+
+    public boolean isAlive() { return alive; }
 
 
     // This needs to be an actual variable instead of just a function because it needs memory to know if an item was in it previously
@@ -71,7 +71,7 @@ public class MobileEntity extends Structure {
 
 
 
-    public MobileEntity(String label, int x, int y, int width, int height, World world, Color color,
+    public MobileEntity(String label, double x, double y, int width, int height, World world, Color color,
                         MovementType movementType, int speed, int range, double angle,
                         int damage, boolean canDamagePlayer) {
 
@@ -88,7 +88,7 @@ public class MobileEntity extends Structure {
         this.damage = damage;
         this.canDamagePlayer = canDamagePlayer;
 
-        healthType = HealthType.INVULNERABLE;
+        vulnerability = Vulnerability.INVULNERABLE;
     }
 
 
@@ -99,16 +99,17 @@ public class MobileEntity extends Structure {
         this(label, x, y, width, height, world, color, movementType, speed, range, angle, damage, canDamagePlayer);
 
         this.health = health;
-        healthType = HealthType.VULNERABLE;
+        vulnerability = Vulnerability.VULNERABLE;
 
     }
 
 
 
+
     private void moveTowardsAngle(double angle) {
-        x -= speed*Math.cos(Math.toRadians(angle));
-        y -= speed*Math.sin(Math.toRadians(angle));
-        System.out.println(speed*Math.cos(Math.toRadians(angle)) + "  " + (double)speed*Math.cos(Math.toRadians(angle)));
+        x -= (speed*Math.cos(Math.toRadians(angle)));
+        y -= (speed*Math.sin(Math.toRadians(angle)));
+
     }
 
 
@@ -120,7 +121,7 @@ public class MobileEntity extends Structure {
                 moveTowardsAngle(angle);
                 // Flip around when at edge of range
                 if (Math.abs(currentDistance) >= range) {
-                    visible = false;
+                    alive = false;
                     cumulativeDamage = 0;
                 } else currentDistance += speed;
                 break;
@@ -210,7 +211,7 @@ public class MobileEntity extends Structure {
 
     private void statLogic() {
 
-        if (health <= 0)
+        if (health <= 0 && vulnerability == Vulnerability.VULNERABLE)
             alive = false;
 
         health = Math.max(health, 0);
@@ -228,10 +229,12 @@ public class MobileEntity extends Structure {
 
     @Override
     public void act() {
-        movementLogic();
-        collisionLogic();
-        borderLogic();
-        statLogic();
+        if (alive) {
+            movementLogic();
+            collisionLogic();
+        }
+            borderLogic();
+            statLogic();
     }
 
 

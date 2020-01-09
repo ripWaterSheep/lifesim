@@ -2,7 +2,7 @@ package main;
 
 import game.components.player.Player;
 import game.GameSession;
-import util.MyFonts;
+import util.MyFont;
 
 import static main.WindowSize.*;
 import static util.TimeUtil.*;
@@ -19,7 +19,7 @@ public class MainPanel extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
         setSize(defaultWidth, defaultHeight);
-        MyFonts.initFonts();
+        MyFont.initFonts();
         gameSession.init(this);
     }
 
@@ -29,7 +29,7 @@ public class MainPanel extends JPanel {
         setBackground(Player.getInstance().getWorld().getOuterColor());
         super.paintComponent(g);
         gameSession.loop(g);
-        sleep(12);
+        sleep(10);
         repaint();
     }
 
