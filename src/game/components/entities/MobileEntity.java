@@ -41,7 +41,6 @@ public class MobileEntity extends Entity {
     protected final boolean continuousDamage;
 
 
-
     private ArrayList<GameComponent> lastTouching = new ArrayList<>();
 
 
@@ -55,7 +54,7 @@ public class MobileEntity extends Entity {
 
     public MobileEntity(String name, double x, double y, double width, double height, World world, Color color,
                         MovementType movementType, double speed, double range, double angle,
-                        double damage, boolean canDamagePlayer, boolean continuousDamage) {
+                        double damage, double health, boolean canDamagePlayer, boolean continuousDamage) {
 
         super(name, x, y, width, height, world, color, speed, angle);
 
@@ -68,19 +67,7 @@ public class MobileEntity extends Entity {
         this.canDamagePlayer = canDamagePlayer;
         this.continuousDamage = continuousDamage;
 
-        vulnerability = Entity.Vulnerability.INVULNERABLE;
-    }
-
-
-    public MobileEntity(String name, double x, double y, double width, double height, World world, Color color,
-                        MovementType movementType, double speed, double range, double angle,
-                        double damage, double health, boolean canDamagePlayer, boolean continuousDamage) {
-
-        this(name, x, y, width, height, world, color, movementType, speed, range, angle, damage, canDamagePlayer, continuousDamage);
-
         this.health = health;
-        vulnerability = Vulnerability.VULNERABLE;
-
     }
 
 
@@ -88,6 +75,18 @@ public class MobileEntity extends Entity {
     /** Copy all fields into new MobileEntity (for spawners) */
     public void cloneAt(double x, double y, World world) {
         new MobileEntity(name, x, y, width, height, world, color, movementType, speed, range, startAngle, damage, health, canDamagePlayer, continuousDamage);
+    }
+
+
+
+    private void randomMovement() {
+        // Switch direction when reached the end of range.
+        if (currentDistance >= range) {
+            currentAngle = getRandInRange(0, 359);
+            currentDistance = 0;
+        }
+        moveTowardsAngle();
+        currentDistance += speed;
     }
 
 
@@ -119,32 +118,30 @@ public class MobileEntity extends Entity {
 
                 break;
 
+            // Make movement in a direction is completely random.
             case RANDOM:
-                // Switch direction when reached the end of range.
-                if (currentDistance >= range) {
-                    currentAngle = getRandInRange(0, 359);
-                }
-                // Make movement in a direction is completely random.
-                moveTowardsAngle();
-
+                    randomMovement();
                 break;
 
 
             case FOLLOW:
                 // Stay touching outside of player so it doesn't overlap because that's just unnecessary.
-                if (playerInRange() && !isTouchingPlayer()) {
-                    currentAngle = getAngleToPlayer()+180 + getRandInRange(-30, 30);
-                    moveTowardsAngle();
-                    //System.out.println(speed*Math.sin(Math.toRadians(getAngleToPlayer())));
-
+                if (playerInRange()) {
+                   if (!isTouchingPlayer()){
+                        currentAngle = getAngleToPlayer() + 180 + getRandInRange(-45, 45);
+                        moveTowardsAngle();
+                    }
+                } else {
+                    randomMovement();
                 }
                 break;
 
             case AVOID:
-                //System.out.println(Math.abs(getDistanceBetween(this, Player.getInstance())));
-                if (playerInRange() && !isTouchingPlayer()) {
+                if (playerInRange()) {
                     currentAngle = getAngleToPlayer();
                     moveTowardsAngle();
+                } else {
+                    randomMovement(); // Move around randomly to prevent getting stuck in corner.
                 }
                 break;
         }
@@ -157,12 +154,12 @@ public class MobileEntity extends Entity {
         for (Entity entity: getTouchingEntities()) {
             // If damage is not continuous, only do damage on first collision with entity
             if ((continuousDamage || !lastTouching.contains(entity)) && entity != this) {
-                if ((canDamagePlayer && entity == Player.getInstance()) || (!canDamagePlayer && entity instanceof MobileEntity)) {
+                // Only do damage to player if specified. If not, don't do damage to player but damage every other MobileEntity
+                //if ((canDamagePlayer && entity == Player.getInstance()) || (!canDamagePlayer && entity instanceof MobileEntity)) {
+                if (canDamagePlayer || entity != Player.getInstance()) {
                     entity.damage(damage);
+                    System.out.println(entity.getName());
                 }
-                // If entities are touching, spread them out to prevent overlap between entities.
-                //if (entity != Player.getInstance())
-                  //  moveTowardsAngle(-angleWrap(entity.currentAngle-90), speed*2);
             }
         }
 
@@ -174,7 +171,7 @@ public class MobileEntity extends Entity {
 
     protected void statLogic() {
 
-        if (health <= 0 && vulnerability == Vulnerability.VULNERABLE)
+        if (health <= 0)
             alive = false;
 
         health = Math.max(health, 0);

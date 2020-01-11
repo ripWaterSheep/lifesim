@@ -50,10 +50,6 @@ public abstract class Entity extends GameComponent {
     public void damage(double amount) { health -= amount; }
 
 
-    protected enum Vulnerability { VULNERABLE, INVULNERABLE }
-    protected Vulnerability vulnerability;
-
-
     @Override
     public Ellipse2D.Double getShape() { return new Ellipse2D.Double(getDisplayX(), getDisplayY(), width, height); }
 

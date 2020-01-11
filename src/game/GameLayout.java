@@ -36,17 +36,21 @@ public class GameLayout {
 
 
 
+    /** Player instance */
+    Player player = new Player("Player", 0, 0, 30, town, Color.YELLOW);
+
+
+
     /** Entity & subtype instances */
 
-    MobileEntity zombie = new MobileEntity("Zombie", 1000, 1000, 50, 50, town, Color.LIGHT_GRAY, MobileEntity.MovementType.FOLLOW, 10, 1000, 45, 5, 50, true, true);
-    MobileEntity boyo = new MobileEntity("Boyo", 500, 500, 50, 50, town, Color.BLUE, MobileEntity.MovementType.AVOID, 6, 150, 10, 0, 5, false, true);
+    MobileEntity doggo = new MobileEntity("Doggo", -50, 50, 50, 50, town, new Color(150, 150, 150), MobileEntity.MovementType.AVOID, 6, 600, 2, 1, 1000, false, true);
+
+    MobileEntity zombie = new MobileEntity("Zombie", -2500, 2500, 50, 50, town, new Color(77, 105, 73), MobileEntity.MovementType.FOLLOW, 8, 800, 45, 2, 25, true, true);
+    MobileEntity boyo = new MobileEntity("Boyo", 500, 500, 50, 50, town, Color.BLUE, MobileEntity.MovementType.AVOID, 11, 150, 10, 0, 5, false, true);
 
     //MobileEntity bruh = new MobileEntity("Bruh", 500, 100, 50, 50, town, Color.RED, MobileEntity.MovementType.RECIPROCATING, 10, 200, 0, 5, 100, true, true);
 
 
-
-    /** Player instance */
-    Player player = new Player("Player", 0, 0, 30, town, Color.YELLOW);
 
 
 
@@ -79,9 +83,7 @@ public class GameLayout {
     Structure cash = new Structure("$", town.getRandX(), town.getRandY(), 55, 30, town, new Color(100, 150, 100), 20);
 
 
-    Spawner zombieSpawner = new Spawner("Zombie Spawner", -2500 , 2500, 200, 200, town, new Color(50, 59, 52), zombie, 3000);
-
-    Spawner boyoSpawner = new Spawner("Boyo Spawner", 2500 , -2500, 200, 200, town, new Color(255, 0, 0), boyo, 2000);
+    Spawner zombieSpawner = new Spawner("Zombie Spawner", -2500 , 2500, 300, 200, town, new Color(50, 59, 52), zombie, 10000);
 
 
     Structure houseDoor = new Structure("House Door", houseInterior.getMidWidth() , 0, 20, 150, houseInterior, new Color(190, 170, 80));

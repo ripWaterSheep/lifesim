@@ -1,6 +1,7 @@
 package game.components;
 
 import game.components.entities.player.Player;
+import main.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,6 +56,7 @@ public class World extends GameComponent {
 
     @Override
     public void draw(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g.create();
         if (this == Player.getInstance().getWorld()) {
             super.draw(g);
         }

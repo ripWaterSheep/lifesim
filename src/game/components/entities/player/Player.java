@@ -138,6 +138,7 @@ public class Player extends Entity {
         super(name, x, y, radius*2, radius*2, world, color, 10, 0);
         Player.instance = this;
 
+        speed = 9;
         health = 1000;
         this.world = world;
         this.color = color;
@@ -255,7 +256,7 @@ public class Player extends Entity {
             int damage = betterRound(Math.ceil(strength/1000)+1);
             double angle = getAngle(Controls.getLastClickX(), Controls.getLastClickY(), WindowSize.getMidWidth(), WindowSize.getMidHeight());
             MobileEntity projectile = new MobileEntity("Projectile", x, y, radius, radius, world, color,
-                    MobileEntity.MovementType.LINEAR, 25, 800, angle, damage, false, false);
+                    MobileEntity.MovementType.LINEAR, 25, 800, angle, damage, 1, false, false);
         }
     }
 
