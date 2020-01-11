@@ -1,12 +1,16 @@
 package game;
 
-import game.components.structures.subtypes.MobileEntity;
+import game.components.GameComponent;
+import game.components.entities.MobileEntity;
+import game.components.structures.Spawner;
 import game.components.structures.Structure;
 import game.components.World;
-import game.components.player.Player;
+import game.components.entities.player.Player;
 import util.MyMath;
 
 import java.awt.*;
+
+import static util.MyMath.angleWrap;
 
 
 public class GameLayout {
@@ -32,7 +36,21 @@ public class GameLayout {
 
 
 
-    /** Structure instances */
+    /** Entity & subtype instances */
+
+    MobileEntity zombie = new MobileEntity("Zombie", 1000, 1000, 50, 50, town, Color.LIGHT_GRAY, MobileEntity.MovementType.FOLLOW, 10, 1000, 45, 5, 50, true, true);
+    MobileEntity boyo = new MobileEntity("Boyo", 500, 500, 50, 50, town, Color.BLUE, MobileEntity.MovementType.AVOID, 6, 150, 10, 0, 5, false, true);
+
+    //MobileEntity bruh = new MobileEntity("Bruh", 500, 100, 50, 50, town, Color.RED, MobileEntity.MovementType.RECIPROCATING, 10, 200, 0, 5, 100, true, true);
+
+
+
+    /** Player instance */
+    Player player = new Player("Player", 0, 0, 30, town, Color.YELLOW);
+
+
+
+    /** Structure & subtype instances*/
 
     Structure horizontalRoad = new Structure("Vertical Road", 0, 0, town.getWidth(), 200, town, Color.DARK_GRAY);
     Structure verticalRoad = new Structure("Vertical Road", 0, 0, 200, town.getHeight(), town, Color.DARK_GRAY);
@@ -48,11 +66,11 @@ public class GameLayout {
     Structure hospital = new Structure("Hospital", -500, -1200, 500, 500, town, new Color(210, 210, 210),50);
     Structure restaurant = new Structure("Restaurant", -500, -450, 500, 400, town, new Color(255, 213, 125), 50);
     Structure shop = new Structure("Shop", -1350, 500, 600, 400, town, new Color(200, 110, 75), 50);
-    Structure townMetro = new Structure("Metro - $100", 600, 2050, 500, 600, town, new Color(100,100, 100),50);
+    Structure townMetro = new Structure("Metro - $1000", 600, 2050, 500, 600, town, new Color(100,100, 100),50);
 
 
     Structure cave = new Structure("Cave", -2000,  -2000, 650, 300, town, new Color(190, 190, 190));
-    Structure lavaPit = new Structure("Lava Pit", 2000, 2000, 1000, 1000, town, new Color(255, 159, 0));
+    Structure lavaPit = new Structure("Lava Pit", 2000, 2000, 1000, 1000, town, new Color(255, 159, 0), 3.0);
 
     Structure platform = new Structure("Platform", 2000, 2000, 300, 300, town, new Color(104, 100, 65));
 
@@ -60,6 +78,10 @@ public class GameLayout {
 
     Structure cash = new Structure("$", town.getRandX(), town.getRandY(), 55, 30, town, new Color(100, 150, 100), 20);
 
+
+    Spawner zombieSpawner = new Spawner("Zombie Spawner", -2500 , 2500, 200, 200, town, new Color(50, 59, 52), zombie, 3000);
+
+    Spawner boyoSpawner = new Spawner("Boyo Spawner", 2500 , -2500, 200, 200, town, new Color(255, 0, 0), boyo, 2000);
 
 
     Structure houseDoor = new Structure("House Door", houseInterior.getMidWidth() , 0, 20, 150, houseInterior, new Color(190, 170, 80));
@@ -73,29 +95,19 @@ public class GameLayout {
     Structure apartment = new Structure("Apartment", -550, -650, 500, 650, city, apartmentInterior.getOuterColor(), 50);
     Structure university = new Structure("University", -650, 650, 600, 600, city, new Color(220, 190, 120), 50);
     Structure museum = new Structure("Museum", 1550, 650, 600, 600, city, new Color(10, 10, 10), 50);
-    Structure cityMetro = new Structure("Metro - $100", -700, -1550, 600, 600, city, new Color(100, 100, 100), 50);
+    Structure cityMetro = new Structure("Metro - $1000", -700, -1550, 600, 600, city, new Color(100, 100, 100), 50);
 
 
     Structure creditCard = new Structure("VISA", city.getRandX(), city.getRandY(), 35, 25, city, new Color(227, 218, 159), 12);
 
 
 
-    /** MobileEntity instances */
-
-    MobileEntity zombie = new MobileEntity("Zombie", 1000, 1000, 50, 50, town, Color.LIGHT_GRAY, MobileEntity.MovementType.FOLLOW, 10, 1000, 45, 5, 1000, true);
-    MobileEntity boyo = new MobileEntity("Boyo", 500, 500, 50, 50, town, Color.BLUE, MobileEntity.MovementType.AVOID, 6, 1000, 10, 0, 100, false);
-
-    //MobileEntity bruh = new MobileEntity("Bruh", 500, 100, 50, 50, town, Color.RED, MobileEntity.MovementType.RECIPROCATING, 10, 300, 0, 5, 1000, true);
 
 
 
-    /** Player instance */
-    public Player player = new Player(0, 0, 30, town, Color.YELLOW);
-
-
-
-    public void playerCollisionLogic(Structure structure) {
-        switch(structure.getLabel()) {
+    /** If player touches something */
+    public void playerCollisionLogic(GameComponent component) {
+        switch(component.getName()) {
 
             case "House Bed":
                 player.energize(1);
@@ -105,7 +117,7 @@ public class GameLayout {
                 if (player.hasMoney()) {
                     player.strengthen(1);
                     player.loseMoney(1);
-                    player.tire(1);
+                    player.tire(0.75);
                 }
                 break;
 
@@ -125,21 +137,21 @@ public class GameLayout {
 
             case "Office":
                 player.gainMoney(1+(player.getIntellect()/500));
-                player.tire(0.75);
+                player.tire(0.5);
                 break;
 
             case "Hospital":
-                if (player.canAfford(5)) {
+                if (player.canAfford(3)) {
                     player.heal(2);
                     player.energize(2);
-                    player.loseMoney(2);
+                    player.loseMoney(3);
                 }
                 break;
 
-            case "Lava Pit":
+            /*case "Lava Pit":
                 player.damage(5);
                 break;
-
+*/
 
             case "$":
                 player.gainMoney(100);
@@ -155,9 +167,9 @@ public class GameLayout {
     }
 
 
-
-    public void playerInteractLogic(Structure structure) {
-        switch(structure.getLabel()) {
+    /** If player interacts (clicks) when touching something */
+    public void playerInteractLogic(GameComponent component) {
+        switch(component.getName()) {
 
             case "House":
                 player.goTo(houseDoor);
@@ -168,9 +180,9 @@ public class GameLayout {
                 break;
 
 
-            case "Metro - $100":
-                if (player.canAfford(100)) {
-                    player.loseMoney(100);
+            case "Metro - $1000":
+                if (player.canAfford(1000)) {
+                    player.loseMoney(1000);
                     if (player.getWorld() == town)
                         player.goTo(cityMetro);
                     else if (player.getWorld() == city)

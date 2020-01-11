@@ -1,6 +1,6 @@
 package game.overlay;
 
-import game.components.player.Player;
+import game.components.entities.player.Player;
 import util.ColorMethods;
 import main.WindowSize;
 
@@ -58,7 +58,7 @@ public class Stat {
     }
 
 
-    private String label;
+    private String key;
 
     private double value;
 
@@ -71,10 +71,10 @@ public class Stat {
     private Color barColor;
 
 
-    public Stat(String label, double value) {
+    public Stat(String key, double value) {
         Stat.shownStats.add(this);
 
-        this.label = label;
+        this.key = key;
         this.value = value;
 
         showStatusBar = false;
@@ -82,10 +82,10 @@ public class Stat {
 
 
 
-    public Stat(String label, double value, double minVal, double maxVal, double scale, Color barColor) {
+    public Stat(String key, double value, double minVal, double maxVal, double scale, Color barColor) {
         Stat.shownStats.add(this);
 
-        this.label = label;
+        this.key = key;
         this.value = value;
         this.minVal = minVal;
         this.maxVal = maxVal;
@@ -119,7 +119,7 @@ public class Stat {
 
         g2d.setColor(Color.WHITE);
         g2d.setFont(Stat.STAT_FONT);
-        g2d.drawString(format(label, value), x, y);
+        g2d.drawString(format(key, value), x, y);
     }
 
 

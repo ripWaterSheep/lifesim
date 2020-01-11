@@ -1,4 +1,4 @@
-package game.components.player;
+package game.components.entities.player;
 
 import game.components.World;
 import util.TimeUtil;
@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static game.components.player.Controls.Cheats.cheatLogic;
+import static game.components.entities.player.Controls.Cheats.cheatLogic;
 import static java.awt.event.KeyEvent.*;
 import static java.awt.event.KeyEvent.VK_CONTROL;
 import static java.awt.event.MouseEvent.BUTTON1;

@@ -1,10 +1,9 @@
 package game;
 
-import game.components.player.Player;
+import game.components.entities.Entity;
 import game.components.GameComponent;
 import game.components.structures.Structure;
 import game.components.World;
-import game.components.structures.subtypes.MobileEntity;
 import game.overlay.Overlay;
 import game.overlay.Stat;
 import util.GarbageCollection;
@@ -26,7 +25,7 @@ public class GameSession {
     /** Holds all instances used in the game */
     private static ArrayList<ArrayList<? extends GameComponent>> usedComponentInstances;
 
-    public static ArrayList<ArrayList<? extends GameComponent >> getUsedComponents() { return usedComponentInstances; }
+    public static ArrayList<ArrayList<? extends GameComponent>> getUsedComponents() { return usedComponentInstances; }
 
 
     private static int currentFrame = 0;
@@ -36,7 +35,7 @@ public class GameSession {
 
     public void debug() {
         currentFrame++;
-		//System.out.println(Player.getInstance().getTopTouching().getLabel());
+		//System.out.println(Player.getInstance().getTopTouching().getName());
     }
 
 
@@ -62,11 +61,12 @@ public class GameSession {
 		 * objects that are added mid game will be referenced (like player created projectiles).
 		 */
 
-		usedComponentInstances.add(Player.getInstances());
+		usedComponentInstances.add(Entity.getInstances());
 		usedComponentInstances.add(Structure.getInstances());
 		usedComponentInstances.add(World.getInstances());
 		
         Collections.reverse(usedComponentInstances);
+		Entity.addSpawnedEntities();
         
         for (ArrayList<? extends GameComponent> instances: usedComponentInstances) {
 			for (GameComponent component : instances) {
@@ -87,14 +87,16 @@ public class GameSession {
 
 		for (ArrayList<? extends GameComponent> instances:usedComponentInstances) {
 			for (GameComponent component : instances) {
-				if (component.onScreen())
+				if (component.isOnScreen())
 					component.draw(g);
 			}
 		}
         Overlay.drawOverlays(g);
-		//GarbageCollection.removeExpiredEntities();
+		Entity.addSpawnedEntities();
+		GarbageCollection.removeExpiredEntities();
 
         debug();
+
     }
 
 

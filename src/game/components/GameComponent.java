@@ -1,25 +1,24 @@
 package game.components;
 
-import game.components.player.Player;
+import game.components.entities.player.Player;
 import main.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
 import static util.MyMath.betterRound;
 
 public abstract class GameComponent {
 
-    protected String label;
+    protected String name;
 
-    public String getLabel() { return label; }
+    public String getName() { return name; }
+
 
     /* Positions are doubles to make speed incrementing and slopes (x increment to y increment ratio) more accurate.
      * Because pixel positions are ints, the rounding is done when to the parameter in draw() and not to the actual
      * variable to prevent lossy conversion.
-     *
      */
     protected double x = 0;
     protected double y = 0;
@@ -50,23 +49,10 @@ public abstract class GameComponent {
     public double getMidHeight() { return height/2; }
 
 
-    protected boolean elliptical = false;
+    public Shape getShape() { return new Rectangle(betterRound(getDisplayX()), betterRound(getDisplayY()), betterRound(width), betterRound(height)); }
 
-    public boolean isElliptical() { return elliptical; }
-
-
-    public Area getShape() {
-        Area shape;
-        if (elliptical) shape = new Area (new Ellipse2D.Double(getDisplayX(), getDisplayY(), width, height));
-        else shape = new Area (new Rectangle.Double(betterRound(getDisplayX()), betterRound(getDisplayY()), width, height));
-        return shape;
-    }
-
-
-    public boolean onScreen() { // If the component is visible in the window, then return true
-		return getShape().intersects(WindowSize.getRect());
-
-	}
+    // If the component is visible in the window, then return true
+    public boolean isOnScreen() { return getShape().intersects(WindowSize.getRect()) && world == Player.getInstance().getWorld(); }
 
 
     protected World world;
@@ -79,6 +65,20 @@ public abstract class GameComponent {
     public Color getColor() { return color; }
 
 
+
+    protected GameComponent(String name, double x, double y, double width, double height, World world, Color color) {
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.world = world;
+        this.color = color;
+
+    }
+
+
+
     /** Set up instances once before event loop. This is when instances can refer to other instances
      * because all instances are guaranteed to be initialized when setup() is called.
      */
@@ -88,6 +88,10 @@ public abstract class GameComponent {
     public abstract void act();
 
     /** Update each instance's appearance individually. */
-    public abstract void draw(Graphics g);
+    public void draw(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setColor(color);
+        g2d.fill(getShape());
+    }
 
 }

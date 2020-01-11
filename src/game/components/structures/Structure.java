@@ -2,7 +2,7 @@ package game.components.structures;
 
 import game.components.GameComponent;
 import game.components.World;
-import game.components.player.Player;
+import game.components.entities.player.Player;
 import util.DrawString;
 import util.MyFont;
 
@@ -10,24 +10,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static util.MyMath.betterRound;
 
 
 public class Structure extends GameComponent {
 
     // Contains all subclass instances as well as Structure instances
-    protected static ArrayList<Structure> instances = new ArrayList<>();
+    private static ArrayList<Structure> instances = new ArrayList<>();
 
     public static ArrayList<Structure> getInstances() { return instances; }
 
-
-    protected final String label;
-
-    public String getLabel() {
-        return label;
-    }
-
     protected Font labelFont;
-    public int fontSize = 0;
+    private int fontSize = 0;
+
+    private double damage = 0;
+
+    public double getDamage() { return damage; }
 
 
     public void randomizePos() {
@@ -37,23 +35,21 @@ public class Structure extends GameComponent {
 
 
 
-    public Structure(String label, double x, double y, double width, double height, World world, Color color) {
+    public Structure(String name, double x, double y, double width, double height, World world, Color color) {
+        super(name, x, y, width, height, world, color);
         Structure.instances.add(this);
-
-        this.label = label;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-
-        this.world = world;
-        this.color = color;
-
     }
 
 
-    public Structure(String label, double x, double y, double width, double height, World world, Color color, int fontSize) {
-        this(label, x, y, width, height, world, color);
+    public Structure(String name, double x, double y, double width, double height, World world, Color color, double damage) {
+        super(name, x, y, width, height, world, color);
+        Structure.instances.add(this);
+        this.damage = damage;
+    }
+
+
+    public Structure(String name, double x, double y, double width, double height, World world, Color color, int fontSize) {
+        this(name, x, y, width, height, world, color);
         this.fontSize = fontSize;
         labelFont = new Font(MyFont.getMainFont(), Font.PLAIN, fontSize);
 
@@ -77,13 +73,9 @@ public class Structure extends GameComponent {
     @Override
     public void draw(Graphics g) {
         if (Player.getInstance().getWorld() == world) {
-            Graphics2D g2d = (Graphics2D) g.create();
+            super.draw(g);
 
-            g2d.setColor(color);
-            g2d.fill(getShape());
-
-            if (fontSize > 0)
-                DrawString.drawCenteredString(g, label, getShape().getBounds(), labelFont, Color.WHITE);
+            if (fontSize > 0) DrawString.drawCenteredString(g, name, getShape().getBounds(), labelFont, Color.WHITE);
         }
     }
 

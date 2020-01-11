@@ -1,6 +1,6 @@
 package main;
 
-import game.components.player.Player;
+import game.components.entities.player.Player;
 import game.GameSession;
 import util.MyFont;
 
@@ -29,7 +29,7 @@ public class MainPanel extends JPanel {
         setBackground(Player.getInstance().getWorld().getOuterColor());
         super.paintComponent(g);
         gameSession.loop(g);
-        sleep(10);
+        sleep(8);
         repaint();
     }
 

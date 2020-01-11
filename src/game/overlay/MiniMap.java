@@ -2,8 +2,8 @@ package game.overlay;
 
 import game.GameSession;
 import game.components.GameComponent;
-import game.components.player.Player;
-import game.components.World;
+import game.components.entities.MobileEntity;
+import game.components.entities.player.Player;
 import main.WindowSize;
 
 import java.awt.*;
@@ -11,7 +11,6 @@ import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 
-import static util.ColorMethods.applyOpacity;
 import static util.MyMath.betterRound;
 
 
@@ -59,7 +58,7 @@ public class MiniMap {
                     int height = betterRound(scale(component.getHeight()));
                     g2d.setColor(component.getColor());
 
-                    if (component.isElliptical()) {
+                    if (component.getShape() instanceof Ellipse2D.Double) {
                         g2d.fillOval(betterRound(x), betterRound(y), width, height);
                     } else {
                         g2d.fillRect(betterRound(x), betterRound(y), width, height);

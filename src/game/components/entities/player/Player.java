@@ -1,10 +1,11 @@
-package game.components.player;
+package game.components.entities.player;
 
+import game.components.entities.Entity;
 import game.components.structures.Structure;
 import game.components.World;
 import game.GameSession;
 import game.components.GameComponent;
-import game.components.structures.subtypes.MobileEntity;
+import game.components.entities.MobileEntity;
 import game.overlay.DeathScreen;
 import game.overlay.GameMessage;
 import util.MyMath;
@@ -12,14 +13,13 @@ import main.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
-import static game.components.player.Controls.*;
+import static game.components.entities.player.Controls.*;
 import static java.lang.Math.*;
 import static util.MyMath.*;
 
 
-public class Player extends GameComponent {
+public class Player extends Entity {
 
 
     private static Player instance;
@@ -37,14 +37,6 @@ public class Player extends GameComponent {
      */
 
 
-    public static ArrayList<Player> getInstances() {
-
-		ArrayList<Player> instanceList = new ArrayList<>();
-		instanceList.add(getInstance());
-		return instanceList;
-	}
-   
-
     public void goTo(double x, double y) {
         this.x = x;
         this.y = y;
@@ -52,11 +44,9 @@ public class Player extends GameComponent {
 
     public void goTo(Structure structure) {
         goTo(structure.getX(), structure.getY());
-        this.world = structure.getWorld();
+        world = structure.getWorld();
     }
 
-
-    private World world;
 
     public void goTo(World world) {
         goTo(0, 0);
@@ -67,9 +57,6 @@ public class Player extends GameComponent {
         goTo(x, y);
         this.world = world;
     }
-
-    public World getWorld() { return world; }
-
 
 
     @Override
@@ -90,45 +77,6 @@ public class Player extends GameComponent {
         width -= amount;
         height -= amount;
     }
-
-
-    public ArrayList<Structure> getTouching() {
-        ArrayList<Structure> touching = new ArrayList<>();
-        for (Structure structure: Structure.getInstances()) {
-            if (testIntersection(getShape(), structure.getShape()) && world == structure.getWorld()) {
-                touching.add(structure);
-            }
-        }
-
-        return touching;
-    }
-
-
-    public boolean isTouchingAnything() { return !getTouching().isEmpty(); }
-
-    public Structure getTopTouching() {
-        Structure topTouching = null;
-        if (isTouchingAnything())
-            topTouching = getTouching().get(getTouching().size()-1);
-
-        return topTouching;
-    }
-
-
-    private double speedMultiplier = 1;
-
-    public void multiplySpeed(double speedFactor) { speedMultiplier *= speedFactor; }
-
-
-    private boolean alive = true;
-
-    private double health = 1000;
-
-    public double getHealth() { return health; }
-
-    public void heal(double amount) { health += amount; }
-
-    public void damage(double amount) { health -= amount; }
 
 
     private double energy = 1000;
@@ -163,7 +111,7 @@ public class Player extends GameComponent {
     public void loseMoney(double amount) { money -= Math.abs(amount); }
 
 
-    private double strength = 0;
+    private double strength = 1;
 
     public double getStrength() { return strength; }
 
@@ -186,17 +134,11 @@ public class Player extends GameComponent {
 
 
 
-    public Player(double x, double y, int radius, World world, Color color) {
+    public Player(String name, double x, double y, double radius, World world, Color color) {
+        super(name, x, y, radius*2, radius*2, world, color, 10, 0);
         Player.instance = this;
 
-        label = "Player";
-
-        this.x = x;
-        this.y = y;
-        this.width = radius*2;
-        this.height = radius*2;
-        elliptical = true;
-
+        health = 1000;
         this.world = world;
         this.color = color;
     }
@@ -208,61 +150,81 @@ public class Player extends GameComponent {
      * @return An int representing number of pixels player will move
      * in a direction per frame if appropriate key is pressed.
      */
-    public int getSpeed() {
-        int speed = betterRound(12*speedMultiplier);
+    public double getCurrentSpeed() {
+        double currentSpeed = speed;
 
         if (Controls.getSprinting()) {
-            speed *= 1.5;
-            tire(0.1);
+            currentSpeed *= 1.5;
+            tire(0.15);
         }
-        return speed;
+        return currentSpeed;
     }
+
 
 
     /** Move in a direction according to which keys are pressed.
      * If two keys of opposing directions are pressed, move in the direction of the first key pressed.
      */
-    private void movementLogic() {
-        int speed = getSpeed();
-        speedMultiplier = 1;
+    protected void movementLogic() {
+        double moveSpeed = getCurrentSpeed();
+
+        boolean left = false;
+        boolean right = false;
+        boolean up = false;
+        boolean down = false;
+
         if(getLeftPressed() && getRightPressed()) {
-            if(getLeftReadTime() > getRightReadTime()) x -= speed;
-            else x += speed;
+            if(getLeftReadTime() > getRightReadTime()) right = true;
+            else left = true;
         }
-        else if(getLeftPressed()) x -= speed;
-        else if(getRightPressed()) x += speed;
+        else if(getLeftPressed()) left = true;
+        else if(getRightPressed()) right = true;
 
         if(getUpPressed() && getDownPressed()) {
-            if(getUpReadTime() > getDownReadTime()) y -= speed;
-            else y += speed;
+            if(getUpReadTime() > getDownReadTime()) up = true;
+            else down = true;
         }
-        else if(getUpPressed()) y -= speed;
-        else if(getDownPressed()) y += speed;
+        else if(getUpPressed()) up = true;
+        else if(getDownPressed()) down = true;
+
+        // Get angles for different key directions (makes going diagonal the same speed as horizontal or vertical)
+        if (up) {
+            if (left) currentAngle = 45;
+            else if (right) currentAngle = 135;
+            else currentAngle = 90;
+        } else if (down) {
+            if (left) currentAngle = 315;
+            else if (right) currentAngle = 225;
+            else currentAngle = 270;
+        }
+        else if (right) currentAngle = 180;
+        else if (left) currentAngle = 0;
+        else moveSpeed = 0;
+
+        moveTowardsAngle(currentAngle, moveSpeed);
     }
+
 
 
     /** Interact with GameComponents
      */
-    private void collisionLogic() {
-
-        if (isTouchingAnything()) {
-            Structure structure = getTopTouching(); // Use the top structure only so you can stand on something above lava to stay safe and stuff
-            System.out.println(getTopTouching());
-            GameSession.getUsedLayout().playerCollisionLogic(structure);
+    @Override
+    protected void collisionLogic() {
+        super.collisionLogic();
+        if (isTouchingAnyStructures()) {
+            GameComponent component = getTopStructureTouching(); // Use the top structure only so you can stand on something above lava to stay safe and stuff
+            GameSession.getUsedLayout().playerCollisionLogic(component);
             if (Controls.getInteracted()) {
-                GameSession.getUsedLayout().playerInteractLogic(structure);
+                GameSession.getUsedLayout().playerInteractLogic(component);
             }
         }
     }
 
 
-    private void borderLogic() {
-        x = MyMath.clamp(x, -world.getMidWidth() + getMidWidth(), world.getMidWidth() - getMidWidth());
-        y = MyMath.clamp(y, -world.getMidHeight() + getMidHeight(), world.getMidHeight() - getMidHeight());
-    }
-
-
+    @Override
     public void statLogic() {
+        System.out.println(getWorld().getName());
+
         tire(0.1);
 
         if (energy <= 0) {
@@ -277,9 +239,7 @@ public class Player extends GameComponent {
             DeathScreen.show();
             health = 0;
             energy = 0;
-            speedMultiplier = 0;
         }
-
 
         health = MyMath.clamp(health, 0, getStrengthDependentStatCap());
         energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());
@@ -292,10 +252,10 @@ public class Player extends GameComponent {
         if (Controls.getFired()) {
             int radius = 25;
             Color color = new Color(100, 75, 35);
-            int damage = betterRound(Math.ceil(strength/1000));
+            int damage = betterRound(Math.ceil(strength/1000)+1);
             double angle = getAngle(Controls.getLastClickX(), Controls.getLastClickY(), WindowSize.getMidWidth(), WindowSize.getMidHeight());
             MobileEntity projectile = new MobileEntity("Projectile", x, y, radius, radius, world, color,
-                    MobileEntity.MovementType.LINEAR, 15, 800, angle, damage, false);
+                    MobileEntity.MovementType.LINEAR, 25, 800, angle, damage, false, false);
         }
     }
 
@@ -303,33 +263,22 @@ public class Player extends GameComponent {
 
     @Override
     public void setup(JPanel panel) {
-        instance = this;
         Controls.initListeners(panel);
+
     }
 
 
     @Override
     public void act() {
-        if (alive) {
-            movementLogic();
-            collisionLogic();
-            projectileLogic();
-        }
-
-        borderLogic();
-        statLogic();
+        super.act();
+        if (alive) projectileLogic();
         Controls.reset();
     }
 
 
     @Override
     public void draw(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setColor(color);
-        g2d.fill(getShape());
-
-        g2d.setColor(new Color(0, 0, 0));
-
+        super.draw(g);
     }
 
 

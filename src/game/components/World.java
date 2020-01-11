@@ -1,10 +1,9 @@
 package game.components;
 
-import game.components.player.Player;
+import game.components.entities.player.Player;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 
@@ -31,16 +30,14 @@ public class World extends GameComponent {
 
 
 
-    public World(String label, int width, int height, Color color, Color outerColor) {
+    public World(String name, int width, int height, Color color, Color outerColor) {
+        super(name, 0, 0, width, height, null, color);
         World.instances.add(this);
-        this.label = label;
-        this.width = width;
-        this.height = height;
         this.world = this;
-        this.color = color;
         this.outerColor = outerColor;
 
     }
+
 
 
     @Override
@@ -59,10 +56,7 @@ public class World extends GameComponent {
     @Override
     public void draw(Graphics g) {
         if (this == Player.getInstance().getWorld()) {
-            Graphics2D g2d = (Graphics2D) g.create();
-
-            g2d.setColor(color);
-            g2d.fill(getShape());
+            super.draw(g);
         }
     }
 
