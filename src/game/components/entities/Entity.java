@@ -125,12 +125,7 @@ public abstract class Entity extends GameComponent {
 
     protected abstract void movementLogic();
 
-
-    protected void collisionLogic() {
-        if (isTouchingAnyStructures()) {
-            damage(getTopStructureTouching().getDamage());
-        }
-    }
+    protected abstract void collisionLogic();
 
 
     @Override

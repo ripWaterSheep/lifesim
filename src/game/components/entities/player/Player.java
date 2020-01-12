@@ -151,9 +151,8 @@ public class Player extends Entity {
      * @return An int representing number of pixels player will move
      * in a direction per frame if appropriate key is pressed.
      */
-    public double getCurrentSpeed() {
-        double currentSpeed = speed;
-
+    private double applyCurrentSpeed() {
+        double currentSpeed = speed * clamp(((energy/getStrengthDependentStatCap())/2)+0.5, 0.5, 1);
         if (Controls.getSprinting()) {
             currentSpeed *= 1.5;
             tire(0.15);
@@ -167,7 +166,7 @@ public class Player extends Entity {
      * If two keys of opposing directions are pressed, move in the direction of the first key pressed.
      */
     protected void movementLogic() {
-        double moveSpeed = getCurrentSpeed();
+        double moveSpeed = applyCurrentSpeed();
 
         boolean left = false;
         boolean right = false;
@@ -211,7 +210,6 @@ public class Player extends Entity {
      */
     @Override
     protected void collisionLogic() {
-        super.collisionLogic();
         if (isTouchingAnyStructures()) {
             GameComponent component = getTopStructureTouching(); // Use the top structure only so you can stand on something above lava to stay safe and stuff
             GameSession.getUsedLayout().playerCollisionLogic(component);
@@ -224,8 +222,6 @@ public class Player extends Entity {
 
     @Override
     public void statLogic() {
-        System.out.println(getWorld().getName());
-
         tire(0.1);
 
         if (energy <= 0) {
@@ -246,13 +242,16 @@ public class Player extends Entity {
         energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());
         money = max(money, 0);
         strength = max(strength, 0);
+        width = clamp(width, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
+        height = clamp(height, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
+
     }
 
 
     private void projectileLogic() {
         if (Controls.getFired()) {
             int radius = 25;
-            Color color = new Color(100, 75, 35);
+            Color color = new Color(35, 31, 15);
             int damage = betterRound(Math.ceil(strength/1000)+1);
             double angle = getAngle(Controls.getLastClickX(), Controls.getLastClickY(), WindowSize.getMidWidth(), WindowSize.getMidHeight());
             MobileEntity projectile = new MobileEntity("Projectile", x, y, radius, radius, world, color,

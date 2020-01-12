@@ -34,6 +34,7 @@ public class World extends GameComponent {
     public World(String name, int width, int height, Color color, Color outerColor) {
         super(name, 0, 0, width, height, null, color);
         World.instances.add(this);
+
         this.world = this;
         this.outerColor = outerColor;
 

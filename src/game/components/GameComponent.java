@@ -5,7 +5,6 @@ import main.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 import static util.MyMath.betterRound;
 
@@ -74,7 +73,6 @@ public abstract class GameComponent {
         this.height = height;
         this.world = world;
         this.color = color;
-
     }
 
 

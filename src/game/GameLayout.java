@@ -10,7 +10,6 @@ import util.MyMath;
 
 import java.awt.*;
 
-import static util.MyMath.angleWrap;
 
 
 public class GameLayout {
@@ -43,13 +42,12 @@ public class GameLayout {
 
     /** Entity & subtype instances */
 
-    MobileEntity doggo = new MobileEntity("Doggo", -50, 50, 50, 50, town, new Color(150, 150, 150), MobileEntity.MovementType.AVOID, 6, 600, 2, 1, 1000, false, true);
+    //MobileEntity doggo = new MobileEntity("Doggo", -50, 50, 50, 50, town, new Color(150, 150, 150), MobileEntity.MovementType.AVOID, 6, 600, 2, 1, 1000, false, true);
 
-    MobileEntity zombie = new MobileEntity("Zombie", -2500, 2500, 50, 50, town, new Color(77, 105, 73), MobileEntity.MovementType.FOLLOW, 8, 800, 45, 2, 25, true, true);
-    MobileEntity boyo = new MobileEntity("Boyo", 500, 500, 50, 50, town, Color.BLUE, MobileEntity.MovementType.AVOID, 11, 150, 10, 0, 5, false, true);
+    MobileEntity zombie = new MobileEntity("Zombie", -2500, 2500, 50, 50, town, new Color(82, 105, 76), MobileEntity.MovementType.FOLLOW, 6, 700, 45, 2, 25, true, true);
+    MobileEntity yourDad = new MobileEntity("yourDad", 500, 500, 50, 50, town, Color.BLUE, MobileEntity.MovementType.AVOID, 11, 500, 10, 0, 500, false, true);
 
     //MobileEntity bruh = new MobileEntity("Bruh", 500, 100, 50, 50, town, Color.RED, MobileEntity.MovementType.RECIPROCATING, 10, 200, 0, 5, 100, true, true);
-
 
 
 
@@ -74,7 +72,7 @@ public class GameLayout {
 
 
     Structure cave = new Structure("Cave", -2000,  -2000, 650, 300, town, new Color(190, 190, 190));
-    Structure lavaPit = new Structure("Lava Pit", 2000, 2000, 1000, 1000, town, new Color(255, 159, 0), 3.0);
+    Structure lavaPit = new Structure("Lava Pit", 2000, 2000, 1000, 1000, town, new Color(255, 159, 0));
 
     Structure platform = new Structure("Platform", 2000, 2000, 300, 300, town, new Color(104, 100, 65));
 
@@ -83,7 +81,7 @@ public class GameLayout {
     Structure cash = new Structure("$", town.getRandX(), town.getRandY(), 55, 30, town, new Color(100, 150, 100), 20);
 
 
-    Spawner zombieSpawner = new Spawner("Zombie Spawner", -2500 , 2500, 300, 200, town, new Color(50, 59, 52), zombie, 10000);
+    Spawner zombieSpawner = new Spawner("Zombie Spawner", -2500 , 2500, 350, 250, town, new Color(50, 59, 52), zombie, 8000);
 
 
     Structure houseDoor = new Structure("House Door", houseInterior.getMidWidth() , 0, 20, 150, houseInterior, new Color(190, 170, 80));

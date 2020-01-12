@@ -18,7 +18,7 @@ public class MobileEntity extends Entity {
     // This is actually just used for other things like collisionLogic() in this class to allow use of uninherited fields and methods
     protected static ArrayList<MobileEntity> instances = new ArrayList<>();
 
-    public static ArrayList<MobileEntity> getSubtypeInstances() { return instances; }
+    public static ArrayList<MobileEntity> getMobileEntityInstances() { return instances; }
 
 
     public enum MovementType {
@@ -51,6 +51,11 @@ public class MobileEntity extends Entity {
     protected double getAngleToPlayer() { return getAngle(x, y, Player.getInstance().getX(), Player.getInstance().getY()); }
 
 
+    /** Copy all fields into new MobileEntity (for spawners) and set its location. */
+    public MobileEntity getNewCloneAt(double x, double y, World world) {
+        return new MobileEntity(name, x, y, width, height, world, color, movementType, speed, range, startAngle, damage, health, canDamagePlayer, continuousDamage);
+    }
+
 
     public MobileEntity(String name, double x, double y, double width, double height, World world, Color color,
                         MovementType movementType, double speed, double range, double angle,
@@ -68,13 +73,6 @@ public class MobileEntity extends Entity {
         this.continuousDamage = continuousDamage;
 
         this.health = health;
-    }
-
-
-
-    /** Copy all fields into new MobileEntity (for spawners) */
-    public void cloneAt(double x, double y, World world) {
-        new MobileEntity(name, x, y, width, height, world, color, movementType, speed, range, startAngle, damage, health, canDamagePlayer, continuousDamage);
     }
 
 
@@ -150,15 +148,12 @@ public class MobileEntity extends Entity {
 
 
     protected void collisionLogic() {
-        super.collisionLogic();
         for (Entity entity: getTouchingEntities()) {
             // If damage is not continuous, only do damage on first collision with entity
             if ((continuousDamage || !lastTouching.contains(entity)) && entity != this) {
-                // Only do damage to player if specified. If not, don't do damage to player but damage every other MobileEntity
-                //if ((canDamagePlayer && entity == Player.getInstance()) || (!canDamagePlayer && entity instanceof MobileEntity)) {
-                if (canDamagePlayer || entity != Player.getInstance()) {
+                // Do damage to colliding entities. If canDamagePlayer == true, can only damage player. Else, it can only damage other MobileEntities
+                if ((canDamagePlayer && entity == Player.getInstance()) || (!canDamagePlayer && entity instanceof MobileEntity)) {
                     entity.damage(damage);
-                    System.out.println(entity.getName());
                 }
             }
         }
@@ -170,12 +165,10 @@ public class MobileEntity extends Entity {
 
 
     protected void statLogic() {
-
         if (health <= 0)
             alive = false;
 
         health = Math.max(health, 0);
-
     }
 
 

@@ -23,10 +23,6 @@ public class Structure extends GameComponent {
     protected Font labelFont;
     private int fontSize = 0;
 
-    private double damage = 0;
-
-    public double getDamage() { return damage; }
-
 
     public void randomizePos() {
         x = world.getRandX();
@@ -40,12 +36,6 @@ public class Structure extends GameComponent {
         Structure.instances.add(this);
     }
 
-
-    public Structure(String name, double x, double y, double width, double height, World world, Color color, double damage) {
-        super(name, x, y, width, height, world, color);
-        Structure.instances.add(this);
-        this.damage = damage;
-    }
 
 
     public Structure(String name, double x, double y, double width, double height, World world, Color color, int fontSize) {
