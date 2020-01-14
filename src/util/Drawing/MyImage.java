@@ -1,4 +1,4 @@
-package util;
+package util.Drawing;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -9,7 +9,7 @@ import static util.MyMath.betterRound;
 
 public class MyImage {
 
-    private static final String FILE_PATH = "assets/Fonts/";
+    private static final String FILE_PATH = "/assets/Fonts/";
     private static final String FILE_ENDING = ".png";
 
 
@@ -22,11 +22,12 @@ public class MyImage {
     private double height;
 
 
-    public MyImage(String name) {
+    public MyImage(String name, double x, double y, double scaleFactor) {
         try {
             File file = new File(FILE_PATH + name + FILE_ENDING);
             img = ImageIO.read(file); // Retrieve image from file folder
-
+            width = img.getWidth(null)*scaleFactor;
+            height = img.getHeight(null)*scaleFactor;
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -34,15 +35,9 @@ public class MyImage {
     }
 
 
-    public void scale(double scaleFactor) {
-        width = img.getWidth(null)*scaleFactor;
-        height = img.getHeight(null)*scaleFactor;
-    }
-
 
     public void draw(Graphics g) {
-        g.drawImage(img, betterRound(x), betterRound(0), betterRound(50), betterRound(50), null);
-
+        g.drawImage(img, betterRound(x), betterRound(y), betterRound(width), betterRound(height), null);
     }
 
 

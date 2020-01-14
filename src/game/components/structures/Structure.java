@@ -3,14 +3,12 @@ package game.components.structures;
 import game.components.GameComponent;
 import game.components.World;
 import game.components.entities.player.Player;
-import util.DrawString;
-import util.MyFont;
+import util.Drawing.DrawString;
+import util.Drawing.MyFont;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-
-import static util.MyMath.betterRound;
 
 
 public class Structure extends GameComponent {

@@ -2,7 +2,7 @@ package main;
 
 import game.components.entities.player.Player;
 import game.GameSession;
-import util.MyFont;
+import util.Drawing.MyFont;
 
 import static main.WindowSize.*;
 import static util.TimeUtil.*;

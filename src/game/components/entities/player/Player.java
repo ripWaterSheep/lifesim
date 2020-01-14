@@ -155,7 +155,7 @@ public class Player extends Entity {
         double currentSpeed = speed * clamp(((energy/getStrengthDependentStatCap())/2)+0.5, 0.5, 1);
         if (Controls.getSprinting()) {
             currentSpeed *= 1.5;
-            tire(0.15);
+            tire(0.05);
         }
         return currentSpeed;
     }
