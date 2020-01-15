@@ -17,15 +17,15 @@ import java.util.Collections;
 public class GameSession {
 
 
-    private static GameLayout usedLayout = new GameLayout();
+    private static Layout usedLayout = new Layout();
 
-    public static GameLayout getUsedLayout() { return usedLayout; }
+    public static Layout getUsedLayout() { return usedLayout; }
 
 
     /** Holds all instances used in the game */
-    private static ArrayList<ArrayList<? extends GameComponent>> usedComponentInstances;
+    private static ArrayList<ArrayList<? extends GameComponent>> usedComponents;
 
-    public static ArrayList<ArrayList<? extends GameComponent>> getUsedComponents() { return usedComponentInstances; }
+    public static ArrayList<ArrayList<? extends GameComponent>> getUsedComponents() { return usedComponents; }
 
 
     private static int currentFrame = 0;
@@ -56,19 +56,19 @@ public class GameSession {
 		 * It's the same thing with all other Structure Subtypes.
 		 */
 		 
-		usedComponentInstances = new ArrayList<>();
+		usedComponents = new ArrayList<>();
 		/* Arraylists of instances are passed to usedInstances to keep references the ArrayLists so that new
 		 * objects that are added mid game will be referenced (like player created projectiles).
 		 */
 
-		usedComponentInstances.add(Entity.getInstances());
-		usedComponentInstances.add(Structure.getInstances());
-		usedComponentInstances.add(World.getInstances());
+		usedComponents.add(Entity.getInstances());
+		usedComponents.add(Structure.getInstances());
+		usedComponents.add(World.getInstances());
 		
-        Collections.reverse(usedComponentInstances);
+        Collections.reverse(usedComponents);
 		Entity.addSpawnedEntities();
         
-        for (ArrayList<? extends GameComponent> instances: usedComponentInstances) {
+        for (ArrayList<? extends GameComponent> instances: usedComponents) {
 			for (GameComponent component : instances) {
 				component.setup(panel);
 			}
@@ -79,18 +79,15 @@ public class GameSession {
 
     public void loop(Graphics g) {
 
-		for (ArrayList<? extends GameComponent> instances: usedComponentInstances) {
-			for (GameComponent component : instances)
-				component.act();
-		}
-        Stat.retrieveValues();
-
-		for (ArrayList<? extends GameComponent> instances:usedComponentInstances) {
+		Stat.retrieveValues();
+		for (ArrayList<? extends GameComponent> instances: usedComponents) {
 			for (GameComponent component : instances) {
+				component.act();
 				if (component.isOnScreen())
 					component.draw(g);
 			}
 		}
+
         Overlay.drawOverlays(g);
 		Entity.addSpawnedEntities();
 		GarbageCollection.removeExpiredEntities();
@@ -98,6 +95,5 @@ public class GameSession {
         debug();
 
     }
-
 
 }

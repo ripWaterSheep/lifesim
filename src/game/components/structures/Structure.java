@@ -18,15 +18,9 @@ public class Structure extends GameComponent {
 
     public static ArrayList<Structure> getInstances() { return instances; }
 
+
     protected Font labelFont;
     private int fontSize = 0;
-
-
-    public void randomizePos() {
-        x = world.getRandX();
-        y = world.getRandY();
-    }
-
 
 
     public Structure(String name, double x, double y, double width, double height, World world, Color color) {
@@ -41,6 +35,13 @@ public class Structure extends GameComponent {
         this.fontSize = fontSize;
         labelFont = new Font(MyFont.getMainFont(), Font.PLAIN, fontSize);
 
+    }
+
+
+
+    public void randomizePos() {
+        x = world.getRandX();
+        y = world.getRandY();
     }
 
 

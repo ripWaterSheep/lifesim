@@ -12,7 +12,7 @@ import java.awt.*;
 
 
 
-public class GameLayout {
+public class Layout {
 
 
 
@@ -148,10 +148,9 @@ public class GameLayout {
                 }
                 break;
 
-            /*case "Lava Pit":
+            case "Lava Pit":
                 player.damage(5);
                 break;
-*/
 
             case "$":
                 player.gainMoney(100);
