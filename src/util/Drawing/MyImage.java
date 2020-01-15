@@ -13,21 +13,23 @@ public class MyImage {
     private static final String FILE_ENDING = ".png";
 
 
-    private Image img;
-
-    private double x;
-    private double y;
+    private Image image;
 
     private double width;
     private double height;
 
+    public double getWidth() { return width; }
 
-    public MyImage(String name, double x, double y, double scaleFactor) {
+    public double getHeight() { return height; }
+
+
+
+    public MyImage(String name, double scaleFactor) {
         try {
             File file = new File(FILE_PATH + name + FILE_ENDING);
-            img = ImageIO.read(file); // Retrieve image from file folder
-            width = img.getWidth(null)*scaleFactor;
-            height = img.getHeight(null)*scaleFactor;
+            image = ImageIO.read(file); // Retrieve image from file folder
+            width = image.getWidth(null)*scaleFactor;
+            height = image.getHeight(null)*scaleFactor;
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -35,10 +37,15 @@ public class MyImage {
     }
 
 
-
-    public void draw(Graphics g) {
-        g.drawImage(img, betterRound(x), betterRound(y), betterRound(width), betterRound(height), null);
+    public void draw(Graphics g, double x, double y) {
+        g.drawImage(image, betterRound(x), betterRound(y), betterRound(width), betterRound(height), null);
     }
+
+
+    public void draw(Graphics g, int x, int y, int width, int height) {
+        g.drawImage(image, x, y, betterRound(width), betterRound(height), null);
+    }
+
 
 
 }

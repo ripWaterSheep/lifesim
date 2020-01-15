@@ -2,6 +2,7 @@ package game.components;
 
 import game.components.entities.player.Player;
 import main.WindowSize;
+import util.Drawing.MyImage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -64,6 +65,10 @@ public abstract class GameComponent {
     public Color getColor() { return color; }
 
 
+    protected MyImage image;
+
+    public MyImage getImage() { return image; }
+
 
     protected GameComponent(String name, double x, double y, double width, double height, World world, Color color) {
         this.name = name;
@@ -73,6 +78,18 @@ public abstract class GameComponent {
         this.height = height;
         this.world = world;
         this.color = color;
+    }
+
+
+    protected GameComponent(String name, double x, double y, World world, String imageName, double imageScale) {
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.world = world;
+
+        image = new MyImage(imageName, imageScale);
+        this.width = image.getWidth();
+        this.height = image.getHeight();
     }
 
 
@@ -88,8 +105,16 @@ public abstract class GameComponent {
     /** Update each instance's appearance individually. */
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setColor(color);
-        g2d.fill(getShape());
+
+        if (color != null) {
+            g2d.setColor(color);
+            g2d.fill(getShape());
+        }
+
+        if (image != null){
+            image.draw(g, x, y);
+        }
+
     }
 
 }

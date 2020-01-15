@@ -52,17 +52,25 @@ public class MiniMap {
 
                 if (Player.getInstance().getWorld() == component.getWorld()) {
                     // Scale features to fit on mini map
-                    double x = scale(component.getDisplayX() - WindowSize.getMidWidth()) + getRadius() + PADDING;
-                    double y = scale(component.getDisplayY() - WindowSize.getMidHeight()) + getRadius() + PADDING;
-                    int width = betterRound(scale(component.getWidth()));
-                    int height = betterRound(scale(component.getHeight()));
-                    g2d.setColor(component.getColor());
+                    int scaledX = betterRound(scale(component.getDisplayX() - WindowSize.getMidWidth()) + getRadius() + PADDING);
+                    int scaledY = betterRound(scale(component.getDisplayY() - WindowSize.getMidHeight()) + getRadius() + PADDING);
 
-                    if (component.getShape() instanceof Ellipse2D.Double) {
-                        g2d.fillOval(betterRound(x), betterRound(y), width, height);
+                    int scaledWidth = betterRound(scale(component.getWidth()));
+                    int scaledHeight = betterRound(scale(component.getHeight()));
+
+                    // If component has a color, fill the shape with that color.
+                    if (component.getColor() != null) {
+                        g2d.setColor(component.getColor());
+                        if (component.getShape() instanceof Ellipse2D.Double) {
+                            g2d.fillOval(betterRound(scaledX), scaledY, scaledWidth, scaledHeight);
+                        } else {
+                            g2d.fillRect(betterRound(scaledX), scaledY, scaledWidth, scaledHeight);
+                        }
                     } else {
-                        g2d.fillRect(betterRound(x), betterRound(y), width, height);
+                        component.getImage().draw(g, scaledX, scaledY, scaledWidth, scaledHeight);
                     }
+
+
                 }
             }
         }
