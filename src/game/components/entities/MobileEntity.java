@@ -12,7 +12,7 @@ import static util.MyMath.*;
 
 public class MobileEntity extends Entity {
 
-    //TODO: Split between mob and projectile, probably.
+    //TODO: Split between mob and projectile because LINEAR/RECIPROCATING are two way completely different behaviors than RANDOM/FOLLOW/AVOID.
 
     // Not actually used for iterating in the GameSession loop.
     // This is actually just used for other things like collisionLogic() in this class to allow use of uninherited fields and methods
@@ -24,6 +24,7 @@ public class MobileEntity extends Entity {
     public enum MovementType {
         LINEAR, // Go forward in a straight line and die at end of range.
         RECIPROCATING, // Go in a straight line, turn around when reached end of range.
+
         RANDOM, // Go in a random direction, change direction when at end of range.
         FOLLOW, // Try to get close to player if player is within range.
         AVOID // Try to get far from player if player is within range.
@@ -51,7 +52,7 @@ public class MobileEntity extends Entity {
     protected double getAngleToPlayer() { return getAngle(x, y, Player.getInstance().getX(), Player.getInstance().getY()); }
 
 
-    /** Copy all fields into new MobileEntity (for spawners) and set its location. */
+    /** Copy all fields into new MobileEntity (for spawners) and set its location. */ // TODO: add this to new Mob class next commit
     public MobileEntity getNewCloneAt(double x, double y, World world) {
         return new MobileEntity(name, x, y, width, height, world, color, movementType, speed, range, startAngle, damage, health, canDamagePlayer, continuousDamage);
     }

@@ -222,14 +222,12 @@ public class Player extends Entity {
 
     @Override
     public void statLogic() {
-        tire(0.1);
+        super.statLogic();
 
         if (energy <= 0) {
             new GameMessage("Get energy quickly!");
             damage(2);
         }
-
-        if (health <= 0) alive = false;
 
         if (!alive) {
             new GameMessage("Oof!");
@@ -237,6 +235,8 @@ public class Player extends Entity {
             health = 0;
             energy = 0;
         }
+
+        tire(0.1);
 
         health = MyMath.clamp(health, 0, getStrengthDependentStatCap());
         energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());

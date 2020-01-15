@@ -18,19 +18,19 @@ public class Spawner extends Structure {
 
     private static final int SPAWN_LIMIT = 8;
 
-    private static ArrayList<MobileEntity> allSpawned = new ArrayList<>();
+    private static ArrayList<MobileEntity> allSpawn = new ArrayList<>();
 
-    private MobileEntity spawnable;
+    private MobileEntity mobToSpawn;
 
     private long spawnInterval;
     private long lastSpawnTime = 0;
 
 
-    public Spawner(String name, double x, double y, double width, double height, World world, Color color, MobileEntity spawnable, long spawnInterval) {
+    public Spawner(String name, double x, double y, double width, double height, World world, Color color, MobileEntity mobToSpawn, long spawnInterval) {
         super(name, x, y, width, height, world, color);
         Spawner.instances.add(this);
 
-        this.spawnable = spawnable;
+        this.mobToSpawn = mobToSpawn;
         this.spawnInterval = spawnInterval;
     }
 
@@ -39,19 +39,15 @@ public class Spawner extends Structure {
     @Override
     public void act() {
         // Spawn a new clone of the MobileEntity passed as a parameter if spawn interval passes and spawn limit has not been reached
-        if (getCurrentTime() - lastSpawnTime > spawnInterval && allSpawned.size() < SPAWN_LIMIT) {
-            MobileEntity spawn = spawnable.getNewCloneAt(x, y, world);
-            allSpawned.add(spawn); // Add spawned entity to list to keep track of size
+        if (getCurrentTime() - lastSpawnTime > spawnInterval && allSpawn.size() < SPAWN_LIMIT) {
+            MobileEntity spawn = mobToSpawn.getNewCloneAt(x, y, world);
+            allSpawn.add(spawn); // Add spawned entity to list to keep track of size
             lastSpawnTime = getCurrentTime();
         }
-
-        for (MobileEntity entity: allSpawned) {
-             System.out.println(entity.isAlive());
-        }
-
+        
         // Clean dead spawn out from list so that more are allowed to spawn
-        allSpawned.removeIf(entity -> !entity.isAlive());
-        System.out.println(allSpawned.size());
+        allSpawn.removeIf(entity -> !entity.isAlive());
+        System.out.println(allSpawn.size());
     }
 
 

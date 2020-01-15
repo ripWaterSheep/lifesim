@@ -23,9 +23,9 @@ public class GameSession {
 
 
     /** Holds all instances used in the game */
-    private static ArrayList<ArrayList<? extends GameComponent>> usedComponents;
+    private static ArrayList< GameComponent> usedComponents;
 
-    public static ArrayList<ArrayList<? extends GameComponent>> getUsedComponents() { return usedComponents; }
+    public static ArrayList< GameComponent> getUsedComponents() { return usedComponents; }
 
 
     private static int currentFrame = 0;
@@ -61,17 +61,15 @@ public class GameSession {
 		 * objects that are added mid game will be referenced (like player created projectiles).
 		 */
 
-		usedComponents.add(Entity.getInstances());
-		usedComponents.add(Structure.getInstances());
-		usedComponents.add(World.getInstances());
+		usedComponents.addAll(Entity.getInstances());
+		usedComponents.addAll(Structure.getInstances());
+		usedComponents.addAll(World.getInstances());
 		
         Collections.reverse(usedComponents);
 		Entity.addSpawnedEntities();
-        
-        for (ArrayList<? extends GameComponent> instances: usedComponents) {
-			for (GameComponent component : instances) {
-				component.setup(panel);
-			}
+
+		for (GameComponent component : usedComponents) {
+			component.setup(panel);
 		}
 		
     }
@@ -80,12 +78,10 @@ public class GameSession {
     public void loop(Graphics g) {
 
 		Stat.retrieveValues();
-		for (ArrayList<? extends GameComponent> instances: usedComponents) {
-			for (GameComponent component : instances) {
-				component.act();
-				if (component.isOnScreen())
-					component.draw(g);
-			}
+		for (GameComponent component: usedComponents) {
+			component.act();
+			if (component.isOnScreen())
+				component.draw(g);
 		}
 
         Overlay.drawOverlays(g);

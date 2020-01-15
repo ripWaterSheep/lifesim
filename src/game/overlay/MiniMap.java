@@ -46,32 +46,28 @@ public class MiniMap {
         g2d.clip(getMapShape());
         g2d.setColor(Player.getInstance().getWorld().getOuterColor());
         g2d.fill(getMapShape());
+        for (GameComponent component: GameSession.getUsedComponents()) {
 
-        for (ArrayList<? extends  GameComponent> components: GameSession.getUsedComponents()) {
-            for (GameComponent component: components) {
+            if (component.getWorld() == Player.getInstance().getWorld() && component.isVisible()) {
+                // Scale features to fit on mini map
+                int scaledX = betterRound(scale(component.getDisplayX() - WindowSize.getMidWidth()) + getRadius() + PADDING);
+                int scaledY = betterRound(scale(component.getDisplayY() - WindowSize.getMidHeight()) + getRadius() + PADDING);
 
-                if (Player.getInstance().getWorld() == component.getWorld()) {
-                    // Scale features to fit on mini map
-                    int scaledX = betterRound(scale(component.getDisplayX() - WindowSize.getMidWidth()) + getRadius() + PADDING);
-                    int scaledY = betterRound(scale(component.getDisplayY() - WindowSize.getMidHeight()) + getRadius() + PADDING);
+                int scaledWidth = betterRound(scale(component.getWidth()));
+                int scaledHeight = betterRound(scale(component.getHeight()));
 
-                    int scaledWidth = betterRound(scale(component.getWidth()));
-                    int scaledHeight = betterRound(scale(component.getHeight()));
-
-                    // If component has a color, fill the shape with that color.
-                    if (component.getColor() != null) {
-                        g2d.setColor(component.getColor());
-                        if (component.getShape() instanceof Ellipse2D.Double) {
-                            g2d.fillOval(betterRound(scaledX), scaledY, scaledWidth, scaledHeight);
-                        } else {
-                            g2d.fillRect(betterRound(scaledX), scaledY, scaledWidth, scaledHeight);
-                        }
+                // If component has a color, fill the shape with that color.
+                if (component.getColor() != null) {
+                    g2d.setColor(component.getColor());
+                    if (component.getShape() instanceof Ellipse2D.Double) {
+                        g2d.fillOval(scaledX, scaledY, scaledWidth, scaledHeight);
                     } else {
-                        component.getImage().draw(g, scaledX, scaledY, scaledWidth, scaledHeight);
+                        g2d.fillRect(scaledX, scaledY, scaledWidth, scaledHeight);
                     }
-
-
+                } else {
+                    component.getImage().draw(g, scaledX, scaledY, scaledWidth, scaledHeight);
                 }
+
             }
         }
 

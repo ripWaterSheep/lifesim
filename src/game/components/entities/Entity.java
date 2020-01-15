@@ -1,8 +1,11 @@
 package game.components.entities;
 
+import game.GameSession;
 import game.components.GameComponent;
 import game.components.World;
+import game.components.entities.player.Player;
 import game.components.structures.Structure;
+import main.WindowSize;
 import util.MyMath;
 
 import javax.swing.*;
@@ -20,15 +23,15 @@ public abstract class Entity extends GameComponent {
     public static ArrayList<Entity> getInstances() { return instances; }
 
 
-    /* If any new entity is spawned in the middle of the game (player projectile, spawners in the future),
-     * then add them to this list to be added outside of the GameSession loop to prevent ConcurrentModificationException.
-     * Kinda cringe but idk how else to do it.
-     */
-    public static ArrayList<Entity> queue = new ArrayList<>();
-
     public static void addSpawnedEntities() {
-        instances.addAll(queue);
-        queue.clear();
+        /* Add entity instance spawned mid-game into the game after the loop is executed.
+         * If GameSession.usedComponents held references to the entity list,
+         * then adding to the list while iterating through it would cause a ConcurrentModificationException.
+         */
+        for (Entity entity: instances) {
+            if (!GameSession.getUsedComponents().contains(entity))
+                GameSession.getUsedComponents().add(entity);
+        }
     }
 
 
@@ -92,7 +95,7 @@ public abstract class Entity extends GameComponent {
     protected Entity(String name, double x, double y, double width, double height, World world, Color color, double speed, double angle) {
         super(name, x, y, width, height, world, color);
 
-        queue.add(this);
+        instances.add(this);
         this.speed = speed;
         this.startAngle = angle;
         this.currentAngle = angle;
@@ -121,7 +124,13 @@ public abstract class Entity extends GameComponent {
     }
 
 
-    protected abstract void statLogic();
+    protected void statLogic() {
+
+        if (health <= 0) {
+            alive = false;
+        }
+    }
+
 
     protected abstract void movementLogic();
 

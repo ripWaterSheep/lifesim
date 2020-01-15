@@ -51,7 +51,7 @@ public abstract class GameComponent {
 
     public Shape getShape() { return new Rectangle(betterRound(getDisplayX()), betterRound(getDisplayY()), betterRound(width), betterRound(height)); }
 
-    // If the component is visible in the window, then return true
+    // If the component is visible in the window, then return true.
     public boolean isOnScreen() { return getShape().intersects(WindowSize.getRect()) && world == Player.getInstance().getWorld(); }
 
 
@@ -63,6 +63,11 @@ public abstract class GameComponent {
     protected Color color;
 
     public Color getColor() { return color; }
+
+
+    protected boolean visible = true;
+
+    public boolean isVisible() { return visible; }
 
 
     protected MyImage image;
