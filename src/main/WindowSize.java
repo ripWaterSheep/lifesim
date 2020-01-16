@@ -4,7 +4,7 @@ package main;
 import java.awt.*;
 
 import static main.Main.panel;
-
+import static util.MyMath.betterRound;
 
 
 public class WindowSize {
@@ -22,6 +22,9 @@ public class WindowSize {
     public static int getMidWidth() { return panel.getWidth()/2; }
 
     public static int getMidHeight() { return panel.getHeight()/2; }
+
+
+    public static int getHypotLength() { return betterRound(Math.hypot(panel.getWidth(), panel.getHeight())); }
 
 
 }

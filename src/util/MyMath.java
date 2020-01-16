@@ -96,14 +96,10 @@ public class MyMath {
 
     /** Keeps angle within 0 to 360 degrees while preserving angle measure */
     public static double angleWrap(double deg) {
-        while (deg < 0)
-            deg += 360;
-
-        while (deg > 360)
-            deg -= 360;
+        while (deg < 0) deg += 360;
+        while (deg > 360) deg -= 360;
 
         return deg;
-
     }
 
 

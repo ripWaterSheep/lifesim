@@ -111,13 +111,15 @@ public abstract class GameComponent {
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
 
-        if (color != null) {
-            g2d.setColor(color);
-            g2d.fill(getShape());
-        }
+        if (visible) {
+            if (color != null) {
+                g2d.setColor(color);
+                g2d.fill(getShape());
+            }
 
-        if (image != null){
-            image.draw(g, x, y);
+            if (image != null) {
+                image.draw(g, x, y);
+            }
         }
 
     }

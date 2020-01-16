@@ -2,13 +2,11 @@ package game.overlay;
 
 import game.GameSession;
 import game.components.GameComponent;
-import game.components.entities.MobileEntity;
 import game.components.entities.player.Player;
 import main.WindowSize;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
 
 
 import static util.MyMath.betterRound;

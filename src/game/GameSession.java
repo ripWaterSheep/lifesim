@@ -46,11 +46,11 @@ public class GameSession {
 		 * the instance is added to the static arraylist "instances" which holds
 		 * all object references of the class
 		 * 
-		 * Since MobileEntity is a subclass of structure I just went frick it and didn't put any effort to make
-		 * a separate arraylist for MobileEntity instances. it works. The thing is, MobileEntity uses the Structure class
+		 * Since Creature is a subclass of structure I just went frick it and didn't put any effort to make
+		 * a separate arraylist for Creature instances. it works. The thing is, Creature uses the Structure class
 		 * constructor inside its constructor to fill in inherited fields (using super()) so i don't have to rewrite it,
 		 * but in the constructor the instance just gets added to Structure.instances. Not a big deal. Just be aware that
-		 * Structures and MobileEntities are both found in Structure.instances. MobileEntity has its own instance arraylist
+		 * Structures and Creatures are both found in Structure.instances. Creature has its own instance arraylist
 		 * but that's just for using polymorphism with non-inherited functions (idk if it can be cast to avoid needing this
 		 * cause it breaks when I try).
 		 * It's the same thing with all other Structure Subtypes.

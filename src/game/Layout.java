@@ -1,7 +1,7 @@
 package game;
 
 import game.components.GameComponent;
-import game.components.entities.MobileEntity;
+import game.components.entities.Creature;
 import game.components.structures.Spawner;
 import game.components.structures.Structure;
 import game.components.World;
@@ -36,19 +36,16 @@ public class Layout {
 
 
     /** Player instance */
-    Player player = new Player("Player", 0, 0, 30, town, Color.YELLOW);
+    Player player = new Player("Player", 0, 0, 50, town, Color.YELLOW, 10);
 
 
 
     /** Entity & subtype instances */
 
-    //MobileEntity doggo = new MobileEntity("Doggo", -50, 50, 50, 50, town, new Color(150, 150, 150), MobileEntity.MovementType.AVOID, 6, 600, 2, 1, 1000, false, true);
+    //Creature doggo = new Creature("Doggo", -50, 50, 50, 50, town, new Color(150, 150, 150), Creature.MovementType.AVOID, 6, 600, 2, 1, 1000, false, true);
 
-    MobileEntity zombie = new MobileEntity("Zombie", -2500, 2500, 50, 50, town, new Color(82, 105, 76), MobileEntity.MovementType.FOLLOW, 6, 700, 45, 2, 25, true, true);
-    MobileEntity yourDad = new MobileEntity("yourDad", 500, 500, 50, 50, town, Color.BLUE, MobileEntity.MovementType.AVOID, 11, 500, 10, 0, 500, false, true);
-
-    //MobileEntity bruh = new MobileEntity("Bruh", 500, 100, 50, 50, town, Color.RED, MobileEntity.MovementType.RECIPROCATING, 10, 200, 0, 5, 100, true, true);
-
+    Creature zombie = new Creature("Zombie", -2500, 2500, 50, town, new Color(82, 105, 76), Creature.BehaviorType.FOLLOW, 6, 700, 2, 25, true);
+    Creature yourDad = new Creature("yourDad", 500, 500, 50, town, Color.BLUE, Creature.BehaviorType.AVOID, 11, 500, 10, 500, false);
 
 
 

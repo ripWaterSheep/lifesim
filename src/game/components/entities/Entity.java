@@ -3,9 +3,7 @@ package game.components.entities;
 import game.GameSession;
 import game.components.GameComponent;
 import game.components.World;
-import game.components.entities.player.Player;
 import game.components.structures.Structure;
-import main.WindowSize;
 import util.MyMath;
 
 import javax.swing.*;
@@ -36,8 +34,7 @@ public abstract class Entity extends GameComponent {
 
 
     protected double speed; // Pixels to move per frame
-    protected final double startAngle;
-    protected double currentAngle;
+    protected double angle;
 
     protected boolean alive = true;
 
@@ -83,7 +80,7 @@ public abstract class Entity extends GameComponent {
     public ArrayList<Entity> getTouchingEntities() {
         ArrayList<Entity> touching = new ArrayList<>();
             for (Entity entity: Entity.instances) {
-                if (testIntersection(getShape(), entity.getShape()) && world == entity.getWorld()) {
+                if (testIntersection(getShape(), entity.getShape()) && world == entity.getWorld() && !(entity == this)) {
                     touching.add(entity);
                 }
             }
@@ -92,25 +89,20 @@ public abstract class Entity extends GameComponent {
 
 
 
-    protected Entity(String name, double x, double y, double width, double height, World world, Color color, double speed, double angle) {
-        super(name, x, y, width, height, world, color);
+    protected Entity(String name, double x, double y, double radius, World world, Color color, double speed, double angle, double health) {
+        super(name, x, y, radius, radius, world, color);
 
         instances.add(this);
         this.speed = speed;
-        this.startAngle = angle;
-        this.currentAngle = angle;
+        this.angle = angle;
+        this.health = health;
     }
 
-
-    protected void moveTowardsAngle(double angle, double speed) {
-        x -= (speed*Math.cos(Math.toRadians(angle)));
-        y -= (speed*Math.sin(Math.toRadians(angle)));
-    }
 
 
     protected void moveTowardsAngle() {
-        x -= (speed*Math.cos(Math.toRadians(currentAngle)));
-        y -= (speed*Math.sin(Math.toRadians(currentAngle)));
+        x -= (speed*Math.cos(Math.toRadians(angle)));
+        y -= (speed*Math.sin(Math.toRadians(angle)));
     }
 
 
@@ -128,7 +120,10 @@ public abstract class Entity extends GameComponent {
 
         if (health <= 0) {
             alive = false;
+            visible = false;
         }
+
+        health = Math.max(health, 0);
     }
 
 
@@ -153,6 +148,7 @@ public abstract class Entity extends GameComponent {
         borderLogic();
         statLogic();
     }
+
 
     @Override
     public void draw(Graphics g) {

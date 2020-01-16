@@ -1,11 +1,11 @@
 package game.components.entities.player;
 
 import game.components.entities.Entity;
+import game.components.entities.Projectile;
 import game.components.structures.Structure;
 import game.components.World;
 import game.GameSession;
 import game.components.GameComponent;
-import game.components.entities.MobileEntity;
 import game.overlay.DeathScreen;
 import game.overlay.GameMessage;
 import util.MyMath;
@@ -78,6 +78,8 @@ public class Player extends Entity {
         height -= amount;
     }
 
+    private double baseSpeed;
+
 
     private double energy = 1000;
 
@@ -134,14 +136,12 @@ public class Player extends Entity {
 
 
 
-    public Player(String name, double x, double y, double radius, World world, Color color) {
-        super(name, x, y, radius*2, radius*2, world, color, 10, 0);
+    public Player(String name, double x, double y, double radius, World world, Color color, double speed) {
+        super(name, x, y, radius, world, color, speed,0, 1000);
         Player.instance = this;
-
-        speed = 9;
-        health = 1000;
         this.world = world;
         this.color = color;
+        baseSpeed = speed;
     }
 
 
@@ -151,8 +151,8 @@ public class Player extends Entity {
      * @return An int representing number of pixels player will move
      * in a direction per frame if appropriate key is pressed.
      */
-    private double applyCurrentSpeed() {
-        double currentSpeed = speed * clamp(((energy/getStrengthDependentStatCap())/2)+0.5, 0.5, 1);
+    private double calculateSpeed() {
+        double currentSpeed = baseSpeed * clamp(((energy/getStrengthDependentStatCap())/2)+0.5, 0.5, 1);
         if (Controls.getSprinting()) {
             currentSpeed *= 1.5;
             tire(0.05);
@@ -166,8 +166,6 @@ public class Player extends Entity {
      * If two keys of opposing directions are pressed, move in the direction of the first key pressed.
      */
     protected void movementLogic() {
-        double moveSpeed = applyCurrentSpeed();
-
         boolean left = false;
         boolean right = false;
         boolean up = false;
@@ -189,19 +187,19 @@ public class Player extends Entity {
 
         // Get angles for different key directions (makes going diagonal the same speed as horizontal or vertical)
         if (up) {
-            if (left) currentAngle = 45;
-            else if (right) currentAngle = 135;
-            else currentAngle = 90;
+            if (left) angle = 45;
+            else if (right) angle = 135;
+            else angle = 90;
         } else if (down) {
-            if (left) currentAngle = 315;
-            else if (right) currentAngle = 225;
-            else currentAngle = 270;
+            if (left) angle = 315;
+            else if (right) angle = 225;
+            else angle = 270;
         }
-        else if (right) currentAngle = 180;
-        else if (left) currentAngle = 0;
-        else moveSpeed = 0;
+        else if (right) angle = 180;
+        else if (left) angle = 0;
+        speed = calculateSpeed();
 
-        moveTowardsAngle(currentAngle, moveSpeed);
+        if (left||right||up||down) moveTowardsAngle();
     }
 
 
@@ -254,8 +252,7 @@ public class Player extends Entity {
             Color color = new Color(35, 31, 15);
             int damage = betterRound(Math.ceil(strength/1000)+1);
             double angle = getAngle(Controls.getLastClickX(), Controls.getLastClickY(), WindowSize.getMidWidth(), WindowSize.getMidHeight());
-            MobileEntity projectile = new MobileEntity("Projectile", x, y, radius, radius, world, color,
-                    MobileEntity.MovementType.LINEAR, 25, 800, angle, damage, 1, false, false);
+            Projectile projectile = new Projectile("Projectile", x, y, radius, world, color, 50, angle, WindowSize.getHypotLength(), damage, 1, false);
         }
     }
 
