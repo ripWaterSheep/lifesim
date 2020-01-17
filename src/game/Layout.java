@@ -16,7 +16,7 @@ public class Layout {
 
 
 
-    /** World instances */
+    /** world instances */
 
     World town = new World("Town",6500, 6500, new Color(86, 200, 93), new Color(220, 200, 140));
     World houseInterior = new World("House Interior", 1000, 850, new Color(230, 210, 140), new Color(100, 80, 50));
@@ -36,7 +36,7 @@ public class Layout {
 
 
     /** Player instance */
-    Player player = new Player("Player", 0, 0, 50, town, Color.YELLOW, 10);
+    Player player = new Player("Player", 0, 0, 35, town, Color.YELLOW, 10);
 
 
 
@@ -44,8 +44,8 @@ public class Layout {
 
     //Creature doggo = new Creature("Doggo", -50, 50, 50, 50, town, new Color(150, 150, 150), Creature.MovementType.AVOID, 6, 600, 2, 1, 1000, false, true);
 
-    Creature zombie = new Creature("Zombie", -2500, 2500, 50, town, new Color(82, 105, 76), Creature.BehaviorType.FOLLOW, 6, 700, 2, 25, true);
-    Creature yourDad = new Creature("yourDad", 500, 500, 50, town, Color.BLUE, Creature.BehaviorType.AVOID, 11, 500, 10, 500, false);
+    Creature zombie = new Creature("Zombie", -2500, 2500, 40, town, new Color(82, 105, 76), Creature.BehaviorType.FOLLOW, 6, 700, 2, 25, true);
+    Creature yourDad = new Creature("yourDad", 500, 500, 40, town, Color.BLUE, Creature.BehaviorType.AVOID, 11, 500, 10, 500, false);
 
 
 

@@ -41,7 +41,6 @@ public class Projectile extends Entity {
     @Override
     protected void movementLogic() {
         // Entity moves along specific angle
-        System.out.println(angle);
         moveTowardsAngle();
         // Die around when at edge of range
         if (Math.abs(currentDistance) >= range) {

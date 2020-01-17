@@ -238,15 +238,19 @@ public class Controls {
 
                     case VK_1:
                         player.gainMoney(1000);
+                        break;
 
                     case VK_2:
                         player.heal(1000);
+                        break;
 
                     case VK_3:
                         player.energize(1000);
+                        break;
 
                     case VK_K:
                         player.damage(100000);
+                        break;
                 }
             }
         }
@@ -256,19 +260,19 @@ public class Controls {
          * Make player go to the next world declared in the used game layout
          */
         static void cycleWorlds(int index) {
-            int currentIndex = World.getInstances().indexOf(Player.getInstance().getWorld());
+            int currentIndex = World.getWorldInstances().indexOf(Player.getInstance().getWorld());
             World newWorld = Player.getInstance().getWorld();
 
             try {
                 // Increment or decrement(if negative) current index and set player world to world at new index.
-                newWorld = (World) World.getInstances().get(currentIndex + index);
+                newWorld = (World) World.getWorldInstances().get(currentIndex + index);
 
             } catch (IndexOutOfBoundsException e) {
 
                 if (index > 0) {
-                    newWorld = (World) World.getInstances().get(index - 1); // Wraparound to the first world
+                    newWorld = (World) World.getWorldInstances().get(index - 1); // Wraparound to the first world
                 } else if (index < 0) {
-                    newWorld = (World) World.getInstances().get(World.getInstances().size() + index); // Wraparound to the last world
+                    newWorld = (World) World.getWorldInstances().get(World.getWorldInstances().size() + index); // Wraparound to the last world
                 }
             }
 

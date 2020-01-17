@@ -47,7 +47,6 @@ public class Spawner extends Structure {
         
         // Clean dead spawn out from list so that more are allowed to spawn
         allSpawn.removeIf(entity -> !entity.isAlive());
-        System.out.println(allSpawn.size());
     }
 
 

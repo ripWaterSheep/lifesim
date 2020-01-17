@@ -68,10 +68,20 @@ public class MyMath {
         if (min >= max) {
             throw new IllegalArgumentException("max must be greater than min");
         }
-
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
     }
+
+
+    public static double getRandInRange(double min, double max) {
+
+        if (min >= max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
+        Random r = new Random();
+        return min + (max - min) * r.nextDouble();
+    }
+
 
 
     public static int applyRandomSign(int number) { // Produces 1 or -1, just trust that this works lol

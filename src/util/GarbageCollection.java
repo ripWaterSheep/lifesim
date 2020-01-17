@@ -11,7 +11,7 @@ public class GarbageCollection {
         for (Creature Creature: Creature.getCreatureInstances()){
             if (!Creature.isAlive()) {
                 Structure.getInstances().remove(Creature); // Remove entity reference from list iterated in game loop.
-                Creature.getInstances().remove(Creature); // Remove entity reference from entity-only list.
+                Creature.getEntityInstances().remove(Creature); // Remove entity reference from entity-only list.
             }
 
         }

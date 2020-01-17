@@ -61,9 +61,9 @@ public class GameSession {
 		 * objects that are added mid game will be referenced (like player created projectiles).
 		 */
 
-		usedComponents.addAll(Entity.getInstances());
+		usedComponents.addAll(Entity.getEntityInstances());
 		usedComponents.addAll(Structure.getInstances());
-		usedComponents.addAll(World.getInstances());
+		usedComponents.addAll(World.getWorldInstances());
 		
         Collections.reverse(usedComponents);
 		Entity.addSpawnedEntities();

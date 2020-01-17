@@ -38,6 +38,10 @@ public class Structure extends GameComponent {
     }
 
 
+    public Structure(String name, double x, double y, World world, String imageName, double imageScale) {
+        super(name, x, y, world, imageName, imageScale);
+    }
+
 
     public void randomizePos() {
         x = world.getRandX();

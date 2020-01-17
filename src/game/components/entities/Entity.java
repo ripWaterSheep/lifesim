@@ -3,6 +3,7 @@ package game.components.entities;
 import game.GameSession;
 import game.components.GameComponent;
 import game.components.World;
+import game.components.entities.player.Player;
 import game.components.structures.Structure;
 import util.MyMath;
 
@@ -16,9 +17,9 @@ import static util.MyMath.testIntersection;
 public abstract class Entity extends GameComponent {
 
     // Contains all subclass instances as well as Entity instances
-    private static ArrayList<Entity> instances = new ArrayList<>();
+    private static ArrayList<Entity> entityInstances = new ArrayList<>();
 
-    public static ArrayList<Entity> getInstances() { return instances; }
+    public static ArrayList<Entity> getEntityInstances() { return entityInstances; }
 
 
     public static void addSpawnedEntities() {
@@ -26,7 +27,7 @@ public abstract class Entity extends GameComponent {
          * If GameSession.usedComponents held references to the entity list,
          * then adding to the list while iterating through it would cause a ConcurrentModificationException.
          */
-        for (Entity entity: instances) {
+        for (Entity entity: entityInstances) {
             if (!GameSession.getUsedComponents().contains(entity))
                 GameSession.getUsedComponents().add(entity);
         }
@@ -79,7 +80,7 @@ public abstract class Entity extends GameComponent {
 
     public ArrayList<Entity> getTouchingEntities() {
         ArrayList<Entity> touching = new ArrayList<>();
-            for (Entity entity: Entity.instances) {
+            for (Entity entity: Entity.entityInstances) {
                 if (testIntersection(getShape(), entity.getShape()) && world == entity.getWorld() && !(entity == this)) {
                     touching.add(entity);
                 }
@@ -90,9 +91,9 @@ public abstract class Entity extends GameComponent {
 
 
     protected Entity(String name, double x, double y, double radius, World world, Color color, double speed, double angle, double health) {
-        super(name, x, y, radius, radius, world, color);
+        super(name, x, y, radius*2, radius*2, world, color);
+        entityInstances.add(this);
 
-        instances.add(this);
         this.speed = speed;
         this.angle = angle;
         this.health = health;
@@ -142,7 +143,7 @@ public abstract class Entity extends GameComponent {
     @Override
     public void act()  {
         if (alive) {
-            movementLogic();
+            if (Player.getInstance().getWorld() == world) movementLogic();
             collisionLogic();
         }
         borderLogic();

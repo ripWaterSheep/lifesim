@@ -248,11 +248,12 @@ public class Player extends Entity {
 
     private void projectileLogic() {
         if (Controls.getFired()) {
-            int radius = 25;
+            int radius = 8 + betterRound(Math.ceil(strength/75));
             Color color = new Color(35, 31, 15);
-            int damage = betterRound(Math.ceil(strength/1000)+1);
+            int damage = betterRound(Math.ceil(strength/10));
+            System.out.println(damage);
             double angle = getAngle(Controls.getLastClickX(), Controls.getLastClickY(), WindowSize.getMidWidth(), WindowSize.getMidHeight());
-            Projectile projectile = new Projectile("Projectile", x, y, radius, world, color, 50, angle, WindowSize.getHypotLength(), damage, 1, false);
+            new Projectile("Projectile", x, y, radius, world, color, 40, angle, WindowSize.getHypotLength(), damage, 100, false);
         }
     }
 
