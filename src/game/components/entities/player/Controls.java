@@ -213,7 +213,6 @@ public class Controls {
 
 
     static void initListeners(JPanel panel) {
-
         panel.addKeyListener(keyAdapter);
         panel.addMouseListener(mouseAdapter);
     }
@@ -230,24 +229,19 @@ public class Controls {
                         cycleWorlds(1);
                         TimeUtil.sleep(45);
                         break;
-
                     case VK_B:
                         cycleWorlds(-1);
                         TimeUtil.sleep(45);
                         break;
-
                     case VK_1:
                         player.gainMoney(1000);
                         break;
-
                     case VK_2:
                         player.heal(1000);
                         break;
-
                     case VK_3:
                         player.energize(1000);
                         break;
-
                     case VK_K:
                         player.damage(100000);
                         break;

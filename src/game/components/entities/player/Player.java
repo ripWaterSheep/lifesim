@@ -1,11 +1,10 @@
 package game.components.entities.player;
 
+import game.Chapter;
 import game.components.entities.Entity;
 import game.components.entities.Projectile;
 import game.components.structures.Structure;
 import game.components.World;
-import game.GameSession;
-import game.components.GameComponent;
 import game.overlay.DeathScreen;
 import game.overlay.GameMessage;
 import util.MyMath;
@@ -35,6 +34,11 @@ public class Player extends Entity {
     /** Because game session polymorphizes the other objects with an arraylist of instance arraylists
      * this function was needed in order to return an arraylist to match.
      */
+
+
+    private Chapter currentChapter;
+
+    public Chapter getCurrentChapter() { return currentChapter; }
 
 
     public void goTo(double x, double y) {
@@ -132,8 +136,6 @@ public class Player extends Entity {
     public double getStrengthDependentStatCap() { return 1000 + (strength/10); }
 
 
-    public boolean getInteracted() { return Controls.getInteracted(); }
-
 
 
     public Player(String name, double x, double y, double radius, World world, Color color, double speed) {
@@ -209,10 +211,11 @@ public class Player extends Entity {
     @Override
     protected void collisionLogic() {
         if (isTouchingAnyStructures()) {
-            GameComponent component = getTopStructureTouching(); // Use the top structure only so you can stand on something above lava to stay safe and stuff
-            GameSession.getUsedLayout().playerCollisionLogic(component);
+            Structure component = getTopStructureTouching(); // Use the top structure only so you can stand on something above lava to stay safe and stuff
+
+            component.onTouch();
             if (Controls.getInteracted()) {
-                GameSession.getUsedLayout().playerInteractLogic(component);
+                component.onClick();
             }
         }
     }
@@ -238,7 +241,7 @@ public class Player extends Entity {
 
         health = MyMath.clamp(health, 0, getStrengthDependentStatCap());
         energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());
-        money = max(money, 0);
+        money = clamp(money, 0, currentChapter.getCashCap());
         strength = max(strength, 0);
         width = clamp(width, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
         height = clamp(height, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
@@ -250,10 +253,10 @@ public class Player extends Entity {
         if (Controls.getFired()) {
             int radius = 8 + betterRound(Math.ceil(strength/75));
             Color color = new Color(35, 31, 15);
-            int damage = betterRound(Math.ceil(strength/10));
+            int damage = betterRound(Math.ceil(strength/65));
             System.out.println(damage);
             double angle = getAngle(Controls.getLastClickX(), Controls.getLastClickY(), WindowSize.getMidWidth(), WindowSize.getMidHeight());
-            new Projectile("Projectile", x, y, radius, world, color, 40, angle, WindowSize.getHypotLength(), damage, 100, false);
+            new Projectile("Projectile", x, y, radius, world, color, 30, angle, WindowSize.getHypotLength(), damage, 100, false);
         }
     }
 
@@ -261,6 +264,7 @@ public class Player extends Entity {
 
     @Override
     public void setup(JPanel panel) {
+        currentChapter = Chapter.getChapters().get(0);
         Controls.initListeners(panel);
 
     }

@@ -29,7 +29,7 @@ public class MainPanel extends JPanel {
         setBackground(Player.getInstance().getWorld().getOuterColor());
         super.paintComponent(g);
         gameSession.loop(g);
-        sleep(8);
+        sleep(10);
         repaint();
     }
 

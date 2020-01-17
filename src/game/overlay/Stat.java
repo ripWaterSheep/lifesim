@@ -47,8 +47,8 @@ public class Stat {
         Stat healthStat = new Stat("Health", player.getHealth(), 0, player.getStrengthDependentStatCap(), 1, Color.RED);
         Stat energyStat = new Stat("Energy", player.getEnergy(), 0, player.getStrengthDependentStatCap(), 1, Color.ORANGE);
         Stat strengthStat = new Stat("Strength", player.getStrength(), 0, Math.max(1000, player.getStrength()), 1, Color.YELLOW);
-        Stat moneyStat = new Stat("Cash", player.getMoney(), 0, Math.max(player.getMoney(), 5000), 0.2, Color.GREEN);
-        Stat intellectStat = new Stat("Intellect", player.getIntellect(), 0, Math.max(5000, player.getIntellect()), 0.2, Color.BLUE);
+        Stat moneyStat = new Stat("Cash", player.getMoney(), 0, player.getCurrentChapter().getCashCap(), 1000/player.getCurrentChapter().getCashCap(), Color.GREEN);
+        Stat intellectStat = new Stat("Intellect", player.getIntellect(), 0, player.getCurrentChapter().getIntellectCap(), 1000/player.getCurrentChapter().getIntellectCap(), Color.BLUE);
 
         Collections.reverse(shownStats);
     }

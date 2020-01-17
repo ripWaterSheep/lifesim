@@ -49,6 +49,10 @@ public class Structure extends GameComponent {
     }
 
 
+    public void onTouch() {}
+
+    public void onClick() {}
+
 
     @Override
     public void setup(JPanel panel) {
