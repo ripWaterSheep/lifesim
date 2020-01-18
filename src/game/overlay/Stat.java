@@ -90,7 +90,7 @@ public class Stat {
         this.key = key;
         this.value = value;
         this.barLength = betterRound(maxVal*DEFAULT_BAR_LENGTH_SCALE*barLengthScale);
-        this.statLength = betterRound(((value - minVal)/(maxVal - minVal)) * DEFAULT_BAR_LENGTH*barLengthScale);
+        this.statLength = betterRound(barLength*(value-minVal)/(maxVal-minVal));
 
         this.barColor = ColorMethods.applyOpacity(barColor, DEFAULT_OPACITY);
         this.showBar = true;

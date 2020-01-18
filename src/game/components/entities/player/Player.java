@@ -143,18 +143,16 @@ public class Player extends Entity {
 
 
 
-    /** Gets the speed at which the player is currently intended to move at.
-     *
-     * @return An int representing number of pixels player will move
+    /** Calculates the speed at which the player is currently intended to move at.
+     * An int representing number of pixels player will move
      * in a direction per frame if appropriate key is pressed.
      */
-    private double calculateSpeed() {
-        double currentSpeed = baseSpeed * clamp(((energy/getStrengthDependentStatCap())/2)+0.5, 0.5, 1);
+    private void calculateSpeed() {
+        speed = baseSpeed * clamp(((energy/getStrengthDependentStatCap())/2)+0.5, 0.5, 1);
         if (Controls.getSprinting()) {
-            currentSpeed *= 1.5;
+            speed *= 1.5;
             tire(0.05);
         }
-        return currentSpeed;
     }
 
 
@@ -194,7 +192,7 @@ public class Player extends Entity {
         }
         else if (right) angle = 180;
         else if (left) angle = 0;
-        speed = calculateSpeed();
+        calculateSpeed();
 
         if (left||right||up||down) moveTowardsAngle();
     }
