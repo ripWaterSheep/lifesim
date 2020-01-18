@@ -1,6 +1,5 @@
 package game.components.entities.player;
 
-import game.Chapter;
 import game.components.entities.Entity;
 import game.components.entities.Projectile;
 import game.components.structures.Structure;
@@ -35,10 +34,6 @@ public class Player extends Entity {
      * this function was needed in order to return an arraylist to match.
      */
 
-
-    private Chapter currentChapter;
-
-    public Chapter getCurrentChapter() { return currentChapter; }
 
 
     public void goTo(double x, double y) {
@@ -241,7 +236,7 @@ public class Player extends Entity {
 
         health = MyMath.clamp(health, 0, getStrengthDependentStatCap());
         energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());
-        money = clamp(money, 0, currentChapter.getCashCap());
+        money = max(money, 0);
         strength = max(strength, 0);
         width = clamp(width, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
         height = clamp(height, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
@@ -264,7 +259,6 @@ public class Player extends Entity {
 
     @Override
     public void setup(JPanel panel) {
-        currentChapter = Chapter.getChapters().get(0);
         Controls.initListeners(panel);
 
     }

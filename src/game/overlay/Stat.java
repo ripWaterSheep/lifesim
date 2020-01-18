@@ -24,8 +24,8 @@ public class Stat {
     private static final int BOTTOM_PADDING = 5;
     private static final int VERTICAL_SPACING = 36;
 
-    private static final double BAR_LENGTH_SCALE = 0.16;
-    private static final double MAX_BAR_LENGTH = 400;
+    private static final double DEFAULT_BAR_LENGTH_SCALE = 0.16;
+    private static final int DEFAULT_BAR_LENGTH = 160;
 
     private static final int DEFAULT_OPACITY = betterRound(0.5*255);
 
@@ -47,8 +47,8 @@ public class Stat {
         Stat healthStat = new Stat("Health", player.getHealth(), 0, player.getStrengthDependentStatCap(), 1, Color.RED);
         Stat energyStat = new Stat("Energy", player.getEnergy(), 0, player.getStrengthDependentStatCap(), 1, Color.ORANGE);
         Stat strengthStat = new Stat("Strength", player.getStrength(), 0, Math.max(1000, player.getStrength()), 1, Color.YELLOW);
-        Stat moneyStat = new Stat("Cash", player.getMoney(), 0, player.getCurrentChapter().getCashCap(), 1000/player.getCurrentChapter().getCashCap(), Color.GREEN);
-        Stat intellectStat = new Stat("Intellect", player.getIntellect(), 0, player.getCurrentChapter().getIntellectCap(), 1000/player.getCurrentChapter().getIntellectCap(), Color.BLUE);
+        Stat moneyStat = new Stat("Cash", player.getMoney(), 0, 10000, 0.1, Color.GREEN);
+        Stat intellectStat = new Stat("Intellect", player.getIntellect(), 0, 10000, 0.1, Color.BLUE);
 
         Collections.reverse(shownStats);
     }
@@ -62,16 +62,15 @@ public class Stat {
 
 
     private String key;
-
     private double value;
 
-    private double minVal;
-    private double maxVal;
-
-    private final boolean showStatusBar;
-    private double scale;
-
+    private final boolean showBar;
     private Color barColor;
+
+    private int barLength;
+    private int statLength;
+
+
 
 
     public Stat(String key, double value) {
@@ -80,23 +79,21 @@ public class Stat {
         this.key = key;
         this.value = value;
 
-        showStatusBar = false;
+        showBar = false;
     }
 
 
 
-
-    public Stat(String key, double value, double minVal, double maxVal, double scale, Color barColor) {
+    public Stat(String key, double value, double minVal, double maxVal, double barLengthScale, Color barColor) {
         Stat.shownStats.add(this);
 
         this.key = key;
         this.value = value;
-        this.minVal = minVal;
-        this.maxVal = maxVal;
-        this.scale = scale;
+        this.barLength = betterRound(maxVal*DEFAULT_BAR_LENGTH_SCALE*barLengthScale);
+        this.statLength = betterRound(((value - minVal)/(maxVal - minVal)) * DEFAULT_BAR_LENGTH*barLengthScale);
 
         this.barColor = ColorMethods.applyOpacity(barColor, DEFAULT_OPACITY);
-        this.showStatusBar = true;
+        this.showBar = true;
     }
 
 
@@ -104,25 +101,24 @@ public class Stat {
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
 
-        int x = LEFT_PADDING+3;
-        int y = WindowSize.getHeight()-((shownStats.indexOf(this))* VERTICAL_SPACING) - (BOTTOM_PADDING+8);
-        if (showStatusBar) {
+        int textX = LEFT_PADDING+3;
+        int textY = WindowSize.getHeight()-((shownStats.indexOf(this))* VERTICAL_SPACING) - (BOTTOM_PADDING+8);
+        if (showBar) {
             int barX = LEFT_PADDING;
-            int barY = betterRound(y-29);
-            int barWidth = betterRound((value-minVal) * BAR_LENGTH_SCALE*scale);
+            int barY = betterRound(textY-29);
 
             // Draw bar showing data amount
             g2d.setColor(barColor);
-            g2d.fillRect(barX, barY, betterRound(Math.min(betterRound(barWidth), MAX_BAR_LENGTH)), VERTICAL_SPACING);
+            g2d.fillRect(barX, barY, Math.min(statLength, barLength), VERTICAL_SPACING);
 
             //Draw bar outline
             g2d.setColor(Color.BLACK);
-            g2d.drawRect(barX, barY, betterRound(Math.min((maxVal-minVal)*BAR_LENGTH_SCALE*scale, MAX_BAR_LENGTH)), VERTICAL_SPACING);
+            g2d.drawRect(barX, barY, barLength, VERTICAL_SPACING);
         }
 
         g2d.setColor(Color.WHITE);
         g2d.setFont(Stat.STAT_FONT);
-        g2d.drawString(format(key, value), x, y);
+        g2d.drawString(format(key, value), textX, textY);
     }
 
 

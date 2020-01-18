@@ -1,6 +1,5 @@
 package game;
 
-import game.components.GameComponent;
 import game.components.entities.Creature;
 import game.components.structures.Spawner;
 import game.components.structures.Structure;
@@ -31,8 +30,6 @@ public class Layout {
     World labInterior = new World("Lab Interior", 1500, 1500, new Color(120, 120, 120), new Color(255, 255, 255));
     World moon = new World("Moon", 2000, 2000, new Color(157, 171, 187), new Color(0, 0, 0));
 
-
-    Chapter ch1 = new Chapter("Welcome to town", town, 5000, 5000);
 
 
     /** Player instance */

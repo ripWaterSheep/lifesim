@@ -242,6 +242,9 @@ public class Controls {
                     case VK_3:
                         player.energize(1000);
                         break;
+                    case VK_4:
+                        player.gainIntellect(1000);
+                        break;
                     case VK_K:
                         player.damage(100000);
                         break;
@@ -259,14 +262,14 @@ public class Controls {
 
             try {
                 // Increment or decrement(if negative) current index and set player world to world at new index.
-                newWorld = (World) World.getWorldInstances().get(currentIndex + index);
+                newWorld = World.getWorldInstances().get(currentIndex + index);
 
             } catch (IndexOutOfBoundsException e) {
 
                 if (index > 0) {
-                    newWorld = (World) World.getWorldInstances().get(index - 1); // Wraparound to the first world
+                    newWorld = World.getWorldInstances().get(index - 1); // Wraparound to the first world
                 } else if (index < 0) {
-                    newWorld = (World) World.getWorldInstances().get(World.getWorldInstances().size() + index); // Wraparound to the last world
+                    newWorld = World.getWorldInstances().get(World.getWorldInstances().size() + index); // Wraparound to the last world
                 }
             }
 
