@@ -1,19 +1,14 @@
 package game.components.entities;
 
-import game.GameSession;
 import game.components.GameComponent;
 import game.components.World;
 import game.components.entities.player.Player;
-import game.components.structures.Structure;
 import util.MyMath;
 
 import javax.swing.*;
-import javax.swing.text.PlainView;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
-
-import static util.MyMath.testIntersection;
 
 public abstract class Entity extends GameComponent {
 
@@ -21,18 +16,6 @@ public abstract class Entity extends GameComponent {
     private static ArrayList<Entity> entityInstances = new ArrayList<>();
 
     public static ArrayList<Entity> getEntityInstances() { return entityInstances; }
-
-
-    public static void addSpawnedEntities() {
-        /* Add entity instance spawned mid-game into the game after the loop is executed.
-         * If GameSession.usedComponents held references to the entity list,
-         * then adding to the list while iterating through it would cause a ConcurrentModificationException.
-         */
-        for (Entity entity: entityInstances) {
-            if (!GameSession.getUsedComponents().contains(entity))
-                GameSession.getUsedComponents().add(entity);
-        }
-    }
 
 
     protected double speed; // Pixels to move per frame
@@ -47,71 +30,46 @@ public abstract class Entity extends GameComponent {
 
     public double getHealth() { return health; }
 
-    public void heal(double amount) {
-        health += amount;
-        if (this instanceof Player && health < Player.getInstance().getStrengthDependentStatCap()) Particle.spawnRisingParticles(Color.RED);
-    }
+    public void heal(double amount) { health += amount; }
 
-    public void damage(double amount) {
-        health -= amount;
-        if (this instanceof Player && health > 0) Particle.spawnFallingParticles(Color.RED);
-    }
+    public void dealDamage(double amount) { health -= amount; }
+
+    protected final double damage;
+
+    public double getDamage() { return damage; }
+
+
+    protected final boolean canDamagePlayer;
+
+    public boolean getCanDamagePlayer() { return canDamagePlayer; }
+
 
 
     @Override
     public Ellipse2D.Double getShape() { return new Ellipse2D.Double(getDisplayX(), getDisplayY(), width, height); }
 
 
-    public ArrayList<Structure> getTouchingStructures() {
-        ArrayList<Structure> touching = new ArrayList<>();
-            for (Structure structure: Structure.getInstances()) {
-                if (testIntersection(getShape(), structure.getShape()) && getWorld() == structure.getWorld()) {
-                    touching.add(structure);
-                }
-            }
-        return touching;
-    }
 
 
-    public boolean isTouchingAnyStructures() { return !getTouchingStructures().isEmpty(); }
-
-
-    public Structure getTopStructureTouching() {
-        Structure topTouching = null;
-        if (isTouchingAnyStructures())
-            topTouching = getTouchingStructures().get(getTouchingStructures().size()-1);
-
-        return topTouching;
-    }
-
-
-    public ArrayList<Entity> getTouchingEntities() {
-        ArrayList<Entity> touching = new ArrayList<>();
-            for (Entity entity: Entity.entityInstances) {
-                if (testIntersection(getShape(), entity.getShape()) && world == entity.getWorld() && !(entity == this)) {
-                    touching.add(entity);
-                }
-            }
-        return touching;
-    }
-
-
-
-    protected Entity(String name, double x, double y, int radius, World world, Color color, double speed, double health) {
+    protected Entity(String name, double x, double y, double radius, World world, Color color, double speed, double health, double damage, boolean canDamagePlayer) {
         super(name, x, y, radius*2, radius*2, world, color);
         entityInstances.add(this);
 
         this.speed = speed;
         this.health = health;
+        this.damage = damage;
+        this.canDamagePlayer = canDamagePlayer;
     }
 
 
-    protected Entity(String name, double x, double y, double scale, World world, String imageName, double speed, double health) {
+    protected Entity(String name, double x, double y, double scale, World world, String imageName, double speed, double health, double damage, boolean canDamagePlayer) {
         super(name, x, y, scale, world, imageName);
         entityInstances.add(this);
 
         this.speed = speed;
         this.health = health;
+        this.damage = damage;
+        this.canDamagePlayer = canDamagePlayer;
     }
 
 
@@ -124,7 +82,6 @@ public abstract class Entity extends GameComponent {
 
     /** Keep entity within the world barrier. */
     protected void borderLogic() {
-        //System.out.println(this.name);
         x = MyMath.clamp(x, -world.getMidWidth() + getMidWidth(), world.getMidWidth() - getMidWidth());
         y = MyMath.clamp(y, -world.getMidHeight() + getMidHeight(), world.getMidHeight() - getMidHeight());
     }
@@ -143,14 +100,14 @@ public abstract class Entity extends GameComponent {
 
 
     @Override
-    public void setup(JPanel panel) {
+    public void init(JPanel panel) {
 
 
     }
 
 
     @Override
-    public void act()  {
+    public void update()  {
         if (alive) {
             if (Player.getInstance().getWorld() == world) movementLogic();
             collisionLogic();

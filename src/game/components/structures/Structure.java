@@ -3,6 +3,7 @@ package game.components.structures;
 import game.components.GameComponent;
 import game.components.World;
 import game.components.entities.player.Player;
+import game.components.entities.player.Stats;
 import util.Drawing.DrawString;
 import util.Drawing.MyFont;
 
@@ -22,15 +23,17 @@ public class Structure extends GameComponent {
     protected Font labelFont;
     private int fontSize = 0;
 
+    protected Stats stats;
 
-    public Structure(String name, double x, double y, int width, int height, World world, Color color) {
+
+    public Structure(String name, double x, double y, double width, double height, World world, Color color) {
         super(name, x, y, width, height, world, color);
         Structure.instances.add(this);
     }
 
 
 
-    public Structure(String name, double x, double y, int width, int height, World world, Color color, int fontSize) {
+    public Structure(String name, double x, double y, double width, double height, World world, Color color, int fontSize) {
         this(name, x, y, width, height, world, color);
         this.fontSize = fontSize;
         labelFont = new Font(MyFont.getMainFont(), Font.PLAIN, fontSize);
@@ -55,13 +58,13 @@ public class Structure extends GameComponent {
 
 
     @Override
-    public void setup(JPanel panel) {
-
+    public void init(JPanel panel) {
+        stats = Player.getInstance().getStats();
     }
 
 
     @Override
-    public void act() {
+    public void update() {
 
 
     }

@@ -2,11 +2,12 @@ package game;
 
 import game.components.entities.Entity;
 import game.components.GameComponent;
+import game.activity.EntityManagement;
+import game.activity.controls.MouseControls;
 import game.components.structures.Structure;
 import game.components.World;
 import game.overlay.Overlay;
-import game.overlay.Stat;
-import util.GarbageCollection;
+import game.overlay.DisplayedStat;
 
 import javax.swing.*;
 import java.awt.*;
@@ -66,10 +67,10 @@ public class GameSession {
 		usedComponents.addAll(World.getWorldInstances());
 		
         Collections.reverse(usedComponents);
-		Entity.addSpawnedEntities();
+		EntityManagement.manageEntities();
 
 		for (GameComponent component : usedComponents) {
-			component.setup(panel);
+			component.init(panel);
 		}
 		
     }
@@ -77,18 +78,18 @@ public class GameSession {
 
     public void loop(Graphics g) {
 
-		Stat.retrieveValues();
+		DisplayedStat.retrieveValues();
 		for (GameComponent component: usedComponents) {
-			component.act();
-			//if (component.isOnScreen())
+			component.update();
+			if (component.isOnScreen())
 				component.draw(g);
 		}
 
         Overlay.drawOverlays(g);
-		Entity.addSpawnedEntities();
-		GarbageCollection.removeExpiredEntities();
+		EntityManagement.manageEntities();
 
         debug();
+		MouseControls.reset();
 
     }
 

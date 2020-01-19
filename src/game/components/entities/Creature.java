@@ -1,8 +1,9 @@
 package game.components.entities;
 
+import game.activity.collision.CollisionLogic;
 import game.components.World;
 import game.components.entities.player.Player;
-import util.Drawing.MyImage;
+import util.Geometry;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,13 +31,13 @@ public class Creature extends Projectile {
     private double lootOnKill; // Declare variable for amount of money the player earns from creature's death.
 
 
-    protected boolean playerInRange() { return (Math.abs(getDistanceBetween(this, Player.getInstance())) <= range); }
+    protected boolean playerInRange() { return (Math.abs(Geometry.getDistanceBetween(this, Player.getInstance())) <= range); }
 
-    protected double getAngleToPlayer() { return getAngle(x, y, Player.getInstance().getX(), Player.getInstance().getY()); }
+    protected double getAngleToPlayer() { return Geometry.getAngle(x, y, Player.getInstance().getX(), Player.getInstance().getY()); }
 
 
 
-    public Creature(String name, double x, double y, int radius, World world, Color color,
+    public Creature(String name, double x, double y, double radius, World world, Color color,
                     Behaviors behavior, double speed, int range,
                     double damage, double health, boolean canDamagePlayer) {
 
@@ -48,7 +49,7 @@ public class Creature extends Projectile {
     }
 
 
-    public Creature(String name, double x, double y, int radius, World world, Color color,
+    public Creature(String name, double x, double y, double radius, World world, Color color,
                     Behaviors behavior, double speed, int range,
                     double damage, double health, boolean canDamagePlayer, double lootOnKill) {
 
@@ -114,35 +115,29 @@ public class Creature extends Projectile {
 
 
     protected void collisionLogic() {
-        // Allow doing damage to other entities continuously for the whole duration of intersection.
-        for (Entity entity: getTouchingEntities()) {
-            // Do damage to colliding entities. If canDamagePlayer == true, can only damage player. Else, it can only damage other Creatures
-            if ((canDamagePlayer && entity == Player.getInstance()) || (!canDamagePlayer && entity instanceof Creature)) {
-                entity.damage(damage);
-            }
-        }
+        CollisionLogic.creatureCollisionLogic(this);
     }
 
 
     @Override
     protected void statLogic() {
         // If health is less than zero but alive has not been set to zero yet (just a single frame where this occurs), player gains loot.
-        if (health <= 0 && alive) Player.getInstance().gainMoney(lootOnKill);
+        if (health <= 0 && alive) Player.getInstance().getStats().gainMoney(lootOnKill);
         super.statLogic();
     }
 
 
 
     @Override
-    public void setup(JPanel panel) {
+    public void init(JPanel panel) {
 
     }
 
 
 
     @Override
-    public void act() {
-        super.act();
+    public void update() {
+        super.update();
     }
 
 

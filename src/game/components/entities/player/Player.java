@@ -1,20 +1,22 @@
 package game.components.entities.player;
 
+import game.activity.collision.CollisionLogic;
 import game.components.entities.Entity;
 import game.components.entities.Projectile;
+import game.activity.controls.KeyboardControls;
+import game.activity.controls.MouseControls;
 import game.components.structures.Structure;
 import game.components.World;
 import game.overlay.DeathScreen;
 import game.overlay.GameMessage;
-import game.components.entities.Particle;
+import util.Geometry;
 import util.MyMath;
 import main.WindowSize;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static game.components.entities.player.Controls.*;
-import static java.lang.Math.*;
+import static game.activity.controls.KeyboardControls.*;
 import static util.MyMath.*;
 
 
@@ -34,7 +36,6 @@ public class Player extends Entity {
     /** Because game session polymorphizes the other objects with an arraylist of instance arraylists
      * this function was needed in order to return an arraylist to match.
      */
-
 
 
     public void goTo(double x, double y) {
@@ -60,100 +61,21 @@ public class Player extends Entity {
 
 
     @Override
-    public int getDisplayX() {
-        return WindowSize.getMidWidth()-getMidWidth();
-    }
+    public int getDisplayX() { return betterRound(WindowSize.getMidWidth()-getMidWidth()); }
 
     @Override
-    public int getDisplayY() { return WindowSize.getMidHeight()-getMidHeight();}
+    public int getDisplayY() { return betterRound(WindowSize.getMidHeight()-getMidHeight());}
 
-
-    public void grow(double amount) {
-        width += amount;
-        height += amount;
-    }
-
-    public void shrink(double amount) {
-        width -= amount;
-        height -= amount;
-    }
 
     private double baseSpeed;
 
+    private Stats stats = new Stats();
 
-    private double energy = 1000;
-
-    public double getEnergy() { return energy; }
-
-    public void energize(double amount) {
-        energy += Math.abs(amount);
-        if(energy < getStrengthDependentStatCap()) Particle.spawnRisingParticles(Color.ORANGE);
-    }
-
-    public void tire(double amount) {
-        energy -= Math.abs(amount);
-        if(energy > 0) Particle.spawnFallingParticles(Color.ORANGE);
-    }
-
-
-    private double money = 0;
-
-    public double getMoney() { return money; }
-
-    public boolean hasMoney() {
-        boolean has = money > 0;
-        if (!has)
-            GameMessage.needMoneyMessage();
-        return has;
-    }
-
-    public boolean canAfford(double moneyAmount) {
-        boolean can = money > moneyAmount;
-        if (!can)
-            GameMessage.needMoneyMessage();
-        return money > moneyAmount;
-    }
-
-    public void gainMoney(double amount) {
-        money += Math.abs(amount);
-        Particle.spawnRisingParticles(Color.GREEN);
-    }
-
-    public void loseMoney(double amount) {
-        money -= Math.abs(amount);
-        Particle.spawnFallingParticles(Color.GREEN);
-    }
-
-
-    private double strength = 1;
-
-    public double getStrength() { return strength; }
-
-    public void strengthen(double amount) {
-        strength += Math.abs(amount);
-        Particle.spawnRisingParticles(Color.YELLOW);
-    }
-
-
-    private double intellect =  0;
-
-    public double getIntellect() { return intellect; }
-
-    public void gainIntellect(double amount) {
-        intellect += Math.abs(amount);
-        Particle.spawnRisingParticles(Color.BLUE);
-    }
-
-
-    /** Calculate the cap for the many stats whose caps increase when strength increases.
-     */
-    public double getStrengthDependentStatCap() { return 1000 + (strength/10); }
-
-
+    public Stats getStats() { return stats; }
 
 
     public Player(String name, double x, double y, int radius, World world, Color color, double speed) {
-        super(name, x, y, radius, world, color, speed, 1000);
+        super(name, x, y, radius, world, color, speed, 1000, 0, false);
         Player.instance = this;
         this.world = world;
         this.color = color;
@@ -167,11 +89,11 @@ public class Player extends Entity {
      * in a direction per frame if appropriate key is pressed.
      */
     private void calculateSpeed() {
-        speed = baseSpeed * (((energy/1000)/2)+0.5);
+        speed = baseSpeed * (((stats.energy/1000)/2)+0.5);
         //System.out.println(speed);
-        if (Controls.getSprinting()) {
+        if (KeyboardControls.getSprinting()) {
             speed *= 1.5;
-            energy -= 0.75;
+            stats.energy -= 0.75;
         }
     }
 
@@ -225,14 +147,7 @@ public class Player extends Entity {
      */
     @Override
     protected void collisionLogic() {
-        if (isTouchingAnyStructures()) {
-            Structure component = getTopStructureTouching(); // Use the top structure only so you can stand on something above lava to stay safe and stuff
-
-            component.onTouch();
-            if (Controls.getInteracted()) {
-                component.onClick();
-            }
-        }
+        CollisionLogic.playerCollisionLogic(this);
     }
 
 
@@ -240,24 +155,10 @@ public class Player extends Entity {
     public void statLogic() {
         super.statLogic();
 
-        if (energy <= 0) {
-            new GameMessage("Get energy quickly!");
-            damage(2);
-        }
-
-        if (!alive) {
-            new GameMessage("Oof!");
-            DeathScreen.show();
-            health = 0;
-            energy = 0;
-        }
-
-        energy -= 0.1;
-
-        health = MyMath.clamp(health, 0, getStrengthDependentStatCap());
-        energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());
-        strength = max(strength, 0);
-        money = max(money, 0);
+        width += stats.growthThisFrame;
+        height += stats.growthThisFrame;
+        stats.statLogic();
+        health = MyMath.clamp(health, 0.0, stats.getStrengthDependentStatCap());
         width = clamp(width, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
         height = clamp(height, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
 
@@ -265,12 +166,12 @@ public class Player extends Entity {
 
 
     private void projectileLogic() {
-        if (Controls.getFired()) {
-            int radius = betterRound(7 + (strength/250));
+        if (MouseControls.getFired()) {
+            int radius = betterRound(7 + (stats.strength/250));
             Color color = new Color(35, 31, 15);
-            double damage = Math.sqrt((strength/20)+1);
+            double damage = Math.sqrt((stats.strength/20)+1);
             System.out.println(damage);
-            double angle = getAngle(Controls.getLastClickX(), Controls.getLastClickY(), WindowSize.getMidWidth(), WindowSize.getMidHeight());
+            double angle = Geometry.getAngle(MouseControls.getLastClickX(), MouseControls.getLastClickY(), WindowSize.getMidWidth(), WindowSize.getMidHeight());
             new Projectile("Projectile", x, y, radius, world, color, 45, angle, WindowSize.getHypotLength(), damage, 100, false);
         }
     }
@@ -278,17 +179,15 @@ public class Player extends Entity {
 
 
     @Override
-    public void setup(JPanel panel) {
-        Controls.initListeners(panel);
-
+    public void init(JPanel panel) {
+        stats.init();
     }
 
 
     @Override
-    public void act() {
-        super.act();
+    public void update() {
+        super.update();
         if (alive) projectileLogic();
-        Controls.reset();
     }
 
 

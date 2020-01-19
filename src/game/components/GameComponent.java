@@ -37,19 +37,19 @@ public abstract class GameComponent {
     public int getDisplayY() { return betterRound(y-Player.getInstance().getY() - getMidHeight() + WindowSize.getMidHeight()); }
 
 
-    protected int width;
-    protected int height;
+    protected double width;
+    protected double height;
 
-    public int getWidth() { return width; }
+    public double getWidth() { return width; }
 
-    public int getHeight() { return height; }
+    public double getHeight() { return height; }
 
-    public int getMidWidth() { return width/2; }
+    public double getMidWidth() { return width/2; }
 
-    public int getMidHeight() { return height/2; }
+    public double getMidHeight() { return height/2; }
 
 
-    public Shape getShape() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
+    public Shape getShape() { return new Rectangle(getDisplayX(), getDisplayY(), betterRound(width), betterRound(height)); }
 
     // If the component is visible in the window, then return true.
     public boolean isOnScreen() { return getShape().intersects(WindowSize.getRect()) && world == Player.getInstance().getWorld(); }
@@ -75,7 +75,7 @@ public abstract class GameComponent {
     public MyImage getImage() { return image; }
 
 
-    protected GameComponent(String name, double x, double y, int width, int height, World world, Color color) {
+    protected GameComponent(String name, double x, double y, double width, double height, World world, Color color) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -103,10 +103,10 @@ public abstract class GameComponent {
     /** Set up instances once before event loop. This is when instances can refer to other instances
      * because all instances are guaranteed to be initialized when setup() is called.
      */
-    public void setup(JPanel panel) {}
+    public void init(JPanel panel) {}
 
     /** Update each instance's data and members individually. */
-    public abstract void act();
+    public abstract void update();
 
     /** Update each instance's appearance individually. */
     public void draw(Graphics g) {

@@ -10,7 +10,7 @@ public class Overlay {
     public static void drawOverlays(Graphics g) {
         if (Player.getInstance().isAlive()) {
             GameMessage.drawCurrentMessage(g);
-            Stat.drawAll(g);
+            DisplayedStat.drawAll(g);
             MiniMap.draw(g);
         } else {
             DeathScreen.draw(g);

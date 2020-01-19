@@ -27,7 +27,7 @@ public class Spawner extends Structure {
     private long lastSpawnTime = 0;
 
 
-    public Spawner(String name, double x, double y, int width, int height, World world, Color color, long spawnInterval, Creature creatureToSpawn) {
+    public Spawner(String name, double x, double y, double width, double height, World world, Color color, long spawnInterval, Creature creatureToSpawn) {
         super(name, x, y, width, height, world, color);
         Spawner.instances.add(this);
 
@@ -47,7 +47,7 @@ public class Spawner extends Structure {
 
 
     @Override
-    public void act() {
+    public void update() {
         // Spawn a new clone of the Creature passed as a parameter if spawn interval passes and spawn limit has not been reached.
         if (getCurrentTime() - lastSpawnTime > spawnInterval && allSpawn.size() < SPAWN_LIMIT) {
             Creature spawn = new Creature(creatureToSpawn, x, y, world);

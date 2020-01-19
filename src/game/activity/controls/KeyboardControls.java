@@ -1,20 +1,18 @@
-package game.components.entities.player;
+package game.activity.controls;
 
 import game.components.World;
+import game.components.entities.player.Player;
 import util.TimeUtil;
 
-import javax.swing.*;
 import java.awt.event.*;
 
-import static game.components.entities.player.Controls.Cheats.cheatLogic;
+import static game.activity.controls.KeyboardControls.Cheats.cheatLogic;
 import static java.awt.event.KeyEvent.*;
 import static java.awt.event.KeyEvent.VK_CONTROL;
-import static java.awt.event.MouseEvent.BUTTON1;
-import static java.awt.event.MouseEvent.BUTTON3;
 import static util.TimeUtil.getCurrentTime;
 
 
-public class Controls {
+public class KeyboardControls {
 
 
     private final static int SPRINT_KEY = VK_SPACE;
@@ -24,26 +22,26 @@ public class Controls {
     private static boolean leftPressed = false;
     private static boolean rightPressed = false;
 
-    static boolean getUpPressed() {
+    public static boolean getUpPressed() {
         return upPressed;
     }
 
-    static boolean getDownPressed() {
+    public static boolean getDownPressed() {
         return downPressed;
     }
 
-    static boolean getLeftPressed() {
+    public static boolean getLeftPressed() {
         return leftPressed;
     }
 
-    static boolean getRightPressed() {
+    public static boolean getRightPressed() {
         return rightPressed;
     }
 
 
     private static boolean sprinting = false;
 
-    static boolean getSprinting() {
+    public static boolean getSprinting() {
         return sprinting;
     }
 
@@ -61,24 +59,24 @@ public class Controls {
     private static long downReadTime = 0;
 
 
-    static long getUpReadTime() {
+    public static long getUpReadTime() {
         return upReadTime;
     }
 
-    static long getDownReadTime() {
+    public static long getDownReadTime() {
         return downReadTime;
     }
 
-    static long getLeftReadTime() {
+    public static long getLeftReadTime() {
         return leftReadTime;
     }
 
-    static long getRightReadTime() {
+    public static long getRightReadTime() {
         return rightReadTime;
     }
 
 
-    private static KeyAdapter keyAdapter = new KeyAdapter() {
+    static KeyAdapter keyAdapter = new KeyAdapter() {
 
         @Override
         public void keyPressed(KeyEvent e) {
@@ -159,51 +157,10 @@ public class Controls {
     };
 
 
-    private final static int INTERACT_BUTTON = BUTTON1;
-
-    private final static int FIRE_BUTTON = BUTTON3;
-
-
-    private static boolean fired = false;
-    private static boolean interacted = false;
-
-
-    public static boolean getInteracted() { return interacted; }
-    public static boolean getFired() { return fired; }
-
-    private static int lastClickX = 0;
-    private static int lastClickY = 0;
-
-    public static int getLastClickX() { return lastClickX; }
-
-    public static int getLastClickY() { return lastClickY; }
-
-
-    private static MouseAdapter mouseAdapter = new MouseAdapter() {
+    static FocusAdapter focusAdapter = new FocusAdapter() {
 
         @Override
-        public void mousePressed(MouseEvent e) {
-            lastClickX = e.getX();
-            lastClickY = e.getY();
-            //System.out.println(Controls.getLastClickX() + "  " + Controls.getLastClickY());
-            switch (e.getButton()) {
-                case INTERACT_BUTTON:
-                    interacted = true;
-                    break;
-
-                case FIRE_BUTTON:
-                    fired = true;
-                    break;
-            }
-        }
-
-
-    };
-
-
-    private static WindowAdapter windowAdapter = new WindowAdapter() {
-        @Override
-        public void windowLostFocus(WindowEvent e) {
+        public void focusLost(FocusEvent e) {
             upPressed = false;
             downPressed = false;
             leftPressed = false;
@@ -213,25 +170,13 @@ public class Controls {
     };
 
 
-    // Reset in the beginning of each frame
-    static void reset() {
-        interacted = false;
-        fired = false;
-    }
-
-
-    static void initListeners(JPanel panel) {
-        panel.addKeyListener(keyAdapter);
-        panel.addMouseListener(mouseAdapter);
-    }
-
 
 
     static class Cheats {
 
         static void cheatLogic(int key) {
             Player player = Player.getInstance();
-            if (Controls.getControlPressed()) {
+            if (KeyboardControls.getControlPressed()) {
                 switch (key) {
                     case VK_N:
                         cycleWorlds(1);
@@ -245,25 +190,24 @@ public class Controls {
                         player.heal(100);
                         break;
                     case VK_2:
-                        player.energize(100);
+                        player.getStats().energize(100);
                         break;
                     case VK_3:
-                        player.strengthen(100);
+                        player.getStats().strengthen(100);
                         break;
                     case VK_4:
-                        player.gainMoney(100);
+                        player.getStats().gainMoney(100);
                         break;
                     case VK_5:
-                        player.gainIntellect(100);
+                        player.getStats().gainIntellect(100);
                         break;
 
                     case VK_K:
-                        player.damage(10000);
+                        player.dealDamage(10000);
                         break;
                 }
             }
         }
-
 
         /**
          * Make player go to the next world declared in the used game layout
@@ -288,6 +232,6 @@ public class Controls {
             Player.getInstance().goTo(newWorld);
         }
 
-
     }
+
 }

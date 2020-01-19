@@ -19,12 +19,12 @@ public class MyImage {
 
     private GameComponent component;
 
-    private int width;
-    private int height;
+    private double width;
+    private double height;
 
-    public int getWidth() { return width; }
+    public double getWidth() { return width; }
 
-    public int getHeight() { return height; }
+    public double getHeight() { return height; }
 
 
     private double scale;
@@ -50,12 +50,12 @@ public class MyImage {
 
 
     public void draw(Graphics g) {
-        g.drawImage(image, betterRound(component.getX()), betterRound(component.getY()), width, height, null);
+        g.drawImage(image, betterRound(component.getX()), betterRound(component.getY()), betterRound(width), betterRound(height), null);
     }
 
 
-    public void draw(Graphics g, double x, double y, int width, int height) {
-        g.drawImage(image, betterRound(x), betterRound(y), width, height, null);
+    public void draw(Graphics g, double x, double y, double width, double height) {
+        g.drawImage(image, betterRound(x), betterRound(y), betterRound(width), betterRound(height), null);
     }
 
 

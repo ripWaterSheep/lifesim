@@ -1,5 +1,6 @@
 package game.components.entities;
 
+import game.activity.collision.CollisionLogic;
 import game.components.GameComponent;
 import game.components.World;
 import game.components.entities.player.Player;
@@ -21,36 +22,31 @@ public class Projectile extends Entity {
     public int getRange() { return range; }
 
 
-    protected final double damage;
-    protected final boolean canDamagePlayer;
-
     private ArrayList<GameComponent> lastTouching = new ArrayList<>();
+
+    public ArrayList<GameComponent> getLastTouching() { return lastTouching; }
 
 
     protected boolean isTouchingPlayer() { return lastTouching.contains(Player.getInstance()); }
 
 
 
-    public Projectile(String name, double x, double y, int radius, World world, Color color, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
-        super(name, x, y, radius, world, color, speed, health);
+    public Projectile(String name, double x, double y, double radius, World world, Color color, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
+        super(name, x, y, radius, world, color, speed, health, damage, canDamagePlayer);
         projectileInstances.add(this);
 
         this.range = range;
         this.angle = angle;
-        this.damage = damage;
-        this.canDamagePlayer = canDamagePlayer;
 
     }
 
 
     protected Projectile(String name, double x, double y,  double scale, World world, String imageName, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
-        super(name, x, y, scale, world, imageName, speed, health);
+        super(name, x, y, scale, world, imageName, speed, health, damage, canDamagePlayer);
         projectileInstances.add(this);
 
         this.range = range;
         this.angle = angle;
-        this.damage = damage;
-        this.canDamagePlayer = canDamagePlayer;
     }
 
 
@@ -74,22 +70,9 @@ public class Projectile extends Entity {
     }
 
 
-
     @Override
     protected void collisionLogic() {
-
-        for (Entity entity: getTouchingEntities()) {
-            // Do damage to other entities at the moment the collision starts only.
-            if (!lastTouching.contains(entity)) {
-                // Do damage to colliding entities. If canDamagePlayer == true, can only damage player. Else, it can only damage other Creatures
-                if ((canDamagePlayer && entity == Player.getInstance()) || (!canDamagePlayer && entity instanceof Creature)) {
-                    entity.damage(damage);
-                }
-            }
-        }
-
-        lastTouching.clear();
-        lastTouching.addAll(getTouchingEntities());
+        CollisionLogic.projectileCollisionLogic(this);
     }
 
 

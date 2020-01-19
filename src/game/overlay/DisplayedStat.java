@@ -11,11 +11,11 @@ import java.util.Collections;
 import static util.MyMath.betterRound;
 
 
-public class Stat {
+public class DisplayedStat {
 
     //TODO: Add icons (Once they are designed by Ken)
 
-    static ArrayList<Stat> shownStats = new ArrayList<>();
+    static ArrayList<DisplayedStat> shownStats = new ArrayList<>();
 
 
     private static final Font STAT_FONT = new Font("StayPuft", Font.PLAIN, 26);
@@ -39,21 +39,21 @@ public class Stat {
         Player player = Player.getInstance();
         shownStats.clear();
 
-        Stat xStat = new Stat("X", player.getX());
-        Stat yStat = new Stat("Y", player.getY());
+        DisplayedStat xStat = new DisplayedStat("X", player.getX());
+        DisplayedStat yStat = new DisplayedStat("Y", player.getY());
 
-        Stat healthStat = new Stat("Health", player.getHealth(), 0, player.getStrengthDependentStatCap(), 1, Color.RED);
-        Stat energyStat = new Stat("Energy", player.getEnergy(), 0, player.getStrengthDependentStatCap(), 1, Color.ORANGE);
-        Stat strengthStat = new Stat("Strength", player.getStrength(), 0, 10000, 0.1, Color.YELLOW);
-        Stat moneyStat = new Stat("Cash", player.getMoney(), 0, 10000, 0.1, Color.GREEN);
-        Stat intellectStat = new Stat("Intellect", player.getIntellect(), 0, 10000, 0.1, Color.BLUE);
+        DisplayedStat healthStat = new DisplayedStat("Health", player.getHealth(), 0, player.getStats().getStrengthDependentStatCap(), 1, Color.RED);
+        DisplayedStat energyStat = new DisplayedStat("Energy", player.getStats().getEnergy(), 0, player.getStats().getStrengthDependentStatCap(), 1, Color.ORANGE);
+        DisplayedStat strengthStat = new DisplayedStat("Strength", player.getStats().getStrength(), 0, 10000, 0.1, Color.YELLOW);
+        DisplayedStat moneyStat = new DisplayedStat("Cash", player.getStats().getMoney(), 0, 10000, 0.1, Color.GREEN);
+        DisplayedStat intellectStat = new DisplayedStat("Intellect", player.getStats().getIntellect(), 0, 10000, 0.1, Color.BLUE);
 
         Collections.reverse(shownStats);
     }
 
 
     public static void drawAll(Graphics g) {
-        for (Stat stat: shownStats) {
+        for (DisplayedStat stat: shownStats) {
             stat.draw(g);
         }
     }
@@ -71,8 +71,8 @@ public class Stat {
 
 
 
-    public Stat(String key, double value) {
-        Stat.shownStats.add(this);
+    public DisplayedStat(String key, double value) {
+        DisplayedStat.shownStats.add(this);
 
         this.key = key;
         this.value = value;
@@ -82,8 +82,8 @@ public class Stat {
 
 
 
-    public Stat(String key, double value, double minVal, double maxVal, double barLengthScale, Color barColor) {
-        Stat.shownStats.add(this);
+    public DisplayedStat(String key, double value, double minVal, double maxVal, double barLengthScale, Color barColor) {
+        DisplayedStat.shownStats.add(this);
 
         this.key = key;
         this.value = value;
@@ -115,7 +115,7 @@ public class Stat {
         }
 
         g2d.setColor(Color.WHITE);
-        g2d.setFont(Stat.STAT_FONT);
+        g2d.setFont(DisplayedStat.STAT_FONT);
         g2d.drawString(format(key, value), textX, textY);
     }
 

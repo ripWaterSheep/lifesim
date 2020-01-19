@@ -61,44 +61,45 @@ public class Layout {
 
     Structure gym = new Structure("Gym", -1200, -500, 400, 500, town, new Color(100, 100, 100), 50) {
         public void onTouch() {
-            if (player.hasMoney()) {
-                player.strengthen(1);
-                player.loseMoney(1);
-                player.tire(0.75);
+            if (stats.hasMoney()) {
+                stats.shrink(0.03);
+                stats.strengthen(1);
+                stats.loseMoney(1);
+                stats.tire(0.75);
             }
         }
     };
 
     Structure school = new Structure("School", 450, 550, 300, 500, town, new Color(180, 117, 84), 50) {
         public void onTouch() {
-            player.gainIntellect(1.5);
-            player.tire(0.5);
+            stats.gainIntellect(1.5);
+            stats.tire(0.5);
         }
     };
 
     Structure office = new Structure("Office",  -500, 500, 400, 400, town, new Color(160, 180, 180), 50) {
         public void onTouch() {
-            player.gainMoney(Math.ceil(player.getIntellect()/250));
-            player.tire(0.5);
+            stats.gainMoney(Math.ceil(stats.getIntellect()/250));
+            stats.tire(0.5);
         }
     };
 
     Structure hospital = new Structure("Hospital", -500, -1200, 500, 500, town, new Color(210, 210, 210),50) {
         public void onTouch() {
-            if (player.canAfford(3)) {
-                player.heal(2);
-                player.energize(2);
-                player.loseMoney(3);
+            if (stats.canAfford(3)) {
+                stats.heal(2);
+                stats.energize(2);
+                stats.loseMoney(3);
             }
         }
     };
 
     Structure restaurant = new Structure("Restaurant", -500, -450, 500, 400, town, new Color(255, 213, 125), 50) {
         public void onTouch() {
-            if (player.hasMoney()) {
-                player.grow(0.1);
-                player.loseMoney(1);
-                player.energize(1);
+            if (stats.hasMoney()) {
+                stats.grow(0.05);
+                stats.loseMoney(1);
+                stats.energize(1);
             }
         }
     };
@@ -106,8 +107,8 @@ public class Layout {
     Structure shop = new Structure("Shop", -1350, 500, 600, 400, town, new Color(200, 110, 75), 50);
     Structure townTeleporter = new Structure("Teleporter - $5000", 600, 2050, 500, 600, town, new Color(100,100, 100),50) {
         public void onClick() {
-            if (player.canAfford(10000)) {
-                player.loseMoney(10000);
+            if (stats.canAfford(10000)) {
+                stats.loseMoney(10000);
                 player.goTo(cityTeleporter);
             }
         }
@@ -115,18 +116,18 @@ public class Layout {
 
 
     Structure cave = new Structure("Cave", -2000,  -2000, 650, 300, town, new Color(190, 190, 190));
+    Structure safetyPlatform = new Structure("Safety Platform", 2000, 2000, 300, 300, town, new Color(104, 100, 65));
     Structure lavaPit = new Structure("Lava Pit", 2000, 2000, 1000, 1000, town, new Color(255, 159, 0)) {
-        public void onClick() {
-            player.damage(5);
+        public void onTouch() {
+            stats.dealDamage(5);
         }
     };
 
-    Structure safetyPlatform = new Structure("Safety Platform", 2000, 2000, 300, 300, town, new Color(104, 100, 65));
 
 
     Structure cash = new Structure("$", town.getRandX(), town.getRandY(), 55, 30, town, new Color(100, 150, 100), 20){
         public void onTouch() {
-            player.gainMoney(100);
+            stats.gainMoney(100);
             cash.randomizePos();
         }
     };
@@ -143,7 +144,7 @@ public class Layout {
 
     Structure houseBed = new Structure("House Bed", 200, 300, 200, 100, houseInterior, new Color(0, 114, 168)) {
         public void onTouch() {
-            player.energize(1);
+            stats.energize(1);
         }
     };
 
@@ -159,7 +160,7 @@ public class Layout {
 
     Structure creditCard = new Structure("VISA", city.getRandX(), city.getRandY(), 35, 25, city, new Color(227, 218, 159), 12) {
         public void onTouch() {
-            player.gainMoney(MyMath.getRandInRange(1, 1000));
+            stats.gainMoney(MyMath.getRandInRange(1, 1000));
             creditCard.randomizePos();
         }
     };

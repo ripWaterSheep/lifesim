@@ -1,13 +1,6 @@
 package util;
 
-import game.components.GameComponent;
-
-import java.awt.*;
-import java.awt.geom.Area;
-import java.awt.geom.Point2D;
 import java.util.Random;
-
-import static java.lang.Math.*;
 
 
 public class MyMath {
@@ -95,47 +88,6 @@ public class MyMath {
         double sign =  (getRandInRange(0, 1)*2)-1;
         return number*sign;
     }
-
-
-
-    public static double getDistanceBetween(GameComponent component1, GameComponent component2) {
-        return betterRound(Point2D.distance(component1.getX(), component1.getY(), component2.getX(), component2.getY()));
-    }
-
-
-
-    /** Keeps angle within 0 to 360 degrees while preserving angle measure */
-    public static double angleWrap(double deg) {
-        while (deg < 0) deg += 360;
-        while (deg > 360) deg -= 360;
-
-        return deg;
-    }
-
-
-    public static double getAngle(double x1, double y1, double x2, double y2) {
-        double angle = betterRound(Math.toDegrees(Math.atan2(y2 - y1, x2 - x1)));
-        angle = angleWrap(angle);
-
-        return angle;
-    }
-
-
-
-    public static boolean testIntersection(Shape shapeA, Shape shapeB) {
-        Area areaA = new Area(shapeA);
-        areaA.intersect(new Area(shapeB));
-        return !areaA.isEmpty();
-    }
-
-
-
-    public static boolean testIntersection(Area areaA, Area areaB) {
-        Area area1 = (Area) areaA.clone();
-        area1.intersect(new Area(areaB));
-        return !area1.isEmpty();
-    }
-
 
 
 }

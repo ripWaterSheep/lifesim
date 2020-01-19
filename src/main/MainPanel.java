@@ -2,6 +2,7 @@ package main;
 
 import game.components.entities.player.Player;
 import game.GameSession;
+import game.activity.controls.ControlSetup;
 import util.Drawing.MyFont;
 
 import static main.WindowSize.*;
@@ -20,6 +21,7 @@ public class MainPanel extends JPanel {
         requestFocusInWindow();
         setSize(defaultWidth, defaultHeight);
         MyFont.initFonts();
+        ControlSetup.initListeners(this);
         gameSession.init(this);
     }
 
