@@ -2,6 +2,7 @@ package game.components.entities;
 
 import game.components.World;
 import game.components.entities.player.Player;
+import util.Drawing.MyImage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,13 +18,16 @@ public class Creature extends Projectile {
 
     public static ArrayList<Creature> getCreatureInstances() { return creatureInstances; }
 
-    public enum BehaviorType {
+    public enum Behaviors {
         RANDOM, // Go in a random direction, change direction when at end of range.
         FOLLOW, // Try to get close to player if player is within range.
         AVOID // Try to get far from player if player is within range.
     }
 
-    protected BehaviorType behavior;
+    protected Behaviors behavior;
+
+    private final double initialHealth; // Keep track of health set when first spawned in order to spawn full-health clones, no matter how much actual health creature still has.
+    private double lootOnKill; // Declare variable for amount of money the player earns from creature's death.
 
 
     protected boolean playerInRange() { return (Math.abs(getDistanceBetween(this, Player.getInstance())) <= range); }
@@ -31,20 +35,37 @@ public class Creature extends Projectile {
     protected double getAngleToPlayer() { return getAngle(x, y, Player.getInstance().getX(), Player.getInstance().getY()); }
 
 
-    /** Copy all fields into new Creature (for spawners) and set its location. */
-    public Creature getNewCloneAt(double x, double y, World world) {
-        return new Creature(name, x, y, getMidWidth(), world, color, behavior, speed, range, damage, health, canDamagePlayer);
-    }
 
-
-    public Creature(String name, double x, double y, double radius, World world, Color color,
-                    BehaviorType behavior, double speed, double range,
+    public Creature(String name, double x, double y, int radius, World world, Color color,
+                    Behaviors behavior, double speed, int range,
                     double damage, double health, boolean canDamagePlayer) {
 
         super(name, x, y, radius, world, color, speed, 0, range, damage, health, canDamagePlayer);
         creatureInstances.add(this);
 
+        initialHealth = health;
         this.behavior = behavior;
+    }
+
+
+    public Creature(String name, double x, double y, int radius, World world, Color color,
+                    Behaviors behavior, double speed, int range,
+                    double damage, double health, boolean canDamagePlayer, double lootOnKill) {
+
+        this(name, x, y, radius, world, color, behavior, speed, range, damage, health, canDamagePlayer);
+
+        this.lootOnKill = lootOnKill;
+    }
+
+
+
+    /** Copy all fields into new Creature (for spawners) and set its location. This is used in class Spawner to clone base instance. */
+    public Creature(Creature baseCreature, double x, double y, World world) {
+        this(baseCreature.name, x, y, baseCreature.getMidWidth(), world, baseCreature.color,
+        baseCreature.behavior, baseCreature.speed, baseCreature.range,
+        baseCreature.damage, baseCreature.initialHealth, baseCreature.canDamagePlayer, baseCreature.lootOnKill);
+
+        image = baseCreature.getImage();
     }
 
 
@@ -103,6 +124,13 @@ public class Creature extends Projectile {
     }
 
 
+    @Override
+    protected void statLogic() {
+        // If health is less than zero but alive has not been set to zero yet (just a single frame where this occurs), player gains loot.
+        if (health <= 0 && alive) Player.getInstance().gainMoney(lootOnKill);
+        super.statLogic();
+    }
+
 
 
     @Override
@@ -119,7 +147,9 @@ public class Creature extends Projectile {
 
 
     public void draw(Graphics g) {
-        if (alive) super.draw(g);
+        if (alive) {
+            super.draw(g);
+        }
     }
 
 

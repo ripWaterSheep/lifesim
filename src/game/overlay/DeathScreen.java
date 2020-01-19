@@ -11,8 +11,8 @@ public class DeathScreen {
 
     private static boolean started = false;
 
-    private static Color bgColor = new Color(215, 26, 26, 170);
-    private static Color textColor = new Color(125, 16, 25, 255);
+    private static Color bgColor = new Color(215, 26, 26, 200);
+    private static Color textColor = new Color(125, 16, 25);
 
     private static Font font = new Font(MyFont.getBloodFont(), Font.BOLD, 90);
 

@@ -10,13 +10,15 @@ import java.util.ArrayList;
 public class Projectile extends Entity {
 
 
-    private static ArrayList<Creature> projectileInstances = new ArrayList<>();
+    private static ArrayList<Projectile> projectileInstances = new ArrayList<>();
 
-    public static ArrayList<Creature> getProjectileInstances() { return projectileInstances; }
+    public static ArrayList<Projectile> getProjectileInstances() { return projectileInstances; }
 
 
     protected double currentDistance = 0; // How far the Projectile currently has gone
-    protected final double range; // How far to move towards specified angle
+    protected final int range; // How far to move towards specified angle
+
+    public int getRange() { return range; }
 
 
     protected final double damage;
@@ -29,13 +31,28 @@ public class Projectile extends Entity {
 
 
 
-    public Projectile(String name, double x, double y, double radius, World world, Color color, double speed, double angle, double range, double damage, double health, boolean canDamagePlayer) {
-        super(name, x, y, radius, world, color, speed, angle, health);
+    public Projectile(String name, double x, double y, int radius, World world, Color color, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
+        super(name, x, y, radius, world, color, speed, health);
+        projectileInstances.add(this);
+
         this.range = range;
+        this.angle = angle;
         this.damage = damage;
         this.canDamagePlayer = canDamagePlayer;
 
     }
+
+
+    protected Projectile(String name, double x, double y,  double scale, World world, String imageName, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
+        super(name, x, y, scale, world, imageName, speed, health);
+        projectileInstances.add(this);
+
+        this.range = range;
+        this.angle = angle;
+        this.damage = damage;
+        this.canDamagePlayer = canDamagePlayer;
+    }
+
 
 
     @Override
@@ -48,6 +65,14 @@ public class Projectile extends Entity {
             visible = false;
         } else currentDistance += speed;
     }
+
+
+    @Override
+    protected void statLogic() {
+        super.statLogic();
+        if (!alive) visible = false;
+    }
+
 
 
     @Override

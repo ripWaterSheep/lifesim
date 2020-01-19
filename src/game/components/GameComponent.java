@@ -32,24 +32,24 @@ public abstract class GameComponent {
      * to the player instead of the player itself, the world must be translated based on the player's position
      * as well as the display size to keep the player in the same place when windows is resized.
      */
-    public double getDisplayX() { return x-Player.getInstance().getX() - getMidWidth() + WindowSize.getMidWidth(); }
+    public int getDisplayX() { return betterRound(x-Player.getInstance().getX() - getMidWidth() + WindowSize.getMidWidth()); }
 
-    public double getDisplayY() { return y-Player.getInstance().getY() - getMidHeight() + WindowSize.getMidHeight(); }
-
-
-    protected double width;
-    protected double height;
-
-    public double getWidth() { return width; }
-
-    public double getHeight() { return height; }
-
-    public double getMidWidth() { return width/2; }
-
-    public double getMidHeight() { return height/2; }
+    public int getDisplayY() { return betterRound(y-Player.getInstance().getY() - getMidHeight() + WindowSize.getMidHeight()); }
 
 
-    public Shape getShape() { return new Rectangle(betterRound(getDisplayX()), betterRound(getDisplayY()), betterRound(width), betterRound(height)); }
+    protected int width;
+    protected int height;
+
+    public int getWidth() { return width; }
+
+    public int getHeight() { return height; }
+
+    public int getMidWidth() { return width/2; }
+
+    public int getMidHeight() { return height/2; }
+
+
+    public Shape getShape() { return new Rectangle(getDisplayX(), getDisplayY(), width, height); }
 
     // If the component is visible in the window, then return true.
     public boolean isOnScreen() { return getShape().intersects(WindowSize.getRect()) && world == Player.getInstance().getWorld(); }
@@ -75,7 +75,7 @@ public abstract class GameComponent {
     public MyImage getImage() { return image; }
 
 
-    protected GameComponent(String name, double x, double y, double width, double height, World world, Color color) {
+    protected GameComponent(String name, double x, double y, int width, int height, World world, Color color) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -86,15 +86,16 @@ public abstract class GameComponent {
     }
 
 
-    protected GameComponent(String name, double x, double y, World world, String imageName, double imageScale) {
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        this.world = world;
+    protected GameComponent(String name, double x, double y, double scale, World world, String imageName) {
+        this(name, x, y, 0, 0, world, null);
+        setImage(imageName, scale);
+    }
 
-        image = new MyImage(imageName, imageScale);
-        this.width = image.getWidth();
-        this.height = image.getHeight();
+
+    public void setImage(String imageName, double imageScale) {
+        image = new MyImage(imageName, imageScale, this);
+        width = image.getWidth();
+        height = image.getHeight();
     }
 
 
@@ -102,7 +103,7 @@ public abstract class GameComponent {
     /** Set up instances once before event loop. This is when instances can refer to other instances
      * because all instances are guaranteed to be initialized when setup() is called.
      */
-    public abstract void setup(JPanel panel);
+    public void setup(JPanel panel) {}
 
     /** Update each instance's data and members individually. */
     public abstract void act();
@@ -118,7 +119,7 @@ public abstract class GameComponent {
             }
 
             if (image != null) {
-                image.draw(g, x, y);
+                image.draw(g);
             }
         }
 

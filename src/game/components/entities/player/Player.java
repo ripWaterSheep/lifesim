@@ -6,6 +6,7 @@ import game.components.structures.Structure;
 import game.components.World;
 import game.overlay.DeathScreen;
 import game.overlay.GameMessage;
+import game.components.entities.Particle;
 import util.MyMath;
 import main.WindowSize;
 
@@ -59,12 +60,12 @@ public class Player extends Entity {
 
 
     @Override
-    public double getDisplayX() {
+    public int getDisplayX() {
         return WindowSize.getMidWidth()-getMidWidth();
     }
 
     @Override
-    public double getDisplayY() { return WindowSize.getMidHeight()-getMidHeight();}
+    public int getDisplayY() { return WindowSize.getMidHeight()-getMidHeight();}
 
 
     public void grow(double amount) {
@@ -84,9 +85,15 @@ public class Player extends Entity {
 
     public double getEnergy() { return energy; }
 
-    public void energize(double amount) { energy += Math.abs(amount); }
+    public void energize(double amount) {
+        energy += Math.abs(amount);
+        if(energy < getStrengthDependentStatCap()) Particle.spawnRisingParticles(Color.ORANGE);
+    }
 
-    public void tire(double amount) { energy -= Math.abs(amount); }
+    public void tire(double amount) {
+        energy -= Math.abs(amount);
+        if(energy > 0) Particle.spawnFallingParticles(Color.ORANGE);
+    }
 
 
     private double money = 0;
@@ -107,23 +114,35 @@ public class Player extends Entity {
         return money > moneyAmount;
     }
 
-    public void gainMoney(double amount) { money += Math.abs(amount); }
+    public void gainMoney(double amount) {
+        money += Math.abs(amount);
+        Particle.spawnRisingParticles(Color.GREEN);
+    }
 
-    public void loseMoney(double amount) { money -= Math.abs(amount); }
+    public void loseMoney(double amount) {
+        money -= Math.abs(amount);
+        Particle.spawnFallingParticles(Color.GREEN);
+    }
 
 
     private double strength = 1;
 
     public double getStrength() { return strength; }
 
-    public void strengthen(double amount) { strength += Math.abs(amount); }
+    public void strengthen(double amount) {
+        strength += Math.abs(amount);
+        Particle.spawnRisingParticles(Color.YELLOW);
+    }
 
 
     private double intellect =  0;
 
     public double getIntellect() { return intellect; }
 
-    public void gainIntellect(double amount) { intellect += Math.abs(amount); }
+    public void gainIntellect(double amount) {
+        intellect += Math.abs(amount);
+        Particle.spawnRisingParticles(Color.BLUE);
+    }
 
 
     /** Calculate the cap for the many stats whose caps increase when strength increases.
@@ -133,8 +152,8 @@ public class Player extends Entity {
 
 
 
-    public Player(String name, double x, double y, double radius, World world, Color color, double speed) {
-        super(name, x, y, radius, world, color, speed,0, 1000);
+    public Player(String name, double x, double y, int radius, World world, Color color, double speed) {
+        super(name, x, y, radius, world, color, speed, 1000);
         Player.instance = this;
         this.world = world;
         this.color = color;
@@ -148,10 +167,11 @@ public class Player extends Entity {
      * in a direction per frame if appropriate key is pressed.
      */
     private void calculateSpeed() {
-        speed = baseSpeed * clamp(((energy/getStrengthDependentStatCap())/2)+0.5, 0.5, 1);
+        speed = baseSpeed * (((energy/1000)/2)+0.5);
+        //System.out.println(speed);
         if (Controls.getSprinting()) {
             speed *= 1.5;
-            tire(0.05);
+            energy -= 0.75;
         }
     }
 
@@ -192,9 +212,11 @@ public class Player extends Entity {
         }
         else if (right) angle = 180;
         else if (left) angle = 0;
-        calculateSpeed();
 
-        if (left||right||up||down) moveTowardsAngle();
+        if (left||right||up||down) {
+            calculateSpeed();
+            moveTowardsAngle();
+        }
     }
 
 
@@ -230,12 +252,12 @@ public class Player extends Entity {
             energy = 0;
         }
 
-        tire(0.1);
+        energy -= 0.1;
 
         health = MyMath.clamp(health, 0, getStrengthDependentStatCap());
         energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());
-        money = max(money, 0);
         strength = max(strength, 0);
+        money = max(money, 0);
         width = clamp(width, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
         height = clamp(height, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
 
@@ -244,12 +266,12 @@ public class Player extends Entity {
 
     private void projectileLogic() {
         if (Controls.getFired()) {
-            int radius = 8 + betterRound(Math.ceil(strength/75));
+            int radius = betterRound(7 + (strength/250));
             Color color = new Color(35, 31, 15);
-            int damage = betterRound(Math.ceil(strength/65));
+            double damage = Math.sqrt((strength/20)+1);
             System.out.println(damage);
             double angle = getAngle(Controls.getLastClickX(), Controls.getLastClickY(), WindowSize.getMidWidth(), WindowSize.getMidHeight());
-            new Projectile("Projectile", x, y, radius, world, color, 30, angle, WindowSize.getHypotLength(), damage, 100, false);
+            new Projectile("Projectile", x, y, radius, world, color, 45, angle, WindowSize.getHypotLength(), damage, 100, false);
         }
     }
 

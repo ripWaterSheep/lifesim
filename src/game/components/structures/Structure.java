@@ -23,14 +23,14 @@ public class Structure extends GameComponent {
     private int fontSize = 0;
 
 
-    public Structure(String name, double x, double y, double width, double height, World world, Color color) {
+    public Structure(String name, double x, double y, int width, int height, World world, Color color) {
         super(name, x, y, width, height, world, color);
         Structure.instances.add(this);
     }
 
 
 
-    public Structure(String name, double x, double y, double width, double height, World world, Color color, int fontSize) {
+    public Structure(String name, double x, double y, int width, int height, World world, Color color, int fontSize) {
         this(name, x, y, width, height, world, color);
         this.fontSize = fontSize;
         labelFont = new Font(MyFont.getMainFont(), Font.PLAIN, fontSize);
@@ -38,8 +38,8 @@ public class Structure extends GameComponent {
     }
 
 
-    public Structure(String name, double x, double y, World world, String imageName, double imageScale) {
-        super(name, x, y, world, imageName, imageScale);
+    public Structure(String name, double x, double y, double scale, World world, String imageName) {
+        super(name, x, y, scale, world, imageName);
     }
 
 

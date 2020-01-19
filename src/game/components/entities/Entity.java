@@ -8,6 +8,7 @@ import game.components.structures.Structure;
 import util.MyMath;
 
 import javax.swing.*;
+import javax.swing.text.PlainView;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public abstract class Entity extends GameComponent {
 
 
     protected double speed; // Pixels to move per frame
-    protected double angle;
+    protected double angle = 0;
 
     protected boolean alive = true;
 
@@ -46,9 +47,15 @@ public abstract class Entity extends GameComponent {
 
     public double getHealth() { return health; }
 
-    public void heal(double amount) { health += amount; }
+    public void heal(double amount) {
+        health += amount;
+        if (this instanceof Player && health < Player.getInstance().getStrengthDependentStatCap()) Particle.spawnRisingParticles(Color.RED);
+    }
 
-    public void damage(double amount) { health -= amount; }
+    public void damage(double amount) {
+        health -= amount;
+        if (this instanceof Player && health > 0) Particle.spawnFallingParticles(Color.RED);
+    }
 
 
     @Override
@@ -90,12 +97,20 @@ public abstract class Entity extends GameComponent {
 
 
 
-    protected Entity(String name, double x, double y, double radius, World world, Color color, double speed, double angle, double health) {
+    protected Entity(String name, double x, double y, int radius, World world, Color color, double speed, double health) {
         super(name, x, y, radius*2, radius*2, world, color);
         entityInstances.add(this);
 
         this.speed = speed;
-        this.angle = angle;
+        this.health = health;
+    }
+
+
+    protected Entity(String name, double x, double y, double scale, World world, String imageName, double speed, double health) {
+        super(name, x, y, scale, world, imageName);
+        entityInstances.add(this);
+
+        this.speed = speed;
         this.health = health;
     }
 
@@ -107,9 +122,7 @@ public abstract class Entity extends GameComponent {
     }
 
 
-    /** Keep entity within the world barrier.
-     * I might make this optional for some worlds in the future.
-     */
+    /** Keep entity within the world barrier. */
     protected void borderLogic() {
         //System.out.println(this.name);
         x = MyMath.clamp(x, -world.getMidWidth() + getMidWidth(), world.getMidWidth() - getMidWidth());
@@ -118,11 +131,7 @@ public abstract class Entity extends GameComponent {
 
 
     protected void statLogic() {
-
-        if (health <= 0) {
-            alive = false;
-            visible = false;
-        }
+        if (health <= 0) alive = false;
 
         health = Math.max(health, 0);
     }
@@ -130,7 +139,7 @@ public abstract class Entity extends GameComponent {
 
     protected abstract void movementLogic();
 
-    protected abstract void collisionLogic();
+    protected void collisionLogic() {}
 
 
     @Override
@@ -148,12 +157,6 @@ public abstract class Entity extends GameComponent {
         }
         borderLogic();
         statLogic();
-    }
-
-
-    @Override
-    public void draw(Graphics g) {
-        super.draw(g);
     }
 
 

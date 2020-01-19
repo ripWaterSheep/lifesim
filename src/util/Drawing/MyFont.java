@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class MyFont {
 
-    static final String FILE_PATH = "assets/Fonts/";
+    static final String FILE_PATH = "res/Fonts/";
     static final String FILE_ENDING = ".ttf";
 
     public static String getMainFont() {

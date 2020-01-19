@@ -33,7 +33,7 @@ public class Layout {
 
 
     /** Player instance */
-    Player player = new Player("Player", 0, 0, 35, town, Color.YELLOW, 10);
+    Player player = new Player("Player", 0, 0, 35, town, Color.YELLOW, 12);
 
 
 
@@ -41,8 +41,8 @@ public class Layout {
 
     //Creature doggo = new Creature("Doggo", -50, 50, 50, 50, town, new Color(150, 150, 150), Creature.MovementType.AVOID, 6, 600, 2, 1, 1000, false, true);
 
-    Creature zombie = new Creature("Zombie", -2500, 2500, 36, town, new Color(82, 105, 76), Creature.BehaviorType.FOLLOW, 7, 600, 2, 25, true);
-    Creature yourDad = new Creature("yourDad", 500, 500, 36, town, Color.BLUE, Creature.BehaviorType.AVOID, 11, 500, 10, 500, false);
+    public Creature zombie = new Creature("Zombie", -2500, 2500, 36, town, new Color(82, 105, 76), Creature.Behaviors.FOLLOW, 8, 1000, 7, 25, true, 0.1);
+    Creature yourDad = new Creature("yourDad", 500, 500, 36, town, Color.BLUE, Creature.Behaviors.AVOID, 11, 500, 10, 10, false, 0.2);
 
 
 
@@ -78,7 +78,7 @@ public class Layout {
 
     Structure office = new Structure("Office",  -500, 500, 400, 400, town, new Color(160, 180, 180), 50) {
         public void onTouch() {
-            player.gainMoney(1+(player.getIntellect()/500));
+            player.gainMoney(Math.ceil(player.getIntellect()/250));
             player.tire(0.5);
         }
     };
@@ -132,7 +132,7 @@ public class Layout {
     };
 
 
-    Spawner zombieSpawner = new Spawner("Zombie Spawner", -2500 , 2500, 350, 250, town, new Color(50, 59, 52), zombie, 8000);
+    Spawner zombieSpawner = new Spawner("Zombie Spawner", -2500 , 2500, 350, 250, town, new Color(50, 59, 52), 8000, zombie);
 
 
     Structure houseDoor = new Structure("House Door", houseInterior.getMidWidth() , 0, 20, 150, houseInterior, new Color(190, 170, 80)){

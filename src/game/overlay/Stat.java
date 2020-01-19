@@ -25,7 +25,6 @@ public class Stat {
     private static final int VERTICAL_SPACING = 36;
 
     private static final double DEFAULT_BAR_LENGTH_SCALE = 0.16;
-    private static final int DEFAULT_BAR_LENGTH = 160;
 
     private static final int DEFAULT_OPACITY = betterRound(0.5*255);
 
@@ -43,10 +42,9 @@ public class Stat {
         Stat xStat = new Stat("X", player.getX());
         Stat yStat = new Stat("Y", player.getY());
 
-
         Stat healthStat = new Stat("Health", player.getHealth(), 0, player.getStrengthDependentStatCap(), 1, Color.RED);
         Stat energyStat = new Stat("Energy", player.getEnergy(), 0, player.getStrengthDependentStatCap(), 1, Color.ORANGE);
-        Stat strengthStat = new Stat("Strength", player.getStrength(), 0, Math.max(1000, player.getStrength()), 1, Color.YELLOW);
+        Stat strengthStat = new Stat("Strength", player.getStrength(), 0, 10000, 0.1, Color.YELLOW);
         Stat moneyStat = new Stat("Cash", player.getMoney(), 0, 10000, 0.1, Color.GREEN);
         Stat intellectStat = new Stat("Intellect", player.getIntellect(), 0, 10000, 0.1, Color.BLUE);
 

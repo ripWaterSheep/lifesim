@@ -8,7 +8,6 @@ import main.WindowSize;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
-
 import static util.MyMath.betterRound;
 
 
@@ -21,7 +20,7 @@ public class MiniMap {
     private static int getRadius() { return DIAMETER/2; }
 
 
-    private static final double MAP_SCALE = 0.035;
+    private static final double MAP_SCALE = 0.055;
 
     private static double scale(double dimension) { return dimension * MAP_SCALE; }
 

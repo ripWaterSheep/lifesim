@@ -80,7 +80,7 @@ public class GameSession {
 		Stat.retrieveValues();
 		for (GameComponent component: usedComponents) {
 			component.act();
-			if (component.isOnScreen())
+			//if (component.isOnScreen())
 				component.draw(g);
 		}
 

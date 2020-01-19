@@ -5,6 +5,7 @@ import game.components.entities.Creature;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static util.MyMath.betterRound;
 import static util.TimeUtil.getCurrentTime;
 
 
@@ -16,7 +17,7 @@ public class Spawner extends Structure {
     public static ArrayList<Spawner> getSpawnerInstances() { return instances; }
 
 
-    private static final int SPAWN_LIMIT = 8;
+    private static final int SPAWN_LIMIT = 12;
 
     private static ArrayList<Creature> allSpawn = new ArrayList<>();
 
@@ -26,8 +27,17 @@ public class Spawner extends Structure {
     private long lastSpawnTime = 0;
 
 
-    public Spawner(String name, double x, double y, double width, double height, World world, Color color, Creature creatureToSpawn, long spawnInterval) {
+    public Spawner(String name, double x, double y, int width, int height, World world, Color color, long spawnInterval, Creature creatureToSpawn) {
         super(name, x, y, width, height, world, color);
+        Spawner.instances.add(this);
+
+        this.creatureToSpawn = creatureToSpawn;
+        this.spawnInterval = spawnInterval;
+    }
+
+
+    public Spawner(String name, double x, double y, double scale, World world,  String imageName, long spawnInterval, Creature creatureToSpawn) {
+        super(name, x, y, scale, world, imageName);
         Spawner.instances.add(this);
 
         this.creatureToSpawn = creatureToSpawn;
@@ -38,15 +48,22 @@ public class Spawner extends Structure {
 
     @Override
     public void act() {
-        // Spawn a new clone of the Creature passed as a parameter if spawn interval passes and spawn limit has not been reached
+        // Spawn a new clone of the Creature passed as a parameter if spawn interval passes and spawn limit has not been reached.
         if (getCurrentTime() - lastSpawnTime > spawnInterval && allSpawn.size() < SPAWN_LIMIT) {
-            Creature spawn = creatureToSpawn.getNewCloneAt(x, y, world);
+            Creature spawn = new Creature(creatureToSpawn, x, y, world);
             allSpawn.add(spawn); // Add spawned entity to list to keep track of size
             lastSpawnTime = getCurrentTime();
         }
-        
+
         // Clean dead spawn out from list so that more are allowed to spawn
         allSpawn.removeIf(entity -> !entity.isAlive());
+    }
+
+
+    @Override
+    public void draw(Graphics g) {
+        super.draw(g);
+        g.setColor(Color.BLACK);
     }
 
 

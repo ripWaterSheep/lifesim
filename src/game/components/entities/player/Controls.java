@@ -4,10 +4,7 @@ import game.components.World;
 import util.TimeUtil;
 
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 import static game.components.entities.player.Controls.Cheats.cheatLogic;
 import static java.awt.event.KeyEvent.*;
@@ -198,9 +195,20 @@ public class Controls {
                     fired = true;
                     break;
             }
-
         }
 
+
+    };
+
+
+    private static WindowAdapter windowAdapter = new WindowAdapter() {
+        @Override
+        public void windowLostFocus(WindowEvent e) {
+            upPressed = false;
+            downPressed = false;
+            leftPressed = false;
+            rightPressed = false;
+        }
 
     };
 
@@ -234,19 +242,23 @@ public class Controls {
                         TimeUtil.sleep(45);
                         break;
                     case VK_1:
-                        player.gainMoney(1000);
+                        player.heal(100);
                         break;
                     case VK_2:
-                        player.heal(1000);
+                        player.energize(100);
                         break;
                     case VK_3:
-                        player.energize(1000);
+                        player.strengthen(100);
                         break;
                     case VK_4:
-                        player.gainIntellect(1000);
+                        player.gainMoney(100);
                         break;
+                    case VK_5:
+                        player.gainIntellect(100);
+                        break;
+
                     case VK_K:
-                        player.damage(100000);
+                        player.damage(10000);
                         break;
                 }
             }
