@@ -22,7 +22,7 @@ public class MainPanel extends JPanel {
         setSize(defaultWidth, defaultHeight);
         MyFont.initFonts();
         ControlSetup.initListeners(this);
-        gameSession.init(this);
+        gameSession.init();
     }
 
 

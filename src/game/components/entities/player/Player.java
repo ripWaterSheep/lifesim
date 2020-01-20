@@ -7,8 +7,6 @@ import game.activity.controls.KeyboardControls;
 import game.activity.controls.MouseControls;
 import game.components.structures.Structure;
 import game.components.World;
-import game.overlay.DeathScreen;
-import game.overlay.GameMessage;
 import util.Geometry;
 import util.MyMath;
 import main.WindowSize;
@@ -17,6 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import static game.activity.controls.KeyboardControls.*;
+import static util.FindComponent.*;
 import static util.MyMath.*;
 
 
@@ -33,30 +32,34 @@ public class Player extends Entity {
     public static Player getInstance() { return instance; }
 
 
-    /** Because game session polymorphizes the other objects with an arraylist of instance arraylists
-     * this function was needed in order to return an arraylist to match.
-     */
-
-
-    public void goTo(double x, double y) {
+    public void goToPos(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public void goTo(Structure structure) {
-        goTo(structure.getX(), structure.getY());
+    public void goToStructure(String name) {
+        Structure structure = findStructure(name);
+        goToPos(structure.getX(), structure.getY());
         world = structure.getWorld();
     }
 
 
-    public void goTo(World world) {
-        goTo(0, 0);
-        this.world = world;
+    public void goToEntity(String name) {
+        Entity entity = findEntity(name);
+        goToPos(entity.getX(), entity.getY());
+        world = entity.getWorld();
     }
 
-    public void goTo(double x, double y, World world) {
-        goTo(x, y);
-        this.world = world;
+
+    public void goToWorld(String name) {
+
+        this.world = findWorld(name);
+        goToPos(0, 0);
+    }
+
+    public void goToWorldAt(String name, double x, double y) {
+        this.world = findWorld(name);
+        goToPos(x, y);
     }
 
 
@@ -74,10 +77,9 @@ public class Player extends Entity {
     public Stats getStats() { return stats; }
 
 
-    public Player(String name, double x, double y, int radius, World world, Color color, double speed) {
-        super(name, x, y, radius, world, color, speed, 1000, 0, false);
+    public Player(String name, double x, double y, int radius, Color color, double speed) {
+        super(name, x, y, radius, color, speed, 1000, 0, false);
         Player.instance = this;
-        this.world = world;
         this.color = color;
         baseSpeed = speed;
     }
@@ -93,7 +95,7 @@ public class Player extends Entity {
         //System.out.println(speed);
         if (KeyboardControls.getSprinting()) {
             speed *= 1.5;
-            stats.energy -= 0.75;
+            stats.energy -= 0.1;
         }
     }
 
@@ -143,14 +145,6 @@ public class Player extends Entity {
 
 
 
-    /** Interact with GameComponents
-     */
-    @Override
-    protected void collisionLogic() {
-        CollisionLogic.playerCollisionLogic(this);
-    }
-
-
     @Override
     public void statLogic() {
         super.statLogic();
@@ -158,11 +152,18 @@ public class Player extends Entity {
         width += stats.growthThisFrame;
         height += stats.growthThisFrame;
         stats.statLogic();
+
         health = MyMath.clamp(health, 0.0, stats.getStrengthDependentStatCap());
         width = clamp(width, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
         height = clamp(height, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
-
     }
+
+
+    @Override
+    protected void collisionLogic() {
+        CollisionLogic.playerCollisionLogic(this);
+    }
+
 
 
     private void projectileLogic() {
@@ -172,14 +173,13 @@ public class Player extends Entity {
             double damage = Math.sqrt((stats.strength/20)+1);
             System.out.println(damage);
             double angle = Geometry.getAngle(MouseControls.getLastClickX(), MouseControls.getLastClickY(), WindowSize.getMidWidth(), WindowSize.getMidHeight());
-            new Projectile("Projectile", x, y, radius, world, color, 45, angle, WindowSize.getHypotLength(), damage, 100, false);
+            new Projectile("Projectile", x, y, radius, color, 45, angle, WindowSize.getHypotLength(), damage, 100, false).setWorld(world);
         }
     }
 
 
-
     @Override
-    public void init(JPanel panel) {
+    public void init() {
         stats.init();
     }
 

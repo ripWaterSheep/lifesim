@@ -13,7 +13,7 @@ public class CollisionCheckers {
 
     static ArrayList<Structure> getTouchingStructures(GameComponent component) {
         ArrayList<Structure> touching = new ArrayList<>();
-        for (Structure structure: Structure.getInstances()) {
+        for (Structure structure: Structure.getStructureInstances()) {
             if (testIntersection(component, structure) && component.getWorld() == structure.getWorld()) {
                 touching.add(structure);
             }

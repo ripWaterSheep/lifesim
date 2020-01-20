@@ -1,5 +1,6 @@
 package game.activity.collision;
 
+import game.components.GameComponent;
 import game.components.entities.Creature;
 import game.components.entities.Entity;
 import game.components.entities.Projectile;
@@ -25,7 +26,6 @@ public class CollisionLogic {
                 }
             }
         }
-
         projectile.getLastTouching().clear();
         projectile.getLastTouching().addAll(getTouchingEntities(projectile));
     }
@@ -36,10 +36,12 @@ public class CollisionLogic {
         // Allow doing damage to other entities continuously for the whole duration of intersection.
         for (Entity entity : getTouchingEntities(creature)) {
             // Do damage to colliding entities. If canDamagePlayer == true, can only damage player. Else, it can only damage other Creatures
-            if ((entity.getCanDamagePlayer() && entity instanceof Player) || (!entity.getCanDamagePlayer() && entity instanceof Creature)) {
+            if ((creature.getCanDamagePlayer() && entity instanceof Player) || (!entity.getCanDamagePlayer() && entity instanceof Creature)) {
                 entity.dealDamage(creature.getDamage());
             }
         }
+        creature.getLastTouching().clear();
+        creature.getLastTouching().addAll(getTouchingEntities(creature));
     }
 
 

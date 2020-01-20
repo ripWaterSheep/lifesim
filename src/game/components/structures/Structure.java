@@ -15,9 +15,9 @@ import java.util.ArrayList;
 public class Structure extends GameComponent {
 
     // Contains all subclass instances as well as Structure instances
-    private static ArrayList<Structure> instances = new ArrayList<>();
+    private static ArrayList<Structure> structureInstances = new ArrayList<>();
 
-    public static ArrayList<Structure> getInstances() { return instances; }
+    public static ArrayList<Structure> getStructureInstances() { return structureInstances; }
 
 
     protected Font labelFont;
@@ -25,24 +25,50 @@ public class Structure extends GameComponent {
 
     protected Stats stats;
 
-
-    public Structure(String name, double x, double y, double width, double height, World world, Color color) {
-        super(name, x, y, width, height, world, color);
-        Structure.instances.add(this);
-    }
+    // Used for interacting with player
+    protected Player player;
 
 
+    private boolean randomizePos;
 
-    public Structure(String name, double x, double y, double width, double height, World world, Color color, int fontSize) {
-        this(name, x, y, width, height, world, color);
+
+    public Structure(String name, double x, double y, double width, double height, Color color, int fontSize) {
+        super(name, x, y, width, height, color);
+        Structure.structureInstances.add(0, this);
         this.fontSize = fontSize;
         labelFont = new Font(MyFont.getMainFont(), Font.PLAIN, fontSize);
 
     }
 
+    public Structure(String name, double x, double y, double width, double height, Color color) {
+        this(name, x, y, width, height, color, 0);
+    }
 
-    public Structure(String name, double x, double y, double scale, World world, String imageName) {
-        super(name, x, y, scale, world, imageName);
+    public Structure(String name, double x, double y, double scale, String imageName) {
+        super(name, x, y, scale, imageName);
+    }
+
+
+    public Structure(String name, double width, double height, Color color) {
+        this(name, 0, 0, width, height, color);
+        randomizePos = true;
+    }
+
+    public Structure(String name, double width, double height, Color color, int fontSize) {
+        this(name, 0, 0, width, height, color, fontSize);
+        randomizePos = true;
+    }
+
+    public Structure(String name, double scale, String imageName) {
+        this(name, 0, 0, scale, imageName);
+        randomizePos = true;
+    }
+
+
+
+    public Structure setWorld(World world) {
+        this.world = world;
+        return this;
     }
 
 
@@ -58,8 +84,9 @@ public class Structure extends GameComponent {
 
 
     @Override
-    public void init(JPanel panel) {
-        stats = Player.getInstance().getStats();
+    public void init() {
+        player = Player.getInstance();
+        stats = player.getStats();
     }
 
 
@@ -75,7 +102,8 @@ public class Structure extends GameComponent {
         if (Player.getInstance().getWorld() == world) {
             super.draw(g);
 
-            if (fontSize > 0) DrawString.drawCenteredString(g, name, getShape().getBounds(), labelFont, Color.WHITE);
+            if (fontSize > 0)
+                DrawString.drawCenteredString(g, name, getShape().getBounds(), labelFont, Color.WHITE);
         }
     }
 

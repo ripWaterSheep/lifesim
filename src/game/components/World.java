@@ -1,5 +1,6 @@
 package game.components;
 
+import game.components.entities.Entity;
 import game.components.entities.player.Player;
 import game.components.structures.Structure;
 
@@ -19,7 +20,7 @@ public class World extends GameComponent {
 
     public static ArrayList<Structure> structures = new ArrayList<>();
 
-    public static ArrayList<Structure> entities = new ArrayList<>();
+    public static ArrayList<Entity> entities = new ArrayList<>();
 
 
     public double getRandX() { return (int)(Math.random()*width) - getMidWidth(); }
@@ -37,7 +38,7 @@ public class World extends GameComponent {
 
 
     public World(String name, double width, double height, Color color, Color outerColor) {
-        super(name, 0, 0, width, height, null, color);
+        super(name, 0, 0, width, height, color);
         World.worldInstances.add(this);
 
         this.world = this;
@@ -46,12 +47,21 @@ public class World extends GameComponent {
     }
 
 
+    public World add(Structure structure) {
+        structures.add(structure.setWorld(this));
+        return this;
+    }
 
+    public World add(Entity entity) {
+        //System.out.println(getName() + "   " + getWorld().getName());
+        entities.add(entity.setWorld(this));
+        return this;
+    }
 
 
 
     @Override
-    public void init(JPanel panel) {
+    public void init() {
 
     }
 

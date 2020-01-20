@@ -53,7 +53,13 @@ public class MyMath {
 
     public static int betterRound(double a) { return (int)Math.round(a); }
 
+    public static double roundToPlace(double input, int place) {
+        double multiplier = Math.pow(10, place);
+        return Math.round(input * multiplier) / multiplier;
+    }
+
     public static int roundToMultiple(int x, int base) { return base * Math.round((float)x / base); }
+
 
 
     public static int getRandInRange(int min, int max) {

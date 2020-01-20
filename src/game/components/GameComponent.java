@@ -75,24 +75,23 @@ public abstract class GameComponent {
     public MyImage getImage() { return image; }
 
 
-    protected GameComponent(String name, double x, double y, double width, double height, World world, Color color) {
+    protected GameComponent(String name, double x, double y, double width, double height, Color color) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.world = world;
         this.color = color;
     }
 
 
-    protected GameComponent(String name, double x, double y, double scale, World world, String imageName) {
-        this(name, x, y, 0, 0, world, null);
+    protected GameComponent(String name, double x, double y, double scale, String imageName) {
+        this(name, x, y, 0, 0, null);
         setImage(imageName, scale);
     }
 
 
-    public void setImage(String imageName, double imageScale) {
+    protected void setImage(String imageName, double imageScale) {
         image = new MyImage(imageName, imageScale, this);
         width = image.getWidth();
         height = image.getHeight();
@@ -103,7 +102,7 @@ public abstract class GameComponent {
     /** Set up instances once before event loop. This is when instances can refer to other instances
      * because all instances are guaranteed to be initialized when setup() is called.
      */
-    public void init(JPanel panel) {}
+    public void init() {}
 
     /** Update each instance's data and members individually. */
     public abstract void update();

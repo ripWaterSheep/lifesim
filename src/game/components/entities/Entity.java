@@ -3,6 +3,7 @@ package game.components.entities;
 import game.components.GameComponent;
 import game.components.World;
 import game.components.entities.player.Player;
+import game.components.structures.Structure;
 import util.MyMath;
 
 import javax.swing.*;
@@ -44,15 +45,13 @@ public abstract class Entity extends GameComponent {
     public boolean getCanDamagePlayer() { return canDamagePlayer; }
 
 
-
     @Override
     public Ellipse2D.Double getShape() { return new Ellipse2D.Double(getDisplayX(), getDisplayY(), width, height); }
 
 
 
-
-    protected Entity(String name, double x, double y, double radius, World world, Color color, double speed, double health, double damage, boolean canDamagePlayer) {
-        super(name, x, y, radius*2, radius*2, world, color);
+    protected Entity(String name, double x, double y, double radius, Color color, double speed, double health, double damage, boolean canDamagePlayer) {
+        super(name, x, y, radius*2, radius*2, color);
         entityInstances.add(this);
 
         this.speed = speed;
@@ -62,14 +61,20 @@ public abstract class Entity extends GameComponent {
     }
 
 
-    protected Entity(String name, double x, double y, double scale, World world, String imageName, double speed, double health, double damage, boolean canDamagePlayer) {
-        super(name, x, y, scale, world, imageName);
+    protected Entity(String name, double x, double y, double scale, String imageName, double speed, double health, double damage, boolean canDamagePlayer) {
+        super(name, x, y, scale, imageName);
         entityInstances.add(this);
 
         this.speed = speed;
         this.health = health;
         this.damage = damage;
         this.canDamagePlayer = canDamagePlayer;
+    }
+
+
+    public Entity setWorld(World world) {
+        this.world = world;
+        return this;
     }
 
 
@@ -96,14 +101,7 @@ public abstract class Entity extends GameComponent {
 
     protected abstract void movementLogic();
 
-    protected void collisionLogic() {}
-
-
-    @Override
-    public void init(JPanel panel) {
-
-
-    }
+    protected abstract void collisionLogic();
 
 
     @Override

@@ -229,7 +229,7 @@ public class KeyboardControls {
                 }
             }
 
-            Player.getInstance().goTo(newWorld);
+            Player.getInstance().goToWorld(newWorld.getName());
         }
 
     }

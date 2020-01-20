@@ -8,6 +8,7 @@ import game.components.structures.Structure;
 import game.components.World;
 import game.overlay.Overlay;
 import game.overlay.DisplayedStat;
+import util.FindComponent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +32,7 @@ public class GameSession {
 
     private static int currentFrame = 0;
 
-    public static int CurrentFrame() { return currentFrame; }
+    public static int getCurrentFrame() { return currentFrame; }
 
 
     public void debug() {
@@ -40,37 +41,19 @@ public class GameSession {
     }
 
 
-    public void init(JPanel panel) {
-		
-		/* Create arraylist of arraylists of all components separated by class.
-		 * In the beginning of each constructor for every GameComponent subclass,
-		 * the instance is added to the static arraylist "instances" which holds
-		 * all object references of the class
-		 * 
-		 * Since Creature is a subclass of structure I just went frick it and didn't put any effort to make
-		 * a separate arraylist for Creature instances. it works. The thing is, Creature uses the Structure class
-		 * constructor inside its constructor to fill in inherited fields (using super()) so i don't have to rewrite it,
-		 * but in the constructor the instance just gets added to Structure.instances. Not a big deal. Just be aware that
-		 * Structures and Creatures are both found in Structure.instances. Creature has its own instance arraylist
-		 * but that's just for using polymorphism with non-inherited functions (idk if it can be cast to avoid needing this
-		 * cause it breaks when I try).
-		 * It's the same thing with all other Structure Subtypes.
-		 */
-		 
+    public void init() {
+		// Add all initially created components to the component list to be iterated through.
 		usedComponents = new ArrayList<>();
-		/* Arraylists of instances are passed to usedInstances to keep references the ArrayLists so that new
-		 * objects that are added mid game will be referenced (like player created projectiles).
-		 */
 
 		usedComponents.addAll(Entity.getEntityInstances());
-		usedComponents.addAll(Structure.getInstances());
+		usedComponents.addAll(Structure.getStructureInstances());
 		usedComponents.addAll(World.getWorldInstances());
 		
         Collections.reverse(usedComponents);
 		EntityManagement.manageEntities();
 
 		for (GameComponent component : usedComponents) {
-			component.init(panel);
+			component.init();
 		}
 		
     }
@@ -84,7 +67,6 @@ public class GameSession {
 			if (component.isOnScreen())
 				component.draw(g);
 		}
-
         Overlay.drawOverlays(g);
 		EntityManagement.manageEntities();
 

@@ -9,8 +9,8 @@ import static util.MyMath.betterRound;
 
 public class WindowSize {
 
-    public static int defaultWidth = 1500;
-    public static int defaultHeight = 900;
+    public static int defaultWidth = 1650;
+    public static int defaultHeight = 1000;
 
 
     public static int getWidth() { return panel.getWidth(); }

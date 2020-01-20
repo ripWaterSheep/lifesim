@@ -10,43 +10,46 @@ import java.util.ArrayList;
 
 public class Projectile extends Entity {
 
-
-    private static ArrayList<Projectile> projectileInstances = new ArrayList<>();
-
-    public static ArrayList<Projectile> getProjectileInstances() { return projectileInstances; }
-
-
     protected double currentDistance = 0; // How far the Projectile currently has gone
     protected final int range; // How far to move towards specified angle
 
-    public int getRange() { return range; }
-
-
-    private ArrayList<GameComponent> lastTouching = new ArrayList<>();
+    protected ArrayList<GameComponent> lastTouching = new ArrayList<>();
 
     public ArrayList<GameComponent> getLastTouching() { return lastTouching; }
 
 
-    protected boolean isTouchingPlayer() { return lastTouching.contains(Player.getInstance()); }
-
-
-
-    public Projectile(String name, double x, double y, double radius, World world, Color color, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
-        super(name, x, y, radius, world, color, speed, health, damage, canDamagePlayer);
-        projectileInstances.add(this);
+    public Projectile(String name, double x, double y, double radius, Color color, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
+        super(name, x, y, radius, color, speed, health, damage, canDamagePlayer);
 
         this.range = range;
         this.angle = angle;
-
     }
 
 
-    protected Projectile(String name, double x, double y,  double scale, World world, String imageName, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
-        super(name, x, y, scale, world, imageName, speed, health, damage, canDamagePlayer);
-        projectileInstances.add(this);
+    protected Projectile(String name, double x, double y, double scale, String imageName, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
+        super(name, x, y, scale, imageName, speed, health, damage, canDamagePlayer);
 
         this.range = range;
         this.angle = angle;
+    }
+
+
+
+    public Projectile(String name, double x, double y, double radius, Color color, World world, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
+        super(name, x, y, radius, color, speed, health, damage, canDamagePlayer);
+
+        this.range = range;
+        this.angle = angle;
+        this.world = world;
+    }
+
+
+    protected Projectile(String name, double x, double y, double scale, String imageName, World world, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
+        super(name, x, y, scale, imageName, speed, health, damage, canDamagePlayer);
+
+        this.range = range;
+        this.angle = angle;
+        this.world = world;
     }
 
 

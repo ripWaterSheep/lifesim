@@ -14,7 +14,6 @@ public class EntityManagement {
     public static void manageEntities() {
         addSpawnedEntities();
         removeExpiredEntities();
-        Particle.startQueuedParticles();
     }
 
 
