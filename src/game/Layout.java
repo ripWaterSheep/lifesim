@@ -1,6 +1,7 @@
 package game;
 
 import game.components.entities.Creature;
+import game.components.structures.Collectable;
 import game.components.structures.Spawner;
 import game.components.structures.Structure;
 import game.components.World;
@@ -34,7 +35,7 @@ public class Layout {
             .add(new Structure("Gym", -1200, -500, 400, 500, new Color(100, 100, 100), 50) {
                  public void onTouch() {
                     if (stats.hasMoney()) {
-                        stats.shrink(0.03);
+                        //stats.shrink(0.03);
                         stats.strengthen(1);
                         stats.loseMoney(1);
                         stats.tire(0.75);
@@ -56,7 +57,7 @@ public class Layout {
             .add(new Structure("Restaurant", -500, -450, 500, 400, new Color(255, 213, 125), 50) {
                 public void onTouch() {
                     if (stats.hasMoney()) {
-                        stats.grow(0.05);
+                        //stats.grow(0.05);
                         stats.loseMoney(1);
                         stats.energize(1);
                     }
@@ -83,14 +84,13 @@ public class Layout {
             .add(new Structure("Cave", -2000, -2000, 650, 300, new Color(190, 190, 190)))
             .add(new Structure("Lava Pit", 2000, 2000, 1000, 1000, new Color(255, 159, 0)) {
                 public void onTouch() {
-                    stats.dealDamage(5);
+                    stats.takeDamage(5);
                 }
             })
             .add(new Structure("Safety Platform", 2000, 2000, 300, 300, new Color(104, 100, 65)))
-            .add(new Structure("$", 55, 30, new Color(100, 150, 100), 20) {
+            .add(new Collectable("$", 55, 30, new Color(100, 150, 100), 20) {
                 public void onTouch() {
                     stats.gainMoney(100);
-                    randomizePos();
                 }
             })
             ;
@@ -115,12 +115,15 @@ public class Layout {
             .add(new Structure("Vertical Street", 0, 0, 250, 4500, new Color(50, 50, 50)))
             .add(new Structure("Bank", 700, -600, 700, 500, new Color(25, 150, 75), 50))
             .add(new Structure("Apartment", -550, -650, 500, 650, new Color(200, 140, 50), 50))
-            .add(new Structure("University", -650, 650, 600, 600, new Color(220, 190, 120), 50))
+            .add(new Structure("University", -650, 650, 600, 600, new Color(220, 190, 120), 50){
+                public void onTouch() {
+
+                }
+            })
             .add(new Structure("Museum", 1550, 650, 600, 600, new Color(10, 10, 10), 50))
-            .add(new Structure("VISA", 35, 25, new Color(227, 218, 159), 12) {
+            .add(new Collectable("VISA", 35, 25, new Color(227, 218, 159), 12) {
                 public void onTouch() {
                     stats.gainMoney(MyMath.getRandInRange(1, 1000));
-                    randomizePos();
                 }
             })
 

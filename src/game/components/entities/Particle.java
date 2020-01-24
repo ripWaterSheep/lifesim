@@ -23,7 +23,6 @@ public class Particle extends Projectile {
     private static final double ANGLE_VARIATION = 20;
 
 
-
     public static void spawnParticles(Color color, boolean rising) {
         if (GameSession.getCurrentFrame() % INTERVAL == 1) {
             double angle = 90;
@@ -39,13 +38,6 @@ public class Particle extends Projectile {
         setPosition();
         setWorld(Player.getInstance().getWorld());
 
-    }
-
-
-    private Particle(double scale, String imageName, double angle) {
-        super("", 0, 0, scale, imageName, SPEED, angle, getRandInRange(MIN_DISTANCE, MAX_DISTANCE), 0, 1, false);
-        setPosition();
-        setWorld(Player.getInstance().getWorld());
     }
 
 
@@ -66,7 +58,6 @@ public class Particle extends Projectile {
             moveTowardsAngle();
             currentDistance += speed;
         } else {
-            alive = false;
             visible = false;
         }
     }

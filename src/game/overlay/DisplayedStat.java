@@ -42,7 +42,7 @@ public class DisplayedStat {
         DisplayedStat xStat = new DisplayedStat("X", player.getX());
         DisplayedStat yStat = new DisplayedStat("Y", player.getY());
 
-        DisplayedStat healthStat = new DisplayedStat("Health", player.getHealth(), 0, player.getStats().getStrengthDependentStatCap(), 1, Color.RED);
+        DisplayedStat healthStat = new DisplayedStat("Health", player.getStats().getHealth(), 0, player.getStats().getStrengthDependentStatCap(), 1, Color.RED);
         DisplayedStat energyStat = new DisplayedStat("Energy", player.getStats().getEnergy(), 0, player.getStats().getStrengthDependentStatCap(), 1, Color.ORANGE);
         DisplayedStat strengthStat = new DisplayedStat("Strength", player.getStats().getStrength(), 0, 10000, 0.1, Color.YELLOW);
         DisplayedStat moneyStat = new DisplayedStat("Cash", player.getStats().getMoney(), 0, 10000, 0.1, Color.GREEN);

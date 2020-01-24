@@ -11,6 +11,8 @@ public class DeathScreen {
 
     private static boolean started = false;
 
+    public static boolean iStarted() { return started; }
+
     private static Color bgColor = new Color(215, 26, 26, 200);
     private static Color textColor = new Color(125, 16, 25);
 

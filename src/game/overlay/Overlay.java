@@ -8,7 +8,7 @@ public class Overlay {
 
 
     public static void drawOverlays(Graphics g) {
-        if (Player.getInstance().isAlive()) {
+        if (Player.getInstance().getStats().isAlive()) {
             GameMessage.drawCurrentMessage(g);
             DisplayedStat.drawAll(g);
             MiniMap.draw(g);

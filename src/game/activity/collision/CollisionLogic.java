@@ -6,13 +6,13 @@ import game.components.entities.Entity;
 import game.components.entities.Projectile;
 import game.components.entities.player.Player;
 import game.activity.controls.MouseControls;
+import game.components.structures.Collectable;
 import game.components.structures.Structure;
+
 
 import static game.activity.collision.CollisionCheckers.*;
 
 public class CollisionLogic {
-
-
 
 
     public static void projectileCollisionLogic(Projectile projectile) {
@@ -21,8 +21,9 @@ public class CollisionLogic {
             // Do damage to other entities at the moment the collision starts only.
             if (!projectile.getLastTouching().contains(entity)) {
                 // Do damage to colliding entities. If canDamagePlayer == true, can only damage player. Else, it can only damage other Creatures
-                if ((projectile.getCanDamagePlayer() && entity == Player.getInstance()) || (!projectile.getCanDamagePlayer() && entity instanceof Creature)) {
-                    entity.dealDamage(projectile.getDamage());
+                if ((projectile.getStats().canDamagePlayer() && entity == Player.getInstance()) || (!projectile.getStats().canDamagePlayer() && entity instanceof Creature)) {
+                    entity.getStats().takeDamage(projectile.getStats().getDamage());
+                    System.out.println(entity.getName());
                 }
             }
         }
@@ -33,16 +34,18 @@ public class CollisionLogic {
 
 
     public static void creatureCollisionLogic(Creature creature) {
+        // Establish whether creature is currently touching the player.
+        creature.setTouchingPlayer(getTouchingEntities(creature).contains(Player.getInstance()));
+
         // Allow doing damage to other entities continuously for the whole duration of intersection.
         for (Entity entity : getTouchingEntities(creature)) {
             // Do damage to colliding entities. If canDamagePlayer == true, can only damage player. Else, it can only damage other Creatures
-            if ((creature.getCanDamagePlayer() && entity instanceof Player) || (!entity.getCanDamagePlayer() && entity instanceof Creature)) {
-                entity.dealDamage(creature.getDamage());
+            if ((creature.getStats().canDamagePlayer() && entity instanceof Player) || (!entity.getStats().canDamagePlayer() && entity instanceof Creature)) {
+                entity.getStats().takeDamage(creature.getStats().getDamage());
             }
         }
-        creature.getLastTouching().clear();
-        creature.getLastTouching().addAll(getTouchingEntities(creature));
     }
+
 
 
 
@@ -51,8 +54,18 @@ public class CollisionLogic {
             Structure component = getTopStructureTouching(player); // Use the top structure only so you can stand on something above lava to stay safe and stuff
 
             component.onTouch();
-            if (MouseControls.getInteracted()) {
+            if (MouseControls.getLeftClicked()) {
                 component.onClick();
+            }
+        }
+    }
+
+
+
+    public static void collectableCollisionLogic(Collectable collectable) {
+        if (isTouchingAnyStructures(Player.getInstance())) {
+            if (getTopStructureTouching(Player.getInstance()) == collectable) {
+                collectable.randomizePos();
             }
         }
     }

@@ -1,6 +1,7 @@
 package game.components.entities.player;
 
 import game.components.entities.Particle;
+import game.components.entities.Stats;
 import game.overlay.DeathScreen;
 import game.overlay.GameMessage;
 import util.MyMath;
@@ -9,25 +10,12 @@ import java.awt.*;
 
 import static java.lang.Math.max;
 
-public class Stats {
+public class PlayerStats extends Stats {
 
-    private Player player;
-
-    void init() { player = Player.getInstance(); }
-
-
-    // Since player's health is inherited because it's an entity, use the player's health variable instead of creating a new one.
-    public double getHealth() { return player.getHealth(); }
 
     public void heal(double amount) {
-        player.heal(amount);
-        if (player.getHealth() < getStrengthDependentStatCap()) Particle.spawnParticles(Color.RED, true);
-    }
-
-
-    public void dealDamage(double amount) {
-        player.dealDamage(amount);
-        if (player.getHealth() > 0) Particle.spawnParticles(Color.RED, false);
+        health += amount;
+        if (health < getStrengthDependentStatCap()) Particle.spawnParticles(Color.RED, true);
     }
 
 
@@ -101,38 +89,34 @@ public class Stats {
 
 
 
-    public double growthThisFrame = 0;
-
-
-    public void grow(double amount) {
-        growthThisFrame += amount;
-    }
-
-    public void shrink(double amount) {
-        growthThisFrame -= amount;
+    public PlayerStats(double health) {
+        super(Player.getInstance(), health, 0, false, 0);
     }
 
 
-
-    void statLogic() {
-
-        if (!player.isAlive()) {
-            new GameMessage("Oof!");
-            DeathScreen.show();
-        }
-
+    @Override
+    protected void statLogic() {
+        super.statLogic();
         if (energy <= 0) {
             new GameMessage("Get energy quickly!");
-            dealDamage(2);
+            takeDamage(2);
         }
 
+        health = MyMath.clamp(health, 0, getStrengthDependentStatCap());
         energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());
         strength = max(strength, 0);
         money = max(money, 0);
         energy -= 0.1;
+    }
 
-        growthThisFrame = 0;
 
+
+    @Override
+    protected void deathLogic() {
+        if (!DeathScreen.iStarted()) {
+            new GameMessage("Oof!");
+            DeathScreen.show();
+        }
     }
 
 

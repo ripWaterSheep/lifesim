@@ -108,7 +108,6 @@ public class KeyboardControls {
 
                 case SPRINT_KEY:
                     sprinting = true;
-                    //sprintToggle = !getSprintToggled();
                     break;
 
                 case VK_CONTROL:
@@ -145,7 +144,6 @@ public class KeyboardControls {
 
                 case SPRINT_KEY:
                     sprinting = false;
-                    //sprintToggle = !getSprintToggled();
                     break;
 
                 case VK_CONTROL:
@@ -157,7 +155,7 @@ public class KeyboardControls {
     };
 
 
-    static FocusAdapter focusAdapter = new FocusAdapter() {
+    static FocusAdapter AFKKeyPreventor = new FocusAdapter() {
 
         @Override
         public void focusLost(FocusEvent e) {
@@ -187,7 +185,7 @@ public class KeyboardControls {
                         TimeUtil.sleep(45);
                         break;
                     case VK_1:
-                        player.heal(100);
+                        player.getStats().heal(100);
                         break;
                     case VK_2:
                         player.getStats().energize(100);
@@ -203,7 +201,7 @@ public class KeyboardControls {
                         break;
 
                     case VK_K:
-                        player.dealDamage(10000);
+                        player.getStats().takeDamage(10000);
                         break;
                 }
             }

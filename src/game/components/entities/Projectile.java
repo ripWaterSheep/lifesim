@@ -3,17 +3,18 @@ package game.components.entities;
 import game.activity.collision.CollisionLogic;
 import game.components.GameComponent;
 import game.components.World;
-import game.components.entities.player.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
+
+import static game.activity.collision.CollisionLogic.projectileCollisionLogic;
 
 public class Projectile extends Entity {
 
     protected double currentDistance = 0; // How far the Projectile currently has gone
     protected final int range; // How far to move towards specified angle
 
-    protected ArrayList<GameComponent> lastTouching = new ArrayList<>();
+    public ArrayList<GameComponent> lastTouching = new ArrayList<>();
 
     public ArrayList<GameComponent> getLastTouching() { return lastTouching; }
 
@@ -23,14 +24,7 @@ public class Projectile extends Entity {
 
         this.range = range;
         this.angle = angle;
-    }
-
-
-    protected Projectile(String name, double x, double y, double scale, String imageName, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
-        super(name, x, y, scale, imageName, speed, health, damage, canDamagePlayer);
-
-        this.range = range;
-        this.angle = angle;
+        stats = new Stats(this, health, damage, canDamagePlayer, 0);
     }
 
 
@@ -38,18 +32,11 @@ public class Projectile extends Entity {
     public Projectile(String name, double x, double y, double radius, Color color, World world, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
         super(name, x, y, radius, color, speed, health, damage, canDamagePlayer);
 
+        this.world = world;
+        world.add(this);
         this.range = range;
         this.angle = angle;
-        this.world = world;
-    }
-
-
-    protected Projectile(String name, double x, double y, double scale, String imageName, World world, double speed, double angle, int range, double damage, double health, boolean canDamagePlayer) {
-        super(name, x, y, scale, imageName, speed, health, damage, canDamagePlayer);
-
-        this.range = range;
-        this.angle = angle;
-        this.world = world;
+        stats = new Stats(this, health, damage, canDamagePlayer, 0);
     }
 
 
@@ -60,23 +47,20 @@ public class Projectile extends Entity {
         moveTowardsAngle();
         // Die around when at edge of range
         if (Math.abs(currentDistance) >= range) {
-            alive = false;
             visible = false;
         } else currentDistance += speed;
     }
 
 
+
     @Override
-    protected void statLogic() {
-        super.statLogic();
-        if (!alive) visible = false;
+    public void update() {
+        super.update();
+        projectileCollisionLogic(this);
     }
 
 
-    @Override
-    protected void collisionLogic() {
-        CollisionLogic.projectileCollisionLogic(this);
-    }
+
 
 
 }

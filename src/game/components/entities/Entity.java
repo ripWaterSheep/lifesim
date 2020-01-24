@@ -1,12 +1,14 @@
 package game.components.entities;
 
+import game.activity.collision.CollisionLogic;
 import game.components.GameComponent;
 import game.components.World;
 import game.components.entities.player.Player;
 import game.components.structures.Structure;
+import util.Drawing.DrawString;
+import util.Drawing.MyFont;
 import util.MyMath;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
@@ -22,27 +24,10 @@ public abstract class Entity extends GameComponent {
     protected double speed; // Pixels to move per frame
     protected double angle = 0;
 
-    protected boolean alive = true;
+    protected Stats stats;
 
-    public boolean isAlive() { return alive; }
+    public Stats getStats() { return stats; }
 
-
-    protected double health;
-
-    public double getHealth() { return health; }
-
-    public void heal(double amount) { health += amount; }
-
-    public void dealDamage(double amount) { health -= amount; }
-
-    protected final double damage;
-
-    public double getDamage() { return damage; }
-
-
-    protected final boolean canDamagePlayer;
-
-    public boolean getCanDamagePlayer() { return canDamagePlayer; }
 
 
     @Override
@@ -55,20 +40,7 @@ public abstract class Entity extends GameComponent {
         entityInstances.add(this);
 
         this.speed = speed;
-        this.health = health;
-        this.damage = damage;
-        this.canDamagePlayer = canDamagePlayer;
-    }
-
-
-    protected Entity(String name, double x, double y, double scale, String imageName, double speed, double health, double damage, boolean canDamagePlayer) {
-        super(name, x, y, scale, imageName);
-        entityInstances.add(this);
-
-        this.speed = speed;
-        this.health = health;
-        this.damage = damage;
-        this.canDamagePlayer = canDamagePlayer;
+        this.stats = new Stats(this, health, damage, canDamagePlayer, 0);
     }
 
 
@@ -76,7 +48,6 @@ public abstract class Entity extends GameComponent {
         this.world = world;
         return this;
     }
-
 
 
     protected void moveTowardsAngle() {
@@ -91,27 +62,29 @@ public abstract class Entity extends GameComponent {
         y = MyMath.clamp(y, -world.getMidHeight() + getMidHeight(), world.getMidHeight() - getMidHeight());
     }
 
-
-    protected void statLogic() {
-        if (health <= 0) alive = false;
-
-        health = Math.max(health, 0);
-    }
-
-
     protected abstract void movementLogic();
 
-    protected abstract void collisionLogic();
+
+    @Override
+    public void init() {  }
+
 
 
     @Override
     public void update()  {
-        if (alive) {
+        if (getStats().isAlive()) {
             if (Player.getInstance().getWorld() == world) movementLogic();
-            collisionLogic();
         }
         borderLogic();
-        statLogic();
+        getStats().update();
+    }
+
+
+    @Override
+    public void draw(Graphics g) {
+        super.draw(g);
+        DrawString.drawCenteredString(g, getStats().getHealth()+"", new Rectangle(getDisplayX(), getDisplayY(), (int)width, (int)height), new Font(MyFont.getMainFont(), Font.PLAIN, 25), Color.WHITE);
+
     }
 
 

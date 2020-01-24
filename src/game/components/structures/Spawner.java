@@ -37,7 +37,7 @@ public class Spawner extends Structure {
 
     @Override
     public void init() {
-        creatureToSpawn.setWorld(world);
+        world.add(creatureToSpawn);
     }
 
 
@@ -45,14 +45,14 @@ public class Spawner extends Structure {
     public void update() {
         // Spawn a new clone of the Creature passed as a parameter if spawn interval passes and spawn limit has not been reached.
         if (getCurrentTime() - lastSpawnTime > spawnInterval && allSpawn.size() < SPAWN_LIMIT) {
-            Creature spawn = new Creature(creatureToSpawn, x, y);
+            Creature spawn = new Creature(creatureToSpawn, x, y, world);
             spawn.setWorld(world);
             allSpawn.add(spawn); // Add spawned entity to list to keep track of size
             lastSpawnTime = getCurrentTime();
         }
 
         // Clean dead spawn out from list so that more are allowed to spawn
-        allSpawn.removeIf(entity -> !entity.isAlive());
+        allSpawn.removeIf(entity -> !entity.getStats().isAlive());
     }
 
 

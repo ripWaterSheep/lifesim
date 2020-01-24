@@ -5,15 +5,15 @@ import game.components.entities.Entity;
 import game.components.entities.Projectile;
 import game.activity.controls.KeyboardControls;
 import game.activity.controls.MouseControls;
+import game.components.entities.Stats;
 import game.components.structures.Structure;
-import game.components.World;
 import util.Geometry;
 import util.MyMath;
 import main.WindowSize;
 
-import javax.swing.*;
 import java.awt.*;
 
+import static game.activity.collision.CollisionLogic.playerCollisionLogic;
 import static game.activity.controls.KeyboardControls.*;
 import static util.FindComponent.*;
 import static util.MyMath.*;
@@ -72,9 +72,11 @@ public class Player extends Entity {
 
     private double baseSpeed;
 
-    private Stats stats = new Stats();
+    private PlayerStats stats;
 
-    public Stats getStats() { return stats; }
+    @Override
+    public PlayerStats getStats() { return stats; }
+
 
 
     public Player(String name, double x, double y, int radius, Color color, double speed) {
@@ -82,6 +84,7 @@ public class Player extends Entity {
         Player.instance = this;
         this.color = color;
         baseSpeed = speed;
+        stats = new PlayerStats(1000);
     }
 
 
@@ -146,48 +149,10 @@ public class Player extends Entity {
 
 
     @Override
-    public void statLogic() {
-        super.statLogic();
-
-        width += stats.growthThisFrame;
-        height += stats.growthThisFrame;
-        stats.statLogic();
-
-        health = MyMath.clamp(health, 0.0, stats.getStrengthDependentStatCap());
-        width = clamp(width, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
-        height = clamp(height, 6, Math.min(WindowSize.getWidth(), WindowSize.getHeight()));
-    }
-
-
-    @Override
-    protected void collisionLogic() {
-        CollisionLogic.playerCollisionLogic(this);
-    }
-
-
-
-    private void projectileLogic() {
-        if (MouseControls.getFired()) {
-            int radius = betterRound(7 + (stats.strength/250));
-            Color color = new Color(35, 31, 15);
-            double damage = Math.sqrt((stats.strength/20)+1);
-            System.out.println(damage);
-            double angle = Geometry.getAngle(MouseControls.getLastClickX(), MouseControls.getLastClickY(), WindowSize.getMidWidth(), WindowSize.getMidHeight());
-            new Projectile("Projectile", x, y, radius, color, 45, angle, WindowSize.getHypotLength(), damage, 100, false).setWorld(world);
-        }
-    }
-
-
-    @Override
-    public void init() {
-        stats.init();
-    }
-
-
-    @Override
     public void update() {
         super.update();
-        if (alive) projectileLogic();
+        playerCollisionLogic(this);
+        Weapon.controlLogic();
     }
 
 

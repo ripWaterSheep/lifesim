@@ -26,6 +26,7 @@ public class EntityManagement {
         for (Entity entity: Entity.getEntityInstances()) {
             if (!GameSession.getUsedComponents().contains(entity))
                 GameSession.getUsedComponents().add(entity);
+            if (entity.getWorld() == null) entity.init();
         }
     }
 
@@ -33,7 +34,6 @@ public class EntityManagement {
 
     public static void removeExpiredEntities() {
         // If entity is dead, then remove it from the game to reduce lag.
-        ArrayList<Entity> entitiesToRemove = new ArrayList<>();
         GameSession.getUsedComponents().removeIf((entity)-> !entity.isVisible());
         Entity.getEntityInstances().removeIf((entity)-> !entity.isVisible()); // Remove entity reference from entity-only list.
 

@@ -7,6 +7,7 @@ import util.Drawing.MyImage;
 import javax.swing.*;
 import java.awt.*;
 
+
 import static util.MyMath.betterRound;
 
 public abstract class GameComponent {

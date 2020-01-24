@@ -18,9 +18,16 @@ public class World extends GameComponent {
     public static ArrayList<World> getWorldInstances() { return worldInstances; }
 
 
-    public static ArrayList<Structure> structures = new ArrayList<>();
+    // The structures and entities inside a world are present in these arraylists for that world instance.
+    public ArrayList<Structure> structures = new ArrayList<>();
 
-    public static ArrayList<Entity> entities = new ArrayList<>();
+    public ArrayList<Structure> getStructures() { return structures; }
+
+
+    public ArrayList<Entity> entities = new ArrayList<>();
+
+    public ArrayList<Entity> getEntities() { return entities; }
+
 
 
     public double getRandX() { return (int)(Math.random()*width) - getMidWidth(); }
@@ -53,7 +60,7 @@ public class World extends GameComponent {
     }
 
     public World add(Entity entity) {
-        //System.out.println(getName() + "   " + getWorld().getName());
+        System.out.println(entity.getName() + "   " + getWorld().getName());
         entities.add(entity.setWorld(this));
         return this;
     }
