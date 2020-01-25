@@ -46,7 +46,7 @@ public class Creature extends Entity {
         initialHealth = health;
         this.behavior = behavior;
         this.detectionRange = detectionRange;
-        this.stats = new AdvancedStats(this, health, damage, canDamagePlayer, killLoot);
+        this.stats = new AdvancedStats(this, speed, health, damage, canDamagePlayer, killLoot);
     }
 
 
@@ -55,6 +55,7 @@ public class Creature extends Entity {
                     double damage, double health, boolean canDamagePlayer, double killLoot) {
 
         this(name, x, y, radius, color, behavior, speed, range, damage, health, canDamagePlayer, killLoot);
+
         this.world = world;
         world.add(this);
     }
@@ -63,7 +64,7 @@ public class Creature extends Entity {
     /** Copy all fields into new Creature (for spawners) and set its location. This is used in class Spawner to clone base instance. */
     public Creature(Creature baseCreature, double x, double y, World world) {
         this(baseCreature.name, x, y, baseCreature.getMidWidth(), baseCreature.color, world,
-        baseCreature.behavior, baseCreature.speed, baseCreature.detectionRange,
+        baseCreature.behavior, baseCreature.stats.getSpeed(), baseCreature.detectionRange,
         baseCreature.stats.getDamage(), baseCreature.initialHealth, baseCreature.stats.canDamagePlayer(), baseCreature.stats.getKillLoot());
 
         image = baseCreature.getImage();

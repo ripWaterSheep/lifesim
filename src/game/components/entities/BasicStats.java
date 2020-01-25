@@ -1,11 +1,5 @@
 package game.components.entities;
 
-import game.components.GameComponent;
-import game.components.entities.player.Player;
-import game.overlay.DeathScreen;
-import game.overlay.GameMessage;
-import util.MyMath;
-
 import java.awt.*;
 
 import static java.lang.Math.abs;
@@ -15,21 +9,26 @@ public class BasicStats {
 
     protected Entity entity;
 
+
+    protected double speed;
+
+    public double getSpeed() { return speed; }
+
+
     protected final double initialHealth;
     protected double health;
-
 
     public double getHealth() { return health; }
 
     public void takeDamage(double amount) {
         health -= amount;
-        if (getHealth() > 0) Particle.spawnParticles(Color.RED, false);
+        if (getHealth() > 0) StatParticle.spawnParticles(entity, Color.RED, amount, false);
     }
 
     public boolean isAlive() { return health > 0; }
 
 
-    private final double damage;
+    private double damage;
 
     public double getDamage() { return damage; }
 
@@ -39,8 +38,10 @@ public class BasicStats {
     public boolean canDamagePlayer() { return canDamagePlayer; }
 
 
-    protected BasicStats(Entity entity, double health, double damage, boolean canDamagePlayer) {
+
+    protected BasicStats(Entity entity, double speed, double health, double damage, boolean canDamagePlayer) {
         this.entity = entity;
+        this.speed = speed;
         this.health = health;
         this.initialHealth = health;
         this.damage = damage;
@@ -52,6 +53,8 @@ public class BasicStats {
     protected void statLogic() {
         health = Math.max(health, 0);
         if (health <= 0) {
+            damage = 0;
+            speed = 0;
             entity.hide();
         }
     }

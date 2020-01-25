@@ -20,10 +20,9 @@ public class CollisionLogic {
         for (Entity entity: getTouchingEntities(projectile)) {
             // Do damage to other entities at the moment the collision starts only.
             if (!projectile.getLastTouching().contains(entity)) {
-                // Do damage to colliding entities. If canDamagePlayer == true, can only damage player. Else, it can only damage other Creatures
-                if ((projectile.getStats().canDamagePlayer() && entity == Player.getInstance()) || (!projectile.getStats().canDamagePlayer() && entity instanceof Creature)) {
+                // Do damage to colliding entities. If canDamagePlayer is true, damage player along with other entities. Else, it can only damage other entities.
+                if (projectile.getStats().canDamagePlayer() || !(entity instanceof Player)) {
                     entity.getStats().takeDamage(projectile.getStats().getDamage());
-                    System.out.println(entity.getName());
                 }
             }
         }
@@ -39,9 +38,13 @@ public class CollisionLogic {
 
         // Allow doing damage to other entities continuously for the whole duration of intersection.
         for (Entity entity : getTouchingEntities(creature)) {
-            // Do damage to colliding entities. If canDamagePlayer == true, can only damage player. Else, it can only damage other Creatures
-            if (((creature.getStats().canDamagePlayer() && entity instanceof Player) || (!entity.getStats().canDamagePlayer() && entity instanceof Creature)) && creature.getStats().isAlive()) {
-                entity.getStats().takeDamage(creature.getStats().getDamage());
+            // Do damage to colliding entities. If canDamagePlayer is true, damage player along with other entities. Else, it can only damage other entities.
+            if (creature.getStats().canDamagePlayer() || !(entity instanceof Player)) {
+                // Damage colliding entity only if they are not clones (do not have the same name).
+                // This prevents cloned creatures that are clumped together when chasing the player from killing each other.
+                if (!creature.getName().equals(entity.getName())) {
+                    entity.getStats().takeDamage(creature.getStats().getDamage());
+                }
             }
         }
     }
@@ -57,6 +60,7 @@ public class CollisionLogic {
             if (MouseControls.getLeftClicked()) {
                 component.onClick();
             }
+
         }
     }
 

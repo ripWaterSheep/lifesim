@@ -1,12 +1,7 @@
 package game.activity;
 
 import game.GameSession;
-import game.components.entities.Creature;
 import game.components.entities.Entity;
-import game.components.entities.Particle;
-import game.components.structures.Structure;
-
-import java.util.ArrayList;
 
 public class EntityManagement {
 

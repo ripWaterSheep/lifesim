@@ -60,7 +60,7 @@ public class World extends GameComponent {
     }
 
     public World add(Entity entity) {
-        System.out.println(entity.getName() + "   " + getWorld().getName());
+        //System.out.println(entity.getName() + "   " + getWorld().getName());
         entities.add(entity.setWorld(this));
         return this;
     }

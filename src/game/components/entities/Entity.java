@@ -17,13 +17,11 @@ public abstract class Entity extends GameComponent {
     public static ArrayList<Entity> getEntityInstances() { return entityInstances; }
 
 
-    protected double speed; // Pixels to move per frame
     protected double angle = 0;
 
     protected BasicStats stats;
 
     public BasicStats getStats() { return stats; }
-
 
 
     @Override
@@ -34,9 +32,7 @@ public abstract class Entity extends GameComponent {
     protected Entity(String name, double x, double y, double radius, Color color, double speed, double health, double damage, boolean canDamagePlayer) {
         super(name, x, y, radius*2, radius*2, color);
         entityInstances.add(this);
-
-        this.speed = speed;
-        this.stats = new AdvancedStats(this, health, damage, canDamagePlayer, 0);
+        this.stats = new AdvancedStats(this, speed, health, damage, canDamagePlayer, 0);
     }
 
 
@@ -47,8 +43,8 @@ public abstract class Entity extends GameComponent {
 
 
     protected void moveTowardsAngle() {
-        x -= (speed*Math.cos(Math.toRadians(angle)));
-        y -= (speed*Math.sin(Math.toRadians(angle)));
+        x -= (stats.speed*Math.cos(Math.toRadians(angle)));
+        y -= (stats.speed*Math.sin(Math.toRadians(angle)));
     }
 
 

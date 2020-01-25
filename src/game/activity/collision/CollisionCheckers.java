@@ -13,8 +13,8 @@ public class CollisionCheckers {
 
     static ArrayList<Structure> getTouchingStructures(GameComponent component) {
         ArrayList<Structure> touching = new ArrayList<>();
-        for (Structure structure: component.getWorld().getStructures()) {
-            if (testIntersection(component, structure)) {
+        for (Structure structure: Structure.getStructureInstances()) {
+            if (testIntersection(component, structure) && component.getWorld() == structure.getWorld()) {
                 touching.add(structure);
             }
         }
@@ -36,8 +36,8 @@ public class CollisionCheckers {
 
     static ArrayList<Entity> getTouchingEntities(GameComponent component) {
         ArrayList<Entity> touching = new ArrayList<>();
-        for (Entity entity: component.getWorld().getEntities()) {
-            if (testIntersection(component, entity) && !(entity == component)) {
+        for (Entity entity: Entity.getEntityInstances()) {
+            if (testIntersection(component, entity) && !(entity == component) && component.getWorld() == entity.getWorld()) {
                 touching.add(entity);
             }
         }

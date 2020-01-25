@@ -14,8 +14,8 @@ public class AdvancedStats extends BasicStats{
     private boolean looted = false;
 
 
-    protected AdvancedStats(Entity entity, double health, double damage, boolean canDamagePlayer, double killLoot) {
-        super(entity, health, damage, canDamagePlayer);
+    protected AdvancedStats(Entity entity, double speed, double health, double damage, boolean canDamagePlayer, double killLoot) {
+        super(entity, speed, health, damage, canDamagePlayer);
         this.killLoot = killLoot;
     }
 

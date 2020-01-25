@@ -1,6 +1,7 @@
 package game.components.entities.player;
 
-import game.components.entities.Particle;
+import game.activity.controls.KeyboardControls;
+import game.components.entities.StatParticle;
 import game.components.entities.BasicStats;
 import game.overlay.DeathScreen;
 import game.overlay.GameMessage;
@@ -13,9 +14,26 @@ import static java.lang.Math.max;
 public class PlayerStats extends BasicStats {
 
 
+    // Speed under normal conditions (full energy, not sprinting)
+    private double baseSpeed;
+
+    /** Calculates the speed at which the player is currently intended to move at.
+     * An int representing number of pixels player will move
+     * in a direction per frame if appropriate key is pressed.
+     */
+    void calculateSpeed() {
+        speed = baseSpeed * (((energy/1000)/2)+0.5);
+        if (KeyboardControls.getSprinting()) {
+            speed *= 1.5;
+            energy -= 0.1;
+        }
+    }
+
+
     public void heal(double amount) {
         health += amount;
-        if (health < getStrengthDependentStatCap()) Particle.spawnParticles(Color.RED, true);
+        if (health < getStrengthDependentStatCap())
+            StatParticle.spawnParticles(entity, Color.RED, amount, true);
     }
 
 
@@ -25,12 +43,14 @@ public class PlayerStats extends BasicStats {
 
     public void energize(double amount) {
         energy += Math.abs(amount);
-        if(energy < getStrengthDependentStatCap()) Particle.spawnParticles(Color.ORANGE, true);
+        if(energy < getStrengthDependentStatCap())
+            StatParticle.spawnParticles(entity, Color.ORANGE, amount, true);
     }
 
     public void tire(double amount) {
         energy -= Math.abs(amount);
-        if(energy > 0) Particle.spawnParticles(Color.ORANGE, false);
+        if(energy > 0)
+            StatParticle.spawnParticles(entity, Color.ORANGE, amount, false);
     }
 
 
@@ -54,12 +74,12 @@ public class PlayerStats extends BasicStats {
 
     public void gainMoney(double amount) {
         money += Math.abs(amount);
-        Particle.spawnParticles(Color.GREEN, true);
+        StatParticle.spawnParticles(entity, Color.GREEN, amount, true);
     }
 
     public void loseMoney(double amount) {
         money -= Math.abs(amount);
-        Particle.spawnParticles(Color.GREEN, false);
+        StatParticle.spawnParticles(entity, Color.GREEN, amount, false);
     }
 
 
@@ -69,7 +89,7 @@ public class PlayerStats extends BasicStats {
 
     public void strengthen(double amount) {
         strength += Math.abs(amount);
-        Particle.spawnParticles(Color.YELLOW, true);
+        StatParticle.spawnParticles(entity, Color.YELLOW, amount, true);
     }
 
 
@@ -79,7 +99,7 @@ public class PlayerStats extends BasicStats {
 
     public void gainIntellect(double amount) {
         intellect += Math.abs(amount);
-        Particle.spawnParticles(Color.BLUE, true);
+        StatParticle.spawnParticles(entity, Color.BLUE, amount, true);
     }
 
 
@@ -89,8 +109,9 @@ public class PlayerStats extends BasicStats {
 
 
 
-    public PlayerStats(double health) {
-        super(Player.getInstance(), health, 0, false);
+    public PlayerStats(double speed, double health) {
+        super(Player.getInstance(), speed, health, 0, false);
+        baseSpeed = speed;
     }
 
 

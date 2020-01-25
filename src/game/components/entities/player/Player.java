@@ -64,8 +64,6 @@ public class Player extends Entity {
     public int getDisplayY() { return betterRound(WindowSize.getMidHeight()-getMidHeight());}
 
 
-    private double baseSpeed;
-
     private PlayerStats stats;
 
     @Override
@@ -76,24 +74,7 @@ public class Player extends Entity {
     public Player(String name, double x, double y, int radius, Color color, double speed) {
         super(name, x, y, radius, color, speed, 1000, 0, false);
         Player.instance = this;
-        this.color = color;
-        baseSpeed = speed;
-        stats = new PlayerStats(1000);
-    }
-
-
-
-    /** Calculates the speed at which the player is currently intended to move at.
-     * An int representing number of pixels player will move
-     * in a direction per frame if appropriate key is pressed.
-     */
-    private void calculateSpeed() {
-        speed = baseSpeed * (((stats.energy/1000)/2)+0.5);
-        //System.out.println(speed);
-        if (KeyboardControls.getSprinting()) {
-            speed *= 1.5;
-            stats.energy -= 0.1;
-        }
+        stats = new PlayerStats(speed, 1000);
     }
 
 
@@ -135,7 +116,7 @@ public class Player extends Entity {
         else if (left) angle = 0;
 
         if (left||right||up||down) {
-            calculateSpeed();
+            stats.calculateSpeed();
             moveTowardsAngle();
         }
     }
