@@ -11,13 +11,12 @@ import java.awt.*;
 import static java.lang.Math.abs;
 import static java.lang.Math.max;
 
-public class Stats {
+public class BasicStats {
 
-    private Entity entity;
+    protected Entity entity;
 
     protected final double initialHealth;
     protected double health;
-
 
 
     public double getHealth() { return health; }
@@ -40,36 +39,25 @@ public class Stats {
     public boolean canDamagePlayer() { return canDamagePlayer; }
 
 
-    private final double killLoot; // Specify amount of money the player earns from entity's death.
-
-    public double getKillLoot() { return killLoot; }
-
-    private boolean looted = false;
-
-
-
-    protected Stats(Entity entity, double health, double damage, boolean canDamagePlayer, double killLoot) {
+    protected BasicStats(Entity entity, double health, double damage, boolean canDamagePlayer) {
         this.entity = entity;
         this.health = health;
         this.initialHealth = health;
         this.damage = damage;
         this.canDamagePlayer = canDamagePlayer;
-        this.killLoot = killLoot;
     }
 
 
 
     protected void statLogic() {
         health = Math.max(health, 0);
-    }
-
-
-    protected void deathLogic() {
-        if (entity instanceof Creature && health <= 0 && !looted) {
-            Player.getInstance().getStats().gainMoney(killLoot);
-            looted = true;
+        if (health <= 0) {
+            entity.hide();
         }
     }
+
+
+    protected void deathLogic() {  }
 
 
     void update() {

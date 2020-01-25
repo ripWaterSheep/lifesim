@@ -70,6 +70,8 @@ public abstract class GameComponent {
 
     public boolean isVisible() { return visible; }
 
+    public void hide() { visible = false; }
+
 
     protected MyImage image;
 

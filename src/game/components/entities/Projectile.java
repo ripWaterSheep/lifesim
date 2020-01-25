@@ -1,6 +1,5 @@
 package game.components.entities;
 
-import game.activity.collision.CollisionLogic;
 import game.components.GameComponent;
 import game.components.World;
 
@@ -24,7 +23,7 @@ public class Projectile extends Entity {
 
         this.range = range;
         this.angle = angle;
-        stats = new Stats(this, health, damage, canDamagePlayer, 0);
+        stats = new BasicStats(this, health, damage, canDamagePlayer);
     }
 
 
@@ -36,7 +35,7 @@ public class Projectile extends Entity {
         world.add(this);
         this.range = range;
         this.angle = angle;
-        stats = new Stats(this, health, damage, canDamagePlayer, 0);
+        stats = new BasicStats(this, health, damage, canDamagePlayer);
     }
 
 

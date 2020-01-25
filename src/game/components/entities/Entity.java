@@ -1,12 +1,8 @@
 package game.components.entities;
 
-import game.activity.collision.CollisionLogic;
 import game.components.GameComponent;
 import game.components.World;
 import game.components.entities.player.Player;
-import game.components.structures.Structure;
-import util.Drawing.DrawString;
-import util.Drawing.MyFont;
 import util.MyMath;
 
 import java.awt.*;
@@ -24,9 +20,9 @@ public abstract class Entity extends GameComponent {
     protected double speed; // Pixels to move per frame
     protected double angle = 0;
 
-    protected Stats stats;
+    protected BasicStats stats;
 
-    public Stats getStats() { return stats; }
+    public BasicStats getStats() { return stats; }
 
 
 
@@ -40,7 +36,7 @@ public abstract class Entity extends GameComponent {
         entityInstances.add(this);
 
         this.speed = speed;
-        this.stats = new Stats(this, health, damage, canDamagePlayer, 0);
+        this.stats = new AdvancedStats(this, health, damage, canDamagePlayer, 0);
     }
 
 

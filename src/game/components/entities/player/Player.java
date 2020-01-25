@@ -1,14 +1,8 @@
 package game.components.entities.player;
 
-import game.activity.collision.CollisionLogic;
 import game.components.entities.Entity;
-import game.components.entities.Projectile;
 import game.activity.controls.KeyboardControls;
-import game.activity.controls.MouseControls;
-import game.components.entities.Stats;
 import game.components.structures.Structure;
-import util.Geometry;
-import util.MyMath;
 import main.WindowSize;
 
 import java.awt.*;

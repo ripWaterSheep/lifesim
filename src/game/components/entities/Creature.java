@@ -1,7 +1,5 @@
 package game.components.entities;
 
-import game.activity.collision.CollisionCheckers;
-import game.activity.collision.CollisionLogic;
 import game.components.World;
 import game.components.entities.player.Player;
 import util.Geometry;
@@ -19,6 +17,11 @@ public class Creature extends Entity {
         FOLLOW, // Try to get close to player if player is within range.
         AVOID // Try to get far from player if player is within range.
     }
+
+    protected AdvancedStats stats;
+
+    public AdvancedStats getStats() { return stats; }
+
 
     protected Behaviors behavior;
 
@@ -43,7 +46,7 @@ public class Creature extends Entity {
         initialHealth = health;
         this.behavior = behavior;
         this.detectionRange = detectionRange;
-        this.stats = new Stats(this, health, damage, canDamagePlayer, killLoot);
+        this.stats = new AdvancedStats(this, health, damage, canDamagePlayer, killLoot);
     }
 
 

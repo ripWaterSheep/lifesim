@@ -1,7 +1,7 @@
 package game.components.entities.player;
 
 import game.components.entities.Particle;
-import game.components.entities.Stats;
+import game.components.entities.BasicStats;
 import game.overlay.DeathScreen;
 import game.overlay.GameMessage;
 import util.MyMath;
@@ -10,7 +10,7 @@ import java.awt.*;
 
 import static java.lang.Math.max;
 
-public class PlayerStats extends Stats {
+public class PlayerStats extends BasicStats {
 
 
     public void heal(double amount) {
@@ -90,7 +90,7 @@ public class PlayerStats extends Stats {
 
 
     public PlayerStats(double health) {
-        super(Player.getInstance(), health, 0, false, 0);
+        super(Player.getInstance(), health, 0, false);
     }
 
 
