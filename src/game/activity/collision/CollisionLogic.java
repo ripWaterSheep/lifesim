@@ -40,7 +40,7 @@ public class CollisionLogic {
         // Allow doing damage to other entities continuously for the whole duration of intersection.
         for (Entity entity : getTouchingEntities(creature)) {
             // Do damage to colliding entities. If canDamagePlayer == true, can only damage player. Else, it can only damage other Creatures
-            if ((creature.getStats().canDamagePlayer() && entity instanceof Player) || (!entity.getStats().canDamagePlayer() && entity instanceof Creature)) {
+            if (((creature.getStats().canDamagePlayer() && entity instanceof Player) || (!entity.getStats().canDamagePlayer() && entity instanceof Creature)) && creature.getStats().isAlive()) {
                 entity.getStats().takeDamage(creature.getStats().getDamage());
             }
         }

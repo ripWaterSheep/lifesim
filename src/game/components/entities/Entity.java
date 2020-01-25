@@ -83,8 +83,6 @@ public abstract class Entity extends GameComponent {
     @Override
     public void draw(Graphics g) {
         super.draw(g);
-        DrawString.drawCenteredString(g, getStats().getHealth()+"", new Rectangle(getDisplayX(), getDisplayY(), (int)width, (int)height), new Font(MyFont.getMainFont(), Font.PLAIN, 25), Color.WHITE);
-
     }
 
 
