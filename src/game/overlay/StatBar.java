@@ -1,21 +1,20 @@
 package game.overlay;
 
-import game.components.entities.player.Player;
-import util.ColorMethods;
+import game.organization.components.entities.Player;
 import main.WindowSize;
+import util.ColorMethods;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static util.MyMath.betterRound;
 
 
-public class DisplayedStat {
+public class StatBar {
 
     //TODO: Add icons (Once they are designed by Ken)
 
-    static ArrayList<DisplayedStat> shownStats = new ArrayList<>();
+    static ArrayList<StatBar> shownStats = new ArrayList<>();
 
 
     private static final Font STAT_FONT = new Font("StayPuft", Font.PLAIN, 26);
@@ -39,21 +38,20 @@ public class DisplayedStat {
         Player player = Player.getInstance();
         shownStats.clear();
 
-        DisplayedStat xStat = new DisplayedStat("X", player.getX());
-        DisplayedStat yStat = new DisplayedStat("Y", player.getY());
+        new StatBar("X", player.getX());
+        new StatBar("Y", player.getY());
 
-        DisplayedStat healthStat = new DisplayedStat("Health", player.getStats().getHealth(), 0, player.getStats().getStrengthDependentStatCap(), 1, Color.RED);
-        DisplayedStat energyStat = new DisplayedStat("Energy", player.getStats().getEnergy(), 0, player.getStats().getStrengthDependentStatCap(), 1, Color.ORANGE);
-        DisplayedStat strengthStat = new DisplayedStat("Strength", player.getStats().getStrength(), 0, 10000, 0.1, Color.YELLOW);
-        DisplayedStat moneyStat = new DisplayedStat("Cash", player.getStats().getMoney(), 0, 10000, 0.1, Color.GREEN);
-        DisplayedStat intellectStat = new DisplayedStat("Intellect", player.getStats().getIntellect(), 0, 10000, 0.1, Color.BLUE);
+        new StatBar("Health", player.getStats().getHealth(), 0, player.getStats().getStrengthDependentStatCap(), 1, Color.RED);
+        new StatBar("Energy", player.getStats().getEnergy(), 0, player.getStats().getStrengthDependentStatCap(), 1, Color.ORANGE);
+        new StatBar("Strength", player.getStats().getStrength(), 0, 10000, 0.1, Color.YELLOW);
+        new StatBar("Cash", player.getStats().getMoney(), 0, 10000, 0.1, Color.GREEN);
+        new StatBar("Intellect", player.getStats().getIntellect(), 0, 10000, 0.1, Color.BLUE);
 
-        Collections.reverse(shownStats);
     }
 
 
     public static void drawAll(Graphics g) {
-        for (DisplayedStat stat: shownStats) {
+        for (StatBar stat: shownStats) {
             stat.draw(g);
         }
     }
@@ -70,9 +68,8 @@ public class DisplayedStat {
 
 
 
-
-    public DisplayedStat(String key, double value) {
-        DisplayedStat.shownStats.add(this);
+    public StatBar(String key, double value) {
+        StatBar.shownStats.add(0, this);
 
         this.key = key;
         this.value = value;
@@ -82,15 +79,16 @@ public class DisplayedStat {
 
 
 
-    public DisplayedStat(String key, double value, double minVal, double maxVal, double barLengthScale, Color barColor) {
-        DisplayedStat.shownStats.add(this);
+    public StatBar(String key, double value, double minVal, double maxVal, double barLengthScale, Color barColor) {
+        StatBar.shownStats.add(0, this);
 
         this.key = key;
         this.value = value;
+
         this.barLength = betterRound(maxVal*DEFAULT_BAR_LENGTH_SCALE*barLengthScale);
         this.statLength = betterRound(barLength*(value-minVal)/(maxVal-minVal));
-
         this.barColor = ColorMethods.applyOpacity(barColor, DEFAULT_OPACITY);
+
         this.showBar = true;
     }
 
@@ -115,7 +113,7 @@ public class DisplayedStat {
         }
 
         g2d.setColor(Color.WHITE);
-        g2d.setFont(DisplayedStat.STAT_FONT);
+        g2d.setFont(StatBar.STAT_FONT);
         g2d.drawString(format(key, value), textX, textY);
     }
 

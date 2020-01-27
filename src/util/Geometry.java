@@ -1,15 +1,14 @@
 package util;
 
-import game.components.GameComponent;
+import game.organization.components.Component;
 
-import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 
 public class Geometry {
 
 
-    public static double getDistanceBetween(GameComponent component1, GameComponent component2) {
+    public static double getDistanceBetween(Component component1, Component component2) {
         return MyMath.betterRound(Point2D.distance(component1.getX(), component1.getY(), component2.getX(), component2.getY()));
     }
 
@@ -28,7 +27,7 @@ public class Geometry {
         return angle;
     }
 
-    public static boolean testIntersection(GameComponent componentA, GameComponent componentB) {
+    public static boolean testIntersection(Component componentA, Component componentB) {
         Area areaA = new Area(componentA.getShape());
         areaA.intersect(new Area(componentB.getShape()));
         return !areaA.isEmpty();

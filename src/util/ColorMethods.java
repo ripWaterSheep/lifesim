@@ -2,8 +2,6 @@ package util;
 
 import java.awt.*;
 
-import static util.MyMath.betterRound;
-
 
 public class ColorMethods {
 

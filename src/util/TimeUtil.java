@@ -1,11 +1,5 @@
 package util;
 
-import game.components.GameComponent;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-
 public class TimeUtil {
 
 
@@ -15,7 +9,9 @@ public class TimeUtil {
         } catch (Exception ignored) {}
     }
 
-    public static long getCurrentTime() { return System.currentTimeMillis(); }
+    public static long getCurrentTime() {
+        return System.currentTimeMillis();
+    }
 
 
 

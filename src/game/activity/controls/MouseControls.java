@@ -3,7 +3,8 @@ package game.activity.controls;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static java.awt.event.MouseEvent.*;
+import static java.awt.event.MouseEvent.BUTTON1;
+import static java.awt.event.MouseEvent.BUTTON3;
 
 public class MouseControls {
 
@@ -12,15 +13,24 @@ public class MouseControls {
     private static boolean RIGHT_CLICKED = false;
 
 
-    public static boolean getLeftClicked() { return LEFT_CLICKED; }
-    public static boolean getRightClicked() { return RIGHT_CLICKED; }
+    public static boolean getLeftClicked() {
+        return LEFT_CLICKED;
+    }
+
+    public static boolean getRightClicked() {
+        return RIGHT_CLICKED;
+    }
 
     private static int lastClickX = 0;
     private static int lastClickY = 0;
 
-    public static int getLastClickX() { return lastClickX; }
+    public static int getLastClickX() {
+        return lastClickX;
+    }
 
-    public static int getLastClickY() { return lastClickY; }
+    public static int getLastClickY() {
+        return lastClickY;
+    }
 
 
     static MouseAdapter mouseAdapter = new MouseAdapter() {

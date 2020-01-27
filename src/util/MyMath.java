@@ -7,16 +7,24 @@ public class MyMath {
 
 
     /** Return true if input is within range. */
-    public static boolean inRange(int val, int min, int max) { return val > min && val < max; }
+    public static boolean inRange(int val, int min, int max) {
+        return val > min && val < max;
+    }
 
     /** Return true if the two ranges overlap. */
-    public static boolean rangeOverlapping(int min1, int max1, int min2, int max2) { return !(max1 < min2 || min1 > max2); }
+    public static boolean rangeOverlapping(int min1, int max1, int min2, int max2) {
+        return !(max1 < min2 || min1 > max2);
+    }
 
 
     /** Ensure input is inside a certain range. */
-    public static double clamp(double val, double min, double max) { return Math.max(min, Math.min(max, val)); }
+    public static double clamp(double val, double min, double max) {
+        return Math.max(min, Math.min(max, val));
+    }
 
-    public static int clamp(int val, int min, int max) { return Math.max(min, Math.min(max, val)); }
+    public static int clamp(int val, int min, int max) {
+        return Math.max(min, Math.min(max, val));
+    }
 
 
     /** Ensure input is within range, but if the number is negative flip the signs
@@ -51,14 +59,18 @@ public class MyMath {
 
 
 
-    public static int betterRound(double a) { return (int)Math.round(a); }
+    public static int betterRound(double a) {
+        return (int)Math.round(a);
+    }
 
     public static double roundToPlace(double input, int place) {
         double multiplier = Math.pow(10, place);
         return Math.round(input * multiplier) / multiplier;
     }
 
-    public static int roundToMultiple(int x, int base) { return base * Math.round((float)x / base); }
+    public static int roundToMultiple(int x, int base) {
+        return base * Math.round((float)x / base);
+    }
 
 
 

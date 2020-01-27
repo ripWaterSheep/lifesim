@@ -1,16 +1,16 @@
-package game.components.entities.player;
+package game.organization.components.entities;
 
-import game.components.entities.Entity;
-import game.activity.controls.KeyboardControls;
-import game.components.structures.Structure;
+import game.organization.components.activity.PlayerWeapon;
+import game.organization.World;
+import game.organization.components.structures.Structure;
 import main.WindowSize;
+import game.organization.components.entities.stats.PlayerStats;
 
 import java.awt.*;
 
-import static game.activity.collision.CollisionLogic.playerCollisionLogic;
 import static game.activity.controls.KeyboardControls.*;
 import static util.FindComponent.*;
-import static util.MyMath.*;
+import static util.MyMath.betterRound;
 
 
 public class Player extends Entity {
@@ -23,58 +23,52 @@ public class Player extends Entity {
      *
      * @return first defined instance of player if one exists already.
      */
-    public static Player getInstance() { return instance; }
-
-
-    public void goToPos(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public void goToStructure(String name) {
-        Structure structure = findStructure(name);
-        goToPos(structure.getX(), structure.getY());
-        world = structure.getWorld();
+    public static Player getInstance() {
+        return instance;
     }
 
 
-    public void goToEntity(String name) {
-        Entity entity = findEntity(name);
-        goToPos(entity.getX(), entity.getY());
-        world = entity.getWorld();
-    }
-
-
-    public void goToWorld(String name) {
-
-        this.world = findWorld(name);
+    public void goToWorld(World world) {
+        this.world = world;
         goToPos(0, 0);
     }
 
-    public void goToWorldAt(String name, double x, double y) {
-        this.world = findWorld(name);
-        goToPos(x, y);
+
+    public void goToStructure(String name) {
+        Structure structure = findStructure(name);
+        this.world = structure.getWorld();
+        goToPos(structure.getX(), structure.getY());
     }
 
 
     @Override
-    public int getDisplayX() { return betterRound(WindowSize.getMidWidth()-getMidWidth()); }
+    public int getDisplayX() {
+        return betterRound(WindowSize.getMidWidth()-getMidWidth());
+    }
 
     @Override
-    public int getDisplayY() { return betterRound(WindowSize.getMidHeight()-getMidHeight());}
+    public int getDisplayY() {
+        return betterRound(WindowSize.getMidHeight()-getMidHeight());
+    }
 
 
-    private PlayerStats stats;
+    protected PlayerStats stats;
 
     @Override
-    public PlayerStats getStats() { return stats; }
+    public PlayerStats getStats() {
+        return stats;
+    }
+
+
+    private PlayerWeapon weapon;
 
 
 
-    public Player(String name, double x, double y, int radius, Color color, double speed) {
-        super(name, x, y, radius, color, speed, 1000, 0, false);
+    public Player(double x, double y) {
+        super("Player", x, y, 50, 50, true, Color.YELLOW);
         Player.instance = this;
-        stats = new PlayerStats(speed, 1000);
+        stats = new PlayerStats(this, 12, 1000);
+        weapon = new PlayerWeapon(this);
     }
 
 
@@ -102,6 +96,7 @@ public class Player extends Entity {
         else if(getUpPressed()) up = true;
         else if(getDownPressed()) down = true;
 
+        double angle = 0;
         // Get angles for different key directions (makes going diagonal the same speed as horizontal or vertical)
         if (up) {
             if (left) angle = 45;
@@ -115,19 +110,19 @@ public class Player extends Entity {
         else if (right) angle = 180;
         else if (left) angle = 0;
 
+        stats.setAngle(angle);
+
         if (left||right||up||down) {
-            stats.calculateSpeed();
+            getStats().calculateSpeed();
             moveTowardsAngle();
         }
     }
 
 
-
     @Override
     public void update() {
         super.update();
-        playerCollisionLogic(this);
-        Weapon.controlLogic();
+        weapon.controlLogic();
     }
 
 

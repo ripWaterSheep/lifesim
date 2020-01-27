@@ -2,11 +2,15 @@ package main;
 
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Main {
 
     static JPanel panel;
+
+    public static JPanel getPanel() {
+        return panel;
+    }
+
 
     public static void main(String[] args) {
 

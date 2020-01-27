@@ -1,6 +1,6 @@
 package util.Drawing;
 
-import game.components.GameComponent;
+import game.organization.components.Component;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -17,24 +17,30 @@ public class MyImage {
 
     private Image image;
 
-    private GameComponent component;
+    private Component component;
 
     private double width;
     private double height;
 
-    public double getWidth() { return width; }
+    public double getWidth() {
+        return width;
+    }
 
-    public double getHeight() { return height; }
+    public double getHeight() {
+        return height;
+    }
 
 
     private double scale;
 
-    public double getScale() { return scale; }
+    public double getScale() {
+        return scale;
+    }
 
 
 
 
-    public MyImage(String name, double scale, GameComponent component) {
+    public MyImage(String name, double scale, Component component) {
         this.component = component;
         this.scale = scale;
         try {

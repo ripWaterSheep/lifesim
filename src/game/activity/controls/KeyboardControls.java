@@ -1,26 +1,30 @@
 package game.activity.controls;
 
-import game.components.World;
-import game.components.entities.player.Player;
+import game.organization.World;
+import game.organization.components.entities.Player;
 import util.TimeUtil;
 
-import java.awt.event.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import static game.activity.controls.KeyboardControls.Cheats.cheatLogic;
 import static java.awt.event.KeyEvent.*;
-import static java.awt.event.KeyEvent.VK_CONTROL;
 import static util.TimeUtil.getCurrentTime;
 
 
 public class KeyboardControls {
 
 
-    private final static int SPRINT_KEY = VK_SPACE;
-
     private static boolean upPressed = false;
     private static boolean downPressed = false;
     private static boolean leftPressed = false;
     private static boolean rightPressed = false;
+    private static boolean spacePressed = false;
+    private static boolean shiftPressed = false;
+    private static boolean controlPressed = false;
+
 
     public static boolean getUpPressed() {
         return upPressed;
@@ -38,15 +42,13 @@ public class KeyboardControls {
         return rightPressed;
     }
 
-
-    private static boolean sprinting = false;
-
-    public static boolean getSprinting() {
-        return sprinting;
+    public static boolean getSpacePressed() {
+        return spacePressed;
     }
 
-
-    private static boolean controlPressed;
+    public static boolean getShiftPressed() {
+        return shiftPressed;
+    }
 
     static boolean getControlPressed() {
         return controlPressed;
@@ -106,8 +108,12 @@ public class KeyboardControls {
                     rightPressed = true;
                     break;
 
-                case SPRINT_KEY:
-                    sprinting = true;
+                case VK_SPACE:
+                    spacePressed = true;
+                    break;
+
+                case VK_SHIFT:
+                    shiftPressed = true;
                     break;
 
                 case VK_CONTROL:
@@ -142,8 +148,12 @@ public class KeyboardControls {
                     rightPressed = false;
                     break;
 
-                case SPRINT_KEY:
-                    sprinting = false;
+                case VK_SPACE:
+                    spacePressed = false;
+                    break;
+
+                case VK_SHIFT:
+                    shiftPressed = false;
                     break;
 
                 case VK_CONTROL:
@@ -211,23 +221,23 @@ public class KeyboardControls {
          * Make player go to the next world declared in the used game layout
          */
         static void cycleWorlds(int index) {
-            int currentIndex = World.getWorldInstances().indexOf(Player.getInstance().getWorld());
             World newWorld = Player.getInstance().getWorld();
+            int currentIndex = World.getWorlds().indexOf(newWorld);
 
             try {
                 // Increment or decrement(if negative) current index and set player world to world at new index.
-                newWorld = World.getWorldInstances().get(currentIndex + index);
+                newWorld = World.getWorlds().get(currentIndex + index);
 
             } catch (IndexOutOfBoundsException e) {
 
                 if (index > 0) {
-                    newWorld = World.getWorldInstances().get(index - 1); // Wraparound to the first world
+                    newWorld = World.getWorlds().get(index - 1); // Wraparound to the first world
                 } else if (index < 0) {
-                    newWorld = World.getWorldInstances().get(World.getWorldInstances().size() + index); // Wraparound to the last world
+                    newWorld = World.getWorlds().get(World.getWorlds().size() + index); // Wraparound to the last world
                 }
             }
 
-            Player.getInstance().goToWorld(newWorld.getName());
+            Player.getInstance().goToWorld(newWorld);
         }
 
     }
