@@ -1,20 +1,21 @@
 package game.overlay;
 
-import game.organization.components.entities.Player;
+import game.components.entities.player.Player;
+import game.Drawable;
 
 import java.awt.*;
 
-public class Overlay {
+public class Overlay implements Drawable {
 
-
-    public static void drawOverlays(Graphics g) {
+    public void run(Graphics g) {
         if (Player.getInstance().getStats().isAlive()) {
             GameMessage.drawCurrentMessage(g);
+            StatBar.retrieveValues();
             StatBar.drawAll(g);
         } else {
             DeathScreen.draw(g);
         }
-
     }
+
 
 }

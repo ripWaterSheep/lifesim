@@ -3,20 +3,14 @@ package game.activity;
 import game.organization.Layout;
 import game.activity.controls.MouseControls;
 import game.organization.World;
-import game.organization.components.entities.Player;
-import game.overlay.StatBar;
+import game.components.entities.player.Player;
 import game.overlay.Overlay;
 
 import java.awt.*;
 
 public class GameSession {
 
-    private Layout layout;
-
-    public Layout getLayout() {
-        return layout;
-    }
-
+    Overlay overlay;
 
     private static int currentFrame = 0;
 
@@ -31,7 +25,8 @@ public class GameSession {
 
 
     public void init() {
-        layout = new Layout();
+        new Layout();
+        overlay = new Overlay();
 
         for (World world: World.getWorlds()) {
             world.init();
@@ -43,8 +38,7 @@ public class GameSession {
 
         Player.getInstance().getWorld().run(g);
 
-        StatBar.retrieveValues();
-        Overlay.drawOverlays(g);
+        overlay.run(g);
         debug();
         MouseControls.reset();
     }

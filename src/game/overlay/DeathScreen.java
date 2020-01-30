@@ -1,8 +1,8 @@
 package game.overlay;
 
 import main.WindowSize;
-import util.Drawing.DrawString;
-import util.Drawing.MyFont;
+import Drawing.DrawString;
+import Drawing.MyFont;
 
 import java.awt.*;
 

@@ -1,8 +1,7 @@
-package game.organization.components.entities;
+package game.components.entities;
 
-import game.organization.components.Component;
-import game.organization.World;
-import game.organization.components.entities.stats.EntityStats;
+import game.components.Component;
+import game.components.entities.stats.EntityStats;
 import util.MyMath;
 
 import java.awt.*;
@@ -54,12 +53,6 @@ public abstract class Entity extends Component {
 
 
     protected abstract void movementLogic();
-
-
-    @Override
-    public void init(World world) {
-        super.init(world);
-    }
 
 
     @Override

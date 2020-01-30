@@ -1,8 +1,9 @@
-package game.organization.components.entities;
+package game.components.entities;
 
-import game.organization.components.Component;
+import game.components.Component;
 import game.organization.World;
-import game.organization.components.entities.stats.DamageStats;
+import game.components.entities.stats.DamageStats;
+import game.components.entities.stats.ProjectileStats;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class Projectile extends Entity {
         super(name, x, y, width, height, elliptical, color);
         this.world = world;
         this.range = range;
-        stats = new DamageStats(this, speed, angle, damage, canDamagePlayer);
+        stats = new ProjectileStats(this, speed, angle, damage, canDamagePlayer);
 
         init(world);
     }

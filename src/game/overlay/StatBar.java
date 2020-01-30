@@ -1,6 +1,6 @@
 package game.overlay;
 
-import game.organization.components.entities.Player;
+import game.components.entities.player.Player;
 import main.WindowSize;
 import util.ColorMethods;
 

@@ -1,8 +1,8 @@
-package game.organization.components.entities.stats;
+package game.components.entities.stats;
 
-import game.organization.components.entities.Entity;
+import game.components.entities.Entity;
 
-public class DamageStats extends EntityStats {
+public abstract class DamageStats extends EntityStats {
 
 
     protected double damage;
@@ -17,7 +17,6 @@ public class DamageStats extends EntityStats {
     public boolean canDamagePlayer() {
         return canDamagePlayer;
     }
-
 
 
     public DamageStats(Entity belongsTo, double speed, double angle, double damage, boolean canDamagePlayer) {

@@ -1,13 +1,14 @@
 package game.organization;
 
-import game.organization.components.structures.Collectable;
-import game.organization.components.structures.Structure;
-import game.organization.components.entities.Creature;
-import game.organization.components.entities.Player;
+import game.components.structures.Collectable;
+import game.components.structures.Spawner;
+import game.components.structures.Structure;
+import game.components.entities.Creature;
+import game.components.entities.player.Player;
 import util.MyMath;
 
 import java.awt.*;
-import java.util.ArrayList;
+
 
 public class Layout {
 
@@ -23,9 +24,9 @@ public class Layout {
                     player.goToStructure("House Door");
                 }
             })
-            /*.add(new Spawner("Zombie Spawner", -2500 , 2500, 350, 250, new Color(50, 59, 52), 8000,
-                    new Creature("Zombie", -2500, 2500, 40, new Color(82, 105, 76), Creature.Behaviors.FOLLOW, 9, 1000, 7, 25, true, 50)
-            ))*/
+            .add(new Spawner("Zombie Spawner", -2500 , 2500, 350, 250,false, new Color(50, 59, 52), 8000,
+                    new Creature("Zombie", 65, 65, true, new Color(82, 105, 76), Creature.Behaviors.FOLLOW, 9, 1000, 25, 25, true, 50)
+            ))
             .add(new Creature("yourDad", 500, 500, 36, 36, false, Color.BLUE, Creature.Behaviors.AVOID, 11, 500, 10, 10, false, 0.2))
             .add(new Structure("Gym", -1200, -500, 400, 500, false, new Color(100, 100, 100), 50) {
                 public void onTouch() {
@@ -39,13 +40,13 @@ public class Layout {
             })
             .add(new Structure("School", 450, 550, 300, 500, false, new Color(180, 117, 84), 50) {
                 public void onTouch() {
-                    stats.gainIntellect(1.5);
+                    stats.gainIntellect(1.25);
                     stats.tire(0.5);
                 }
             })
-            .add(new Structure("Office", -500, 500, 400, 400, false, new Color(160, 180, 180), 50) {
+            .add(new Structure("Office", -500, 500, 400, 400, false, new Color(150, 150, 160), 50) {
                 public void onTouch() {
-                    stats.gainMoney(Math.ceil(stats.getIntellect()/250));
+                    stats.gainMoney(Math.sqrt(Math.ceil(stats.getIntellect()/200))+0.5);
                     stats.tire(0.5);
                 }
             })
@@ -98,7 +99,7 @@ public class Layout {
             })
             .add(new Structure("House Bed", 200, 300, 200, 100,false, new Color(0, 114, 168)) {
                 public void onTouch() {
-                    stats.energize(0.75);
+                    stats.energize(1);
                 }
             })
             ;
@@ -111,7 +112,10 @@ public class Layout {
             .add(new Structure("Apartment", -550, -650, 500, 650, false, new Color(200, 140, 50), 50))
             .add(new Structure("University", -650, 650, 600, 600, false, new Color(220, 190, 120), 50){
                 public void onTouch() {
-
+                    if (stats.canAfford(1)) {
+                        stats.loseMoney(1);
+                        stats.gainIntellect(2);
+                    }
                 }
             })
             .add(new Structure("Museum", 1550, 650, 600, 600, false, new Color(10, 10, 10), 50))
@@ -120,7 +124,6 @@ public class Layout {
                     stats.gainMoney(MyMath.getRandInRange(1, 1000));
                 }
             })
-
             ;
 
     World apartmentInterior = new World("Apartment Interior", 1125, 1575, new Color(220, 200, 140), new Color(200, 140, 50));

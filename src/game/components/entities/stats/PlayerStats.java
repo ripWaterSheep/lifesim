@@ -1,8 +1,8 @@
-package game.organization.components.entities.stats;
+package game.components.entities.stats;
 
 import game.activity.controls.KeyboardControls;
-import game.organization.components.entities.Player;
-import game.organization.components.entities.StatParticle;
+import game.components.entities.player.Player;
+import game.components.entities.StatParticle;
 import game.overlay.DeathScreen;
 import game.overlay.GameMessage;
 import util.MyMath;
@@ -12,6 +12,15 @@ import java.awt.*;
 import static java.lang.Math.max;
 
 public class PlayerStats extends HealthStats {
+
+    // Override belongsTo with subtype, because Player is the intended subtype to instantiate this class.
+    protected Player belongsTo;
+
+    // Accessor must be used because supertype is hidden. Any time the superclass references the
+    @Override
+    protected Player getBelongsTo() {
+        return belongsTo;
+    }
 
 
     // Speed under normal conditions (full energy, not sprinting)
@@ -33,11 +42,16 @@ public class PlayerStats extends HealthStats {
     public void heal(double amount) {
         health += amount;
         if (health < getStrengthDependentStatCap())
-            StatParticle.spawnParticles(belongsTo, true, Color.RED, amount, true);
+            StatParticle.spawnParticles(belongsTo, true, healthColor, amount, true);
     }
 
 
-    double energy = 1000;
+    private double energy = 1000;
+    private final Color energyColor = new Color(255, 200, 0);
+
+    protected Color getEnergyColor() {
+        return energyColor;
+    }
 
     public double getEnergy() {
         return energy;
@@ -46,17 +60,23 @@ public class PlayerStats extends HealthStats {
     public void energize(double amount) {
         energy += Math.abs(amount);
         if(energy < getStrengthDependentStatCap())
-            StatParticle.spawnParticles(belongsTo, true, Color.ORANGE, amount, true);
+            StatParticle.spawnParticles(belongsTo, true, energyColor, amount, true);
     }
 
     public void tire(double amount) {
         energy -= Math.abs(amount);
         if(energy > 0)
-            StatParticle.spawnParticles(belongsTo, true, Color.ORANGE, amount, false);
+            StatParticle.spawnParticles(belongsTo, true, energyColor, amount, false);
     }
 
 
-    double money = 0;
+
+    private double money = 0;
+
+    private final Color moneyColor = new Color(35, 240, 35);
+    protected Color getMoneyColor() {
+        return moneyColor;
+    }
 
     public double getMoney() {
         return money;
@@ -78,16 +98,21 @@ public class PlayerStats extends HealthStats {
 
     public void gainMoney(double amount) {
         money += Math.abs(amount);
-        StatParticle.spawnParticles(belongsTo, false, Color.GREEN, amount, true);
+        StatParticle.spawnParticles(belongsTo, false, moneyColor, amount, true);
     }
 
     public void loseMoney(double amount) {
         money -= Math.abs(amount);
-        StatParticle.spawnParticles(belongsTo, false, Color.GREEN, amount, false);
+        StatParticle.spawnParticles(belongsTo, false, moneyColor, amount, false);
     }
 
 
-    double strength = 0;
+    private double strength = 0;
+    private final Color strengthColor = new Color(255, 255, 0);
+
+    protected Color getStrengthColor() {
+        return strengthColor;
+    }
 
     public double getStrength() {
         return strength;
@@ -95,11 +120,16 @@ public class PlayerStats extends HealthStats {
 
     public void strengthen(double amount) {
         strength += Math.abs(amount);
-        StatParticle.spawnParticles(belongsTo, true, Color.YELLOW, amount, true);
+        StatParticle.spawnParticles(belongsTo, true, strengthColor, amount, true);
     }
 
 
-    double intellect =  0;
+    private double intellect =  0;
+    private final Color intellectColor = new Color(0, 0, 255);
+
+    protected Color getIntellectColor() {
+        return intellectColor;
+    }
 
     public double getIntellect() {
         return intellect;
@@ -107,7 +137,7 @@ public class PlayerStats extends HealthStats {
 
     public void gainIntellect(double amount) {
         intellect += Math.abs(amount);
-        StatParticle.spawnParticles(belongsTo, false, Color.BLUE, amount, true);
+        StatParticle.spawnParticles(belongsTo, false, intellectColor, amount, true);
     }
 
 
@@ -120,6 +150,7 @@ public class PlayerStats extends HealthStats {
 
     public PlayerStats(Player player, double speed, double health) {
         super(player, speed, health, 0, false);
+        this.belongsTo = player;
         baseSpeed = speed;
     }
 
@@ -150,6 +181,5 @@ public class PlayerStats extends HealthStats {
             DeathScreen.show();
         }
     }
-
 
 }

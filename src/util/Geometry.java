@@ -1,6 +1,6 @@
 package util;
 
-import game.organization.components.Component;
+import game.components.Component;
 
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;

@@ -1,9 +1,9 @@
 package util;
 
-import game.organization.components.Component;
+import game.components.Component;
 import game.organization.World;
-import game.organization.components.entities.Entity;
-import game.organization.components.structures.Structure;
+import game.components.entities.Entity;
+import game.components.structures.Structure;
 
 public class FindComponent {
 

@@ -1,10 +1,11 @@
-package game.organization.components.entities;
+package game.components.entities;
 
 import game.activity.GameSession;
-import game.organization.components.Component;
+import game.components.Component;
 
 import java.awt.*;
 
+import static java.lang.Math.min;
 import static java.lang.Math.sqrt;
 import static util.ColorMethods.applyOpacity;
 import static util.MyMath.*;
@@ -27,7 +28,7 @@ public class StatParticle extends Projectile {
             angle += getRandInRange(-ANGLE_VARIATION, ANGLE_VARIATION);
 
             double range = getRandInRange(MIN_DISTANCE, MAX_DISTANCE);
-            double speed = sqrt(rate*5)+0.5;
+            double speed = min(sqrt(rate*4)+1, 10);
 
             if (rate > 0) new StatParticle(spawnTarget, getRandInRange(7, 13), elliptical, color, speed, angle, range);
         }
@@ -39,7 +40,6 @@ public class StatParticle extends Projectile {
 
     private StatParticle(Component c, double size, boolean elliptical, Color color, double speed, double angle, double range) {
         super("", c.getX(), c.getY(), size, size, elliptical, color, c.getWorld(), speed,angle, range, 0, false);
-
         this.spawnTarget = c;
         setPosition();
     }
@@ -61,7 +61,7 @@ public class StatParticle extends Projectile {
 
 
     protected void fadeLogic() {
-        int opacity = clamp(255 - betterRound(currentDistance/range*255), 0, 255);
+        int opacity = clamp(255 - betterRound(currentDistance/range*255), 0, 255)^2;
         color = applyOpacity(color, opacity);
         if (opacity <= 0) delete();
     }

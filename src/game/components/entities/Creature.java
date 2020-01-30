@@ -1,11 +1,15 @@
-package game.organization.components.entities;
+package game.components.entities;
 
+import Drawing.MyFont;
+import game.components.entities.player.Player;
 import game.organization.World;
-import game.organization.components.entities.stats.CreatureStats;
+import game.components.entities.stats.CreatureStats;
 import util.Geometry;
 
 import java.awt.*;
 
+import static Drawing.DrawString.drawCenteredString;
+import static game.components.entities.stats.CollisionChecker.getTouchingEntities;
 import static util.MyMath.getRandInRange;
 
 public class Creature extends Entity {
@@ -28,12 +32,6 @@ public class Creature extends Entity {
         return (Math.abs(Geometry.getDistanceBetween(this, Player.getInstance())) <= detectionRange);
     }
 
-    private boolean touchingPlayer;
-
-    public void setTouchingPlayer(boolean is) {
-        touchingPlayer = is;
-    }
-
     protected double getAngleToPlayer() {
         return Geometry.getAngle(x, y, Player.getInstance().getX(), Player.getInstance().getY());
     }
@@ -46,9 +44,11 @@ public class Creature extends Entity {
     }
 
 
+
     public Creature(String name, double x, double y, double width, double height, boolean elliptical, Color color,
                     Behaviors behavior, double speed, double detectionRange,
                     double health, double damage, boolean canDamagePlayer, double killLoot) {
+
         super(name, x, y, width, height, elliptical, color);
 
         initialHealth = health;
@@ -58,11 +58,21 @@ public class Creature extends Entity {
     }
 
 
+    public Creature(String name, double width, double height, boolean elliptical, Color color,
+                         Behaviors behavior, double speed, double detectionRange,
+                         double health, double damage, boolean canDamagePlayer, double killLoot) {
+
+        this(name, 0, 0, width, height, elliptical, color, behavior, speed, detectionRange, health, damage, canDamagePlayer, killLoot);
+    }
+
+
     public Creature(String name, double x, double y, double width, double height, boolean elliptical, Color color, World world,
                     Behaviors behavior, double speed, double range,
                     double health, double damage, boolean canDamagePlayer, double killLoot) {
+
         this(name, x, y, width, height, elliptical, color, behavior, speed, range, damage, health, canDamagePlayer, killLoot);
     }
+
 
 
     /** Copy all fields into new c (for spawners) and set its location. This is used in class Spawner to clone base instance. */
@@ -85,36 +95,30 @@ public class Creature extends Entity {
 
 
     protected void movementLogic() {
-        switch (behavior) {
-            // Make movement in a direction is completely random.
-            case RANDOM:
+        if (playerInRange()) {
+            if (behavior == Behaviors.FOLLOW) {
+                stats.setAngle(getAngleToPlayer() + 180 + getRandInRange(-45, 45));
+
+            } else if (behavior == Behaviors.AVOID) {
+                stats.setAngle(getAngleToPlayer());
+            } else  {
                 randomMovement();
-                break;
-
-            case FOLLOW:
-                // Stay touching outside of player so it doesn't overlap because that's just unnecessary.
-                if (playerInRange()) {
-                        stats.setAngle(getAngleToPlayer() + 180 + getRandInRange(-45, 45));
-                } else randomMovement();
-                break;
-
-            case AVOID:
-                if (playerInRange()) {
-                    stats.setAngle(getAngleToPlayer());
-                } else randomMovement(); // Move around randomly to prevent getting stuck in corner. }
-                break;
+            }
+        } else  {
+            randomMovement();
         }
-        if (behavior != Behaviors.FOLLOW || !touchingPlayer) moveTowardsAngle();
+
+        if (behavior != Behaviors.FOLLOW || !getTouchingEntities(this).contains(Player.getInstance()))
+            moveTowardsAngle();
+
     }
 
 
     @Override
-    public void update() {
-        super.update();
+    public void draw(Graphics g) {
+        super.draw(g);
+        drawCenteredString(g, getStats().getHealth()+"", new Rectangle(getDisplayX(), getDisplayY(), (int)width, (int)height), new Font(MyFont.getMainFont(), Font.PLAIN, 20), Color.WHITE);
     }
-
-
-
 }
 
 

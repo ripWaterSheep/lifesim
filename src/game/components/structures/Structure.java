@@ -1,11 +1,11 @@
-package game.organization.components.structures;
+package game.components.structures;
 
-import game.organization.components.Component;
+import game.components.Component;
 import game.organization.World;
-import game.organization.components.entities.stats.PlayerStats;
-import game.organization.components.entities.Player;
-import util.Drawing.DrawString;
-import util.Drawing.MyFont;
+import game.components.entities.stats.PlayerStats;
+import game.components.entities.player.Player;
+import Drawing.DrawString;
+import Drawing.MyFont;
 
 import java.awt.*;
 

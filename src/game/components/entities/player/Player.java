@@ -1,14 +1,16 @@
-package game.organization.components.entities;
+package game.components.entities.player;
 
-import game.organization.components.activity.PlayerWeapon;
+import game.activity.controls.MouseControls;
+import game.components.entities.Entity;
 import game.organization.World;
-import game.organization.components.structures.Structure;
+import game.components.structures.Structure;
 import main.WindowSize;
-import game.organization.components.entities.stats.PlayerStats;
+import game.components.entities.stats.PlayerStats;
 
 import java.awt.*;
 
 import static game.activity.controls.KeyboardControls.*;
+import static game.components.entities.stats.CollisionChecker.getTopStructureTouching;
 import static util.FindComponent.*;
 import static util.MyMath.betterRound;
 
@@ -119,16 +121,23 @@ public class Player extends Entity {
     }
 
 
-    @Override
-    public void update() {
-        super.update();
-        weapon.controlLogic();
+
+    private void collisionLogic() {
+        Structure structure = getTopStructureTouching(this); // Use the top structure to implement concept of layered surfaces.
+
+        structure.onTouch();
+        if (MouseControls.getLeftClicked())
+            structure.onClick();
     }
 
 
+
+
     @Override
-    public void draw(Graphics g) {
-        super.draw(g);
+    public void update() {
+        super.update();
+        collisionLogic();
+        weapon.run();
     }
 
 

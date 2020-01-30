@@ -1,17 +1,17 @@
-package game.organization.components;
+package game.components;
 
-import game.organization.components.entities.Player;
+import game.components.entities.player.Player;
 import game.organization.World;
 import main.WindowSize;
-import util.Drawing.MyImage;
+import Drawing.MyImage;
+import game.Drawable;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
 import static util.MyMath.betterRound;
 
-public abstract class Component {
-
+public abstract class Component implements Drawable {
 
     protected String name;
 
@@ -139,14 +139,15 @@ public abstract class Component {
     public void init(World world) {
         if (this.world == null)
             this.world = world;
-        else world.add(this);
+        if (!world.getComponents().contains(this))
+            world.add(this);
     }
 
     /** Update each instance's data and members individually. */
-    public abstract void update();
+    protected abstract void update();
 
     /** Update each instance's appearance individually. */
-    public void draw(Graphics g) {
+    protected void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
         if (color != null) {
             g2d.setColor(color);
@@ -155,4 +156,10 @@ public abstract class Component {
 
     }
 
+
+    @Override
+    public void run(Graphics g) {
+        update();
+        draw(g);
+    }
 }

@@ -1,29 +1,23 @@
 package game.organization;
 
-import game.organization.components.Component;
-import game.organization.components.activity.management.EntityManager;
-import game.organization.components.activity.management.WorldManager;
-import game.organization.components.activity.management.collision.CollisionChecker;
-import game.organization.components.activity.management.collision.CollisionManager;
-import game.organization.components.entities.Entity;
-import game.organization.components.structures.Structure;
-import game.organization.components.entities.Player;
+import game.components.Component;
+import game.components.entities.Entity;
+import game.components.structures.Structure;
+import game.components.entities.player.Player;
 import main.Main;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class World {
 
     private static ArrayList<World> worlds = new ArrayList<>();
 
+    // Return a copy of encapsulated object to prevent external modification.
     public static ArrayList<World> getWorlds() {
-        return worlds;
+        return new ArrayList<>(worlds);
     }
-
 
 
     protected String name;
@@ -36,20 +30,8 @@ public class World {
     private ArrayList<Component> components = new ArrayList<>();
 
     public ArrayList<Component> getComponents() {
-        return components;
+        return new ArrayList<>(components);
     }
-
-
-    public ArrayList<Entity> getEntities() {
-        ArrayList<Entity> entities = new ArrayList<>();
-        for (Component component: components) {
-            if (component instanceof Entity) {
-                entities.add((Entity) component);
-            }
-        }
-        return entities;
-    }
-
 
     private ArrayList<Entity> entities = new ArrayList<>();
 
@@ -61,13 +43,7 @@ public class World {
 
     private Color outerColor;
 
-    public Color getOuterColor() {
-        return outerColor;
-    }
-
-
     EntityManager entityManager;
-    CollisionManager collisionManager;
 
 
     World(String name, double width, double height, Color color, Color outerColor) {
@@ -79,7 +55,6 @@ public class World {
 
         this.outerColor = outerColor;
         entityManager = new EntityManager(this);
-        collisionManager = new CollisionManager(this);
     }
 
 
@@ -100,8 +75,13 @@ public class World {
     }
 
 
+    public void remove(Component component) {
+        components.remove(component);
+    }
+
+
     public void init() {
-        // Make sure entities go on top
+        // Ensure that entities go on top.
         components.addAll(entities);
         for (Component component: components) {
             component.init(this);
@@ -109,19 +89,13 @@ public class World {
     }
 
 
-    private void runComponent(Component c, Graphics g) {
-        c.update();
-        collisionManager.collisionLogic(c);
-        c.draw(g);
-    }
-
-
     public void run(Graphics g) {
         Main.getPanel().setBackground(outerColor);
-        for (Component component: components) {
-            runComponent(component, g);
+        // Use a copy of game.components arrayList to prevent concurrentModificationException while spawning entities.
+        for (Component component: new ArrayList<>(components)) {
+            component.run(g);
         }
-        runComponent(Player.getInstance(), g);
+        Player.getInstance().run(g);
         entityManager.run();
     }
 

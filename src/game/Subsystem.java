@@ -1,4 +1,4 @@
-package game.organization.components.activity;
+package game;
 
 public interface Subsystem {
 

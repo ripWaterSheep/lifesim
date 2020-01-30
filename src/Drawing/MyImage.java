@@ -1,6 +1,6 @@
-package util.Drawing;
+package Drawing;
 
-import game.organization.components.Component;
+import game.components.Component;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

@@ -1,8 +1,11 @@
-package game.organization.components.structures;
+package game.components.structures;
 
 import game.organization.World;
+import game.components.entities.player.Player;
 
 import java.awt.*;
+
+import static game.components.entities.stats.CollisionChecker.getTouchingEntities;
 
 
 public class Collectable extends Structure {
@@ -23,7 +26,7 @@ public class Collectable extends Structure {
     }
 
 
-    public void randomizePos(World world) {
+    public void randomizePos() {
         x = (int) (Math.random() * world.getFloor().getMidWidth()) - world.getFloor().getMidWidth();
         y = (int) (Math.random() * world.getFloor().getMidHeight()) - world.getFloor().getMidHeight();
     }
@@ -32,10 +35,16 @@ public class Collectable extends Structure {
     @Override
     public void init(World world) {
         super.init(world);
-        randomizePos(world);
+        randomizePos();
     }
 
 
+    @Override
+    public void update() {
+        super.update();
+        if (getTouchingEntities(this).contains(Player.getInstance()))
+            randomizePos();
+    }
 }
 
 

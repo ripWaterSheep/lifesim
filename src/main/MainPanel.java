@@ -2,7 +2,7 @@ package main;
 
 import game.activity.GameSession;
 import game.activity.controls.ControlSetup;
-import util.Drawing.MyFont;
+import Drawing.MyFont;
 
 import javax.swing.*;
 import java.awt.*;
