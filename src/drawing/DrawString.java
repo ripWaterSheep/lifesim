@@ -1,4 +1,4 @@
-package Drawing;
+package drawing;
 
 import java.awt.*;
 

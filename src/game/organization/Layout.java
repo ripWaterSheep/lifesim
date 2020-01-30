@@ -28,7 +28,7 @@ public class Layout {
                     new Creature("Zombie", 65, 65, true, new Color(82, 105, 76), Creature.Behaviors.FOLLOW, 9, 1000, 25, 25, true, 50)
             ))
             .add(new Creature("yourDad", 500, 500, 36, 36, false, Color.BLUE, Creature.Behaviors.AVOID, 11, 500, 10, 10, false, 0.2))
-            .add(new Structure("Gym", -1200, -500, 400, 500, false, new Color(100, 100, 100), 50) {
+            .add(new Structure("Gym", -1200, -450, 2, "Gym") {
                 public void onTouch() {
                     if (stats.hasMoney()) {
                         //stats.shrink(0.03);

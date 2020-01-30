@@ -3,7 +3,7 @@ package game.components;
 import game.components.entities.player.Player;
 import game.organization.World;
 import main.WindowSize;
-import Drawing.MyImage;
+import drawing.MyImage;
 import game.Drawable;
 
 import java.awt.*;
@@ -152,6 +152,9 @@ public abstract class Component implements Drawable {
         if (color != null) {
             g2d.setColor(color);
             g2d.fill(getShape());
+        }
+        if (image != null) {
+            image.draw(g);
         }
 
     }

@@ -1,6 +1,6 @@
 package game.overlay;
 
-import Drawing.MyFont;
+import drawing.MyFont;
 
 import java.awt.*;
 

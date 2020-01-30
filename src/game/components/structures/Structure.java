@@ -4,8 +4,8 @@ import game.components.Component;
 import game.organization.World;
 import game.components.entities.stats.PlayerStats;
 import game.components.entities.player.Player;
-import Drawing.DrawString;
-import Drawing.MyFont;
+import drawing.DrawString;
+import drawing.MyFont;
 
 import java.awt.*;
 
@@ -35,6 +35,7 @@ public class Structure extends Component {
 
     public Structure(String name, double x, double y, double scale, String imageName) {
         super(name, x, y, scale, imageName);
+        System.out.println(width);
     }
 
 

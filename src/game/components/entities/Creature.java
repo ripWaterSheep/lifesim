@@ -1,6 +1,6 @@
 package game.components.entities;
 
-import Drawing.MyFont;
+import drawing.MyFont;
 import game.components.entities.player.Player;
 import game.organization.World;
 import game.components.entities.stats.CreatureStats;
@@ -8,7 +8,7 @@ import util.Geometry;
 
 import java.awt.*;
 
-import static Drawing.DrawString.drawCenteredString;
+import static drawing.DrawString.drawCenteredString;
 import static game.components.entities.stats.CollisionChecker.getTouchingEntities;
 import static util.MyMath.getRandInRange;
 

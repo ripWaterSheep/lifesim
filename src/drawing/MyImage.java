@@ -1,4 +1,4 @@
-package Drawing;
+package drawing;
 
 import game.components.Component;
 
@@ -11,7 +11,7 @@ import static util.MyMath.betterRound;
 
 public class MyImage {
 
-    private static final String FILE_PATH = "Fonts/";
+    private static final String FILE_PATH = "res/Images/";
     private static final String FILE_ENDING = ".png";
 
 
@@ -56,7 +56,7 @@ public class MyImage {
 
 
     public void draw(Graphics g) {
-        g.drawImage(image, betterRound(component.getX()), betterRound(component.getY()), betterRound(width), betterRound(height), null);
+        g.drawImage(image, betterRound(component.getDisplayX()), betterRound(component.getDisplayY()), betterRound(width), betterRound(height), null);
     }
 
 

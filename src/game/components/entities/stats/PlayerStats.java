@@ -31,7 +31,7 @@ public class PlayerStats extends HealthStats {
      * in a direction per frame if appropriate key is pressed.
      */
     public void calculateSpeed() {
-        speed = baseSpeed * (((energy/1000)/2)+0.5);
+        speed = baseSpeed * (((energy/1000)/2)+0.6);
         if (KeyboardControls.getSpacePressed()) {
             speed *= 1.5;
             energy -= 0.1;
