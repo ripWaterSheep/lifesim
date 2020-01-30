@@ -40,6 +40,11 @@ public class Projectile extends Entity {
         init(world);
     }
 
+    public Projectile(String name, double x, double y, double scale, String imageName,  World world, double speed, double angle, double range, double damage, boolean canDamagePlayer) {
+        this(name, x, y, 0, 0, false, null, world, speed, angle, range, damage, canDamagePlayer);
+
+        setImage(imageName, scale);
+    }
 
 
     @Override

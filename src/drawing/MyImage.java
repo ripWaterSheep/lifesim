@@ -39,15 +39,14 @@ public class MyImage {
 
 
 
-
     public MyImage(String name, double scale, Component component) {
         this.component = component;
         this.scale = scale;
         try {
             File file = new File(FILE_PATH + name + FILE_ENDING);
             image = ImageIO.read(file); // Retrieve image from file folder
-            width = betterRound(image.getWidth(null)*scale);
-            height = betterRound(image.getHeight(null)*scale);
+            width = (int)(image.getWidth(null)*scale);
+            height = (int)(image.getHeight(null)*scale);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -56,12 +55,12 @@ public class MyImage {
 
 
     public void draw(Graphics g) {
-        g.drawImage(image, betterRound(component.getDisplayX()), betterRound(component.getDisplayY()), betterRound(width), betterRound(height), null);
+        g.drawImage(image, component.getDisplayX(), component.getDisplayY(), (int)width, (int)height, null);
     }
 
 
     public void draw(Graphics g, double x, double y, double width, double height) {
-        g.drawImage(image, betterRound(x), betterRound(y), betterRound(width), betterRound(height), null);
+        g.drawImage(image, (int)x, (int)y, (int)width, (int)height, null);
     }
 
 

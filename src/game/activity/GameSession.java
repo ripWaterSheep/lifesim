@@ -22,8 +22,8 @@ public class GameSession {
         currentFrame++;
     }
 
-
-
+    //TODO: Add player instance here.
+    
     public void init() {
         new Layout();
         overlay = new Overlay();
@@ -35,7 +35,6 @@ public class GameSession {
 
 
     public void run(Graphics g) {
-
         Player.getInstance().getWorld().run(g);
 
         overlay.run(g);

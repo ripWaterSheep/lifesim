@@ -61,7 +61,7 @@ public class StatParticle extends Projectile {
 
 
     protected void fadeLogic() {
-        int opacity = clamp(255 - betterRound(currentDistance/range*255), 0, 255)^2;
+        int opacity = clamp(255 - (int)(currentDistance/range*255), 0, 255)^2;
         color = applyOpacity(color, opacity);
         if (opacity <= 0) delete();
     }

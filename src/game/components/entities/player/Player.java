@@ -12,7 +12,7 @@ import java.awt.*;
 import static game.activity.controls.KeyboardControls.*;
 import static game.components.entities.stats.CollisionChecker.getTopStructureTouching;
 import static util.FindComponent.*;
-import static util.MyMath.betterRound;
+
 
 
 public class Player extends Entity {
@@ -45,12 +45,12 @@ public class Player extends Entity {
 
     @Override
     public int getDisplayX() {
-        return betterRound(WindowSize.getMidWidth()-getMidWidth());
+        return (int)(WindowSize.getMidWidth()-getMidWidth());
     }
 
     @Override
     public int getDisplayY() {
-        return betterRound(WindowSize.getMidHeight()-getMidHeight());
+        return (int)(WindowSize.getMidHeight()-getMidHeight());
     }
 
 

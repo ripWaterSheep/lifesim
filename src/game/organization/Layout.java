@@ -1,5 +1,6 @@
 package game.organization;
 
+import game.components.entities.Entity;
 import game.components.structures.Collectable;
 import game.components.structures.Spawner;
 import game.components.structures.Structure;
@@ -17,7 +18,6 @@ public class Layout {
             .add(new Player(0, 0))
             .add(new Structure("Horizontal Road", 0, 0, 6500, 200, false, Color.DARK_GRAY))
             .add(new Structure("Vertical Road", 0, 0, 200, 6500, false, Color.DARK_GRAY))
-            .add(new Creature("Doggo", -750, 500, 30, 25, false, new Color(150, 150, 150), Creature.Behaviors.FOLLOW, 6, 200, 4, 1000, false, 0))
 
             .add(new Structure("House", 500, -400, 450, 350, false,  new Color(100, 80, 50), 50) {
                 public void onClick() {
@@ -25,9 +25,9 @@ public class Layout {
                 }
             })
             .add(new Spawner("Zombie Spawner", -2500 , 2500, 350, 250,false, new Color(50, 59, 52), 8000,
-                    new Creature("Zombie", 65, 65, true, new Color(82, 105, 76), Creature.Behaviors.FOLLOW, 9, 1000, 25, 25, true, 50)
+                    new Creature("Zombie", 65, 65, true, new Color(82, 105, 76), Creature.Behaviors.PURSUE, 9, 1000, 25, 25, true, 50)
             ))
-            .add(new Creature("yourDad", 500, 500, 36, 36, false, Color.BLUE, Creature.Behaviors.AVOID, 11, 500, 10, 10, false, 0.2))
+            .add(new Creature("yourDad", 500, 500, 36, 36, false, Color.BLUE, Creature.Behaviors.EVADE, 11, 500, 10, 10, false, 0.2))
             .add(new Structure("Gym", -1200, -450, 2, "Gym") {
                 public void onTouch() {
                     if (stats.hasMoney()) {
@@ -132,10 +132,16 @@ public class Layout {
     World snowLand = new World("Snow Land", 6000, 6000, new Color(180, 220, 230), new Color(100, 75, 40));
     World heck = new World("Heck", 4500, 4500, new Color(100, 35, 30), new Color(255, 150, 0)); // No swearing on my christian minecraft server
     World cheeseLand = new World("Cheese Land", 3500, 3500, new Color(255, 210, 75), new Color(255, 175, 100));
-    World caveLand = new World("Cave Land", 3000, 1000, new Color(90, 90, 90), new Color(25, 25, 25));
-    World daddyLand = new World("Daddy Land", 6900, 4200, new Color(255, 195, 240), new Color(255, 50, 170));
+    World caveLand = new World("Cave Land", 3000, 1000, new Color(90, 90, 90), new Color(25, 25, 25))
+            .add(new Creature("Sub", -750, 500, 0.4, "sub", Creature.Behaviors.EVADE, 25, 800, 50, 20, true, 1000))
+            ;
+    World daddyLand = new World("Daddy Land", 6900, 4200, new Color(255, 195, 240), new Color(255, 50, 170))
+            .add(new Creature("Joshe", 100, 1000, 0.4, "gotcha", Creature.Behaviors.EVADE, 35, 400,75,50, true, 2000))
+    ;
     World labInterior = new World("Lab Interior", 1500, 1500, new Color(120, 120, 120), new Color(255, 255, 255));
-    World moon = new World("Moon", 2000, 2000, new Color(157, 171, 187), new Color(0, 0, 0));
+    World moon = new World("Moon", 2000, 2000, new Color(157, 171, 187), new Color(0, 0, 0))
+            .add(new Creature("Ken", 100, 1000, 0.2, "kenface", Creature.Behaviors.PURSUE, 15, 300,1000,7, true, 4000))
+            ;
 
 
 }

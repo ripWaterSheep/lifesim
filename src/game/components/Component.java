@@ -41,11 +41,11 @@ public abstract class Component implements Drawable {
      * as well as the display size to keep the player in the same place when windows is resized.
      */
     public int getDisplayX() {
-        return betterRound(x- Player.getInstance().getX() - getMidWidth() + WindowSize.getMidWidth());
+        return (int)(x- Player.getInstance().getX() - getMidWidth() + WindowSize.getMidWidth());
     }
 
     public int getDisplayY() {
-        return betterRound(y-Player.getInstance().getY() - getMidHeight() + WindowSize.getMidHeight());
+        return (int)(y-Player.getInstance().getY() - getMidHeight() + WindowSize.getMidHeight());
     }
 
 

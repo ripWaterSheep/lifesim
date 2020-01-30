@@ -16,9 +16,8 @@ public class Creature extends Entity {
 
 
     public enum Behaviors {
-        RANDOM, // Go in a random direction, change direction when at end of range.
-        FOLLOW, // Try to get close to player if player is within range.
-        AVOID // Try to get far from player if player is within range.
+        PURSUE, // Try to get close to player if player is within range.
+        EVADE // Try to get far from player if player is within range.
     }
 
 
@@ -66,11 +65,13 @@ public class Creature extends Entity {
     }
 
 
-    public Creature(String name, double x, double y, double width, double height, boolean elliptical, Color color, World world,
-                    Behaviors behavior, double speed, double range,
+
+    public Creature(String name, double x, double y, double scale, String imageName,
+                    Behaviors behavior, double speed, double detectionRange,
                     double health, double damage, boolean canDamagePlayer, double killLoot) {
 
-        this(name, x, y, width, height, elliptical, color, behavior, speed, range, damage, health, canDamagePlayer, killLoot);
+        this(name, x, y, 0, 0, false, null, behavior, speed, detectionRange, health, damage, canDamagePlayer, killLoot);
+        setImage(imageName, scale);
     }
 
 
@@ -96,19 +97,16 @@ public class Creature extends Entity {
 
     protected void movementLogic() {
         if (playerInRange()) {
-            if (behavior == Behaviors.FOLLOW) {
+            if (behavior == Behaviors.PURSUE) {
                 stats.setAngle(getAngleToPlayer() + 180 + getRandInRange(-45, 45));
-
-            } else if (behavior == Behaviors.AVOID) {
+            } else {
                 stats.setAngle(getAngleToPlayer());
-            } else  {
-                randomMovement();
             }
         } else  {
             randomMovement();
         }
 
-        if (behavior != Behaviors.FOLLOW || !getTouchingEntities(this).contains(Player.getInstance()))
+        if (behavior != Behaviors.PURSUE || !getTouchingEntities(this).contains(Player.getInstance()))
             moveTowardsAngle();
 
     }
@@ -117,7 +115,7 @@ public class Creature extends Entity {
     @Override
     public void draw(Graphics g) {
         super.draw(g);
-        drawCenteredString(g, getStats().getHealth()+"", new Rectangle(getDisplayX(), getDisplayY(), (int)width, (int)height), new Font(MyFont.getMainFont(), Font.PLAIN, 20), Color.WHITE);
+        drawCenteredString(g, ((int)getStats().getHealth())+"", new Rectangle(getDisplayX(), getDisplayY(), (int)width, (int)height), new Font(MyFont.getMainFont(), Font.PLAIN, 20), Color.WHITE);
     }
 }
 
