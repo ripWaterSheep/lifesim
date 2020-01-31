@@ -23,16 +23,12 @@ public class Creature extends Entity {
 
     protected Behaviors behavior;
 
-    private final double initialHealth; // Keep track of health set when first spawned in order to spawn full-health clones, no matter how much actual health creature still has.
+    protected final double initialHealth; // Keep track of health set when first spawned in order to spawn full-health clones, no matter how much actual health creature still has.
 
-    private final double detectionRange;
+    protected final double detectionRange;
 
     private boolean playerInRange() {
-        return (Math.abs(Geometry.getDistanceBetween(this, Player.getInstance())) <= detectionRange);
-    }
-
-    protected double getAngleToPlayer() {
-        return Geometry.getAngle(x, y, Player.getInstance().getX(), Player.getInstance().getY());
+        return (Math.abs(Geometry.getDistance(this, Player.getInstance())) <= detectionRange);
     }
 
 
@@ -76,9 +72,9 @@ public class Creature extends Entity {
 
 
 
-    /** Copy all fields into new c (for spawners) and set its location. This is used in class Spawner to clone base instance. */
+    /** Copy all fields into new creature and set its location. This is used in class Spawner to clone base instance. */
     public Creature(Creature c, double x, double y, World world) {
-        this("Clone of " + c.getName(), x, y, c.width, c.height, c.isElliptical(), c.color,
+        this("Clone of " + c.getName(), x, y, c.width, c.height, c.elliptical, c.color,
             c.behavior, c.stats.getSpeed(), c.detectionRange, c.initialHealth, c.stats.getDamage(), c.stats.canDamagePlayer(), c.stats.getKillLoot());
 
         image = c.getImage();
@@ -95,6 +91,7 @@ public class Creature extends Entity {
     }
 
 
+
     protected void movementLogic() {
         if (playerInRange()) {
             if (behavior == Behaviors.PURSUE) {
@@ -102,14 +99,14 @@ public class Creature extends Entity {
             } else {
                 stats.setAngle(getAngleToPlayer());
             }
-        } else  {
+        } else {
             randomMovement();
         }
 
         if (behavior != Behaviors.PURSUE || !getTouchingEntities(this).contains(Player.getInstance()))
             moveTowardsAngle();
-
     }
+
 
 
     @Override

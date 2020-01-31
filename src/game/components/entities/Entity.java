@@ -1,7 +1,9 @@
 package game.components.entities;
 
 import game.components.Component;
+import game.components.entities.player.Player;
 import game.components.entities.stats.EntityStats;
+import util.Geometry;
 import util.MyMath;
 
 import java.awt.*;
@@ -28,9 +30,12 @@ public abstract class Entity extends Component {
         return exists;
     }
 
-
     public void delete() {
         exists = false;
+    }
+
+    protected double getAngleToPlayer() {
+        return Geometry.getAngleBetween(this, Player.getInstance());
     }
 
 

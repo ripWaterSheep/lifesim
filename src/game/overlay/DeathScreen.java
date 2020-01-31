@@ -1,5 +1,7 @@
 package game.overlay;
 
+import game.activity.controls.MouseControls;
+import main.MainPanel;
 import main.WindowSize;
 import drawing.DrawString;
 import drawing.MyFont;
@@ -38,6 +40,9 @@ public class DeathScreen {
             g2d.setFont(font);
             DrawString.drawCenteredString(g2d, "OOF, YOU DIED!", rect, font, textColor);
 
+            if (MouseControls.getLeftClicked()) {
+                MainPanel.restartGame();
+            }
         }
 
     }

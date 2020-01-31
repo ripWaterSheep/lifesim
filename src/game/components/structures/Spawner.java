@@ -2,6 +2,7 @@ package game.components.structures;
 
 import game.components.entities.Creature;
 import game.components.entities.Entity;
+import game.components.entities.RangedCreature;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,23 +17,29 @@ public class Spawner extends Structure {
     private static ArrayList<Entity> allSpawn = new ArrayList<>();
 
 
-    private Creature spawnTarget;
+    private Creature spawnTemplate;
 
-    private long spawnInterval;
+    private final long spawnInterval;
     private long lastSpawnTime = 0;
 
 
-    public Spawner(String name, double x, double y, double width, double height, boolean elliptical, Color color, long spawnInterval, Creature spawnTarget) {
+    public Spawner(String name, double x, double y, double width, double height, boolean elliptical, Color color, long spawnInterval, Creature spawnTemplate) {
         super(name, x, y, width, height, elliptical, color);
-        this.spawnTarget = spawnTarget;
+        this.spawnTemplate = spawnTemplate;
         this.spawnInterval = spawnInterval;
     }
 
 
     private void spawnLogic() {
-        // Spawn a new clone of the MobileEntity passed as a parameter if spawn interval passes and spawn limit has not been reached
+        // Spawn a new clone of the Creature passed as a parameter if spawn interval passes and spawn limit has not been reached
         if (getCurrentTime() - lastSpawnTime > spawnInterval && allSpawn.size() < SPAWN_LIMIT) {
-            Creature spawn = new Creature(spawnTarget, x, y, world);
+            Creature spawn = null;
+            if (spawnTemplate instanceof RangedCreature) {
+                spawn = new RangedCreature((RangedCreature)spawnTemplate, x, y, world);
+            } else {
+                spawn = new Creature(spawnTemplate, x, y, world);
+            }
+
             allSpawn.add(spawn); // Add spawned entity to list to keep track of size
             lastSpawnTime = getCurrentTime();
 

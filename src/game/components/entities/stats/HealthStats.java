@@ -9,15 +9,15 @@ public abstract class HealthStats extends DamageStats {
 
     protected final double initialHealth;
     protected double health;
-    protected final Color healthColor = new Color(255, 0, 0);
-
-    protected Color getHealthColor() {
-        return healthColor;
-    }
-
     public double getHealth() {
         return health;
     }
+
+    protected static final Color healthColor = new Color(255, 0, 0);
+    public static Color getHealthColor() {
+        return healthColor;
+    }
+
 
     @Override
     public void takeDamage(double amount) {
@@ -54,10 +54,6 @@ public abstract class HealthStats extends DamageStats {
         getBelongsTo().delete();
     }
 
-    @Override
-    protected void collisionLogic(Entity entity) {
-
-    }
 
 
     @Override

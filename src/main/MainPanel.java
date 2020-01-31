@@ -3,6 +3,7 @@ package main;
 import game.activity.GameSession;
 import game.activity.controls.ControlSetup;
 import drawing.MyFont;
+import game.organization.World;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,18 @@ import static util.TimeUtil.sleep;
 
 public class MainPanel extends JPanel {
 
-    GameSession gameSession = new GameSession();
+    private static GameSession gameSession = new GameSession();
+
+    public static GameSession getGameSession() {
+        return gameSession;
+    }
+
+
+    public static void restartGame() {
+       gameSession = new GameSession();
+       gameSession.init();
+    }
+
 
     public MainPanel() {
         setFocusable(true);
@@ -26,11 +38,12 @@ public class MainPanel extends JPanel {
     }
 
 
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         gameSession.run(g);
-        sleep(8);
+        sleep(9);
         repaint();
     }
 

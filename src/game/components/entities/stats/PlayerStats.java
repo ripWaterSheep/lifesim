@@ -13,6 +13,29 @@ import static java.lang.Math.max;
 
 public class PlayerStats extends HealthStats {
 
+    private static final Color energyColor = new Color(255, 200, 0);
+    public static Color getEnergyColor() {
+        return energyColor;
+    }
+
+    private static final Color strengthColor = new Color(255, 255, 0);
+    public static Color getStrengthColor() {
+        return strengthColor;
+    }
+
+    private static final Color moneyColor = new Color(35, 240, 35);
+    public static Color getMoneyColor() {
+        return moneyColor;
+    }
+
+    private static final Color intellectColor = new Color(0, 0, 255);
+    public static Color getIntellectColor() {
+        return intellectColor;
+    }
+
+
+
+
     // Override belongsTo with subtype, because Player is the intended subtype to instantiate this class.
     protected Player belongsTo;
 
@@ -31,10 +54,11 @@ public class PlayerStats extends HealthStats {
      * in a direction per frame if appropriate key is pressed.
      */
     public void calculateSpeed() {
-        speed = baseSpeed * (((energy/1000)/2)+0.6);
-        if (KeyboardControls.getSpacePressed()) {
+        speed = baseSpeed * (((energy/1000)/2)+0.55);
+        energy -= 0.075;
+        if (KeyboardControls.getSpacePressed() && energy > 0) {
             speed *= 1.5;
-            energy -= 0.1;
+            energy -= 0.075;
         }
     }
 
@@ -47,11 +71,6 @@ public class PlayerStats extends HealthStats {
 
 
     private double energy = 1000;
-    private final Color energyColor = new Color(255, 200, 0);
-
-    protected Color getEnergyColor() {
-        return energyColor;
-    }
 
     public double getEnergy() {
         return energy;
@@ -72,11 +91,6 @@ public class PlayerStats extends HealthStats {
 
 
     private double money = 0;
-
-    private final Color moneyColor = new Color(35, 240, 35);
-    protected Color getMoneyColor() {
-        return moneyColor;
-    }
 
     public double getMoney() {
         return money;
@@ -108,11 +122,6 @@ public class PlayerStats extends HealthStats {
 
 
     private double strength = 0;
-    private final Color strengthColor = new Color(255, 255, 0);
-
-    protected Color getStrengthColor() {
-        return strengthColor;
-    }
 
     public double getStrength() {
         return strength;
@@ -125,11 +134,6 @@ public class PlayerStats extends HealthStats {
 
 
     private double intellect =  0;
-    private final Color intellectColor = new Color(0, 0, 255);
-
-    protected Color getIntellectColor() {
-        return intellectColor;
-    }
 
     public double getIntellect() {
         return intellect;
@@ -167,7 +171,7 @@ public class PlayerStats extends HealthStats {
         energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());
         strength = max(strength, 0);
         money = max(money, 0);
-        energy -= 0.1;
+        energy -= 0.075;
     }
 
 

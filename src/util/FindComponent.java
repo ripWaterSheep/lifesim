@@ -1,15 +1,19 @@
 package util;
 
+import game.activity.GameSession;
 import game.components.Component;
 import game.organization.World;
 import game.components.entities.Entity;
 import game.components.structures.Structure;
+import main.Main;
+
+import static main.MainPanel.getGameSession;
 
 public class FindComponent {
 
 
     public static World findStructureWorld(Structure structure) {
-        for (World world: World.getWorlds()) {
+        for (World world: getGameSession().getWorlds()) {
             if (world.getComponents().contains(structure)) {
                 return world;
             }
@@ -19,7 +23,7 @@ public class FindComponent {
 
 
     public static Component findComponent(String name) {
-        for (World world: World.getWorlds()) {
+        for (World world: getGameSession().getWorlds()) {
             for (Component component : world.getComponents()) {
                 if (component.getName().equals(name)) return component;
             }

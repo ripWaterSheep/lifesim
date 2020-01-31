@@ -27,14 +27,10 @@ public class ProjectileStats extends DamageStats {
 
     @Override
     protected void collisionLogic(Entity entity) {
-        EntityStats stats = entity.getStats();
         // Do damage to other entities at the moment the collision starts only (if not already in touching list).
-        if (!getBelongsTo().getLastTouching().contains(entity) && stats instanceof HealthStats) {
-            HealthStats healthStats = (HealthStats) stats;
-            // Do damage to colliding entities. If canDamagePlayer is true, damage player along with other entities. Else, it can only damage other entities.
-            if ((getBelongsTo().getStats().canDamagePlayer() || !(entity instanceof Player))) {
-                healthStats.takeDamageFrom(this);
-            }
+        if (!getBelongsTo().getLastTouching().contains(entity)) {
+            super.collisionLogic(entity);
+
         }
         belongsTo.getLastTouching().clear();
         belongsTo.getLastTouching().add(entity);

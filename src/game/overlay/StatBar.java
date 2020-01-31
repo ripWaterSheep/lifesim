@@ -1,6 +1,7 @@
 package game.overlay;
 
 import game.components.entities.player.Player;
+import game.components.entities.stats.PlayerStats;
 import main.WindowSize;
 import util.ColorMethods;
 
@@ -23,7 +24,7 @@ public class StatBar {
     private static final int BOTTOM_PADDING = 5;
     private static final int VERTICAL_SPACING = 36;
 
-    private static final double DEFAULT_BAR_LENGTH_SCALE = 0.16;
+    private static final double DEFAULT_BAR_LENGTH_SCALE = 0.15;
 
     private static final int DEFAULT_OPACITY = betterRound(0.5*255);
 
@@ -41,11 +42,11 @@ public class StatBar {
         new StatBar("X", player.getX());
         new StatBar("Y", player.getY());
 
-        new StatBar("Health", player.getStats().getHealth(), 0, player.getStats().getStrengthDependentStatCap(), 1, Color.RED);
-        new StatBar("Energy", player.getStats().getEnergy(), 0, player.getStats().getStrengthDependentStatCap(), 1, Color.ORANGE);
-        new StatBar("Strength", player.getStats().getStrength(), 0, 10000, 0.1, Color.YELLOW);
-        new StatBar("Cash", player.getStats().getMoney(), 0, 10000, 0.1, Color.GREEN);
-        new StatBar("Intellect", player.getStats().getIntellect(), 0, 10000, 0.1, Color.BLUE);
+        new StatBar("Health", player.getStats().getHealth(), 0, player.getStats().getStrengthDependentStatCap(), 1, PlayerStats.getHealthColor());
+        new StatBar("Energy", player.getStats().getEnergy(), 0, player.getStats().getStrengthDependentStatCap(), 1, PlayerStats.getEnergyColor());
+        new StatBar("Strength", player.getStats().getStrength(), 0, 10000, 0.1, PlayerStats.getStrengthColor());
+        new StatBar("Cash", player.getStats().getMoney(), 0, 10000, 0.1, PlayerStats.getMoneyColor());
+        new StatBar("Intellect", player.getStats().getIntellect(), 0, 10000, 0.1, PlayerStats.getIntellectColor());
 
     }
 

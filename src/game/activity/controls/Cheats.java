@@ -2,7 +2,10 @@ package game.activity.controls;
 
 import game.components.entities.player.Player;
 import game.organization.World;
+import main.Main;
 import util.TimeUtil;
+
+import java.util.ArrayList;
 
 import static java.awt.event.KeyEvent.*;
 import static java.awt.event.KeyEvent.VK_K;
@@ -40,6 +43,9 @@ class Cheats {
                 case VK_K:
                     player.getStats().takeDamage(10000);
                     break;
+
+                case VK_R:
+                    Main.getPanel().restartGame();
             }
         }
     }
@@ -48,19 +54,20 @@ class Cheats {
      * Make player go to the next world declared in the used game layout
      */
     static void cycleWorlds(int index) {
-        World newWorld = Player.getInstance().getWorld();
-        int currentIndex = World.getWorlds().indexOf(newWorld);
+        ArrayList<World> worlds = Main.getPanel().getGameSession().getWorlds();
 
-        try {
-            // Increment or decrement(if negative) current index and set player world to world at new index.
-            newWorld = World.getWorlds().get(currentIndex + index);
+        World newWorld = Player.getInstance().getWorld();
+        int currentIndex = worlds.indexOf(newWorld);
+
+        try {// Increment or decrement(if negative) current index and set player world to world at new index.
+            newWorld = worlds.get(currentIndex + index);
 
         } catch (IndexOutOfBoundsException e) {
 
             if (index > 0) {
-                newWorld = World.getWorlds().get(index - 1); // Wraparound to the first world
+                newWorld = worlds.get(index - 1); // Wraparound to the first world
             } else if (index < 0) {
-                newWorld = World.getWorlds().get(World.getWorlds().size() + index); // Wraparound to the last world
+                newWorld = worlds.get(worlds.size() + index); // Wraparound to the last world
             }
         }
 

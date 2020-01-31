@@ -30,6 +30,10 @@ public class Projectile extends Entity {
 
     protected final double range;
 
+    double getRange() {
+        return range;
+    }
+
 
     public Projectile(String name, double x, double y, double width, double height, boolean elliptical, Color color, World world, double speed, double angle, double range, double damage, boolean canDamagePlayer) {
         super(name, x, y, width, height, elliptical, color);
@@ -40,10 +44,26 @@ public class Projectile extends Entity {
         init(world);
     }
 
+
+    public Projectile(String name, double width, double height, boolean elliptical, Color color, double speed, double range, double damage, boolean canDamagePlayer) {
+        super(name, 0, 0, width, height, elliptical, color);
+        this.range = range;
+        stats = new ProjectileStats(this, speed, 0, damage, canDamagePlayer);
+    }
+
+
     public Projectile(String name, double x, double y, double scale, String imageName,  World world, double speed, double angle, double range, double damage, boolean canDamagePlayer) {
         this(name, x, y, 0, 0, false, null, world, speed, angle, range, damage, canDamagePlayer);
 
         setImage(imageName, scale);
+    }
+
+    /** Copy all fields into new projectile and set its location. This is used in class RangedCreature to clone base instance. */
+    public Projectile(Projectile p, double x, double y, World world, double angle) {
+        this("Clone of " + p.getName(), x, y, p.width, p.height, p.elliptical, p.color, world,
+                p.stats.getSpeed(), angle, p.range, p.stats.getDamage(), p.stats.canDamagePlayer());
+
+        image = p.getImage();
     }
 
 
@@ -57,8 +77,4 @@ public class Projectile extends Entity {
     }
 
 
-    @Override
-    public void draw(Graphics g) {
-        super.draw(g);
-    }
 }

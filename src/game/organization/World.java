@@ -1,23 +1,18 @@
 package game.organization;
 
+import game.activity.GameSession;
 import game.components.Component;
 import game.components.entities.Entity;
 import game.components.structures.Structure;
 import game.components.entities.player.Player;
 import main.Main;
+import main.MainPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 
 public class World {
-
-    private static ArrayList<World> worlds = new ArrayList<>();
-
-    // Return a copy of encapsulated object to prevent external modification.
-    public static ArrayList<World> getWorlds() {
-        return new ArrayList<>(worlds);
-    }
 
 
     protected String name;
@@ -48,7 +43,7 @@ public class World {
 
     World(String name, double width, double height, Color color, Color outerColor) {
         this.name = name;
-        worlds.add(this);
+        MainPanel.getGameSession().addWorld(this);
 
         floor = new Structure(name+" floor", 0, 0, width, height, false, color);
         add(floor);

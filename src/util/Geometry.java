@@ -8,7 +8,7 @@ import java.awt.geom.Point2D;
 public class Geometry {
 
 
-    public static double getDistanceBetween(Component component1, Component component2) {
+    public static double getDistance(Component component1, Component component2) {
         return MyMath.betterRound(Point2D.distance(component1.getX(), component1.getY(), component2.getX(), component2.getY()));
     }
 
@@ -22,6 +22,13 @@ public class Geometry {
 
     public static double getAngle(double x1, double y1, double x2, double y2) {
         double angle = MyMath.betterRound(Math.toDegrees(Math.atan2(y2 - y1, x2 - x1)));
+        angle = angleWrap(angle);
+
+        return angle;
+    }
+
+    public static double getAngleBetween(Component component1, Component component2) {
+        double angle = MyMath.betterRound(Math.toDegrees(Math.atan2(component2.getY() - component1.getY(), component2.getX() - component1.getX())));
         angle = angleWrap(angle);
 
         return angle;

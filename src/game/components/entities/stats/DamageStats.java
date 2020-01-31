@@ -1,6 +1,7 @@
 package game.components.entities.stats;
 
 import game.components.entities.Entity;
+import game.components.entities.player.Player;
 
 public abstract class DamageStats extends EntityStats {
 
@@ -23,7 +24,17 @@ public abstract class DamageStats extends EntityStats {
         super(belongsTo, speed, angle);
         this.damage = damage;
         this.canDamagePlayer = canDamagePlayer;
+    }
 
+
+    @Override
+    protected void collisionLogic(Entity entity) {
+        // Do damage to colliding entities. If canDamagePlayer is true, damage player along with other entities. Else, it can only damage other entities.
+        if ((canDamagePlayer && entity instanceof Player) || !canDamagePlayer() && !(entity instanceof Player)) {
+            if (entity.getStats() instanceof HealthStats) {
+                entity.getStats().takeDamageFrom(this);
+            }
+        }
     }
 
 
