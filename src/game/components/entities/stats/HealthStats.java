@@ -8,6 +8,8 @@ public abstract class HealthStats extends DamageStats {
 
 
     protected final double initialHealth;
+    public double getInitialHealth() { return initialHealth; }
+
     protected double health;
     public double getHealth() {
         return health;
@@ -40,7 +42,6 @@ public abstract class HealthStats extends DamageStats {
         this.health = health;
         this.initialHealth = health;
     }
-
 
 
     protected void statLogic() {

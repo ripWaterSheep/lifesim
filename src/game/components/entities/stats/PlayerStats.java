@@ -13,7 +13,7 @@ import static java.lang.Math.max;
 
 public class PlayerStats extends HealthStats {
 
-    private static final Color energyColor = new Color(255, 200, 0);
+    private static final Color energyColor = new Color(255, 159, 0);
     public static Color getEnergyColor() {
         return energyColor;
     }
@@ -23,7 +23,7 @@ public class PlayerStats extends HealthStats {
         return strengthColor;
     }
 
-    private static final Color moneyColor = new Color(35, 240, 35);
+    private static final Color moneyColor = new Color(10, 255, 0);
     public static Color getMoneyColor() {
         return moneyColor;
     }
@@ -104,7 +104,8 @@ public class PlayerStats extends HealthStats {
     }
 
     public boolean canAfford(double moneyAmount) {
-        boolean can = money > moneyAmount;
+        boolean can = money >= moneyAmount;
+
         if (!can)
             GameMessage.needMoneyMessage();
         return money > moneyAmount;
@@ -179,7 +180,6 @@ public class PlayerStats extends HealthStats {
     @Override
     protected void deathLogic() {
         baseSpeed = 0;
-        System.out.println(speed);
         if (!DeathScreen.iStarted()) {
             new GameMessage("Oof!");
             DeathScreen.show();

@@ -30,10 +30,17 @@ public class Spawner extends Structure {
     }
 
 
+    public Spawner(String name, double x, double y, double width, double height, boolean elliptical, Color color, int fontSize, long spawnInterval, Creature spawnTemplate) {
+        super(name, x, y, width, height, elliptical, color, fontSize);
+        this.spawnTemplate = spawnTemplate;
+        this.spawnInterval = spawnInterval;
+    }
+
+
     private void spawnLogic() {
         // Spawn a new clone of the Creature passed as a parameter if spawn interval passes and spawn limit has not been reached
         if (getCurrentTime() - lastSpawnTime > spawnInterval && allSpawn.size() < SPAWN_LIMIT) {
-            Creature spawn = null;
+            Creature spawn;
             if (spawnTemplate instanceof RangedCreature) {
                 spawn = new RangedCreature((RangedCreature)spawnTemplate, x, y, world);
             } else {

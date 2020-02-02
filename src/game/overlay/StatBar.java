@@ -21,10 +21,10 @@ public class StatBar {
     private static final Font STAT_FONT = new Font("StayPuft", Font.PLAIN, 26);
 
     private static final int LEFT_PADDING = 3;
-    private static final int BOTTOM_PADDING = 5;
+    private static final int BOTTOM_PADDING = 3;
     private static final int VERTICAL_SPACING = 36;
 
-    private static final double DEFAULT_BAR_LENGTH_SCALE = 0.15;
+    private static final double DEFAULT_BAR_LENGTH_SCALE = 0.155;
 
     private static final int DEFAULT_OPACITY = betterRound(0.5*255);
 

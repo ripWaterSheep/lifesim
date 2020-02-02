@@ -71,11 +71,6 @@ public abstract class Component implements Drawable {
 
     protected boolean elliptical;
 
-    public boolean isElliptical() {
-        return elliptical;
-    }
-
-
     public Shape getShape() {
         Shape shape;
         if (elliptical)

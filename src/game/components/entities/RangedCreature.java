@@ -1,5 +1,6 @@
 package game.components.entities;
 
+import drawing.MyImage;
 import game.components.entities.player.Player;
 import game.organization.World;
 
@@ -28,10 +29,21 @@ public class RangedCreature extends Creature {
     }
 
 
+    public RangedCreature(String name, double x, double y, double scale, String imageName,
+                               Behaviors behavior, double speed, double detectionRange,
+                               double health, double damage, boolean canDamagePlayer, double killLoot,
+                               long shootInterval, Projectile shotTemplate) {
+
+        this(name, x, y, 0, 0, false, null, behavior, speed, detectionRange, health, damage, canDamagePlayer, killLoot, shootInterval, shotTemplate);
+
+        setImage(imageName, scale);
+    }
+
+
     /** Copy all fields into new creature and set its location. This is used in class Spawner to clone base instance. */
     public RangedCreature(RangedCreature c, double x, double y, World world) {
         this("Clone of " + c.getName(), x, y, c.width, c.height, c.elliptical, c.color,
-                c.behavior, c.stats.getSpeed(), c.detectionRange, c.initialHealth, c.stats.getDamage(), c.stats.canDamagePlayer(), c.stats.getKillLoot(),
+                c.behavior, c.stats.getSpeed(), c.detectionRange, c.getStats().getInitialHealth(), c.stats.getDamage(), c.stats.canDamagePlayer(), c.stats.getKillLoot(),
                 c.shootInterval, c.shotTemplate);
 
         image = c.getImage();
@@ -43,9 +55,8 @@ public class RangedCreature extends Creature {
 
     private void shootLogic() {
         // Shoot out new clone of the projectile passed as a parameter if spawn interval passes
-        if (getCurrentTime() - lastShootTime > shootInterval) {
+        if (getCurrentTime() - lastShootTime > shootInterval && getDistance(this, Player.getInstance()) < shotTemplate.getRange()) {
             new Projectile(shotTemplate, x, y, world, 180+getAngleToPlayer());
-            System.out.println("Projectile shot");
             lastShootTime = getCurrentTime();
         }
     }
@@ -53,7 +64,8 @@ public class RangedCreature extends Creature {
 
     @Override
     protected void movementLogic() {
-        if (getDistance(this, Player.getInstance()) > shotTemplate.getRange())
+        // DOn't move if player is in range and this is supposed to chase the player.
+        if (getDistance(this, Player.getInstance()) > shotTemplate.getRange() || !(behavior == Behaviors.PURSUE))
             super.movementLogic();
     }
 

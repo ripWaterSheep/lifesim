@@ -121,21 +121,22 @@ public class Player extends Entity {
     }
 
 
-
     private void collisionLogic() {
         Structure structure = getTopStructureTouching(this); // Use the top structure to implement concept of layered surfaces.
 
         structure.onTouch();
-        if (MouseControls.getLeftClicked())
+        if (MouseControls.getLeftClicked()) {
             structure.onClick();
+            System.out.println(structure.getName());
+        }
     }
-
 
 
 
     @Override
     public void update() {
         super.update();
+
         collisionLogic();
         weapon.run();
     }

@@ -30,10 +30,10 @@ public class ProjectileStats extends DamageStats {
         // Do damage to other entities at the moment the collision starts only (if not already in touching list).
         if (!getBelongsTo().getLastTouching().contains(entity)) {
             super.collisionLogic(entity);
-
         }
-        belongsTo.getLastTouching().clear();
-        belongsTo.getLastTouching().add(entity);
+
+        getBelongsTo().getLastTouching().clear();
+        getBelongsTo().getLastTouching().add(entity);
     }
 
 

@@ -68,13 +68,8 @@ public class MyMath {
         return Math.round(input * multiplier) / multiplier;
     }
 
-    public static int roundToMultiple(int x, int base) {
-        return base * Math.round((float)x / base);
-    }
 
-
-
-    public static int getRandInRange(int min, int max) {
+    public static int getRand(int min, int max) {
 
         if (min >= max) {
             throw new IllegalArgumentException("max must be greater than min");
@@ -84,27 +79,13 @@ public class MyMath {
     }
 
 
-    public static double getRandInRange(double min, double max) {
+    public static double getRand(double min, double max) {
 
         if (min >= max) {
             throw new IllegalArgumentException("max must be greater than min");
         }
         Random r = new Random();
         return min + (max - min) * r.nextDouble();
-    }
-
-
-
-    public static int applyRandomSign(int number) { // Produces 1 or -1, just trust that this works lol
-        int sign =  (getRandInRange(0, 1)*2)-1;
-        return number*sign;
-    }
-
-
-
-    public static double applyRandomSign(double number) { // Produces 1 or -1, just trust that this works lol
-        double sign =  (getRandInRange(0, 1)*2)-1;
-        return number*sign;
     }
 
 

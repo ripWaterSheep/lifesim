@@ -25,12 +25,12 @@ public class StatParticle extends Projectile {
         if (GameSession.getCurrentFrame() % INTERVAL == 1) {
             double angle = 90;
             if (!rising) angle = 270;
-            angle += getRandInRange(-ANGLE_VARIATION, ANGLE_VARIATION);
+            angle += getRand(-ANGLE_VARIATION, ANGLE_VARIATION);
 
-            double range = getRandInRange(MIN_DISTANCE, MAX_DISTANCE);
+            double range = getRand(MIN_DISTANCE, MAX_DISTANCE);
             double speed = min(sqrt(rate*4)+1, 10);
 
-            if (rate > 0) new StatParticle(spawnTarget, getRandInRange(7, 13), elliptical, color, speed, angle, range);
+            if (rate > 0) new StatParticle(spawnTarget, getRand(7, 13), elliptical, color, speed, angle, range);
         }
     }
 

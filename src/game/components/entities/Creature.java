@@ -5,12 +5,13 @@ import game.components.entities.player.Player;
 import game.organization.World;
 import game.components.entities.stats.CreatureStats;
 import util.Geometry;
+import util.MyMath;
 
 import java.awt.*;
 
 import static drawing.DrawString.drawCenteredString;
 import static game.components.entities.stats.CollisionChecker.getTouchingEntities;
-import static util.MyMath.getRandInRange;
+import static util.MyMath.getRand;
 
 public class Creature extends Entity {
 
@@ -22,8 +23,6 @@ public class Creature extends Entity {
 
 
     protected Behaviors behavior;
-
-    protected final double initialHealth; // Keep track of health set when first spawned in order to spawn full-health clones, no matter how much actual health creature still has.
 
     protected final double detectionRange;
 
@@ -46,13 +45,14 @@ public class Creature extends Entity {
 
         super(name, x, y, width, height, elliptical, color);
 
-        initialHealth = health;
         this.behavior = behavior;
         this.detectionRange = detectionRange;
         this.stats = new CreatureStats(this, speed, health, damage, canDamagePlayer, killLoot);
     }
 
 
+
+    /** Spawn template for Spawner */
     public Creature(String name, double width, double height, boolean elliptical, Color color,
                          Behaviors behavior, double speed, double detectionRange,
                          double health, double damage, boolean canDamagePlayer, double killLoot) {
@@ -67,6 +67,7 @@ public class Creature extends Entity {
                     double health, double damage, boolean canDamagePlayer, double killLoot) {
 
         this(name, x, y, 0, 0, false, null, behavior, speed, detectionRange, health, damage, canDamagePlayer, killLoot);
+
         setImage(imageName, scale);
     }
 
@@ -75,7 +76,7 @@ public class Creature extends Entity {
     /** Copy all fields into new creature and set its location. This is used in class Spawner to clone base instance. */
     public Creature(Creature c, double x, double y, World world) {
         this("Clone of " + c.getName(), x, y, c.width, c.height, c.elliptical, c.color,
-            c.behavior, c.stats.getSpeed(), c.detectionRange, c.initialHealth, c.stats.getDamage(), c.stats.canDamagePlayer(), c.stats.getKillLoot());
+            c.behavior, c.stats.getSpeed(), c.detectionRange, c.getStats().getInitialHealth(), c.stats.getDamage(), c.stats.canDamagePlayer(), c.stats.getKillLoot());
 
         image = c.getImage();
         init(world);
@@ -85,8 +86,8 @@ public class Creature extends Entity {
 
     private void randomMovement() {
         // Switch direction when reached the end of range.
-        if (getRandInRange(1, 100) <= 4) {
-            stats.setAngle(getRandInRange(0, 359));
+        if (MyMath.getRand(1, 100) <= 4) {
+            stats.setAngle(MyMath.getRand(0, 359));
         }
     }
 
@@ -95,7 +96,7 @@ public class Creature extends Entity {
     protected void movementLogic() {
         if (playerInRange()) {
             if (behavior == Behaviors.PURSUE) {
-                stats.setAngle(getAngleToPlayer() + 180 + getRandInRange(-45, 45));
+                stats.setAngle(getAngleToPlayer() + 180 + MyMath.getRand(-45, 45));
             } else {
                 stats.setAngle(getAngleToPlayer());
             }

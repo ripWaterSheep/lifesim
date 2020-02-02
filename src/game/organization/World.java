@@ -28,8 +28,6 @@ public class World {
         return new ArrayList<>(components);
     }
 
-    private ArrayList<Entity> entities = new ArrayList<>();
-
 
     private Structure floor;
 
@@ -38,7 +36,6 @@ public class World {
 
     private Color outerColor;
 
-    EntityManager entityManager;
 
 
     World(String name, double width, double height, Color color, Color outerColor) {
@@ -49,7 +46,6 @@ public class World {
         add(floor);
 
         this.outerColor = outerColor;
-        entityManager = new EntityManager(this);
     }
 
 
@@ -60,7 +56,7 @@ public class World {
 
 
     public World add(Entity entity) {
-        entities.add(entity);
+        components.add(entity);
         return this;
     }
 
@@ -76,8 +72,6 @@ public class World {
 
 
     public void init() {
-        // Ensure that entities go on top.
-        components.addAll(entities);
         for (Component component: components) {
             component.init(this);
         }
@@ -91,7 +85,6 @@ public class World {
             component.run(g);
         }
         Player.getInstance().run(g);
-        entityManager.run();
     }
 
 

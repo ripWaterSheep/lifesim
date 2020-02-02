@@ -32,6 +32,8 @@ public abstract class Entity extends Component {
 
     public void delete() {
         exists = false;
+        if (world != null)
+            world.remove(this);
     }
 
     protected double getAngleToPlayer() {
@@ -66,6 +68,7 @@ public abstract class Entity extends Component {
         borderLogic();
         getStats().update();
     }
+
 
     @Override
     public void draw(Graphics g) {

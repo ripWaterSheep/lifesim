@@ -8,6 +8,8 @@ import game.components.entities.stats.ProjectileStats;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static util.FindComponent.findStructure;
+
 
 public class Projectile extends Entity {
 
@@ -44,7 +46,7 @@ public class Projectile extends Entity {
         init(world);
     }
 
-
+    /** Shot template for RangedCreature */
     public Projectile(String name, double width, double height, boolean elliptical, Color color, double speed, double range, double damage, boolean canDamagePlayer) {
         super(name, 0, 0, width, height, elliptical, color);
         this.range = range;
@@ -64,6 +66,7 @@ public class Projectile extends Entity {
                 p.stats.getSpeed(), angle, p.range, p.stats.getDamage(), p.stats.canDamagePlayer());
 
         image = p.getImage();
+        init(world);
     }
 
 
