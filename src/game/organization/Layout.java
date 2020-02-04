@@ -135,7 +135,7 @@ public class Layout {
                     stats.gainMoney(getRand(1, 1000));
                 }
             })
-            .add(new Spawner("Prison", -1800, -2000, 800, 550, false, new Color(110, 110, 110), 50, 6000,
+            .add(new Spawner("Prison", -1700, -1900, 700, 550, false, new Color(110, 110, 110), 50, 6000,
                     new RangedCreature("Skelebro", 0, 0, 50, 50, true, new Color(210, 210, 210), Creature.Behaviors.PURSUE,
                         11, 700, 15, 0, false, 50, 1000,
                         new Projectile("Arrow", 15, 15, true, new Color(80, 80, 80), 30, 500, 30, true))

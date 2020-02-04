@@ -36,6 +36,12 @@ public class Player extends Entity {
     }
 
 
+    public void goToWorld(String name) {
+        this.world = findWorld(name);
+        goToPos(0, 0);
+    }
+
+
     public void goToStructure(String name) {
         Structure structure = findStructure(name);
         this.world = structure.getWorld();
