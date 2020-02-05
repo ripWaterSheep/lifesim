@@ -28,9 +28,9 @@ public class Layout {
                 }
             })
             .add(new Spawner("Zombie Spawner", -2500 , 2500, 350, 250,false, new Color(45, 59, 43), 9000,
-                    new Creature("Zombie", 65, 65, true, new Color(83, 105, 70), Creature.Behaviors.PURSUE, 10, 800, 25, 5, true, 100)
+                    new Creature("Zombie", 65, 65, true, new Color(83, 105, 70), Creature.Behaviors.PURSUE, 11, 800, 25, 5, false, 100)
             ))
-            .add(new Structure("Gym", -1200, -450, 2, "Gym") {
+            .add(new Structure("Gym", -1500, -450, 2.5, "Gym") {
                 public void onTouch() {
                     if (stats.hasMoney()) {
                         stats.strengthen(1.25);
@@ -39,7 +39,7 @@ public class Layout {
                     }
                 }
             })
-            .add(new Structure("School", 450, 550, 300, 500, false, new Color(180, 117, 84), 50) {
+            .add(new Structure("School", 550, 600, 350, 550, false, new Color(180, 117, 84), 50) {
                 public void onTouch() {
                     stats.gainIntellect(1);
                     stats.tire(0.2);
@@ -60,7 +60,7 @@ public class Layout {
                     }
                 }
             })
-            .add(new Structure("Hospital", -500, -1200, 500, 500, false, new Color(210, 210, 210),50) {
+            .add(new Structure("Hospital", -500, -1250, 500, 500, false, new Color(210, 210, 210),50) {
                 public void onTouch() {
                     if (stats.canAfford(3)) {
                         stats.heal(2);
@@ -90,7 +90,7 @@ public class Layout {
                     stats.gainMoney(100);
                 }
             })
-            .add(new Creature("yourDad", 500, 500, 36, 36, false, Color.BLUE, Creature.Behaviors.EVADE, 11, 500, 10, 10, false, 0.2))
+            .add(new Creature("yourDad", 500, 500, 36, 36, false, Color.BLUE, Creature.Behaviors.EVADE, 25, 700, 10, 10, true, 10000))
             ;
 
     World houseInterior = new World("House Interior", 1000, 900, new Color(230, 210, 140), new Color(100, 80, 50))
@@ -136,8 +136,8 @@ public class Layout {
             })
             .add(new Spawner("Prison", -1700, -1900, 700, 550, false, new Color(110, 110, 110), 50, 7000,
                     new RangedCreature("Skelebro", 0, 0, 50, 50, true, new Color(210, 210, 210), Creature.Behaviors.PURSUE,
-                        11, 700, 15, 1, true, 100, 1000,
-                        new Projectile("Arrow", 15, 15, true, new Color(80, 80, 80), 30, 500, 30, true))
+                        11, 700, 15, 1, false, 100, 1000,
+                        new Projectile("Arrow", 15, 15, true, new Color(80, 80, 80), 35, 500, 40, false))
                 ))
             ;
 
@@ -160,16 +160,16 @@ public class Layout {
     World heck = new World("Heck", 4500, 4500, new Color(100, 35, 30), new Color(255, 150, 0)); // No swearing on my christian minecraft server
     World cheeseLand = new World("Cheese Land", 3500, 3500, new Color(255, 210, 75), new Color(255, 175, 100));
     World caveLand = new World("Cave Land", 5000, 3000, new Color(90, 90, 90), new Color(25, 25, 25))
-            .add(new Creature("Sub", -750, 500, 0.4, "sub", Creature.Behaviors.EVADE, 22, 800, 100, 13, true, 2000))
+            .add(new Creature("Sub", -750, 500, 0.4, "sub", Creature.Behaviors.EVADE, 22, 800, 100, 13, false, 2000))
             ;
     World daddyLand = new World("Daddy Land", 6900, 4200, new Color(255, 195, 240), new Color(255, 50, 170))
-            .add(new RangedCreature("Joshe", 100, 1000, 0.76, "gotcha", Creature.Behaviors.EVADE, 1, 60, 500, 25, true, 3000,750,
-                    new Projectile("Joshe Ball", 20, 20, true, new Color(0, 0, 0), 30, 400, 10, true)
+            .add(new RangedCreature("Joshe", 4000, 3000, 0.76, "gotcha", Creature.Behaviors.EVADE, 25, 800, 500, 25, false, 3000, 1000,
+                    new Projectile("Joshe Ball", 20, 20, true, new Color(0, 0, 0), 65, 1000, 50, false)
             ))
     ;
     World labInterior = new World("Lab Interior", 1500, 1500, new Color(120, 120, 120), new Color(255, 255, 255));
     World moon = new World("Moon", 2000, 2000, new Color(157, 171, 187), new Color(0, 0, 0))
-            .add(new Creature("Ken", 100, 1000, 0.2, "kenface", Creature.Behaviors.PURSUE, 15, 300,1000,6, true, 5000))
+            .add(new Creature("Ken", 100, 1000, 0.2, "kenface", Creature.Behaviors.PURSUE, 15, 300,1000,8, false, 5000))
             ;
 
 

@@ -37,25 +37,25 @@ public class Projectile extends Entity {
     }
 
 
-    public Projectile(String name, double x, double y, double width, double height, boolean elliptical, Color color, World world, double speed, double angle, double range, double damage, boolean canDamagePlayer) {
+    public Projectile(String name, double x, double y, double width, double height, boolean elliptical, Color color, World world, double speed, double angle, double range, double damage, boolean playerAlly) {
         super(name, x, y, width, height, elliptical, color);
         this.world = world;
         this.range = range;
-        stats = new ProjectileStats(this, speed, angle, damage, canDamagePlayer);
+        stats = new ProjectileStats(this, speed, angle, damage, playerAlly);
 
         init(world);
     }
 
     /** Shot template for RangedCreature */
-    public Projectile(String name, double width, double height, boolean elliptical, Color color, double speed, double range, double damage, boolean canDamagePlayer) {
+    public Projectile(String name, double width, double height, boolean elliptical, Color color, double speed, double range, double damage, boolean playerAlly) {
         super(name, 0, 0, width, height, elliptical, color);
         this.range = range;
-        stats = new ProjectileStats(this, speed, 0, damage, canDamagePlayer);
+        stats = new ProjectileStats(this, speed, 0, damage, playerAlly);
     }
 
 
-    public Projectile(String name, double x, double y, double scale, String imageName,  World world, double speed, double angle, double range, double damage, boolean canDamagePlayer) {
-        this(name, x, y, 0, 0, false, null, world, speed, angle, range, damage, canDamagePlayer);
+    public Projectile(String name, double x, double y, double scale, String imageName,  World world, double speed, double angle, double range, double damage, boolean playerAlly) {
+        this(name, x, y, 0, 0, false, null, world, speed, angle, range, damage, playerAlly);
 
         setImage(imageName, scale);
     }
@@ -63,7 +63,7 @@ public class Projectile extends Entity {
     /** Copy all fields into new projectile and set its location. This is used in class RangedCreature to clone base instance. */
     public Projectile(Projectile p, double x, double y, World world, double angle) {
         this("Clone of " + p.getName(), x, y, p.width, p.height, p.elliptical, p.color, world,
-                p.stats.getSpeed(), angle, p.range, p.stats.getDamage(), p.stats.canDamagePlayer());
+                p.stats.getSpeed(), angle, p.range, p.stats.getDamage(), p.stats.isPlayerAlly());
 
         image = p.getImage();
         init(world);

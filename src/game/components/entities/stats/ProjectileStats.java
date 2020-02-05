@@ -18,8 +18,8 @@ public class ProjectileStats extends DamageStats {
     }
 
 
-    public ProjectileStats(Projectile belongsTo, double speed, double angle, double damage, boolean canDamagePlayer) {
-        super(belongsTo, speed, angle, damage, canDamagePlayer);
+    public ProjectileStats(Projectile belongsTo, double speed, double angle, double damage, boolean playerAlly) {
+        super(belongsTo, speed, angle, damage, playerAlly);
         this.belongsTo = belongsTo;
 
     }

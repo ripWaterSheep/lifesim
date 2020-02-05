@@ -41,13 +41,13 @@ public class Creature extends Entity {
 
     public Creature(String name, double x, double y, double width, double height, boolean elliptical, Color color,
                     Behaviors behavior, double speed, double detectionRange,
-                    double health, double damage, boolean canDamagePlayer, double killLoot) {
+                    double health, double damage, boolean playerAlly, double killLoot) {
 
         super(name, x, y, width, height, elliptical, color);
 
         this.behavior = behavior;
         this.detectionRange = detectionRange;
-        this.stats = new CreatureStats(this, speed, health, damage, canDamagePlayer, killLoot);
+        this.stats = new CreatureStats(this, speed, health, damage, playerAlly, killLoot);
     }
 
 
@@ -55,18 +55,18 @@ public class Creature extends Entity {
     /** Spawn template for Spawner */
     public Creature(String name, double width, double height, boolean elliptical, Color color,
                          Behaviors behavior, double speed, double detectionRange,
-                         double health, double damage, boolean canDamagePlayer, double killLoot) {
+                         double health, double damage, boolean playerAlly, double killLoot) {
 
-        this(name, 0, 0, width, height, elliptical, color, behavior, speed, detectionRange, health, damage, canDamagePlayer, killLoot);
+        this(name, 0, 0, width, height, elliptical, color, behavior, speed, detectionRange, health, damage, playerAlly, killLoot);
     }
 
 
 
     public Creature(String name, double x, double y, double scale, String imageName,
                     Behaviors behavior, double speed, double detectionRange,
-                    double health, double damage, boolean canDamagePlayer, double killLoot) {
+                    double health, double damage, boolean playerAlly, double killLoot) {
 
-        this(name, x, y, 0, 0, false, null, behavior, speed, detectionRange, health, damage, canDamagePlayer, killLoot);
+        this(name, x, y, 0, 0, false, null, behavior, speed, detectionRange, health, damage, playerAlly, killLoot);
 
         setImage(imageName, scale);
     }
@@ -76,7 +76,7 @@ public class Creature extends Entity {
     /** Copy all fields into new creature and set its location. This is used in class Spawner to clone base instance. */
     public Creature(Creature c, double x, double y, World world) {
         this("Clone of " + c.getName(), x, y, c.width, c.height, c.elliptical, c.color,
-            c.behavior, c.stats.getSpeed(), c.detectionRange, c.getStats().getInitialHealth(), c.stats.getDamage(), c.stats.canDamagePlayer(), c.stats.getKillLoot());
+            c.behavior, c.stats.getSpeed(), c.detectionRange, c.getStats().getInitialHealth(), c.stats.getDamage(), c.stats.isPlayerAlly(), c.stats.getKillLoot());
 
         image = c.getImage();
         init(world);

@@ -19,10 +19,10 @@ public class RangedCreature extends Creature {
 
     public RangedCreature(String name, double x, double y, double width, double height, boolean elliptical, Color color,
                           Behaviors behavior, double speed, double detectionRange,
-                          double health, double damage, boolean canDamagePlayer, double killLoot,
+                          double health, double damage, boolean playerAlly, double killLoot,
                           long shootInterval, Projectile shotTemplate) {
 
-        super(name, x, y, width, height, elliptical, color, behavior, speed, detectionRange, health, damage, canDamagePlayer, killLoot);
+        super(name, x, y, width, height, elliptical, color, behavior, speed, detectionRange, health, damage, playerAlly, killLoot);
 
         this.shootInterval = shootInterval;
         this.shotTemplate = shotTemplate;
@@ -31,10 +31,10 @@ public class RangedCreature extends Creature {
 
     public RangedCreature(String name, double x, double y, double scale, String imageName,
                                Behaviors behavior, double speed, double detectionRange,
-                               double health, double damage, boolean canDamagePlayer, double killLoot,
+                               double health, double damage, boolean playerAlly, double killLoot,
                                long shootInterval, Projectile shotTemplate) {
 
-        this(name, x, y, 0, 0, false, null, behavior, speed, detectionRange, health, damage, canDamagePlayer, killLoot, shootInterval, shotTemplate);
+        this(name, x, y, 0, 0, false, null, behavior, speed, detectionRange, health, damage, playerAlly, killLoot, shootInterval, shotTemplate);
 
         setImage(imageName, scale);
     }
@@ -43,7 +43,7 @@ public class RangedCreature extends Creature {
     /** Copy all fields into new creature and set its location. This is used in class Spawner to clone base instance. */
     public RangedCreature(RangedCreature c, double x, double y, World world) {
         this("Clone of " + c.getName(), x, y, c.width, c.height, c.elliptical, c.color,
-                c.behavior, c.stats.getSpeed(), c.detectionRange, c.getStats().getInitialHealth(), c.stats.getDamage(), c.stats.canDamagePlayer(), c.stats.getKillLoot(),
+                c.behavior, c.stats.getSpeed(), c.detectionRange, c.getStats().getInitialHealth(), c.stats.getDamage(), c.stats.isPlayerAlly(), c.stats.getKillLoot(),
                 c.shootInterval, c.shotTemplate);
 
         image = c.getImage();

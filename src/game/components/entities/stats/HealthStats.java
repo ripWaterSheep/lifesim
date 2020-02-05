@@ -36,8 +36,8 @@ public abstract class HealthStats extends DamageStats {
 
 
 
-    public HealthStats(Entity belongsTo, double speed, double health, double damage, boolean canDamagePlayer) {
-        super(belongsTo, speed, 0, damage, canDamagePlayer);
+    public HealthStats(Entity belongsTo, double speed, double health, double damage, boolean playerAlly) {
+        super(belongsTo, speed, 0, damage, playerAlly);
         this.health = health;
         this.initialHealth = health;
     }

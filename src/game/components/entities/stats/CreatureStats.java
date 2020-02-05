@@ -36,8 +36,8 @@ public class CreatureStats extends HealthStats {
     private boolean looted = false;
 
 
-    public CreatureStats(Creature belongsTo, double speed, double health, double damage, boolean canDamagePlayer, double killLoot) {
-        super(belongsTo, speed, health, damage, canDamagePlayer);
+    public CreatureStats(Creature belongsTo, double speed, double health, double damage, boolean playerAlly, double killLoot) {
+        super(belongsTo, speed, health, damage, playerAlly);
         this.belongsTo = belongsTo;
         this.killLoot = killLoot;
     }

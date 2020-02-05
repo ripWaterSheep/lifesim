@@ -29,7 +29,7 @@ public class PlayerWeapon implements Subsystem {
         double damage = sqrt((strength / 20) + 1);
         System.out.println(damage);
         double angle = Geometry.getAngle(MouseControls.getLastClickX(), MouseControls.getLastClickY(), WindowSize.getMidWidth(), WindowSize.getMidHeight());
-        new Projectile("Projectile", player.getX(), player.getY(), size, size, true, color, player.getWorld(), 43, angle, 800, damage, false);
+        new Projectile("Projectile", player.getX(), player.getY(), size, size, true, color, player.getWorld(), 43, angle, 800, damage, true);
     }
 
 

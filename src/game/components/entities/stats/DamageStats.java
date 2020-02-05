@@ -13,24 +13,24 @@ public abstract class DamageStats extends EntityStats {
     }
 
 
-    private final boolean canDamagePlayer;
+    private final boolean playerAlly;
 
-    public boolean canDamagePlayer() {
-        return canDamagePlayer;
+    public boolean isPlayerAlly() {
+        return playerAlly;
     }
 
 
-    public DamageStats(Entity belongsTo, double speed, double angle, double damage, boolean canDamagePlayer) {
+    public DamageStats(Entity belongsTo, double speed, double angle, double damage, boolean playerAlly) {
         super(belongsTo, speed, angle);
         this.damage = damage;
-        this.canDamagePlayer = canDamagePlayer;
+        this.playerAlly = playerAlly;
     }
 
 
     @Override
     protected void collisionLogic(Entity entity) {
-        // Do damage to colliding entities. If canDamagePlayer is true, damage player along with other entities. Else, it can only damage other entities.
-        if ((canDamagePlayer && entity instanceof Player) || !canDamagePlayer() && !(entity instanceof Player)) {
+        // Do damage to colliding entities. If playerAlly is true, damage player along with other entities. Else, it can only damage other entities.
+        if ((isPlayerAlly() && !(entity instanceof Player)) || (!isPlayerAlly()) && entity instanceof Player) {
             entity.getStats().takeDamageFrom(this);
         }
     }
