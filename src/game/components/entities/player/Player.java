@@ -133,7 +133,6 @@ public class Player extends Entity {
         structure.onTouch();
         if (MouseControls.getLeftClicked()) {
             structure.onClick();
-            System.out.println(structure.getName());
         }
     }
 

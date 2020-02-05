@@ -21,7 +21,6 @@ public abstract class HealthStats extends DamageStats {
     }
 
 
-    @Override
     public void takeDamage(double amount) {
         health -= amount;
     }

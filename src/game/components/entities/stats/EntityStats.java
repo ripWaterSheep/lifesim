@@ -34,7 +34,6 @@ public abstract class EntityStats {
         return 0;
     }
     // Do nothing, since if this is not HealthStats subtype, it's invincible
-    public void takeDamage(double amount) {}
     public void takeDamageFrom(EntityStats stats) {}
 
     public EntityStats(Entity belongsTo, double speed, double angle) {

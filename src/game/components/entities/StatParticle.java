@@ -15,8 +15,8 @@ public class StatParticle extends Projectile {
 
     private static final long INTERVAL = 4;
 
-    private static final int MIN_DISTANCE = 45;
-    private static final int MAX_DISTANCE = 80;
+    private static final int MIN_DISTANCE = 50;
+    private static final int MAX_DISTANCE = 90;
 
     private static final double ANGLE_VARIATION = 25;
 
@@ -28,7 +28,7 @@ public class StatParticle extends Projectile {
             angle += getRand(-ANGLE_VARIATION, ANGLE_VARIATION);
 
             double range = getRand(MIN_DISTANCE, MAX_DISTANCE);
-            double speed = min(sqrt(rate*4)+1, 10);
+            double speed = clamp(sqrt(rate*5),2.5, 11);
 
             if (rate > 0) new StatParticle(spawnTarget, getRand(7, 13), elliptical, color, speed, angle, range);
         }
@@ -52,12 +52,6 @@ public class StatParticle extends Projectile {
         x = spawnTarget.getX() + (r * Math.cos(angle) * spawnTarget.getMidWidth());
         y = spawnTarget.getY() + (r * Math.sin(angle) * spawnTarget.getMidHeight());
     }
-
-
-    protected void movementLogic() {
-        super.movementLogic();
-    }
-
 
 
     protected void fadeLogic() {

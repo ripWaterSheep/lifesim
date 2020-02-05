@@ -42,8 +42,8 @@ public class StatBar {
         new StatBar("X", player.getX());
         new StatBar("Y", player.getY());
 
-        new StatBar("Health", player.getStats().getHealth(), 0, player.getStats().getStrengthDependentStatCap(), 1, PlayerStats.getHealthColor());
-        new StatBar("Energy", player.getStats().getEnergy(), 0, player.getStats().getStrengthDependentStatCap(), 1, PlayerStats.getEnergyColor());
+        new StatBar("Health", player.getStats().getHealth(), 0, player.getStats().getHealthEnergyCap(), 1, PlayerStats.getHealthColor());
+        new StatBar("Energy", player.getStats().getEnergy(), 0, player.getStats().getHealthEnergyCap(), 1, PlayerStats.getEnergyColor());
         new StatBar("Strength", player.getStats().getStrength(), 0, 10000, 0.1, PlayerStats.getStrengthColor());
         new StatBar("Cash", player.getStats().getMoney(), 0, 10000, 0.1, PlayerStats.getMoneyColor());
         new StatBar("Intellect", player.getStats().getIntellect(), 0, 10000, 0.1, PlayerStats.getIntellectColor());

@@ -35,7 +35,6 @@ public class Structure extends Component {
 
     public Structure(String name, double x, double y, double scale, String imageName) {
         super(name, x, y, scale, imageName);
-        System.out.println(width);
     }
 
 

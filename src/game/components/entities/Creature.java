@@ -113,7 +113,7 @@ public class Creature extends Entity {
     @Override
     public void draw(Graphics g) {
         super.draw(g);
-        drawCenteredString(g, ((int)getStats().getHealth())+"", new Rectangle(getDisplayX(), getDisplayY(), (int)width, (int)height), new Font(MyFont.getMainFont(), Font.PLAIN, 20), Color.WHITE);
+        //drawCenteredString(g, ((int)getStats().getHealth())+"", new Rectangle(getDisplayX(), getDisplayY(), (int)width, (int)height), new Font(MyFont.getMainFont(), Font.PLAIN, 20), Color.WHITE);
     }
 }
 

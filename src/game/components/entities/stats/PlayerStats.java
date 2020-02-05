@@ -10,6 +10,7 @@ import util.MyMath;
 import java.awt.*;
 
 import static java.lang.Math.max;
+import static java.lang.Math.sqrt;
 
 public class PlayerStats extends HealthStats {
 
@@ -54,18 +55,18 @@ public class PlayerStats extends HealthStats {
      * in a direction per frame if appropriate key is pressed.
      */
     public void calculateSpeed() {
-        speed = baseSpeed * (((energy/1000)/2)+0.55);
-        energy -= 0.075;
+        speed = baseSpeed * (((energy/2000))+0.6);
+        energy -= 0.05;
         if (KeyboardControls.getSpacePressed() && energy > 0) {
             speed *= 1.5;
-            energy -= 0.075;
+            energy -= 0.05;
         }
     }
 
 
     public void heal(double amount) {
         health += amount;
-        if (health < getStrengthDependentStatCap())
+        if (health < getHealthEnergyCap())
             StatParticle.spawnParticles(belongsTo, true, healthColor, amount, true);
     }
 
@@ -78,7 +79,7 @@ public class PlayerStats extends HealthStats {
 
     public void energize(double amount) {
         energy += Math.abs(amount);
-        if(energy < getStrengthDependentStatCap())
+        if(energy < getHealthEnergyCap())
             StatParticle.spawnParticles(belongsTo, true, energyColor, amount, true);
     }
 
@@ -147,7 +148,7 @@ public class PlayerStats extends HealthStats {
 
 
     /** Calculate the cap for the many stats whose caps increase when strength increases. */
-    public double getStrengthDependentStatCap() {
+    public double getHealthEnergyCap() {
         return 1000 + (strength/10);
     }
 
@@ -168,11 +169,11 @@ public class PlayerStats extends HealthStats {
             takeDamage(2);
         }
 
-        health = MyMath.clamp(health, 0, getStrengthDependentStatCap());
-        energy = MyMath.clamp(energy, 0, getStrengthDependentStatCap());
+        health = MyMath.clamp(health, 0, getHealthEnergyCap());
+        energy = MyMath.clamp(energy, 0, getHealthEnergyCap());
         strength = max(strength, 0);
         money = max(money, 0);
-        energy -= 0.075;
+        energy -= 0.05;
     }
 
 

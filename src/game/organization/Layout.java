@@ -27,29 +27,28 @@ public class Layout {
                     player.goToStructure("House Door");
                 }
             })
-            .add(new Spawner("Zombie Spawner", -2500 , 2500, 350, 250,false, new Color(50, 59, 52), 8000,
-                    new Creature("Zombie", 65, 65, true, new Color(82, 105, 76), Creature.Behaviors.PURSUE, 9, 1000, 25, 5, true, 50)
+            .add(new Spawner("Zombie Spawner", -2500 , 2500, 350, 250,false, new Color(45, 59, 43), 9000,
+                    new Creature("Zombie", 65, 65, true, new Color(83, 105, 70), Creature.Behaviors.PURSUE, 10, 800, 25, 5, true, 100)
             ))
             .add(new Structure("Gym", -1200, -450, 2, "Gym") {
                 public void onTouch() {
                     if (stats.hasMoney()) {
-                        //stats.shrink(0.03);
-                        stats.strengthen(1);
+                        stats.strengthen(1.25);
                         stats.loseMoney(1.25);
-                        stats.tire(0.75);
+                        stats.tire(0.5);
                     }
                 }
             })
             .add(new Structure("School", 450, 550, 300, 500, false, new Color(180, 117, 84), 50) {
                 public void onTouch() {
-                    stats.gainIntellect(1.25);
-                    stats.tire(0.5);
+                    stats.gainIntellect(1);
+                    stats.tire(0.2);
                 }
             })
             .add(new Structure("Office", -500, 500, 400, 400, false, new Color(150, 150, 160), 50) {
                 public void onTouch() {
-                    stats.gainMoney(Math.sqrt(Math.ceil(stats.getIntellect()/200))+0.5);
-                    stats.tire(0.5);
+                    stats.gainMoney((stats.getIntellect()/400)+0.1);
+                    stats.tire(0.25);
                 }
             })
             .add(new Structure("Restaurant", -500, -450, 500, 400, true, new Color(255, 213, 125), 50) {
@@ -57,7 +56,7 @@ public class Layout {
                     if (stats.hasMoney()) {
                         //stats.grow(0.05);
                         stats.loseMoney(0.5);
-                        stats.energize(1);
+                        stats.energize(2);
                     }
                 }
             })
@@ -66,7 +65,7 @@ public class Layout {
                     if (stats.canAfford(3)) {
                         stats.heal(2);
                         stats.energize(2);
-                        stats.loseMoney(3);
+                        stats.loseMoney(2);
                     }
                 }
             })
@@ -100,7 +99,7 @@ public class Layout {
                     player.goToStructure("House");
                 }
             })
-            .add(new Structure("House Bed", -200, -300, 200, 100,false, new Color(0, 114, 168)) {
+            .add(new Structure("House Bed", -200, -300, 250, 150,false, new Color(0, 114, 168)) {
                 public void onTouch() {
                     stats.energize(1);
                 }
@@ -113,15 +112,15 @@ public class Layout {
 
             .add(new Structure("Bank", 700, -600, 700, 500, false,  new Color(25, 150, 75), 50) {
                 public void onTouch() {
-                    stats.gainMoney(0.75);
+                    stats.gainMoney(stats.getIntellect()/800);
                 }
             })
-            .add(new Structure("Apartment", -550, -650, 450, 650, false, new Color(200, 140, 50), 50){
+            .add(new Structure("Apartment", -550, -650, 450, 650, false, new Color(200, 140, 50), 50) {
                 public void onClick() {
                     player.goToStructure("Apartment Door");
                 }
             })
-            .add(new Structure("University", -650, 650, 600, 600, false, new Color(220, 190, 120), 50){
+            .add(new Structure("University", -650, 650, 600, 600, false, new Color(220, 190, 120), 50) {
                 public void onTouch() {
                     if (stats.canAfford(1)) {
                         stats.loseMoney(1);
@@ -130,22 +129,27 @@ public class Layout {
                 }
             })
             .add(new Structure("Museum", 650, 650, 600, 600, false, new Color(10, 10, 10), 50))
-            .add(new Collectable("VISA", 40, 28, false, new Color(209, 199, 139), 12) {
+            .add(new Collectable("VISA", 50, 35, false, new Color(209, 199, 139), 15) {
                 public void onTouch() {
                     stats.gainMoney(getRand(1, 1000));
                 }
             })
-            .add(new Spawner("Prison", -1700, -1900, 700, 550, false, new Color(110, 110, 110), 50, 6000,
+            .add(new Spawner("Prison", -1700, -1900, 700, 550, false, new Color(110, 110, 110), 50, 7000,
                     new RangedCreature("Skelebro", 0, 0, 50, 50, true, new Color(210, 210, 210), Creature.Behaviors.PURSUE,
-                        11, 700, 15, 0, false, 50, 1000,
+                        11, 700, 15, 1, true, 100, 1000,
                         new Projectile("Arrow", 15, 15, true, new Color(80, 80, 80), 30, 500, 30, true))
                 ))
             ;
 
-    World apartmentInterior = new World("Apartment Interior", 1200, 1500, new Color(220, 200, 140), new Color(200, 140, 50))
-            .add(new Structure("Apartment Door", 1200*0.5 , 0, 150, 20, false, new Color(77, 57, 38)){
+    World apartmentInterior = new World("Apartment Interior", 1000, 1200, new Color(220, 200, 140), new Color(200, 140, 50))
+            .add(new Structure("Apartment Door", 1000*0.5 , 0, 20, 150, false, new Color(77, 57, 38)) {
                 public void onClick() {
                     player.goToStructure("Apartment");
+                }
+            })
+            .add(new Structure("Apartment Bed", -400, -400, 150, 250,false, new Color(168, 69, 79)) {
+                public void onTouch() {
+                    stats.energize(1.5);
                 }
             })
             ;
@@ -161,8 +165,7 @@ public class Layout {
     World daddyLand = new World("Daddy Land", 6900, 4200, new Color(255, 195, 240), new Color(255, 50, 170))
             .add(new RangedCreature("Joshe", 100, 1000, 0.76, "gotcha", Creature.Behaviors.EVADE, 1, 60, 500, 25, true, 3000,750,
                     new Projectile("Joshe Ball", 20, 20, true, new Color(0, 0, 0), 30, 400, 10, true)
-                    )
-            )
+            ))
     ;
     World labInterior = new World("Lab Interior", 1500, 1500, new Color(120, 120, 120), new Color(255, 255, 255));
     World moon = new World("Moon", 2000, 2000, new Color(157, 171, 187), new Color(0, 0, 0))
