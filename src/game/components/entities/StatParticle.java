@@ -28,7 +28,7 @@ public class StatParticle extends Projectile {
             angle += getRand(-ANGLE_VARIATION, ANGLE_VARIATION);
 
             double range = getRand(MIN_DISTANCE, MAX_DISTANCE);
-            double speed = clamp(sqrt(rate*5),2.5, 11);
+            double speed = clamp(sqrt(rate*6),2.5, 11);
 
             if (rate > 0) new StatParticle(spawnTarget, getRand(7, 13), elliptical, color, speed, angle, range);
         }

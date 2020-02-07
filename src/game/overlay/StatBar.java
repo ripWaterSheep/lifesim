@@ -15,13 +15,13 @@ public class StatBar {
 
     //TODO: Add icons (Once they are designed by Ken)
 
-    static ArrayList<StatBar> shownStats = new ArrayList<>();
+    static final ArrayList<StatBar> shownStats = new ArrayList<>();
 
 
     private static final Font STAT_FONT = new Font("StayPuft", Font.PLAIN, 26);
 
-    private static final int LEFT_PADDING = 3;
-    private static final int BOTTOM_PADDING = 3;
+    private static final int LEFT_PADDING = 0;
+    private static final int BOTTOM_PADDING = 0;
     private static final int VERTICAL_SPACING = 36;
 
     private static final double DEFAULT_BAR_LENGTH_SCALE = 0.155;
@@ -44,9 +44,9 @@ public class StatBar {
 
         new StatBar("Health", player.getStats().getHealth(), 0, player.getStats().getHealthEnergyCap(), 1, PlayerStats.getHealthColor());
         new StatBar("Energy", player.getStats().getEnergy(), 0, player.getStats().getHealthEnergyCap(), 1, PlayerStats.getEnergyColor());
-        new StatBar("Strength", player.getStats().getStrength(), 0, 10000, 0.1, PlayerStats.getStrengthColor());
+        new StatBar("Strength", player.getStats().getStrength(), 0, 5000, 0.2, PlayerStats.getStrengthColor());
         new StatBar("Cash", player.getStats().getMoney(), 0, 10000, 0.1, PlayerStats.getMoneyColor());
-        new StatBar("Intellect", player.getStats().getIntellect(), 0, 10000, 0.1, PlayerStats.getIntellectColor());
+        new StatBar("Intellect", player.getStats().getIntellect(), 0, 5000, 0.2, PlayerStats.getIntellectColor());
 
     }
 
@@ -79,7 +79,6 @@ public class StatBar {
     }
 
 
-
     public StatBar(String key, double value, double minVal, double maxVal, double barLengthScale, Color barColor) {
         StatBar.shownStats.add(0, this);
 
@@ -99,7 +98,7 @@ public class StatBar {
         Graphics2D g2d = (Graphics2D) g.create();
 
         int textX = LEFT_PADDING+3;
-        int textY = WindowSize.getHeight()-((shownStats.indexOf(this))* VERTICAL_SPACING) - (BOTTOM_PADDING+8);
+        int textY = WindowSize.getHeight()-((shownStats.indexOf(this))* VERTICAL_SPACING) - (BOTTOM_PADDING)-8;
         if (showBar) {
             int barX = LEFT_PADDING;
             int barY = betterRound(textY-29);

@@ -1,13 +1,16 @@
 package game.activity.controls;
 
 
+import javax.swing.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
 import static game.activity.controls.Cheats.cheatLogic;
 import static java.awt.event.KeyEvent.*;
+import static util.MyMath.inRange;
 import static util.TimeUtil.getCurrentTime;
 
 
@@ -20,7 +23,6 @@ public class KeyboardControls {
     private static boolean rightPressed = false;
     private static boolean spacePressed = false;
     private static boolean shiftPressed = false;
-    private static boolean controlPressed = false;
 
 
     public static boolean getUpPressed() {
@@ -47,16 +49,11 @@ public class KeyboardControls {
         return shiftPressed;
     }
 
-    static boolean getControlPressed() {
-        return controlPressed;
-    }
-
 
     private static long leftReadTime = 0;
     private static long rightReadTime = 0;
     private static long upReadTime = 0;
     private static long downReadTime = 0;
-
 
     public static long getUpReadTime() {
         return upReadTime;
@@ -75,12 +72,20 @@ public class KeyboardControls {
     }
 
 
-    static KeyAdapter keyAdapter = new KeyAdapter() {
+    private static int lastNumPressed = 1;
+
+    public static int getLastNumPressed() {
+        return lastNumPressed;
+    }
+
+
+    private static KeyAdapter keyAdapter = new KeyAdapter() {
 
         @Override
         public void keyPressed(KeyEvent e) {
             //System.out.println("key pressed: " + e.getKeyChar());
-            switch (e.getKeyCode()) {
+            int keyCode = e.getKeyCode();
+            switch (keyCode) {
                 case VK_W:
                 case VK_UP:
                     upReadTime = getCurrentTime();
@@ -112,19 +117,19 @@ public class KeyboardControls {
                 case VK_SHIFT:
                     shiftPressed = true;
                     break;
-
-                case VK_CONTROL:
-                    controlPressed = true;
-                    break;
             }
-            cheatLogic(e.getKeyCode());
+
+            cheatLogic(keyCode);
+            if (!shiftPressed && inRange(keyCode, 48, 57))
+                lastNumPressed = keyCode-48;
         }
 
 
         @Override
         public void keyReleased(KeyEvent e) {
             //System.out.println("key released: " + e.toString());
-            switch (e.getKeyCode()) {
+            int keyCode = e.getKeyCode();
+            switch (keyCode) {
                 case VK_W:
                 case VK_UP:
                     upPressed = false;
@@ -152,17 +157,13 @@ public class KeyboardControls {
                 case VK_SHIFT:
                     shiftPressed = false;
                     break;
-
-                case VK_CONTROL:
-                    controlPressed = false;
-                    break;
             }
         }
 
     };
 
 
-    static FocusAdapter AFKKeyPreventor = new FocusAdapter() {
+    private static FocusAdapter AFKKeyPreventor = new FocusAdapter() {
 
         @Override
         public void focusLost(FocusEvent e) {
@@ -171,6 +172,14 @@ public class KeyboardControls {
             leftPressed = false;
             rightPressed = false;
         }
-
     };
+
+
+
+    static void init(JPanel panel) {
+        panel.addKeyListener(KeyboardControls.keyAdapter);
+        panel.addFocusListener(KeyboardControls.AFKKeyPreventor);
+
+    }
+
 }

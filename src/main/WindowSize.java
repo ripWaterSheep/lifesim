@@ -8,8 +8,8 @@ import static main.Main.panel;
 
 public class WindowSize {
 
-    public static int defaultWidth = 1650;
-    public static int defaultHeight = 1000;
+    public static final int defaultWidth = 1800;
+    public static final int defaultHeight = 1000;
 
 
     public static int getWidth() {

@@ -3,6 +3,7 @@ package game.activity.controls;
 import game.components.entities.player.Player;
 import game.organization.World;
 import main.Main;
+import main.MainPanel;
 import util.TimeUtil;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ class Cheats {
 
     static void cheatLogic(int key) {
         Player player = Player.getInstance();
-        if (KeyboardControls.getControlPressed()) {
+        if (KeyboardControls.getShiftPressed()) {
             switch (key) {
                 case VK_N:
                     cycleWorlds(1);
@@ -45,7 +46,7 @@ class Cheats {
                     break;
 
                 case VK_R:
-                    Main.getPanel().restartGame();
+                    MainPanel.restartGame();
             }
         }
     }

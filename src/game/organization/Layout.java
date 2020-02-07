@@ -7,7 +7,6 @@ import game.components.structures.Spawner;
 import game.components.structures.Structure;
 import game.components.entities.Creature;
 import game.components.entities.player.Player;
-import util.MyMath;
 
 import java.awt.*;
 
@@ -33,7 +32,7 @@ public class Layout {
             .add(new Structure("Gym", -1500, -450, 2.5, "Gym") {
                 public void onTouch() {
                     if (stats.hasMoney()) {
-                        stats.strengthen(1.25);
+                        stats.strengthen(1);
                         stats.loseMoney(1.25);
                         stats.tire(0.5);
                     }
@@ -91,7 +90,7 @@ public class Layout {
                 }
             })
             .add(new Creature("yourDad", 500, 500, 36, 36, false, Color.BLUE, Creature.Behaviors.EVADE, 25, 700, 10, 10, true, 10000))
-            ;
+                        ;
 
     World houseInterior = new World("House Interior", 1000, 900, new Color(230, 210, 140), new Color(100, 80, 50))
             .add(new Structure("House Door", 0 , 900*0.5, 150, 20, false, new Color(190, 170, 80)){

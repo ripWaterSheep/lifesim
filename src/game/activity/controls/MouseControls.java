@@ -1,5 +1,6 @@
 package game.activity.controls;
 
+import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -62,4 +63,10 @@ public class MouseControls {
         LEFT_CLICKED = false;
         RIGHT_CLICKED = false;
     }
+
+
+    static void init(JPanel panel) {
+        panel.addMouseListener(mouseAdapter);
+    }
+
 }

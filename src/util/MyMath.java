@@ -8,12 +8,7 @@ public class MyMath {
 
     /** Return true if input is within range. */
     public static boolean inRange(int val, int min, int max) {
-        return val > min && val < max;
-    }
-
-    /** Return true if the two ranges overlap. */
-    public static boolean rangeOverlapping(int min1, int max1, int min2, int max2) {
-        return !(max1 < min2 || min1 > max2);
+        return val >= min && val <= max;
     }
 
 

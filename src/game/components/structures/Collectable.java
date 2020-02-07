@@ -26,7 +26,7 @@ public class Collectable extends Structure {
     }
 
 
-    public void randomizePos() {
+    private void randomizePos() {
         x = (int) (Math.random() * world.getFloor().getMidWidth()) - world.getFloor().getMidWidth();
         y = (int) (Math.random() * world.getFloor().getMidHeight()) - world.getFloor().getMidHeight();
     }

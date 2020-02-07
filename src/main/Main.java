@@ -1,7 +1,9 @@
 package main;
 
-
 import javax.swing.*;
+
+import static main.WindowSize.*;
+
 
 public class Main {
 
@@ -15,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
         panel = new MainPanel();
         JFrame frame = new JFrame("LifeSim");
-        frame.setSize(panel.getSize());
+        frame.setSize(defaultWidth, defaultHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(panel);
         frame.setVisible(true);
