@@ -18,10 +18,11 @@ public class CollisionChecker {
 
         for (Component componentB: allComponents) {
             // If two different game.components are touching each other, place in the list.
-            if (testIntersection(componentA, componentB) && componentA != componentB) {
+            if (testIntersection(componentA, componentB)) {
                 touching.add(componentB);
             }
         }
+        touching.remove(componentA);
         return touching;
     }
 

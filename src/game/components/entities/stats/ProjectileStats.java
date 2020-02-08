@@ -1,8 +1,11 @@
 package game.components.entities.stats;
 
+import game.components.Component;
 import game.components.entities.Entity;
 import game.components.entities.player.Player;
 import game.components.entities.Projectile;
+
+import java.util.ArrayList;
 
 import static game.components.entities.stats.CollisionChecker.getTouchingEntities;
 
@@ -27,19 +30,13 @@ public class ProjectileStats extends DamageStats {
 
     @Override
     protected void collisionLogic(Entity entity) {
-        // Do damage to other entities at the moment the collision starts only (if not already in touching list).
-        if (!getBelongsTo().getLastTouching().contains(entity)) {
-            super.collisionLogic(entity);
-        }
-
-        getBelongsTo().getLastTouching().clear();
-        getBelongsTo().getLastTouching().add(entity);
+        super.collisionLogic(entity);
     }
 
 
     @Override
     public void update() {
-    super.update();
+        super.update();
         for (Entity entity: getTouchingEntities(belongsTo)) {
             collisionLogic(entity);
         }

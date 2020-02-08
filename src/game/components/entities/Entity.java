@@ -70,10 +70,4 @@ public abstract class Entity extends Component {
     }
 
 
-    @Override
-    public void draw(Graphics g) {
-        if (exists) super.draw(g);
-    }
-
-
 }

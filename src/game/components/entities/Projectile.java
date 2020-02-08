@@ -15,12 +15,6 @@ public class Projectile extends Entity {
 
     protected double currentDistance = 0; // How far the Projectile currently has gone
 
-    public ArrayList<Component> lastTouching = new ArrayList<>();
-
-    public ArrayList<Component> getLastTouching() {
-        return lastTouching;
-    }
-
 
     protected DamageStats stats;
 
@@ -30,7 +24,7 @@ public class Projectile extends Entity {
     }
 
 
-    protected final double range;
+    protected double range;
 
     double getRange() {
         return range;
