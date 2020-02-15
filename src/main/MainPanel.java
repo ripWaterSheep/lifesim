@@ -1,8 +1,11 @@
 package main;
 
-import game.components.entities.player.Player;
-import game.GameSession;
-import util.Drawing.MyFont;
+import game.Game;
+import game.GraphicsManager;
+import game.controls.ControlSetup;
+import game.entities.Player;
+import game.systems.RenderSystem;
+import game.world.WorldRenderer;
 
 import static main.WindowSize.*;
 import static util.TimeUtil.*;
@@ -13,22 +16,30 @@ import java.awt.*;
 
 public class MainPanel extends JPanel {
 
-    private GameSession gameSession = new GameSession();
+    Game currentGame;
+
 
     public MainPanel() {
+        setPanel();
+        currentGame = new Game();
+        ControlSetup.initListeners(this);
+    }
+
+
+    private void setPanel() {
         setFocusable(true);
         requestFocusInWindow();
         setSize(defaultWidth, defaultHeight);
-        MyFont.initFonts();
-        gameSession.init(this);
     }
 
 
     @Override
     public void paintComponent(Graphics g) {
-        setBackground(Player.getInstance().getWorld().getOuterColor());
+        GraphicsManager.setGraphics(g);
         super.paintComponent(g);
-        gameSession.loop(g);
+
+        currentGame.run();
+
         sleep(8);
         repaint();
     }
