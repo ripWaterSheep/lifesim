@@ -6,4 +6,6 @@ import java.util.ArrayList;
 
 public interface IComponent {
 
+    IComponent copy();
+
 }

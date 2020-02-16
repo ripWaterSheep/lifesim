@@ -55,4 +55,9 @@ public class Stats implements IComponent {
         intellect = 0;
     }
 
+
+    @Override
+    public Stats copy() {
+        return new Stats();
+    }
 }

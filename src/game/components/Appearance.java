@@ -9,7 +9,14 @@ public class Appearance implements IComponent {
 
     private final Color color;
 
+    public Color getColor() {
+        return color;
+    }
+
+
+
     private final MyImage image;
+
 
     public Appearance(Color color) {
         this.color = color;
@@ -19,6 +26,11 @@ public class Appearance implements IComponent {
     public Appearance(String imageName) {
         image = new MyImage(imageName);
         color = null;
+    }
+
+    private Appearance(Color color, MyImage image) {
+        this.color = color;
+        this.image = image;
     }
 
 
@@ -31,7 +43,12 @@ public class Appearance implements IComponent {
         }
 
         g2d.fill(shape);
+    }
 
+
+    @Override
+    public Appearance copy() {
+        return new Appearance(color, image);
     }
 
 }

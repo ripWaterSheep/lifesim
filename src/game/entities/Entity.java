@@ -1,6 +1,7 @@
 package game.entities;
 
 import game.components.IComponent;
+import game.components.Position;
 import game.components.StatInteraction;
 import game.world.World;
 
@@ -17,7 +18,7 @@ public class Entity {
     }
 
 
-    private World world;
+    protected World world;
 
     public World getWorld() {
         return world;
@@ -46,6 +47,23 @@ public class Entity {
         return this;
     }
 
+
+    /** Copy all of the entities components to create a
+     * pretty much identical entity in a different location
+     */
+    public final Entity copyAt(double x, double y, World world) {
+        Entity newEntity = new Entity("Copy of " + name);
+
+        for (IComponent component: components) {
+            newEntity.add(component.copy());
+        }
+
+        world.add(newEntity);
+        for (Position pos: newEntity.getAll(Position.class)) {
+            pos.set(x, y);
+        }
+        return newEntity;
+    }
 
 
     public final boolean has(Class<? extends IComponent> componentType) {

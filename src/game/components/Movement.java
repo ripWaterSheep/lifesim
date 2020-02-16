@@ -8,9 +8,14 @@ public class Movement implements IComponent {
     private final double initialSpeed;
     private double currentSpeed;
 
-    public void setSpeedRatio(double speedMultiplier) {
-        currentSpeed = initialSpeed *speedMultiplier;
+    public void setSpeedRatio(double ratio) {
+        currentSpeed = initialSpeed *ratio;
     }
+
+    public void resetSpeed() {
+        currentSpeed = initialSpeed;
+    }
+
 
     private double angle;
 
@@ -47,20 +52,25 @@ public class Movement implements IComponent {
     }
 
 
-    public Movement(double initialSpeed, double angle) {
-        this.initialSpeed = initialSpeed;
+    public Movement(double speed, double angle) {
+        initialSpeed = speed;
         currentSpeed = initialSpeed;
+        this.angle = angle;
     }
 
-    public Movement(double initialSpeed) {
-        this(initialSpeed, 0);
+    public Movement(double speed) {
+        this(speed, 0);
     }
 
 
-    public void moveTowardsAngle() {
+    public void setMovementTowardsAngle() {
+        System.out.println(currentSpeed);
         movementX = -(currentSpeed * Math.cos(Math.toRadians(angle)));
         movementY = -(currentSpeed * Math.sin(Math.toRadians(angle)));
     }
 
-
+    @Override
+    public Movement copy() {
+        return new Movement(initialSpeed);
+    }
 }

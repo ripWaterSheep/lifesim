@@ -4,7 +4,7 @@ import game.entities.Entity;
 import game.entities.Player;
 import game.world.World;
 
-public class tpAbility implements IComponent {
+public class TpAbility implements IComponent {
 
     private World destinationWorld;
     private double destinationX;
@@ -14,7 +14,7 @@ public class tpAbility implements IComponent {
 
 
 
-    public tpAbility(World world, double x, double y, double tpPrice) {
+    public TpAbility(World world, double x, double y, double tpPrice) {
         destinationWorld = world;
         destinationX = x;
         destinationY = y;
@@ -22,14 +22,12 @@ public class tpAbility implements IComponent {
     }
 
 
-    public tpAbility(Entity entity, double tpPrice) {
+    public TpAbility(Entity entity, double tpPrice) {
         this(entity.getWorld(), entity.get(Position.class).getX(), entity.get(Position.class).getY(), tpPrice);
     }
 
 
-
-
-    public tpAbility(World world, double tpPrice) {
+    public TpAbility(World world, double tpPrice) {
         this(world, 0, 0, tpPrice);
     }
 
@@ -40,4 +38,8 @@ public class tpAbility implements IComponent {
         player.get(Stats.class).loseMoney(tpPrice);
     }
 
+    @Override
+    public TpAbility copy() {
+        return new TpAbility(destinationWorld, destinationX, destinationY, tpPrice);
+    }
 }

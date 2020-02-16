@@ -22,8 +22,9 @@ public class MovementSystem implements ISystem {
                     }
                 }
                 if (movement.isMoving()) {
-                    movement.moveTowardsAngle();
+                    movement.setMovementTowardsAngle();
                     pos.translate(movement.getMovementX(), movement.getMovementY());
+                    movement.resetSpeed();
                 }
             }
         }

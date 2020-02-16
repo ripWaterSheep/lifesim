@@ -40,7 +40,7 @@ public class MainPanel extends JPanel {
 
         currentGame.run();
 
-        sleep(8);
+        sleep(9);
         repaint();
     }
 

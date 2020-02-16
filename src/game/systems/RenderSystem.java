@@ -18,24 +18,37 @@ public class RenderSystem implements ISystem {
         Graphics2D g2d = GraphicsManager.getGraphics();
 
         for (Position pos: entity.getAll(Position.class)) {
-            for (Spatial shape: entity.getAll(Spatial.class)) {
+            for (Spatial spatial: entity.getAll(Spatial.class)) {
+
+                calculateDisplayPos(entity, spatial, pos);
+
                 for (Appearance appearance: entity.getAll(Appearance.class)) {
+                    appearance.draw(g2d, spatial.getShape());
+
                     for (Label label : entity.getAll(Label.class)) {
                         DrawString.drawCenteredString(g2d, entity.getName(),
-                                shape.getShapeAt(pos.getX(), pos.getY()).getBounds(), label.getFont(), Color.WHITE);
-                    }
-
-                    if (entity instanceof Player) {
-                        appearance.draw(g2d, shape.getShapeAt(WindowSize.getMidWidth()-shape.getMidWidth(), WindowSize.getMidHeight()-shape.getHeight()));
-                    } else {
-                        Position playerPos = Player.getInstance().get(Position.class);
-                        appearance.draw(g2d, shape.getShapeAt(pos.getX()-playerPos.getX() - shape.getMidWidth() + WindowSize.getMidWidth(),
-                            pos.getY()-playerPos.getY() - shape.getMidHeight() + WindowSize.getMidHeight()));
-
+                                spatial.getShape().getBounds(), label.getFont(), label.getTextColor());
                     }
                 }
             }
         }
+    }
+
+
+    /** Calculate the intended display position of the entity whether it is the player (center of the screen)
+     * or any other type of entity (moving relative to player) due to player centric display.
+     */
+    public void calculateDisplayPos(Entity entity, Spatial spatial, Position pos) {
+        double displayX, displayY;
+        if (entity instanceof Player) {
+            displayX = WindowSize.getMidWidth() - spatial.getMidWidth();
+            displayY = WindowSize.getMidHeight() - spatial.getMidHeight();
+        } else {
+            Position playerPos = Player.getInstance().get(Position.class);
+            displayX = pos.getX()-playerPos.getX() - spatial.getMidWidth() + WindowSize.getMidWidth();
+            displayY = pos.getY()-playerPos.getY() - spatial.getMidHeight() + WindowSize.getMidHeight();
+        }
+        spatial.setDisplayPos(displayX, displayY);
     }
 
 

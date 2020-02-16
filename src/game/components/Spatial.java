@@ -27,12 +27,29 @@ public class Spatial implements IComponent {
     }
 
 
-    public Shape getShapeAt(double x, double y) {
+    private double displayX, displayY;
+
+    public double getDisplayX() {
+        return displayX;
+    }
+
+    public double getDisplayY() {
+        return displayY;
+    }
+
+
+    public void setDisplayPos(double x, double y) {
+        displayX = x;
+        displayY = y;
+    }
+
+
+    public Shape getShape() {
         Shape shape;
         if (elliptical)
-            shape = new Ellipse2D.Double((int) x, (int) y, (int) width, (int) height);
+            shape = new Ellipse2D.Double((int) displayX, (int) displayY, (int) width, (int) height);
         else
-            shape = new Rectangle((int) x, (int) y, (int) width, (int) height);
+            shape = new Rectangle((int) displayX, (int) displayY, (int) width, (int) height);
         return shape;
     }
 
@@ -44,4 +61,8 @@ public class Spatial implements IComponent {
     }
 
 
+    @Override
+    public Spatial copy() {
+        return new Spatial(width, height, elliptical);
+    }
 }

@@ -1,4 +1,4 @@
-package game.organization;
+package game.layout;
 
 import game.world.World;
 

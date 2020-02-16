@@ -1,8 +1,8 @@
 package game;
 
 import game.entities.Player;
-import game.organization.DefaultLayout;
-import game.organization.Layout;
+import game.layout.DefaultLayout;
+import game.layout.Layout;
 import game.systems.PlayerInputSystem;
 import game.world.World;
 
@@ -23,7 +23,7 @@ public class Game {
     }
 
     public void run() {
-        player.getCurrentWorld().run();
+        player.getWorld().run();
         playerInputSystem.run(player);
     }
 

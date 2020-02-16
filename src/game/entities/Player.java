@@ -1,6 +1,7 @@
 package game.entities;
 
 import game.components.Appearance;
+import game.components.Label;
 import game.components.Movement;
 import game.components.Position;
 import game.components.Spatial;
@@ -17,15 +18,9 @@ public final class Player extends Entity {
         return instance;
     }
 
-
-    private World currentWorld;
-
-    public World getCurrentWorld() {
-        return currentWorld;
-    }
-
+    @Override
     public void setWorld(World newWorld) {
-        currentWorld = newWorld;
+        world = newWorld;
     }
 
 

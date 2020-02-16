@@ -2,6 +2,7 @@ package game.components;
 
 public class Behavior implements IComponent {
 
+
     public enum BehaviorTypes {
         PURSURE,
         EVADE
@@ -15,6 +16,12 @@ public class Behavior implements IComponent {
 
     public Behavior(BehaviorTypes behaviorType) {
         this.behaviorType = behaviorType;
+    }
+
+
+    @Override
+    public Behavior copy() {
+        return new Behavior(behaviorType);
     }
 
 }

@@ -4,9 +4,11 @@ package game.components;
 public class Position implements IComponent {
 
     private double x, y;
+
     public double getX() {
         return x;
     }
+
     public double getY() {
         return y;
     }
@@ -29,4 +31,8 @@ public class Position implements IComponent {
     }
 
 
+    @Override
+    public Position copy() {
+        return new Position(x, y);
+    }
 }

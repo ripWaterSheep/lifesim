@@ -5,10 +5,7 @@ import game.components.Position;
 import game.components.Spatial;
 import game.entities.Entity;
 import game.entities.Player;
-import game.systems.CollisionSystem;
-import game.systems.ISystem;
-import game.systems.MovementSystem;
-import game.systems.RenderSystem;
+import game.systems.*;
 
 import java.awt.*;
 import java.util.*;
@@ -18,16 +15,23 @@ public class World {
 
     private WorldRenderer worldRenderer;
 
-    private ArrayList<Entity> entities = new ArrayList<>();
     private ArrayList<ISystem> systems = new ArrayList<>();
+    private ArrayList<Entity> entities = new ArrayList<>();
+
+    public ArrayList<Entity> getEntities() {
+        return new ArrayList<>(entities);
+    }
+
 
     private Entity floor;
 
-    public World(String name, double width, double height, Color innerColor, Color outerColor) {
+    public World(String name, double width, double height, Color innerColor, Color outerColor, BorderTypes borderType) {
         worldRenderer = new WorldRenderer(outerColor);
         systems.add(new MovementSystem());
+        systems.add(new CollisionSystem());
+        systems.add(new BorderSystem(borderType));
+
         systems.add(new RenderSystem());
-        systems.add(new CollisionSystem(entities));
 
         floor = new Entity(name + "Floor")
                 .add(new Position(0, 0))

@@ -1,6 +1,7 @@
 package game.systems;
 
 import game.components.Movement;
+import game.components.Position;
 import game.controls.KeyboardControls;
 import game.controls.MouseControls;
 import game.entities.Entity;
@@ -15,6 +16,7 @@ public class PlayerInputSystem implements ISystem {
         if (entity instanceof Player) {
             Player player = (Player) entity;
 
+            sprintControls(player);
             movementControls(player);
 
         }
@@ -40,7 +42,6 @@ public class PlayerInputSystem implements ISystem {
 
         for (Movement movement : player.getAll(Movement.class)) {
             movement.setAngle(getIntendedAngle(up, down, left, right));
-
             movement.setMoving(up || down || left || right);
         }
     }
@@ -62,6 +63,13 @@ public class PlayerInputSystem implements ISystem {
         else if (left) angle = 0;
 
         return angle;
+    }
+
+
+    private void sprintControls(Player player) {
+        if (getSpacePressed()) {
+            player.get(Movement.class).setSpeedRatio(1.5);
+        }
     }
 
 

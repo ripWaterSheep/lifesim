@@ -2,7 +2,7 @@ package game.components;
 
 public class Combat implements IComponent {
 
-    private double damage;
+    private final double damage;
 
     public Combat(double damage) {
         this.damage = damage;
@@ -12,4 +12,8 @@ public class Combat implements IComponent {
         health.loseHealth(damage);
     }
 
+    @Override
+    public Combat copy() {
+        return new Combat(damage);
+    }
 }
