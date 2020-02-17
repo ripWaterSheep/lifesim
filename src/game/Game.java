@@ -1,12 +1,18 @@
 package game;
 
-import game.entities.Player;
-import game.layout.DefaultLayout;
-import game.layout.Layout;
-import game.systems.PlayerInputSystem;
-import game.world.World;
+import game.ECS.entities.Player;
+import game.setting.layout.DefaultLayout;
+import game.setting.layout.Layout;
+import game.ECS.systems.PlayerInputSystem;
+import game.setting.world.World;
 
 public class Game {
+
+    private static long currentFrame = 0;
+
+    public static long getCurrentFrame() {
+        return currentFrame;
+    }
 
     PlayerInputSystem playerInputSystem = new PlayerInputSystem();
     private Player player = new Player();
@@ -23,8 +29,9 @@ public class Game {
     }
 
     public void run() {
-        player.getWorld().run();
+        currentFrame++;
         playerInputSystem.run(player);
+        player.getWorld().run();
     }
 
 }

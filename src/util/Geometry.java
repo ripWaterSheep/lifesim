@@ -1,6 +1,6 @@
 package util;
 
-import game.components.Position;
+import game.ECS.components.Position;
 
 import java.awt.*;
 import java.awt.geom.Area;

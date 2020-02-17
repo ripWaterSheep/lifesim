@@ -3,9 +3,6 @@ package main;
 import game.Game;
 import game.GraphicsManager;
 import game.controls.ControlSetup;
-import game.entities.Player;
-import game.systems.RenderSystem;
-import game.world.WorldRenderer;
 
 import static main.WindowSize.*;
 import static util.TimeUtil.*;
