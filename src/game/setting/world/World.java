@@ -1,8 +1,8 @@
 package game.setting.world;
 
-import game.ECS.components.Appearance;
-import game.ECS.components.Position;
-import game.ECS.components.Spatial;
+import game.ECS.components.AppearanceComponent;
+import game.ECS.components.PositionComponent;
+import game.ECS.components.SpatialComponent;
 import game.ECS.entities.Entity;
 import game.ECS.systems.*;
 
@@ -32,9 +32,9 @@ public class World {
         systems.add(new RenderSystem());
 
         floor = new Entity(name + "Floor")
-                .add(new Position(0, 0))
-                .add(new Spatial(width, height, false))
-                .add(new Appearance(innerColor));
+                .add(new PositionComponent(0, 0))
+                .add(new SpatialComponent(width, height, false))
+                .add(new AppearanceComponent(innerColor));
         add(floor);
     }
 
@@ -55,15 +55,15 @@ public class World {
     }
 
 
-    public boolean has(String entityName) {
-        boolean has = false;
+    public Entity getEntityWithName(String entityName) {
+        Entity desiredEntity = null;
         for (Entity entity: entities) {
             if(entity.getName().equals(entityName)) {
-                has = true;
+                desiredEntity = entity;
                 break;
             }
         }
-        return has;
+        return desiredEntity;
     }
 
 
@@ -74,7 +74,6 @@ public class World {
             }
         }
     }
-
 
 
     public void run() {

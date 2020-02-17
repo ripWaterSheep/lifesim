@@ -7,7 +7,7 @@ import java.awt.*;
 
 /** Defines visible traits of an entity.
  */
-public class Appearance implements IComponent {
+public class AppearanceComponent implements IComponent {
 
     private final Color color;
 
@@ -19,17 +19,17 @@ public class Appearance implements IComponent {
     private final MyImage image;
 
 
-    public Appearance(Color color) {
+    public AppearanceComponent(Color color) {
         this.color = color;
         this.image = null;
     }
 
-    public Appearance(String imageName) {
+    public AppearanceComponent(String imageName) {
         image = new MyImage(imageName);
         color = null;
     }
 
-    private Appearance(Color color, MyImage image) {
+    private AppearanceComponent(Color color, MyImage image) {
         this.color = color;
         this.image = image;
     }
@@ -48,8 +48,8 @@ public class Appearance implements IComponent {
 
 
     @Override
-    public Appearance copy() {
-        return new Appearance(color, image);
+    public AppearanceComponent copy() {
+        return new AppearanceComponent(color, image);
     }
 
 }

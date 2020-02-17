@@ -1,8 +1,8 @@
 package game.ECS.systems;
 
-import game.ECS.components.PathFinding;
-import game.ECS.components.Position;
-import game.ECS.components.Movement;
+import game.ECS.components.PathFindingComponent;
+import game.ECS.components.PositionComponent;
+import game.ECS.components.MovementComponent;
 import game.ECS.entities.Entity;
 import game.ECS.entities.Player;
 import util.Geometry;
@@ -11,11 +11,11 @@ import util.Geometry;
 public class MovementSystem implements ISystem {
 
     public void run(Entity entity) {
-        for (Position pos: entity.getAll(Position.class)) {
-            for (Movement movement : entity.getAll(Movement.class)) {
-                for (PathFinding pathfinding : entity.getAll(PathFinding.class)) {
-                    double followAngle = Geometry.getAngleBetween(Player.getInstance().get(Position.class), pos);
-                    if (pathfinding.getType() == PathFinding.Behaviors.PURSUE) {
+        for (PositionComponent pos: entity.getAll(PositionComponent.class)) {
+            for (MovementComponent movement : entity.getAll(MovementComponent.class)) {
+                for (PathFindingComponent pathfinding : entity.getAll(PathFindingComponent.class)) {
+                    double followAngle = Geometry.getAngleBetween(Player.getInstance().get(PositionComponent.class), pos);
+                    if (pathfinding.getType() == PathFindingComponent.Behaviors.PURSUE) {
                         movement.setAngle(followAngle);
                     } else {
                         movement.setAngle(180 - followAngle);

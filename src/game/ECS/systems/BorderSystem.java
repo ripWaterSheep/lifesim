@@ -1,9 +1,9 @@
 package game.ECS.systems;
 
-import game.ECS.components.Health;
-import game.ECS.components.Movement;
-import game.ECS.components.Position;
-import game.ECS.components.Spatial;
+import game.ECS.components.HealthComponent;
+import game.ECS.components.MovementComponent;
+import game.ECS.components.PositionComponent;
+import game.ECS.components.SpatialComponent;
 import game.ECS.entities.Entity;
 import game.setting.world.BorderTypes;
 
@@ -25,9 +25,9 @@ public class BorderSystem implements ISystem {
     public void run(Entity entity) {
         if (borderType != BorderTypes.FREE) {
 
-            for (Position pos: entity.getAll(Position.class)) {
-                for (Spatial shape : entity.getAll(Spatial.class)) {
-                    for (Spatial floorSpace : entity.getWorld().getFloor().getAll(Spatial.class)) {
+            for (PositionComponent pos: entity.getAll(PositionComponent.class)) {
+                for (SpatialComponent shape : entity.getAll(SpatialComponent.class)) {
+                    for (SpatialComponent floorSpace : entity.getWorld().getFloor().getAll(SpatialComponent.class)) {
                         boolean overEdge = !testIntersection(floorSpace.getShape(), shape.getShape());
 
                         switch (borderType) {
@@ -39,11 +39,10 @@ public class BorderSystem implements ISystem {
 
                             case LAVA_ISLAND:
                                 if (overEdge) {
-                                    for (Health health : entity.getAll(Health.class)) {
+                                    for (HealthComponent health : entity.getAll(HealthComponent.class)) {
                                         health.loseHealth(1);
                                     }
-
-                                    for (Movement movement : entity.getAll(Movement.class)) {
+                                    for (MovementComponent movement : entity.getAll(MovementComponent.class)) {
                                         movement.setSpeedRatio(0.15);
                                     }
                                 }

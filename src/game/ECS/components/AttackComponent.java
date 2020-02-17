@@ -2,7 +2,7 @@ package game.ECS.components;
 
 /** Defines interaction between the entity this belongs to and an entity with a health component.
  */
-public class Attack implements IComponent {
+public class AttackComponent implements IComponent {
 
     private final double damage;
 
@@ -12,17 +12,17 @@ public class Attack implements IComponent {
         return deleteOnDamage;
     }
 
-    public Attack(double damage, boolean deleteOnDamage) {
+    public AttackComponent(double damage, boolean deleteOnDamage) {
         this.damage = damage;
         this.deleteOnDamage = true;
     }
 
-    public void doDamageTo(Health health) {
+    public void doDamageTo(HealthComponent health) {
         health.loseHealth(damage);
     }
 
     @Override
-    public Attack copy() {
-        return new Attack(damage, deleteOnDamage);
+    public AttackComponent copy() {
+        return new AttackComponent(damage, deleteOnDamage);
     }
 }

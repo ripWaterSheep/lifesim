@@ -1,9 +1,9 @@
 package game.ECS.entities;
 
-import game.ECS.components.Appearance;
-import game.ECS.components.Movement;
-import game.ECS.components.Position;
-import game.ECS.components.Spatial;
+import game.ECS.components.AppearanceComponent;
+import game.ECS.components.MovementComponent;
+import game.ECS.components.PositionComponent;
+import game.ECS.components.SpatialComponent;
 import game.setting.world.World;
 
 import java.awt.*;
@@ -27,10 +27,15 @@ public final class Player extends Entity {
         super("Player");
         instance = this;
 
-        add(new Position(0, 0));
-        add(new Spatial(50, 50, true));
-        add(new Appearance(Color.YELLOW));
-        add(new Movement(12));
+        add(new PositionComponent(0, 0));
+        add(new SpatialComponent(50, 50, true));
+        add(new AppearanceComponent(Color.YELLOW));
+        add(new MovementComponent(12));
+    }
+
+
+    public void goTo(Entity entity) {
+        get(PositionComponent.class).goTo(entity.get(PositionComponent.class));
     }
 
 }

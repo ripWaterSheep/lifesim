@@ -1,6 +1,6 @@
 package util;
 
-import game.ECS.components.Position;
+import game.ECS.components.PositionComponent;
 
 import java.awt.*;
 import java.awt.geom.Area;
@@ -10,7 +10,7 @@ import static util.MyMath.betterRound;
 
 public class Geometry {
 
-    public static double getDistanceBetween(Position pos1, Position pos2) {
+    public static double getDistanceBetween(PositionComponent pos1, PositionComponent pos2) {
         return betterRound(Point2D.distance(pos1.getX(), pos1.getY(), pos2.getX(), pos2.getY()));
     }
 
@@ -32,7 +32,7 @@ public class Geometry {
     }
 
 
-    public static double getAngleBetween(Position pos1, Position pos2) {
+    public static double getAngleBetween(PositionComponent pos1, PositionComponent pos2) {
         double angle = MyMath.betterRound(Math.toDegrees(Math.atan2(pos2.getY() - pos1.getY(), pos2.getX() - pos1.getX())));
         angle = angleWrap(angle);
 

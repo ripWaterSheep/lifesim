@@ -5,7 +5,7 @@ import static util.MyMath.clamp;
 
 /** Defines health related characteristics of an entity
  */
-public class Health implements IComponent {
+public class HealthComponent implements IComponent {
 
     private final double initialHealth;
 
@@ -24,15 +24,15 @@ public class Health implements IComponent {
     }
 
 
-    public Health(double health) {
+    public HealthComponent(double health) {
         initialHealth = health;
         this.health = health;
     }
 
 
     @Override
-    public Health copy() {
-        return new Health(initialHealth);
+    public HealthComponent copy() {
+        return new HealthComponent(initialHealth);
     }
 
 }

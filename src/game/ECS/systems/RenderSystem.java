@@ -2,8 +2,8 @@ package game.ECS.systems;
 
 import game.GraphicsManager;
 import game.ECS.components.*;
-import game.ECS.components.Label;
-import game.ECS.components.Spatial;
+import game.ECS.components.LabelComponent;
+import game.ECS.components.SpatialComponent;
 import game.ECS.entities.Entity;
 import game.ECS.entities.Player;
 import main.WindowSize;
@@ -17,15 +17,15 @@ public class RenderSystem implements ISystem {
     public void run(Entity entity) {
         Graphics2D g2d = GraphicsManager.getGraphics();
 
-        for (Position pos: entity.getAll(Position.class)) {
-            for (Spatial spatial: entity.getAll(Spatial.class)) {
+        for (PositionComponent pos: entity.getAll(PositionComponent.class)) {
+            for (SpatialComponent spatial: entity.getAll(SpatialComponent.class)) {
 
                 calculateDisplayPos(entity, spatial, pos);
 
-                for (Appearance appearance: entity.getAll(Appearance.class)) {
+                for (AppearanceComponent appearance: entity.getAll(AppearanceComponent.class)) {
                     appearance.draw(g2d, spatial.getShape());
 
-                    for (Label label : entity.getAll(Label.class)) {
+                    for (LabelComponent label : entity.getAll(LabelComponent.class)) {
                         DrawString.drawCenteredString(g2d, entity.getName(),
                                 spatial.getShape().getBounds(), label.getFont(), label.getTextColor());
                     }
@@ -38,13 +38,13 @@ public class RenderSystem implements ISystem {
     /** Calculate the intended display position of the entity whether it is the player (center of the screen)
      * or any other type of entity (moving relative to player) due to player centric display.
      */
-    public void calculateDisplayPos(Entity entity, Spatial spatial, Position pos) {
+    public void calculateDisplayPos(Entity entity, SpatialComponent spatial, PositionComponent pos) {
         double displayX, displayY;
         if (entity instanceof Player) {
             displayX = WindowSize.getMidWidth() - spatial.getMidWidth();
             displayY = WindowSize.getMidHeight() - spatial.getMidHeight();
         } else {
-            Position playerPos = Player.getInstance().get(Position.class);
+            PositionComponent playerPos = Player.getInstance().get(PositionComponent.class);
             displayX = pos.getX()-playerPos.getX() - spatial.getMidWidth() + WindowSize.getMidWidth();
             displayY = pos.getY()-playerPos.getY() - spatial.getMidHeight() + WindowSize.getMidHeight();
         }

@@ -8,16 +8,16 @@ public final class Creature extends Entity {
 
 
     public Creature(String name, double x, double y, double width, double height, boolean elliptical, Color color,
-                    double speed, PathFinding.Behaviors pathFindingBehavior, double health, double damage) {
+                    double speed, PathFindingComponent.Behaviors pathFindingBehavior, double health, double damage) {
         super(name);
 
-        add(new Position(x, y));
-        add(new Spatial(width, height, elliptical));
-        add(new Appearance(color));
-        add(new Movement(speed));
-        add(new PathFinding(pathFindingBehavior));
-        add(new Health(health));
-        add(new Attack(damage, false));
+        add(new PositionComponent(x, y));
+        add(new SpatialComponent(width, height, elliptical));
+        add(new AppearanceComponent(color));
+        add(new MovementComponent(speed));
+        add(new PathFindingComponent(pathFindingBehavior));
+        add(new HealthComponent(health));
+        add(new AttackComponent(damage, false));
     }
 
 }

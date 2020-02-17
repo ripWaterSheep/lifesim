@@ -2,9 +2,9 @@ package game.ECS.components;
 
 
 /** Defines an entity's location in the player-centric coordinate system (not the actual screen coordinate system,;
- * that is done in Spatial).
+ * that is done in SpatialComponent).
  */
-public class Position implements IComponent {
+public class PositionComponent implements IComponent {
 
     /** These are the x and y of the center of the entity's shape. */
     private double x, y;
@@ -18,7 +18,7 @@ public class Position implements IComponent {
     }
 
 
-    public Position(double x, double y) {
+    public PositionComponent(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -34,9 +34,14 @@ public class Position implements IComponent {
         this.y = y;
     }
 
+    public void goTo(PositionComponent pos) {
+        x = pos.x;
+        y = pos.y;
+    }
+
 
     @Override
-    public Position copy() {
-        return new Position(x, y);
+    public PositionComponent copy() {
+        return new PositionComponent(x, y);
     }
 }

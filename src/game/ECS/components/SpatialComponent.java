@@ -6,7 +6,7 @@ import java.awt.geom.Ellipse2D;
 
 /** Defines an entity's characteristics related to its spatial dimensions and presentation on the screen.
  */
-public class Spatial implements IComponent {
+public class SpatialComponent implements IComponent {
 
     private double width;
     public double getWidth() {
@@ -59,7 +59,7 @@ public class Spatial implements IComponent {
     }
 
 
-    public Spatial(double width, double height, boolean elliptical) {
+    public SpatialComponent(double width, double height, boolean elliptical) {
         this.width = width;
         this.height = height;
         this.elliptical = elliptical;
@@ -67,7 +67,7 @@ public class Spatial implements IComponent {
 
 
     @Override
-    public Spatial copy() {
-        return new Spatial(width, height, elliptical);
+    public SpatialComponent copy() {
+        return new SpatialComponent(width, height, elliptical);
     }
 }

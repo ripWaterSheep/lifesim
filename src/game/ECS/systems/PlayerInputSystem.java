@@ -1,6 +1,6 @@
 package game.ECS.systems;
 
-import game.ECS.components.Movement;
+import game.ECS.components.MovementComponent;
 import game.controls.MouseControls;
 import game.ECS.entities.Entity;
 import game.ECS.entities.Player;
@@ -37,7 +37,7 @@ public class PlayerInputSystem implements ISystem {
         } else if (getUpPressed()) up = true;
         else if (getDownPressed()) down = true;
 
-        for (Movement movement : player.getAll(Movement.class)) {
+        for (MovementComponent movement : player.getAll(MovementComponent.class)) {
             movement.setAngle(getIntendedAngle(up, down, left, right));
             movement.setMoving(up || down || left || right);
         }
@@ -65,7 +65,7 @@ public class PlayerInputSystem implements ISystem {
 
     private void sprintControls(Player player) {
         if (getSpacePressed()) {
-            player.get(Movement.class).setSpeedRatio(1.5);
+            player.get(MovementComponent.class).setSpeedRatio(1.5);
         }
     }
 

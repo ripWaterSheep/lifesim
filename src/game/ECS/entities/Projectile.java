@@ -11,11 +11,11 @@ public class Projectile extends Entity{
                       double speed, double angle, double damage) {
         super(name);
 
-        add(new Position(x, y));
-        add(new Spatial(width, height, elliptical));
-        add(new Appearance(color));
-        add(new Movement(speed, angle));
-        add(new Attack(damage, true));
+        add(new PositionComponent(x, y));
+        add(new SpatialComponent(width, height, elliptical));
+        add(new AppearanceComponent(color));
+        add(new MovementComponent(speed, angle));
+        add(new AttackComponent(damage, true));
     }
 
 

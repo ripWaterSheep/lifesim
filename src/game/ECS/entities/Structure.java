@@ -1,18 +1,18 @@
 package game.ECS.entities;
 
-import game.ECS.components.Appearance;
-import game.ECS.components.Position;
-import game.ECS.components.Spatial;
+import game.ECS.components.AppearanceComponent;
+import game.ECS.components.PositionComponent;
+import game.ECS.components.SpatialComponent;
 
 import java.awt.*;
 
-public class Structure extends Entity{
+public class Structure extends Entity {
 
     public Structure(String name, double x, double y, double width, double height, boolean elliptical, Color color) {
         super(name);
-        add(new Position(x, y));
-        add(new Spatial(width, height, elliptical));
-        add(new Appearance(color));
+        add(new PositionComponent(x, y));
+        add(new SpatialComponent(width, height, elliptical));
+        add(new AppearanceComponent(color));
     }
 
 }

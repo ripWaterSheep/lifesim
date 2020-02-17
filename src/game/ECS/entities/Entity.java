@@ -1,7 +1,7 @@
 package game.ECS.entities;
 
 import game.ECS.components.IComponent;
-import game.ECS.components.Position;
+import game.ECS.components.PositionComponent;
 import game.setting.world.World;
 
 import java.util.ArrayList;
@@ -48,6 +48,7 @@ public class Entity {
 
 
     public final Entity add(IComponent component) {
+        System.out.println(component + "  " + getName());
         components.add(component);
         return this;
     }
@@ -64,7 +65,7 @@ public class Entity {
         }
 
         world.add(newEntity);
-        for (Position pos: newEntity.getAll(Position.class)) {
+        for (PositionComponent pos: newEntity.getAll(PositionComponent.class)) {
             pos.set(x, y);
         }
         return newEntity;

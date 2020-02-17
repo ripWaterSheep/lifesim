@@ -6,7 +6,7 @@ import static util.Geometry.angleWrap;
 
 /** Define characteristics of an entity relating to its motion
  */
-public class Movement implements IComponent {
+public class MovementComponent implements IComponent {
 
     private final double initialSpeed;
     private double currentSpeed;
@@ -55,13 +55,13 @@ public class Movement implements IComponent {
     }
 
 
-    public Movement(double speed, double angle) {
+    public MovementComponent(double speed, double angle) {
         initialSpeed = speed;
         currentSpeed = initialSpeed;
         this.angle = angle;
     }
 
-    public Movement(double speed) {
+    public MovementComponent(double speed) {
         this(speed, 0);
     }
 
@@ -72,7 +72,7 @@ public class Movement implements IComponent {
     }
 
     @Override
-    public Movement copy() {
-        return new Movement(initialSpeed);
+    public MovementComponent copy() {
+        return new MovementComponent(initialSpeed);
     }
 }

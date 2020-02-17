@@ -1,16 +1,16 @@
 package game.ECS.components;
 
-public class Stats implements IComponent {
+public class StatsComponent implements IComponent {
 
     private double energy;
     public double getEnergy() {
         return energy;
     }
 
-    public void gainEnergy(double amount) {
+    public void energize(double amount) {
         energy += amount;
     }
-    public void loseEnergy(double amount) {
+    public void tire(double amount) {
         energy -= amount;
     }
 
@@ -20,7 +20,7 @@ public class Stats implements IComponent {
         return strength;
     }
 
-    public void gainStrength(double amount) {
+    public void strengthen(double amount) {
         strength += amount;
     }
 
@@ -37,6 +37,10 @@ public class Stats implements IComponent {
         money -= amount;
     }
 
+    public boolean hasEnoughMoney(double amount) {
+        return (money >= amount);
+    }
+
 
     private double intellect;
     public double getIntellect() {
@@ -48,7 +52,7 @@ public class Stats implements IComponent {
     }
 
 
-    public Stats() {
+    public StatsComponent() {
         energy = 1000;
         strength = 0;
         money = 0;
@@ -57,7 +61,7 @@ public class Stats implements IComponent {
 
 
     @Override
-    public Stats copy() {
-        return new Stats();
+    public StatsComponent copy() {
+        return new StatsComponent();
     }
 }
