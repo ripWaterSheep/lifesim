@@ -46,9 +46,7 @@ public class Entity {
     }
 
 
-
     public final Entity add(IComponent component) {
-        System.out.println(component + "  " + getName());
         components.add(component);
         return this;
     }
@@ -72,17 +70,6 @@ public class Entity {
     }
 
 
-    public final boolean has(Class<? extends IComponent> componentType) {
-        boolean has = false;
-        for (IComponent component: components) {
-            if (component.getClass().equals(componentType)) {
-                has = true;
-                break;
-            }
-        }
-        return has;
-    }
-
 
 
     public final <T extends IComponent> T get(Class<T> componentType) {
@@ -96,10 +83,10 @@ public class Entity {
     }
 
 
-    public <T extends IComponent> ArrayList<T> getAll(Class<T> filteringClass){
+    public <T extends IComponent> ArrayList<T> getAll(Class<T> filteringClass) {
         return new ArrayList<>(
                 components.stream()
-                        .filter(t -> t.getClass().equals(filteringClass))
+                        .filter(t -> t.getClass().isAssignableFrom(filteringClass))
                         .map(t -> (T) t)
                         .collect(Collectors.toList())
         );

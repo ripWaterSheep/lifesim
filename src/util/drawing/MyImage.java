@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class MyImage {
 
-    private static final String FILE_PATH = "/assets/Fonts/";
+    private static final String FILE_PATH = "/res/Images/";
     private static final String FILE_ENDING = ".png";
 
     private Image image;

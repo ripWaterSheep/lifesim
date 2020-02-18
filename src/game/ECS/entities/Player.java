@@ -1,15 +1,11 @@
 package game.ECS.entities;
 
-import game.ECS.components.AppearanceComponent;
-import game.ECS.components.MovementComponent;
-import game.ECS.components.PositionComponent;
-import game.ECS.components.SpatialComponent;
+import game.ECS.components.*;
 import game.setting.world.World;
 
 import java.awt.*;
 
 public final class Player extends Entity {
-
 
     private static Player instance;
 
@@ -17,9 +13,12 @@ public final class Player extends Entity {
         return instance;
     }
 
+
     @Override
     public void setWorld(World newWorld) {
+        //delete();
         world = newWorld;
+        //world.add(this);
     }
 
 
@@ -31,6 +30,8 @@ public final class Player extends Entity {
         add(new SpatialComponent(50, 50, true));
         add(new AppearanceComponent(Color.YELLOW));
         add(new MovementComponent(12));
+        add(new HealthComponent(1000));
+        add(new StatsComponent());
     }
 
 

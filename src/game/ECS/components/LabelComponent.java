@@ -1,6 +1,6 @@
 package game.ECS.components;
 
-import util.FontLoader;
+import util.drawing.FontLoader;
 
 import java.awt.*;
 
@@ -26,7 +26,7 @@ public class LabelComponent implements IComponent {
 
     public LabelComponent(int fontSize, Color textColor) {
         this.fontSize = fontSize;
-        this.font = new Font(FontLoader.mainFont, Font.PLAIN, fontSize);
+        this.font = new Font(FontLoader.getMainFont(), Font.PLAIN, fontSize);
         this.textColor = textColor;
     }
 

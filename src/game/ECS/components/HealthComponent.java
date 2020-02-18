@@ -1,6 +1,9 @@
 package game.ECS.components;
 
 
+import java.awt.*;
+import java.awt.color.ColorSpace;
+
 import static util.MyMath.clamp;
 
 /** Defines health related characteristics of an entity
@@ -15,6 +18,10 @@ public class HealthComponent implements IComponent {
         return health;
     }
 
+    public boolean isAlive() {
+        return health > 0;
+    }
+
     public void gainHealth(double amount) {
         health += amount;
     }
@@ -22,6 +29,7 @@ public class HealthComponent implements IComponent {
     public void loseHealth(double amount) {
         health -= amount;
     }
+
 
 
     public HealthComponent(double health) {
@@ -34,5 +42,10 @@ public class HealthComponent implements IComponent {
     public HealthComponent copy() {
         return new HealthComponent(initialHealth);
     }
+
+    public static class Colors {
+        public static final Color bloodColor = new Color(255, 0, 0);
+    }
+
 
 }

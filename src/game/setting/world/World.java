@@ -5,14 +5,13 @@ import game.ECS.components.PositionComponent;
 import game.ECS.components.SpatialComponent;
 import game.ECS.entities.Entity;
 import game.ECS.systems.*;
+import main.Main;
 
 import java.awt.*;
 import java.util.*;
 
 
 public class World {
-
-    private WorldRenderer worldRenderer;
 
     private ArrayList<ISystem> systems = new ArrayList<>();
     private ArrayList<Entity> entities = new ArrayList<>();
@@ -22,10 +21,11 @@ public class World {
     }
 
 
+    private Color outerColor;
+
     private Entity floor;
 
     public World(String name, double width, double height, Color innerColor, Color outerColor, BorderTypes borderType) {
-        worldRenderer = new WorldRenderer(outerColor);
         systems.add(new MovementSystem());
         systems.add(new CollisionSystem());
         systems.add(new BorderSystem(borderType));
@@ -36,6 +36,8 @@ public class World {
                 .add(new SpatialComponent(width, height, false))
                 .add(new AppearanceComponent(innerColor));
         add(floor);
+
+        this.outerColor = outerColor;
     }
 
 
@@ -77,7 +79,7 @@ public class World {
 
 
     public void run() {
-        worldRenderer.run();
+        Main.getPanel().setBackground(outerColor);
         runSystems();
     }
 

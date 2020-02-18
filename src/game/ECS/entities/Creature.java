@@ -4,7 +4,7 @@ import game.ECS.components.*;
 
 import java.awt.*;
 
-public final class Creature extends Entity {
+public class Creature extends Entity {
 
 
     public Creature(String name, double x, double y, double width, double height, boolean elliptical, Color color,

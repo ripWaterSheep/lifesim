@@ -6,10 +6,12 @@ import game.ECS.components.LabelComponent;
 import game.ECS.components.SpatialComponent;
 import game.ECS.entities.Entity;
 import game.ECS.entities.Player;
-import main.WindowSize;
 import util.drawing.DrawString;
 
 import java.awt.*;
+
+import static main.Main.getPanel;
+
 
 public class RenderSystem implements ISystem {
 
@@ -41,12 +43,12 @@ public class RenderSystem implements ISystem {
     public void calculateDisplayPos(Entity entity, SpatialComponent spatial, PositionComponent pos) {
         double displayX, displayY;
         if (entity instanceof Player) {
-            displayX = WindowSize.getMidWidth() - spatial.getMidWidth();
-            displayY = WindowSize.getMidHeight() - spatial.getMidHeight();
+            displayX = getPanel().getMidWidth() - spatial.getMidWidth();
+            displayY =  getPanel().getMidHeight() - spatial.getMidHeight();
         } else {
             PositionComponent playerPos = Player.getInstance().get(PositionComponent.class);
-            displayX = pos.getX()-playerPos.getX() - spatial.getMidWidth() + WindowSize.getMidWidth();
-            displayY = pos.getY()-playerPos.getY() - spatial.getMidHeight() + WindowSize.getMidHeight();
+            displayX = pos.getX()-playerPos.getX() - spatial.getMidWidth() + getPanel().getMidWidth();
+            displayY = pos.getY()-playerPos.getY() - spatial.getMidHeight() + getPanel().getMidHeight();
         }
         spatial.setDisplayPos(displayX, displayY);
     }

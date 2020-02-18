@@ -3,8 +3,11 @@ package main;
 import game.Game;
 import game.GraphicsManager;
 import game.controls.ControlSetup;
+import game.overlay.Overlay;
+import game.setting.layout.Layout;
 
-import static main.WindowSize.*;
+import static game.GraphicsManager.setGraphics;
+
 import static util.TimeUtil.*;
 
 import javax.swing.*;
@@ -13,17 +16,20 @@ import java.awt.*;
 
 public class MainPanel extends JPanel {
 
-    Game currentGame;
+    public int defaultWidth = 1500;
+    public int defaultHeight = 900;
+
+    public Rectangle getRect() { return new Rectangle(0, 0, getWidth(), getHeight()); }
+
+    public int getMidWidth() { return getWidth()/2; }
+
+    public int getMidHeight() { return getHeight()/2; }
+
+    private Overlay overlay = new Overlay();
+
 
 
     public MainPanel() {
-        setPanel();
-        currentGame = new Game();
-        ControlSetup.initListeners(this);
-    }
-
-
-    private void setPanel() {
         setFocusable(true);
         requestFocusInWindow();
         setSize(defaultWidth, defaultHeight);
@@ -32,14 +38,12 @@ public class MainPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        GraphicsManager.setGraphics(g);
+        setGraphics(g);
         super.paintComponent(g);
-
-        currentGame.run();
-
+        Main.currentGame.run();
+        overlay.draw(g);
         sleep(9);
         repaint();
     }
-
 
 }

@@ -1,17 +1,39 @@
 package main;
 
-
 import game.Game;
+import game.controls.ControlSetup;
+import game.setting.layout.DefaultLayout;
+import game.setting.layout.Layout;
 
 import javax.swing.*;
-import java.awt.*;
+
 
 public class Main {
 
+    static Game currentGame;
+
+    public static Game getCurrentGame() {
+        return currentGame;
+    }
+
+    private static void newGame(Layout layout) {
+        currentGame = new Game(layout);
+        ControlSetup.initListeners(panel);
+    }
+
+    public static void startNew() {
+        newGame(new DefaultLayout());
+    }
+
+    public static void startFromSavePoint(Layout layout) {
+        newGame(layout);
+    }
+
+
     static MainPanel panel;
 
-    public static void restartGame() {
-        initPanel();
+    public static MainPanel getPanel() {
+        return panel;
     }
 
 
@@ -24,14 +46,10 @@ public class Main {
         frame.setVisible(true);
     }
 
-    public static void setPanelColor(Color color) {
-        panel.setBackground(color);
-    }
-
 
     public static void main(String[] args) {
         initPanel();
+        startNew();
     }
-
 
 }

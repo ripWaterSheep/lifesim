@@ -1,5 +1,6 @@
 package game.setting.layout;
 
+import game.ECS.components.IComponent;
 import game.ECS.entities.Entity;
 import game.setting.world.World;
 
@@ -39,6 +40,21 @@ public abstract class Layout {
         }
 
         return desiredEntity;
+    }
+
+
+    public Layout copyCurrentSaveState() {
+        Layout savedLayout = new DefaultLayout();
+            for (World world: worlds) {
+            for (Entity entity: world.getEntities()) {
+                for (IComponent component: entity.getComponents()) {
+                    entity.add(component.copy());
+                }
+                world.add(entity);
+            }
+            savedLayout.createWorld(world);
+        }
+        return savedLayout;
     }
 
 }

@@ -1,4 +1,4 @@
-package util;
+package util.drawing;
 
 import java.awt.*;
 import java.io.File;
@@ -10,8 +10,14 @@ public class FontLoader {
     private static final String FILE_PATH = "assets/Fonts/";
     private final String FILE_ENDING = ".ttf";
 
-    public static final String mainFont = "StayPuft";
-    public static final String bloodFont = "Blood Cyrillic";
+    public static String getMainFont() {
+        return "StayPuft";
+    }
+
+    public static String getBloodFont() {
+        return "Blood Cyrillic";
+    }
+
 
     private String name;
 

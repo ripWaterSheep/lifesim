@@ -4,7 +4,6 @@ import java.awt.*;
 
 public class GraphicsManager {
 
-
     private static Graphics g;
 
     public static void setGraphics(Graphics graphics) {

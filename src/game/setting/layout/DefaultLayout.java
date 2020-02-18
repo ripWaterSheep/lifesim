@@ -1,9 +1,7 @@
 package game.setting.layout;
 
-import game.ECS.components.InteractionComponent;
-import game.ECS.components.PositionComponent;
-import game.ECS.components.SpatialComponent;
-import game.ECS.components.StatsComponent;
+import game.ECS.components.*;
+import game.ECS.entities.Entity;
 import game.ECS.entities.Player;
 import game.ECS.entities.Structure;
 import game.setting.world.World;
@@ -22,7 +20,20 @@ public class DefaultLayout extends Layout {
                 .add(new Structure("Vertical Road", 0, 0, 200, 6500, false, Color.DARK_GRAY))
 
 
-                .add(new Structure("Gym", -1500, -450, 800, 500, false, Color.GRAY)
+                .add(new Entity("Gym")
+                        .add(new PositionComponent(-1500, -450))
+                        .add(new SpatialComponent(800, 500, false))
+                        //.add(new AppearanceComponent("Gym"))
+                        .add(new AppearanceComponent(Color.GRAY))
+                        .add(new InteractionComponent() {
+                            @Override public void interact(StatsComponent stats) {
+                              stats.strengthen(3);
+                              System.out.println("dab");
+                            }
+                        })
+                )
+
+                       /* ("Gym", -1500, -450, 800, 500, false, Color.GRAY)
                     .add(new InteractionComponent() {
                         @Override
                          public void interact(StatsComponent stats) {
@@ -37,7 +48,7 @@ public class DefaultLayout extends Layout {
                              player.goTo(getEntity("House"));
                              System.out.println("dab");
                          }
-                     }))
+                     })*/
         );
 
         createWorld(new World("House Interior", 1000, 900, new Color(230, 210, 140), new Color(100, 80, 50), WALLED)
