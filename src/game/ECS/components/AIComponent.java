@@ -2,7 +2,7 @@ package game.ECS.components;
 
 /** Defines an entity's behavior of automatic pathfinding relative to the player.
  */
-public class PathFindingComponent implements Copyable {
+public class AIComponent implements Copyable {
 
     /** Define whether to pursue or evade the location of player instance */
     public enum Behaviors {
@@ -10,7 +10,7 @@ public class PathFindingComponent implements Copyable {
         EVADE
     }
 
-    private final Behaviors behavior;
+    private final Behaviors pathFinding;
 
 
     private final double followDistance;
@@ -21,22 +21,22 @@ public class PathFindingComponent implements Copyable {
 
 
     public Behaviors getType() {
-        return behavior;
+        return pathFinding;
     }
 
-    public PathFindingComponent(Behaviors behavior, double followDistance) {
-        this.behavior = behavior;
+    public AIComponent(Behaviors pathFinding, double followDistance) {
+        this.pathFinding = pathFinding;
         this.followDistance = followDistance;
     }
 
 
     @Override
-    public PathFindingComponent copyInitialState() {
-        return new PathFindingComponent(behavior, followDistance);
+    public AIComponent copyInitialState() {
+        return new AIComponent(pathFinding, followDistance);
     }
 
     @Override
-    public PathFindingComponent copyCurrentState() {
+    public AIComponent copyCurrentState() {
         return copyInitialState();
     }
 

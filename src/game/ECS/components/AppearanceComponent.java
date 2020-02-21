@@ -38,12 +38,13 @@ public class AppearanceComponent implements Copyable {
     public void draw(Graphics2D g2d, Shape shape) {
         if (color != null) {
             g2d.setColor(color);
+            g2d.fill(shape);
         }
+
         if (image != null) {
             image.draw(g2d, shape);
         }
 
-        g2d.fill(shape);
     }
 
 

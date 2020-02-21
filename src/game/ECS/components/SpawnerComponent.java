@@ -11,11 +11,19 @@ public class SpawnerComponent implements Copyable {
 
     private static final int MAX_SPAWN = 10;
 
+
     private final Entity spawnTemplate;
+
+    public Entity getSpawnTemplate() {
+        return spawnTemplate;
+    }
+
     private ArrayList<Entity> allSpawn = new ArrayList<>();
+
 
     private final long spawnInterval;
     private long lastSpawnTime = 0;
+
 
     /** Distance player must be from the entity for the entity to attempt to spawn.
      * If it is negative, then there is no maximum range.

@@ -14,25 +14,25 @@ import static game.setting.world.BorderTypes.*;
 public class DefaultLayout extends Layout {
 
     public DefaultLayout() {
+
         createWorld(new World("Town", 5000, 5000, new Color(56, 150, 86), new Color(201, 193, 126), LAVA_ISLAND)
                 .add(new Structure("Hi", 0, 0, 100, 100, false, new Color(100, 100, 100)))
                 .add(new Structure("Horizontal Road", 0, 0, 6500, 200, false, Color.DARK_GRAY))
                 .add(new Structure("Vertical Road", 0, 0, 200, 6500, false, Color.DARK_GRAY))
 
-
                 .add(new Entity("Gym")
                         .add(new PositionComponent(-1500, -450))
                         .add(new SpatialComponent(800, 500, false))
-                        //.add(new AppearanceComponent("Gym"))
-                        .add(new AppearanceComponent(Color.GRAY))
+                        .add(new AppearanceComponent("Gym"))
+                        //.add(new AppearanceComponent(Color.GRAY))
                         .add(new InteractionComponent() {
+
                             @Override public void interact(StatsComponent stats) {
                               stats.strengthen(3);
                               System.out.println("dab");
                             }
                         })
                 )
-
                        /* ("Gym", -1500, -450, 800, 500, false, Color.GRAY)
                     .add(new InteractionComponent() {
                         @Override

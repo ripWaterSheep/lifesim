@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class MyImage {
 
-    private static final String FILE_PATH = "/res/Images/";
+    private static final String FILE_PATH = "res/Images/";
     private static final String FILE_ENDING = ".png";
 
     private Image image;
@@ -27,7 +27,7 @@ public class MyImage {
 
     public void draw(Graphics g, Shape shape) {
         Rectangle rect = shape.getBounds();
-        g.drawImage(image, (int) rect.getMinX(), (int) rect.getMinY(), (int) rect.getWidth(), (int) rect.getHeight(), null);
+        g.drawImage(image, (int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight(), null);
     }
 
 

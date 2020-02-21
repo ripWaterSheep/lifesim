@@ -99,6 +99,14 @@ public class Entity implements Copyable {
     }
 
 
+    public PositionComponent getPos() {
+        PositionComponent pos = get(PositionComponent.class);
+        if (pos == null)
+            return new PositionComponent(0, 0);
+        return pos;
+    }
+
+
 
 
 }
