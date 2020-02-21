@@ -8,7 +8,7 @@ import java.io.IOException;
 public class FontLoader {
 
     private static final String FILE_PATH = "assets/Fonts/";
-    private final String FILE_ENDING = ".ttf";
+    private static final String FILE_ENDING = ".ttf";
 
     public static String getMainFont() {
         return "StayPuft";
@@ -19,14 +19,11 @@ public class FontLoader {
     }
 
 
-    private String name;
-
     private FontLoader(String name) {
-        this.name = name;
-        loadFont();
+        loadFont(name);
     }
 
-    private void loadFont() {
+    private void loadFont(String name) {
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(FILE_PATH + name + FILE_ENDING)));
