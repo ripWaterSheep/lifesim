@@ -8,7 +8,7 @@ import game.ECS.entities.Player;
 
 import static util.Geometry.*;
 
-public class SpawnSystem implements ISystem {
+public class SpawnSystem implements System {
 
     private static final int MAX_ENTITIES = 50;
 

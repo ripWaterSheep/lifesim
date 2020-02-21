@@ -7,10 +7,9 @@ import java.util.ArrayList;
 
 import static util.TimeUtil.getCurrentTime;
 
-public class SpawnerComponent implements IComponent {
+public class SpawnerComponent implements Copyable {
 
     private static final int MAX_SPAWN = 10;
-
 
     private final Entity spawnTemplate;
     private ArrayList<Entity> allSpawn = new ArrayList<>();
@@ -36,7 +35,7 @@ public class SpawnerComponent implements IComponent {
 
 
     private void spawn(double x, double y, World world) {
-        allSpawn.add(spawnTemplate.copyAt(x, y, world));
+        allSpawn.add(spawnTemplate.copyInitialState());
         lastSpawnTime = getCurrentTime();
     }
 
@@ -49,7 +48,16 @@ public class SpawnerComponent implements IComponent {
 
 
     @Override
-    public SpawnerComponent copy() {
+    public SpawnerComponent copyInitialState() {
         return new SpawnerComponent(spawnTemplate, spawnInterval, activeRange);
     }
+
+    @Override
+    public SpawnerComponent copyCurrentState() {
+        SpawnerComponent spawner = new SpawnerComponent(spawnTemplate, spawnInterval, activeRange);
+        spawner.lastSpawnTime = lastSpawnTime;
+        spawner.allSpawn = allSpawn;
+        return spawner;
+    }
+
 }

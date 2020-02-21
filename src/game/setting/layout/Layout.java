@@ -1,6 +1,6 @@
 package game.setting.layout;
 
-import game.ECS.components.IComponent;
+import game.ECS.components.Copyable;
 import game.ECS.entities.Entity;
 import game.setting.world.World;
 
@@ -47,8 +47,8 @@ public abstract class Layout {
         Layout savedLayout = new DefaultLayout();
             for (World world: worlds) {
             for (Entity entity: world.getEntities()) {
-                for (IComponent component: entity.getComponents()) {
-                    entity.add(component.copy());
+                for (Copyable component: entity.getComponents()) {
+                    entity.add(component.copyInitialState());
                 }
                 world.add(entity);
             }

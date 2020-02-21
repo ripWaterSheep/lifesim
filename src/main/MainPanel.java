@@ -1,10 +1,7 @@
 package main;
 
 import game.Game;
-import game.GraphicsManager;
-import game.controls.ControlSetup;
-import game.overlay.Overlay;
-import game.setting.layout.Layout;
+import game.overlay.OverlayManager;
 
 import static game.GraphicsManager.setGraphics;
 
@@ -25,8 +22,7 @@ public class MainPanel extends JPanel {
 
     public int getMidHeight() { return getHeight()/2; }
 
-    private Overlay overlay = new Overlay();
-
+    public final OverlayManager overlayManager = new OverlayManager();
 
 
     public MainPanel() {
@@ -40,8 +36,10 @@ public class MainPanel extends JPanel {
     public void paintComponent(Graphics g) {
         setGraphics(g);
         super.paintComponent(g);
-        Main.currentGame.run();
-        overlay.draw(g);
+
+        GameManager.currentGame.run();
+        overlayManager.draw(g);
+
         sleep(9);
         repaint();
     }

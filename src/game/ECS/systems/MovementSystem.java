@@ -8,7 +8,7 @@ import game.ECS.entities.Player;
 import util.Geometry;
 
 
-public class MovementSystem implements ISystem {
+public class MovementSystem implements System {
 
     public void run(Entity entity) {
         for (PositionComponent pos: entity.getAll(PositionComponent.class)) {

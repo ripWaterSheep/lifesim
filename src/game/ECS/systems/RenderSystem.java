@@ -13,7 +13,8 @@ import java.awt.*;
 import static main.Main.getPanel;
 
 
-public class RenderSystem implements ISystem {
+public class RenderSystem implements System {
+
 
     @Override
     public void run(Entity entity) {

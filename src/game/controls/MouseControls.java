@@ -40,7 +40,7 @@ public class MouseControls {
         public void mousePressed(MouseEvent e) {
             lastClickX = e.getX();
             lastClickY = e.getY();
-            //ISystem.out.println(KeyboardControls.getLastClickX() + "  " + KeyboardControls.getLastClickY());
+            //System.out.println(KeyboardControls.getLastClickX() + "  " + KeyboardControls.getLastClickY());
             switch (e.getButton()) {
                 case BUTTON1:
                     LEFT_CLICKED = true;

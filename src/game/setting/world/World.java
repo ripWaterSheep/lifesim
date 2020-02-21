@@ -5,6 +5,7 @@ import game.ECS.components.PositionComponent;
 import game.ECS.components.SpatialComponent;
 import game.ECS.entities.Entity;
 import game.ECS.systems.*;
+import game.ECS.systems.System;
 import main.Main;
 
 import java.awt.*;
@@ -13,7 +14,7 @@ import java.util.*;
 
 public class World {
 
-    private ArrayList<ISystem> systems = new ArrayList<>();
+    private ArrayList<System> systems = new ArrayList<>();
     private ArrayList<Entity> entities = new ArrayList<>();
 
     public ArrayList<Entity> getEntities() {
@@ -70,7 +71,7 @@ public class World {
 
 
     private void runSystems() {
-        for (ISystem system: systems) {
+        for (System system: systems) {
             for (Entity entity: entities) {
                 system.run(entity);
             }

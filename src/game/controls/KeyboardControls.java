@@ -80,7 +80,7 @@ public class KeyboardControls {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            //ISystem.out.println("key pressed: " + e.getKeyChar());
+            //System.out.println("key pressed: " + e.getKeyChar());
             int keyCode = e.getKeyCode();
             switch (keyCode) {
                 case VK_W:
@@ -120,7 +120,7 @@ public class KeyboardControls {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            //ISystem.out.println("key released: " + e.toString());
+            //System.out.println("key released: " + e.toString());
             int keyCode = e.getKeyCode();
             switch (keyCode) {
                 case VK_W:

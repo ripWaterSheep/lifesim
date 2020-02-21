@@ -7,7 +7,7 @@ import java.awt.*;
 /** Defines characteristics of a visible label on the entity.
  * An entity only has a label if it has this component.
  */
-public class LabelComponent implements IComponent {
+public class LabelComponent implements Copyable {
 
     private final int fontSize;
 
@@ -35,7 +35,13 @@ public class LabelComponent implements IComponent {
     }
 
     @Override
-    public LabelComponent copy() {
+    public LabelComponent copyInitialState() {
         return new LabelComponent(fontSize);
+    }
+
+
+    @Override
+    public LabelComponent copyCurrentState() {
+        return copyInitialState();
     }
 }

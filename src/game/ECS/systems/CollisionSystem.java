@@ -10,7 +10,7 @@ import static util.Geometry.testIntersection;
 /**
  *
  */
-public class CollisionSystem implements ISystem {
+public class CollisionSystem implements System {
 
 
     @Override

@@ -4,6 +4,7 @@ import game.ECS.components.HealthComponent;
 import game.ECS.components.StatsComponent;
 import game.ECS.entities.Player;
 import game.setting.world.World;
+import main.GameManager;
 import main.Main;
 import util.TimeUtil;
 
@@ -47,7 +48,7 @@ class Cheats {
                     break;
 
                 case VK_R:
-                    Main.startNew();
+                    GameManager.startNew();
             }
         }
     }
@@ -56,7 +57,7 @@ class Cheats {
      * Make player go to the next world declared in the used game layout
      */
     static void cycleWorlds(int index) {
-        ArrayList<World> worlds = Main.getCurrentGame().getLayout().getWorlds();
+        ArrayList<World> worlds = GameManager.getCurrentGame().getLayout().getWorlds();
 
         World newWorld = Player.getInstance().getWorld();
         int currentIndex = worlds.indexOf(newWorld);

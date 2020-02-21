@@ -7,7 +7,7 @@ import game.ECS.entities.Player;
 
 import static game.controls.KeyboardControls.*;
 
-public class PlayerInputSystem implements ISystem {
+public class PlayerInputSystem implements System {
 
     @Override
     public void run(Entity entity) {

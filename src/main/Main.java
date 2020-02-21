@@ -10,27 +10,7 @@ import javax.swing.*;
 
 public class Main {
 
-    static Game currentGame;
-
-    public static Game getCurrentGame() {
-        return currentGame;
-    }
-
-    private static void newGame(Layout layout) {
-        currentGame = new Game(layout);
-        ControlSetup.initListeners(panel);
-    }
-
-    public static void startNew() {
-        newGame(new DefaultLayout());
-    }
-
-    public static void startFromSavePoint(Layout layout) {
-        newGame(layout);
-    }
-
-
-    static MainPanel panel;
+    private static MainPanel panel;
 
     public static MainPanel getPanel() {
         return panel;
@@ -44,12 +24,14 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(panel);
         frame.setVisible(true);
+
+        ControlSetup.initListeners(panel);
     }
 
 
     public static void main(String[] args) {
+        GameManager.startNew();
         initPanel();
-        startNew();
     }
 
 }

@@ -2,7 +2,7 @@ package game.ECS.systems;
 
 import game.ECS.entities.Entity;
 
-public interface ISystem {
+public interface System {
 
     void run(Entity entity);
 

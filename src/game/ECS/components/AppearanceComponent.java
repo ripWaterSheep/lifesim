@@ -7,7 +7,7 @@ import java.awt.*;
 
 /** Defines visible traits of an entity.
  */
-public class AppearanceComponent implements IComponent {
+public class AppearanceComponent implements Copyable {
 
     private final Color color;
 
@@ -48,8 +48,13 @@ public class AppearanceComponent implements IComponent {
 
 
     @Override
-    public AppearanceComponent copy() {
+    public AppearanceComponent copyInitialState() {
         return new AppearanceComponent(color, image);
+    }
+
+    @Override
+    public AppearanceComponent copyCurrentState() {
+        return copyInitialState();
     }
 
 }

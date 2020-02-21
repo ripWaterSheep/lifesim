@@ -2,13 +2,12 @@ package game.ECS.components;
 
 
 import java.awt.*;
-import java.awt.color.ColorSpace;
 
 import static util.MyMath.clamp;
 
 /** Defines health related characteristics of an entity
  */
-public class HealthComponent implements IComponent {
+public class HealthComponent implements Copyable {
 
     private final double initialHealth;
 
@@ -39,8 +38,14 @@ public class HealthComponent implements IComponent {
 
 
     @Override
-    public HealthComponent copy() {
+    public HealthComponent copyInitialState() {
         return new HealthComponent(initialHealth);
+    }
+
+
+    @Override
+    public HealthComponent copyCurrentState() {
+        return new HealthComponent(health);
     }
 
     public static class Colors {

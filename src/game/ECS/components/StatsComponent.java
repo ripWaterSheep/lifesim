@@ -2,7 +2,7 @@ package game.ECS.components;
 
 import java.awt.*;
 
-public class StatsComponent implements IComponent {
+public class StatsComponent implements Copyable {
 
     private double energy;
     public double getEnergy() {
@@ -62,9 +62,22 @@ public class StatsComponent implements IComponent {
     }
 
 
+    public StatsComponent(double energy, double strength, double money, double intellect) {
+        this.energy = energy;
+        this.strength = strength;
+        this.money = money;
+        this.intellect = intellect;
+    }
+
+
     @Override
-    public StatsComponent copy() {
+    public StatsComponent copyInitialState() {
         return new StatsComponent();
+    }
+
+    @Override
+    public StatsComponent copyCurrentState() {
+        return new StatsComponent(energy, strength, money, intellect);
     }
 
 

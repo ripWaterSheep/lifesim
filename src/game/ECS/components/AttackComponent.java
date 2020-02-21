@@ -2,7 +2,7 @@ package game.ECS.components;
 
 /** Defines interaction between the entity this belongs to and an entity with a health component.
  */
-public class AttackComponent implements IComponent {
+public class AttackComponent implements Copyable {
 
     private final double damage;
 
@@ -22,7 +22,12 @@ public class AttackComponent implements IComponent {
     }
 
     @Override
-    public AttackComponent copy() {
+    public AttackComponent copyInitialState() {
         return new AttackComponent(damage, deleteOnDamage);
+    }
+
+    @Override
+    public AttackComponent copyCurrentState() {
+        return copyInitialState();
     }
 }

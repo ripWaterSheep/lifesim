@@ -11,7 +11,7 @@ import static util.Geometry.testIntersection;
 import static util.MyMath.clamp;
 
 
-public class BorderSystem implements ISystem {
+public class BorderSystem implements System {
 
 
     private BorderTypes borderType;

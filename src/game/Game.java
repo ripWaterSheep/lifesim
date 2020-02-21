@@ -1,15 +1,9 @@
 package game;
 
-import game.ECS.components.IComponent;
-import game.ECS.entities.Entity;
 import game.ECS.entities.Player;
-import game.overlay.Overlay;
-import game.setting.layout.DefaultLayout;
 import game.setting.layout.Layout;
 import game.ECS.systems.PlayerInputSystem;
 import game.setting.world.World;
-
-import java.util.ArrayList;
 
 public class Game {
 
