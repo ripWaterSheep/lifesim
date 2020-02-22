@@ -1,10 +1,10 @@
-package game.ECS.components;
+package game.ecs.components;
 
 
 /** Defines an entity's location in the player-centric coordinate system (not the actual screen coordinate system,;
  * that is done in SpatialComponent).
  */
-public class PositionComponent implements Copyable {
+public class PositionComponent implements CopyableComponent {
 
     /** These are the x and y of the center of the entity's shape. */
     private double x, y;

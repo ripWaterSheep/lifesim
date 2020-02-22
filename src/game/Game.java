@@ -1,13 +1,11 @@
 package game;
 
-import game.ECS.entities.Player;
+import game.ecs.entities.player.Player;
+import game.ecs.entities.player.PlayerControls;
 import game.setting.layout.Layout;
-import game.ECS.systems.PlayerInputSystem;
-import game.setting.world.World;
 
 public class Game {
 
-    PlayerInputSystem playerInputSystem = new PlayerInputSystem();
     private Player player = new Player();
 
     private Layout layout;
@@ -20,16 +18,12 @@ public class Game {
     public Game(Layout layout) {
         this.layout = layout;
 
-        for (World world: layout.getWorlds()) {
-            // Ensures player can interact with other entities no matter what world is currently in use.
-            world.add(player);
-        }
-        player.setWorld(layout.getWorlds().get(0));
+        layout.getWorlds().get(0).add(player);
     }
 
 
     public void run() {
-        playerInputSystem.run(player);
+        player.control();
         player.getWorld().run();
     }
 

@@ -1,10 +1,9 @@
 package game.overlay;
 
-import game.ECS.components.HealthComponent;
-import game.ECS.components.PositionComponent;
-import game.ECS.components.StatsComponent;
-import game.ECS.entities.Player;
-import util.ColorMethods;
+import game.ecs.components.HealthComponent;
+import game.ecs.components.PositionComponent;
+import game.ecs.components.StatsComponent;
+import game.ecs.entities.player.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,9 +12,9 @@ import static main.Main.getPanel;
 import static util.MyMath.betterRound;
 
 
-public class StatBar {
+public class OLDStatBar {
 
-    static final ArrayList<StatBar> shownStats = new ArrayList<>();
+    static final ArrayList<OLDStatBar> shownStats = new ArrayList<>();
 
 
     private static final Font STAT_FONT = new Font("StayPuft", Font.PLAIN, 26);
@@ -42,20 +41,20 @@ public class StatBar {
         StatsComponent stats = player.get(StatsComponent.class);
         shownStats.clear();
 
-        new StatBar("X", pos.getX());
-        new StatBar("Y", pos.getY());
+        new OLDStatBar("X", pos.getX());
+        new OLDStatBar("Y", pos.getY());
 
-        new StatBar("Health", health.getHealth(), 0, 1000, 1, HealthComponent.Colors.bloodColor);
-        new StatBar("Energy", stats.getEnergy(), 0, 1000, 1, StatsComponent.Colors.energyColor);
-        new StatBar("Strength", stats.getStrength(), 0, 5000, 0.2, StatsComponent.Colors.strengthColor);
-        new StatBar("Cash", stats.getMoney(), 0, 10000, 0.1, StatsComponent.Colors.moneyColor);
-        new StatBar("Intellect", stats.getIntellect(), 0, 5000, 0.2, StatsComponent.Colors.intellectColor);
+        new OLDStatBar("Health", health.getHealth(), 0, 1000, 1, HealthComponent.Colors.bloodColor);
+        new OLDStatBar("Energy", stats.getEnergy(), 0, 1000, 1, StatsComponent.Colors.energyColor);
+        new OLDStatBar("Strength", stats.getStrength(), 0, 5000, 0.2, StatsComponent.Colors.strengthColor);
+        new OLDStatBar("Cash", stats.getMoney(), 0, 10000, 0.1, StatsComponent.Colors.moneyColor);
+        new OLDStatBar("Intellect", stats.getIntellect(), 0, 5000, 0.2, StatsComponent.Colors.intellectColor);
 
     }
 
 
     public static void drawAll(Graphics g) {
-        for (StatBar stat: shownStats) {
+        for (OLDStatBar stat: shownStats) {
             stat.draw(g);
         }
     }
@@ -72,8 +71,8 @@ public class StatBar {
 
 
 
-    public StatBar(String key, double value) {
-        StatBar.shownStats.add(0, this);
+    public OLDStatBar(String key, double value) {
+        OLDStatBar.shownStats.add(0, this);
 
         this.key = key;
         this.value = value;
@@ -82,15 +81,15 @@ public class StatBar {
     }
 
 
-    public StatBar(String key, double value, double minVal, double maxVal, double barLengthScale, Color barColor) {
-        StatBar.shownStats.add(0, this);
+    public OLDStatBar(String key, double value, double minVal, double maxVal, double barLengthScale, Color barColor) {
+        OLDStatBar.shownStats.add(0, this);
 
         this.key = key;
         this.value = value;
 
         this.barLength = (int)(maxVal*DEFAULT_BAR_LENGTH_SCALE*barLengthScale);
         this.statLength = (int)(barLength*(value-minVal)/(maxVal-minVal));
-        this.barColor = ColorMethods.applyOpacity(barColor, DEFAULT_OPACITY);
+        //this.barColor = ColorMethods.applyOpacity(barColor, DEFAULT_OPACITY);
 
         this.showBar = true;
     }
@@ -116,7 +115,7 @@ public class StatBar {
         }
 
         g2d.setColor(Color.WHITE);
-        g2d.setFont(StatBar.STAT_FONT);
+        g2d.setFont(OLDStatBar.STAT_FONT);
         g2d.drawString(format(key, value), textX, textY);
     }
 

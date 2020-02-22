@@ -1,4 +1,4 @@
-package game.ECS.components;
+package game.ecs.components;
 
 
 import static util.Geometry.angleWrap;
@@ -6,7 +6,7 @@ import static util.Geometry.angleWrap;
 
 /** Define characteristics of an entity relating to its motion
  */
-public class MovementComponent implements Copyable {
+public class MovementComponent implements CopyableComponent {
 
     private final double initialSpeed;
     private double currentSpeed;
@@ -73,6 +73,7 @@ public class MovementComponent implements Copyable {
         movementX = -(currentSpeed * Math.cos(Math.toRadians(angle)));
         movementY = -(currentSpeed * Math.sin(Math.toRadians(angle)));
         moving = true;
+        resetSpeed();
     }
 
     @Override
@@ -81,7 +82,7 @@ public class MovementComponent implements Copyable {
     }
 
     @Override
-    public Copyable copyCurrentState() {
+    public CopyableComponent copyCurrentState() {
         return new MovementComponent(currentSpeed, angle);
     }
 }

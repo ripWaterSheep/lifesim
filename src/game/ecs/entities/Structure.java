@@ -1,8 +1,8 @@
-package game.ECS.entities;
+package game.ecs.entities;
 
-import game.ECS.components.AppearanceComponent;
-import game.ECS.components.PositionComponent;
-import game.ECS.components.SpatialComponent;
+import game.ecs.components.AppearanceComponent;
+import game.ecs.components.PositionComponent;
+import game.ecs.components.SpatialComponent;
 
 import java.awt.*;
 

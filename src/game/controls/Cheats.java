@@ -1,11 +1,10 @@
 package game.controls;
 
-import game.ECS.components.HealthComponent;
-import game.ECS.components.StatsComponent;
-import game.ECS.entities.Player;
+import game.ecs.components.HealthComponent;
+import game.ecs.components.StatsComponent;
+import game.ecs.entities.player.Player;
 import game.setting.world.World;
 import main.GameManager;
-import main.Main;
 import util.TimeUtil;
 
 import java.util.ArrayList;
@@ -57,20 +56,20 @@ class Cheats {
      * Make player go to the next world declared in the used game layout
      */
     static void cycleWorlds(int index) {
-        ArrayList<World> worlds = GameManager.getCurrentGame().getLayout().getWorlds();
+        ArrayList<World> allWorlds = GameManager.getAllWorlds();
 
         World newWorld = Player.getInstance().getWorld();
-        int currentIndex = worlds.indexOf(newWorld);
+        int currentIndex = allWorlds.indexOf(newWorld);
 
         try {// Increment or decrement(if negative) current index and set player world to world at new index.
-            newWorld = worlds.get(currentIndex + index);
+            newWorld = allWorlds.get(currentIndex + index);
 
         } catch (IndexOutOfBoundsException e) {
 
             if (index > 0) {
-                newWorld = worlds.get(index - 1); // Wraparound to the first world
+                newWorld  =allWorlds.get(index - 1); // Wraparound to the first world
             } else if (index < 0) {
-                newWorld = worlds.get(worlds.size() + index); // Wraparound to the last world
+                newWorld = allWorlds.get(allWorlds.size() + index); // Wraparound to the last world
             }
         }
 

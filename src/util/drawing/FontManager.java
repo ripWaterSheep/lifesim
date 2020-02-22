@@ -5,25 +5,21 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class FontLoader {
+public class FontManager {
 
-    private static final String FILE_PATH = "assets/Fonts/";
+    private static final String FILE_PATH = "res/Fonts/";
     private static final String FILE_ENDING = ".ttf";
 
-    public static String getMainFont() {
-        return "StayPuft";
+    public static Font getMainFont(int size) {
+        return loadFont("StayPuft", size);
     }
 
-    public static String getBloodFont() {
-        return "Blood Cyrillic";
+    public static Font getBloodFont(int size) {
+        return loadFont("Blood Cyrillic", size);
     }
 
 
-    private FontLoader(String name) {
-        loadFont(name);
-    }
-
-    private void loadFont(String name) {
+    public static Font loadFont(String name, int size) {
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(FILE_PATH + name + FILE_ENDING)));
@@ -31,6 +27,8 @@ public class FontLoader {
             //Handle exception
             e.printStackTrace();
         }
+
+        return new Font(name, Font.PLAIN, size);
     }
 
 

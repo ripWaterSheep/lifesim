@@ -1,13 +1,14 @@
-package game.ECS.components;
+package game.ecs.components;
 
-import util.drawing.MyImage;
 
 import java.awt.*;
+
+import static util.drawing.ImageManager.loadImage;
 
 
 /** Defines visible traits of an entity.
  */
-public class AppearanceComponent implements Copyable {
+public class AppearanceComponent implements CopyableComponent {
 
     private final Color color;
 
@@ -16,7 +17,7 @@ public class AppearanceComponent implements Copyable {
     }
 
 
-    private final MyImage image;
+    private final Image image;
 
 
     public AppearanceComponent(Color color) {
@@ -25,11 +26,12 @@ public class AppearanceComponent implements Copyable {
     }
 
     public AppearanceComponent(String imageName) {
-        image = new MyImage(imageName);
+        image = loadImage(imageName);
         color = null;
     }
 
-    private AppearanceComponent(Color color, MyImage image) {
+
+    private AppearanceComponent(Color color, Image image) {
         this.color = color;
         this.image = image;
     }
@@ -42,9 +44,9 @@ public class AppearanceComponent implements Copyable {
         }
 
         if (image != null) {
-            image.draw(g2d, shape);
+            Rectangle rect = shape.getBounds();
+            g2d.drawImage(image, (int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight(), null);
         }
-
     }
 
 

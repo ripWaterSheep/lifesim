@@ -1,13 +1,13 @@
-package game.ECS.components;
+package game.ecs.components;
 
-import util.drawing.FontLoader;
+import util.drawing.FontManager;
 
 import java.awt.*;
 
 /** Defines characteristics of a visible label on the entity.
  * An entity only has a label if it has this component.
  */
-public class LabelComponent implements Copyable {
+public class LabelComponent implements CopyableComponent {
 
     private final int fontSize;
 
@@ -26,7 +26,7 @@ public class LabelComponent implements Copyable {
 
     public LabelComponent(int fontSize, Color textColor) {
         this.fontSize = fontSize;
-        this.font = new Font(FontLoader.getMainFont(), Font.PLAIN, fontSize);
+        this.font = FontManager.getMainFont(fontSize);
         this.textColor = textColor;
     }
 

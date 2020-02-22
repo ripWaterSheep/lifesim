@@ -1,11 +1,11 @@
 package game.setting.world;
 
-import game.ECS.components.AppearanceComponent;
-import game.ECS.components.PositionComponent;
-import game.ECS.components.SpatialComponent;
-import game.ECS.entities.Entity;
-import game.ECS.systems.*;
-import game.ECS.systems.System;
+import game.ecs.components.AppearanceComponent;
+import game.ecs.components.PositionComponent;
+import game.ecs.components.SpatialComponent;
+import game.ecs.entities.Entity;
+import game.ecs.systems.*;
+import game.ecs.systems.IterableSystem;
 import main.Main;
 
 import java.awt.*;
@@ -14,7 +14,7 @@ import java.util.*;
 
 public class World {
 
-    private ArrayList<System> systems = new ArrayList<>();
+    private ArrayList<IterableSystem> systems = new ArrayList<>();
     private ArrayList<Entity> entities = new ArrayList<>();
 
     public ArrayList<Entity> getEntities() {
@@ -30,7 +30,7 @@ public class World {
         systems.add(new MovementSystem());
         systems.add(new CollisionSystem());
         systems.add(new BorderSystem(borderType));
-        systems.add(new RenderSystem());
+        systems.add(new RenderSystem(Main.getPanel()));
 
         floor = new Entity(name + "Floor")
                 .add(new PositionComponent(0, 0))
@@ -53,6 +53,7 @@ public class World {
         return this;
     }
 
+
     public void remove(Entity entity) {
         entities.remove(entity);
     }
@@ -71,7 +72,7 @@ public class World {
 
 
     private void runSystems() {
-        for (System system: systems) {
+        for (IterableSystem system: systems) {
             for (Entity entity: entities) {
                 system.run(entity);
             }

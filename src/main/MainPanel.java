@@ -1,9 +1,9 @@
 package main;
 
 import game.Game;
+import game.controls.ControlSetup;
 import game.overlay.OverlayManager;
 
-import static game.GraphicsManager.setGraphics;
 
 import static util.TimeUtil.*;
 
@@ -22,23 +22,33 @@ public class MainPanel extends JPanel {
 
     public int getMidHeight() { return getHeight()/2; }
 
+
     public final OverlayManager overlayManager = new OverlayManager();
+
+
+    private Graphics currentGraphics;
+
+    public Graphics getCurrentGraphics() {
+        return currentGraphics;
+    }
 
 
     public MainPanel() {
         setFocusable(true);
         requestFocusInWindow();
         setSize(defaultWidth, defaultHeight);
+        ControlSetup.initListeners(this);
     }
+
 
 
     @Override
     public void paintComponent(Graphics g) {
-        setGraphics(g);
         super.paintComponent(g);
+        currentGraphics = g;
 
-        GameManager.currentGame.run();
-        overlayManager.draw(g);
+        GameManager.getCurrentGame().run();
+        //overlayManager.draw(g);
 
         sleep(9);
         repaint();

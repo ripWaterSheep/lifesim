@@ -1,4 +1,4 @@
-package game.ECS.components;
+package game.ecs.components;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -6,7 +6,7 @@ import java.awt.geom.Ellipse2D;
 
 /** Defines an entity's characteristics related to its spatial dimensions and presentation on the screen.
  */
-public class SpatialComponent implements Copyable {
+public class SpatialComponent implements CopyableComponent {
 
     private double width;
     public double getWidth() {

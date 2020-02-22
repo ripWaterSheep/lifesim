@@ -1,6 +1,6 @@
 package util;
 
-import game.ECS.components.PositionComponent;
+import game.ecs.components.PositionComponent;
 
 import java.awt.*;
 import java.awt.geom.Area;
@@ -46,5 +46,6 @@ public class Geometry {
         areaA.intersect(new Area(shapeB));
         return !areaA.isEmpty();
     }
+
 
 }

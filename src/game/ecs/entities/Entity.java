@@ -1,18 +1,18 @@
-package game.ECS.entities;
+package game.ecs.entities;
 
-import game.ECS.components.Copyable;
-import game.ECS.components.PositionComponent;
+import game.ecs.components.CopyableComponent;
+import game.ecs.components.PositionComponent;
 import game.setting.world.World;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 
-public class Entity implements Copyable {
+public class Entity {
 
-    private ArrayList<Copyable> components = new ArrayList<>();
+    private ArrayList<CopyableComponent> components = new ArrayList<>();
 
-    public ArrayList<Copyable> getComponents() {
+    public ArrayList<CopyableComponent> getComponents() {
         return components;
     }
 
@@ -41,20 +41,22 @@ public class Entity implements Copyable {
     }
 
 
-    public void delete() {
-        world.remove(this);
+    public void destroy() {
+        if (world != null) {
+            world.remove(this);
+        }
     }
 
 
-    public final Entity add(Copyable component) {
+    public Entity add(CopyableComponent component) {
         components.add(component);
         return this;
     }
 
 
-    public final <T extends Copyable> T get(Class<T> componentType) {
-        Copyable desiredComponent = null;
-        for (Copyable component: components) {
+    public final <T extends CopyableComponent> T get(Class<T> componentType) {
+        CopyableComponent desiredComponent = null;
+        for (CopyableComponent component: components) {
             if (component.getClass().equals(componentType)) {
                 desiredComponent = component;
             }
@@ -63,7 +65,7 @@ public class Entity implements Copyable {
     }
 
 
-    public <T extends Copyable> ArrayList<T> getAll(Class<T> filteringClass) {
+    public <T extends CopyableComponent> ArrayList<T> getAll(Class<T> filteringClass) {
         return new ArrayList<>(
                 components.stream()
                         .filter(t -> t.getClass().isAssignableFrom(filteringClass))
@@ -73,11 +75,11 @@ public class Entity implements Copyable {
     }
 
 
-    @Override
+
     public Entity copyInitialState() {
         Entity newEntity = new Entity("Copy of template Entity " + name);
 
-        for (Copyable component: components) {
+        for (CopyableComponent component: components) {
             newEntity.add(component.copyInitialState());
         }
 
@@ -86,11 +88,10 @@ public class Entity implements Copyable {
     }
 
 
-    @Override
     public Entity copyCurrentState() {
         Entity newEntity = new Entity("Copy of " + name);
 
-        for (Copyable component: components) {
+        for (CopyableComponent component: components) {
             newEntity.add(component.copyCurrentState());
         }
 

@@ -1,4 +1,4 @@
-package game.ECS.components;
+package game.ecs.components;
 
 
 import java.awt.*;
@@ -7,7 +7,7 @@ import static util.MyMath.clamp;
 
 /** Defines health related characteristics of an entity
  */
-public class HealthComponent implements Copyable {
+public class HealthComponent implements CopyableComponent {
 
     private final double initialHealth;
 

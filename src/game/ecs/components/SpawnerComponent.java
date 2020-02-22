@@ -1,13 +1,13 @@
-package game.ECS.components;
+package game.ecs.components;
 
-import game.ECS.entities.Entity;
+import game.ecs.entities.Entity;
 import game.setting.world.World;
 
 import java.util.ArrayList;
 
 import static util.TimeUtil.getCurrentTime;
 
-public class SpawnerComponent implements Copyable {
+public class SpawnerComponent implements CopyableComponent {
 
     private static final int MAX_SPAWN = 10;
 
@@ -42,15 +42,18 @@ public class SpawnerComponent implements Copyable {
     }
 
 
-    private void spawn(double x, double y, World world) {
-        allSpawn.add(spawnTemplate.copyInitialState());
+        private void spawnAt(double x, double y, World world) {
+        Entity spawnedEntity = spawnTemplate.copyInitialState();
+        allSpawn.add(spawnedEntity);
+        world.add(spawnedEntity);
+
         lastSpawnTime = getCurrentTime();
     }
 
 
     public void attemptSpawn(double x, double y, World world) {
         if (getCurrentTime() - lastSpawnTime >= spawnInterval && allSpawn.size() < MAX_SPAWN) {
-            spawn(x, y, world);
+            spawnAt(x, y, world);
         }
     }
 

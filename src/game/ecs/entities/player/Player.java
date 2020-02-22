@@ -1,6 +1,7 @@
-package game.ECS.entities;
+package game.ecs.entities.player;
 
-import game.ECS.components.*;
+import game.ecs.components.*;
+import game.ecs.entities.Entity;
 import game.setting.world.World;
 
 import java.awt.*;
@@ -13,12 +14,13 @@ public final class Player extends Entity {
         return instance;
     }
 
+    private PlayerControls controls = new PlayerControls(this);
 
-    @Override
-    public void setWorld(World newWorld) {
-        //delete();
+
+    public void setNewWorld(World newWorld) {
+        world.remove(this);
         world = newWorld;
-        //world.add(this);
+        world.add(this);
     }
 
 
@@ -32,6 +34,11 @@ public final class Player extends Entity {
         add(new MovementComponent(12));
         add(new HealthComponent(1000));
         add(new StatsComponent());
+    }
+
+
+    public void control() {
+        controls.run();
     }
 
 

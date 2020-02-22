@@ -1,10 +1,10 @@
 package game.overlay;
 
-import game.ECS.components.PositionComponent;
-import game.ECS.entities.Player;
-import game.GraphicsManager;
+import game.ecs.components.PositionComponent;
+import game.ecs.entities.player.Player;
 import main.Main;
 import util.drawing.DrawString;
+import util.drawing.FontManager;
 
 import java.awt.*;
 
@@ -18,15 +18,19 @@ public class StatMenu implements DrawableOverlay {
     private static final int BAR_WIDTH = 1200;
     private static final int BAR_HEIGHT = 1200;
 
+    private static final int TEXT_SIZE = 45;
+
 
     private int currentBarNum = 0;
+
+    private Graphics g;
 
 
     @Override
     public void draw(Graphics g) {
+        this.g = g;
 
         writeValue("X", Player.getInstance().get(PositionComponent.class).getX());
-
 
     }
 
@@ -46,13 +50,10 @@ public class StatMenu implements DrawableOverlay {
     }
 
 
-    private void drawbar(int length) {
-        Graphics2D g2d = GraphicsManager.getGraphics();
-
-        int x = LEFT_PADDING;
+    private void drawBar(int length) {
         int y = Main.getPanel().getHeight()-((getCurrentBarNum()-1) * BAR_HEIGHT) + BOTTOM_PADDING;
 
-        g2d.fillRect(x, y, BAR_WIDTH, BAR_HEIGHT);
+        g.fillRect(LEFT_PADDING, y, BAR_WIDTH, BAR_HEIGHT);
         nextLine();
 
     }
@@ -60,8 +61,9 @@ public class StatMenu implements DrawableOverlay {
 
     private <T> void writeValue(String label, T data) {
         String formattedString = format(label, "" + data);
-        int textX = LEFT_PADDING;
+
         int textY = getPanel().getHeight()-(getCurrentBarNum() - (BOTTOM_PADDING));
+        DrawString.drawCenteredString(g, formattedString, new Rectangle(LEFT_PADDING, textY, BAR_WIDTH, BAR_HEIGHT), FontManager.getMainFont(TEXT_SIZE), Color.WHITE);
     }
 
 }

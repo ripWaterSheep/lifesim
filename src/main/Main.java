@@ -1,16 +1,12 @@
 package main;
 
-import game.Game;
-import game.controls.ControlSetup;
-import game.setting.layout.DefaultLayout;
-import game.setting.layout.Layout;
-
 import javax.swing.*;
 
 
 public class Main {
 
-    private static MainPanel panel;
+
+    static MainPanel panel = new MainPanel();
 
     public static MainPanel getPanel() {
         return panel;
@@ -19,13 +15,10 @@ public class Main {
 
     private static void initPanel() {
         JFrame frame = new JFrame("");
-        panel = new MainPanel();
         frame.setSize(panel.getSize());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(panel);
         frame.setVisible(true);
-
-        ControlSetup.initListeners(panel);
     }
 
 

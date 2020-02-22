@@ -1,17 +1,17 @@
-package game.ECS.systems;
+package game.ecs.systems;
 
-import game.ECS.components.HealthComponent;
-import game.ECS.components.MovementComponent;
-import game.ECS.components.PositionComponent;
-import game.ECS.components.SpatialComponent;
-import game.ECS.entities.Entity;
+import game.ecs.components.HealthComponent;
+import game.ecs.components.MovementComponent;
+import game.ecs.components.PositionComponent;
+import game.ecs.components.SpatialComponent;
+import game.ecs.entities.Entity;
 import game.setting.world.BorderTypes;
 
 import static util.Geometry.testIntersection;
 import static util.MyMath.clamp;
 
 
-public class BorderSystem implements System {
+public class BorderSystem implements IterableSystem {
 
 
     private BorderTypes borderType;

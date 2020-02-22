@@ -1,16 +1,20 @@
-package game.ECS.components;
+package game.ecs.components;
 
 /** Defines an entity's behavior of automatic pathfinding relative to the player.
  */
-public class AIComponent implements Copyable {
+public class AIComponent implements CopyableComponent {
 
     /** Define whether to pursue or evade the location of player instance */
-    public enum Behaviors {
+    public enum PathFinding {
         PURSUE,
         EVADE
     }
 
-    private final Behaviors pathFinding;
+    private final PathFinding pathFinding;
+
+    public PathFinding getPathFinding() {
+        return pathFinding;
+    }
 
 
     private final double followDistance;
@@ -20,19 +24,24 @@ public class AIComponent implements Copyable {
     }
 
 
-    public Behaviors getType() {
-        return pathFinding;
+    private final boolean doRandomMovement;
+
+    public boolean doesRandomMovement() {
+        return doRandomMovement;
     }
 
-    public AIComponent(Behaviors pathFinding, double followDistance) {
+
+
+    public AIComponent(PathFinding pathFinding, double followDistance, boolean doRandomMovement) {
         this.pathFinding = pathFinding;
         this.followDistance = followDistance;
+        this.doRandomMovement = doRandomMovement;
     }
 
 
     @Override
     public AIComponent copyInitialState() {
-        return new AIComponent(pathFinding, followDistance);
+        return new AIComponent(pathFinding, followDistance, doRandomMovement);
     }
 
     @Override

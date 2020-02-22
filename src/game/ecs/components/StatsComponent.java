@@ -1,8 +1,8 @@
-package game.ECS.components;
+package game.ecs.components;
 
 import java.awt.*;
 
-public class StatsComponent implements Copyable {
+public class StatsComponent implements CopyableComponent {
 
     private double energy;
     public double getEnergy() {

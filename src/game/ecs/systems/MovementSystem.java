@@ -1,12 +1,16 @@
-package game.ECS.systems;
+package game.ecs.systems;
 
-import game.ECS.components.*;
-import game.ECS.entities.Entity;
-import game.ECS.entities.Player;
+import game.ecs.components.*;
+import game.ecs.entities.Entity;
+import game.ecs.entities.player.Player;
+
+import java.util.Random;
+
 import static util.Geometry.*;
+import static util.MyMath.getRand;
 
 
-public class MovementSystem implements System {
+public class MovementSystem implements IterableSystem {
 
     public void run(Entity entity) {
         for (PositionComponent pos: entity.getAll(PositionComponent.class)) {
@@ -25,20 +29,24 @@ public class MovementSystem implements System {
                     }
 
                     if (playerDistance < ai.getFollowDistance()) {
-                        if (ai.getType() == AIComponent.Behaviors.PURSUE) {
+
+                        if (ai.getPathFinding() == AIComponent.PathFinding.PURSUE) {
                             movement.setAngle(followAngle);
                         } else {
                             movement.setAngle(180 - followAngle);
                         }
+                    } else if (ai.doesRandomMovement()) {
+                        if (getRand(0, 1000) < 5) {
+                            movement.setAngle(getRand(0, 359));
+                        }
+                    } else {
+                        movement.setMoving(false);
                     }
-
-
                 }
 
                 if (movement.isMoving()) {
                     movement.setMovementTowardsAngle();
                     pos.translate(movement.getMovementX(), movement.getMovementY());
-                    movement.resetSpeed();
                 }
             }
         }

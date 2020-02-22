@@ -1,14 +1,14 @@
-package game.ECS.components;
+package game.ecs.components;
 
 
-import game.ECS.entities.Player;
+import game.ecs.entities.player.Player;
 
-public class InteractionComponent implements Copyable {
+public class InteractionComponent implements CopyableComponent {
 
     /** This void needs to be overriden through an anonymous class when added to an entity when calling entity.add(InteractionComponent) */
     public void interact(StatsComponent stats) {}
 
-    public void playerTp(Player player) {}
+    public void teleport(Player player) {}
 
 
     @Override

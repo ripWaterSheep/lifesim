@@ -1,27 +1,27 @@
-package game.ECS.systems;
+package game.ecs.entities.player;
 
-import game.ECS.components.MovementComponent;
+import game.ecs.components.MovementComponent;
+import game.ecs.components.SpawnerComponent;
 import game.controls.MouseControls;
-import game.ECS.entities.Entity;
-import game.ECS.entities.Player;
 
 import static game.controls.KeyboardControls.*;
 
-public class PlayerInputSystem implements System {
+public class PlayerControls {
 
-    @Override
-    public void run(Entity entity) {
-        if (entity instanceof Player) {
-            Player player = (Player) entity;
+    private Player player;
 
-            sprintControls(player);
-            movementControls(player);
-
-        }
+    PlayerControls(Player player) {
+        this.player = player;
     }
 
 
-    private void movementControls(Player player) {
+    public void run() {
+        sprintControls();
+        movementControls();
+    }
+
+
+    private void movementControls() {
 
         boolean up = false, down = false, left = false, right = false;
 
@@ -63,7 +63,7 @@ public class PlayerInputSystem implements System {
     }
 
 
-    private void sprintControls(Player player) {
+    private void sprintControls() {
         if (getSpacePressed()) {
             player.get(MovementComponent.class).setSpeedRatio(1.5);
         }
@@ -71,9 +71,10 @@ public class PlayerInputSystem implements System {
 
 
 
-    private void weaponControls() {
+    private void weaponControls(Player player) {
         if (MouseControls.getRightClicked()) {
-            //player.getComponent(Weapon.class).spawn;
+            player.get(SpawnerComponent.class).attemptSpawn(
+                    player.getPos().getX(), player.getPos().getY(), player.getWorld());
         }
     }
 

@@ -3,6 +3,9 @@ package main;
 import game.Game;
 import game.setting.layout.DefaultLayout;
 import game.setting.layout.Layout;
+import game.setting.world.World;
+
+import java.util.ArrayList;
 
 public class GameManager {
 
@@ -12,14 +15,18 @@ public class GameManager {
         return currentGame;
     }
 
-    private static void startFromLayout(Layout layout) {
+    private static void startFrom(Layout layout) {
         currentGame = new Game(layout);
     }
 
     public static void startNew() {
-        startFromLayout(new DefaultLayout());
+        startFrom(new DefaultLayout());
     }
 
+
+    public static ArrayList<World> getAllWorlds() {
+       return currentGame.getLayout().getWorlds();
+    }
 
 
 }
