@@ -22,6 +22,5 @@ public class Main {
         frame.setContentPane(panel);
         frame.setVisible(true);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
     }
 }

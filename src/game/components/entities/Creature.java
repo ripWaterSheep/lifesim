@@ -1,6 +1,7 @@
 package game.components.entities;
 
-import drawing.MyFont;
+import util.drawing.DrawString;
+import util.drawing.FontManager;
 import game.components.entities.player.Player;
 import game.organization.World;
 import game.components.entities.stats.CreatureStats;
@@ -9,7 +10,7 @@ import util.MyMath;
 
 import java.awt.*;
 
-import static drawing.DrawString.drawCenteredString;
+import static util.drawing.DrawString.drawCenteredString;
 import static game.components.entities.stats.CollisionChecker.getTouchingEntities;
 import static util.MyMath.getRand;
 
@@ -113,7 +114,7 @@ public class Creature extends Entity {
     @Override
     public void draw(Graphics g) {
         super.draw(g);
-        drawCenteredString(g, ((int)getStats().getHealth())+"", new Rectangle(getDisplayX(), getDisplayY(), (int)width, (int)height), new Font(MyFont.getMainFont(), Font.PLAIN, 20), Color.WHITE);
+        DrawString.drawCenteredString(g, ((int)getStats().getHealth())+"", new Rectangle(getDisplayX(), getDisplayY(), (int)width, (int)height), new Font(FontManager.getMainFont(), Font.PLAIN, 20), Color.WHITE);
     }
 }
 

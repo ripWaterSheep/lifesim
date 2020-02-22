@@ -1,13 +1,15 @@
 package game.components.structures;
 
+import util.drawing.DrawString;
 import game.components.Component;
 import game.organization.World;
 import game.components.entities.stats.PlayerStats;
 import game.components.entities.player.Player;
-import drawing.DrawString;
-import drawing.MyFont;
+import util.drawing.FontManager;
 
 import java.awt.*;
+
+
 
 public class Structure extends Component {
 
@@ -22,7 +24,7 @@ public class Structure extends Component {
     public Structure(String name, double x, double y, double width, double height,  boolean elliptical, Color color, int fontSize) {
         super(name, x, y, width, height, elliptical, color);
         this.fontSize = fontSize;
-        labelFont = new Font(MyFont.getMainFont(), Font.PLAIN, fontSize);
+        labelFont = new Font(FontManager.getMainFont(), Font.PLAIN, fontSize);
 
         this.elliptical = elliptical;
 

@@ -46,7 +46,7 @@ public class Layout {
             })
             .add(new Structure("Office", -500, 500, 400, 400, false, new Color(150, 150, 160), 50) {
                 public void onTouch() {
-                    stats.gainMoney((stats.getIntellect()/400)+0.1);
+                    stats.gainMoney((stats.getIntellect()/300)+0.1);
                     stats.tire(0.25);
                 }
             })

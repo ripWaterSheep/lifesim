@@ -17,12 +17,13 @@ import static util.TimeUtil.getCurrentTime;
 public class KeyboardControls {
 
 
-    private static boolean upPressed = false;
-    private static boolean downPressed = false;
-    private static boolean leftPressed = false;
-    private static boolean rightPressed = false;
-    private static boolean spacePressed = false;
-    private static boolean shiftPressed = false;
+    private static boolean anyKeyPressed = false,
+            upPressed = false,
+            downPressed = false,
+            leftPressed = false,
+            rightPressed = false,
+            spacePressed = false,
+            shiftPressed = false;
 
 
     public static boolean getUpPressed() {
@@ -50,10 +51,10 @@ public class KeyboardControls {
     }
 
 
-    private static long leftReadTime = 0;
-    private static long rightReadTime = 0;
-    private static long upReadTime = 0;
-    private static long downReadTime = 0;
+    private static long leftReadTime = 0,
+            rightReadTime = 0,
+            upReadTime = 0,
+            downReadTime = 0;
 
     public static long getUpReadTime() {
         return upReadTime;
@@ -85,6 +86,7 @@ public class KeyboardControls {
         public void keyPressed(KeyEvent e) {
             //System.out.println("key pressed: " + e.getKeyChar());
             int keyCode = e.getKeyCode();
+            anyKeyPressed = true;
             switch (keyCode) {
                 case VK_W:
                 case VK_UP:
@@ -129,6 +131,8 @@ public class KeyboardControls {
         public void keyReleased(KeyEvent e) {
             //System.out.println("key released: " + e.toString());
             int keyCode = e.getKeyCode();
+
+            anyKeyPressed = false;
             switch (keyCode) {
                 case VK_W:
                 case VK_UP:
@@ -167,10 +171,13 @@ public class KeyboardControls {
 
         @Override
         public void focusLost(FocusEvent e) {
+            anyKeyPressed = false;
             upPressed = false;
             downPressed = false;
             leftPressed = false;
             rightPressed = false;
+            spacePressed = false;
+            shiftPressed = false;
         }
     };
 

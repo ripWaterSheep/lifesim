@@ -1,6 +1,6 @@
 package game.overlay;
 
-import drawing.MyFont;
+import util.drawing.FontManager;
 
 import java.awt.*;
 
@@ -56,7 +56,7 @@ public class GameMessage {
 
     private void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
-        Font font = new Font(MyFont.getMainFont(), Font.PLAIN, 35);
+        Font font = new Font(FontManager.getMainFont(), Font.PLAIN, 35);
 
         g2d.setColor(Color.WHITE);
         g2d.setFont(font);

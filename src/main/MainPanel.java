@@ -2,8 +2,6 @@ package main;
 
 import game.activity.GameSession;
 import game.activity.controls.ControlSetup;
-import drawing.MyFont;
-import game.organization.World;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,9 +30,9 @@ public class MainPanel extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
         setSize(defaultWidth, defaultHeight);
-        MyFont.initFonts();
         ControlSetup.initListeners(this);
         gameSession.init();
+
     }
 
 
@@ -43,7 +41,7 @@ public class MainPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         gameSession.run(g);
-        sleep(9);
+        sleep(7);
         repaint();
     }
 

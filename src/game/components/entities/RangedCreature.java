@@ -1,6 +1,5 @@
 package game.components.entities;
 
-import drawing.MyImage;
 import game.components.entities.player.Player;
 import game.organization.World;
 

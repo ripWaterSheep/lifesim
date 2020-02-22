@@ -67,9 +67,9 @@ public class Player extends Entity {
         return stats;
     }
 
-
     private PlayerWeapon weapon;
 
+    private PlayerImageManager imageManager;
 
 
     public Player(double x, double y) {
@@ -77,8 +77,8 @@ public class Player extends Entity {
         Player.instance = this;
         stats = new PlayerStats(this, 12, 1000);
         weapon = new PlayerWeapon(this);
+        imageManager = new PlayerImageManager(this);
     }
-
 
 
     /** Move in a direction according to which keys are pressed.
@@ -144,6 +144,7 @@ public class Player extends Entity {
 
         collisionLogic();
         weapon.run();
+        image = imageManager.getCurrentImage();
     }
 
 

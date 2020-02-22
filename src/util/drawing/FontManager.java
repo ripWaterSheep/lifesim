@@ -1,14 +1,14 @@
-package drawing;
+package util.drawing;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
 
-public class MyFont {
+public class FontManager {
 
-    static final String FILE_PATH = "res/Fonts/";
-    static final String FILE_ENDING = ".ttf";
+    private static final String FILE_PATH = "assets/Fonts/";
+    private static final String FILE_ENDING = ".ttf";
 
     public static String getMainFont() {
         return "StayPuft";
@@ -19,20 +19,12 @@ public class MyFont {
     }
 
 
-    public static void initFonts() {
-        new MyFont("StayPuft");
-        new MyFont("Blood Cyrillic");
-    }
-
-
     private String name;
 
-    private MyFont (String name) {
+    private FontManager(String name) {
         this.name = name;
         loadFont();
     }
-
-
 
     private void loadFont() {
         try {
@@ -43,5 +35,6 @@ public class MyFont {
             e.printStackTrace();
         }
     }
+
 
 }

@@ -10,20 +10,20 @@ import static java.awt.event.MouseEvent.BUTTON3;
 public class MouseControls {
 
 
-    private static boolean LEFT_CLICKED = false;
-    private static boolean RIGHT_CLICKED = false;
+    private static boolean leftClicked = false,
+            rightClicked = false;
 
 
     public static boolean getLeftClicked() {
-        return LEFT_CLICKED;
+        return leftClicked;
     }
 
     public static boolean getRightClicked() {
-        return RIGHT_CLICKED;
+        return rightClicked;
     }
 
-    private static int lastClickX = 0;
-    private static int lastClickY = 0;
+    private static int lastClickX = 0,
+            lastClickY = 0;
 
     public static int getLastClickX() {
         return lastClickX;
@@ -43,11 +43,11 @@ public class MouseControls {
             //System.out.println(KeyboardControls.getLastClickX() + "  " + KeyboardControls.getLastClickY());
             switch (e.getButton()) {
                 case BUTTON1:
-                    LEFT_CLICKED = true;
+                    leftClicked = true;
                     break;
 
                 case BUTTON3:
-                    RIGHT_CLICKED = true;
+                    rightClicked = true;
                     break;
             }
         }
@@ -57,11 +57,10 @@ public class MouseControls {
 
 
 
-
     // Reset in the beginning of each frame
     public static void reset() {
-        LEFT_CLICKED = false;
-        RIGHT_CLICKED = false;
+        leftClicked = false;
+        rightClicked = false;
     }
 
 

@@ -55,11 +55,6 @@ public class World {
     }
 
 
-    public World add(Entity entity) {
-        components.add(entity);
-        return this;
-    }
-
     public World add(Player player) {
         player.goToWorld(this);
         return this;

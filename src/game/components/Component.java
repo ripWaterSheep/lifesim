@@ -3,13 +3,11 @@ package game.components;
 import game.components.entities.player.Player;
 import game.organization.World;
 import main.WindowSize;
-import drawing.MyImage;
+import util.drawing.MyImage;
 import game.Drawable;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-
-import static util.MyMath.betterRound;
 
 public abstract class Component implements Drawable {
 
