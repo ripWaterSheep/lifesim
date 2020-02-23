@@ -1,10 +1,16 @@
 package game.ecs.entities.player;
 
-import game.ecs.components.MovementComponent;
-import game.ecs.components.SpawnerComponent;
+import com.sun.tools.javac.Main;
+import game.controls.KeyboardControls;
+import game.ecs.components.*;
 import game.controls.MouseControls;
+import game.ecs.entities.Entity;
+import javafx.geometry.Pos;
+import main.MainPanel;
+import util.Geometry;
 
 import static game.controls.KeyboardControls.*;
+import static java.lang.Math.sqrt;
 
 public class PlayerControls {
 
@@ -18,6 +24,7 @@ public class PlayerControls {
     public void run() {
         sprintControls();
         movementControls();
+        weaponControls();
     }
 
 
@@ -71,10 +78,28 @@ public class PlayerControls {
 
 
 
-    private void weaponControls(Player player) {
+    private void weaponControls() {
+
         if (MouseControls.getRightClicked()) {
-            player.get(SpawnerComponent.class).attemptSpawn(
-                    player.getPos().getX(), player.getPos().getY(), player.getWorld());
+            double strength = player.get(StatsComponent.class).getStrength();
+
+            double size = 9 + (strength / 275);
+            double angle = Geometry.getAngleBetween(MouseControls.getLastClickX(), MouseControls.getLastClickY(), main.Main.getPanel().getMidWidth(), main.Main.getPanel().getMidHeight());
+            double damage = sqrt((strength / 16) + 1);
+            System.out.println(damage);
+
+
+            if (MouseControls.getRightClicked()) {
+                player.getWorld().add(new Entity("Player Bullet")
+                        .add(player.getPos().copyCurrentState())
+                        .add(new SpatialComponent(size, size, true))
+                        .add(new MovementComponent(40, angle))
+                        .add(new AttackComponent(damage))
+                        .add(new ProjectileComponent(700, true))
+                );
+                /*player.get(SpawnerComponent.class).attemptSpawn(
+                        player.getPos().getX(), player.getPos().getY(), player.getWorld());*/
+            }
         }
     }
 

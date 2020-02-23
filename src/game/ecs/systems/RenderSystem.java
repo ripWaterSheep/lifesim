@@ -1,10 +1,12 @@
 package game.ecs.systems;
 
+import game.GameManager;
 import game.ecs.components.*;
 import game.ecs.components.LabelComponent;
 import game.ecs.components.SpatialComponent;
 import game.ecs.entities.Entity;
 import game.ecs.entities.player.Player;
+import game.setting.world.World;
 import main.MainPanel;
 import util.drawing.DrawString;
 
@@ -13,11 +15,12 @@ import java.awt.*;
 import static main.Main.getPanel;
 
 
-public class RenderSystem implements IterableSystem {
+public class RenderSystem extends IterableSystem {
 
     MainPanel graphicsPanel;
 
-    public RenderSystem(MainPanel graphicsPanel) {
+    public RenderSystem(World world, MainPanel graphicsPanel) {
+        super(world);
         this.graphicsPanel = graphicsPanel;
     }
 
@@ -55,7 +58,7 @@ public class RenderSystem implements IterableSystem {
             displayX = getPanel().getMidWidth() - spatial.getMidWidth();
             displayY =  getPanel().getMidHeight() - spatial.getMidHeight();
         } else {
-            PositionComponent playerPos = Player.getInstance().get(PositionComponent.class);
+            PositionComponent playerPos = GameManager.getPlayer().get(PositionComponent.class);
             displayX = pos.getX()-playerPos.getX() - spatial.getMidWidth() + getPanel().getMidWidth();
             displayY = pos.getY()-playerPos.getY() - spatial.getMidHeight() + getPanel().getMidHeight();
         }

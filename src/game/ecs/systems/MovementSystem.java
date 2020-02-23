@@ -1,24 +1,28 @@
 package game.ecs.systems;
 
+import game.GameManager;
 import game.ecs.components.*;
 import game.ecs.entities.Entity;
 import game.ecs.entities.player.Player;
-
-import java.util.Random;
+import game.setting.world.World;
 
 import static util.Geometry.*;
 import static util.MyMath.getRand;
 
 
-public class MovementSystem implements IterableSystem {
+public class MovementSystem extends IterableSystem {
+
+    public MovementSystem(World world) {
+        super(world);
+    }
 
     public void run(Entity entity) {
         for (PositionComponent pos: entity.getAll(PositionComponent.class)) {
             for (MovementComponent movement : entity.getAll(MovementComponent.class)) {
                 for (AIComponent ai : entity.getAll(AIComponent.class)) {
 
-                    double followAngle = getAngleBetween(Player.getInstance().getPos(), pos);
-                    double playerDistance = getDistanceBetween(Player.getInstance().getPos(), pos);
+                    double followAngle = getAngleBetween(GameManager.getPlayer().getPos(), pos);
+                    double playerDistance = getDistanceBetween(GameManager.getPlayer().getPos(), pos);
 
                     for (SpawnerComponent spawner: entity.getAll(SpawnerComponent.class)) {
                         for (ProjectileComponent projectile: spawner.getSpawnTemplate().getAll(ProjectileComponent.class)) {
@@ -28,7 +32,7 @@ public class MovementSystem implements IterableSystem {
                         }
                     }
 
-                    if (playerDistance < ai.getFollowDistance()) {
+                    if (playerDistance < ai.getDetectionRange()) {
 
                         if (ai.getPathFinding() == AIComponent.PathFinding.PURSUE) {
                             movement.setAngle(followAngle);
@@ -48,6 +52,7 @@ public class MovementSystem implements IterableSystem {
                     movement.setMovementTowardsAngle();
                     pos.translate(movement.getMovementX(), movement.getMovementY());
                 }
+
             }
         }
     }

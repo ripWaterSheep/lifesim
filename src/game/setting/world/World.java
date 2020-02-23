@@ -1,9 +1,11 @@
 package game.setting.world;
 
+import game.GameManager;
 import game.ecs.components.AppearanceComponent;
 import game.ecs.components.PositionComponent;
 import game.ecs.components.SpatialComponent;
 import game.ecs.entities.Entity;
+import game.ecs.entities.player.Player;
 import game.ecs.systems.*;
 import game.ecs.systems.IterableSystem;
 import main.Main;
@@ -23,14 +25,18 @@ public class World {
 
 
     private Color outerColor;
-
     private Entity floor;
 
+    public Entity getFloor() {
+        return floor;
+    }
+
+
     public World(String name, double width, double height, Color innerColor, Color outerColor, BorderTypes borderType) {
-        systems.add(new MovementSystem());
-        systems.add(new CollisionSystem());
-        systems.add(new BorderSystem(borderType));
-        systems.add(new RenderSystem(Main.getPanel()));
+        systems.add(new MovementSystem(this));
+        systems.add(new CollisionSystem(this));
+        systems.add(new BorderSystem(this, borderType));
+        systems.add(new RenderSystem(this, Main.getPanel()));
 
         floor = new Entity(name + "Floor")
                 .add(new PositionComponent(0, 0))
@@ -42,14 +48,9 @@ public class World {
     }
 
 
-    public Entity getFloor() {
-        return floor;
-    }
-
 
     public World add(Entity entity) {
         entities.add(entity);
-        entity.setWorld(this);
         return this;
     }
 
@@ -83,6 +84,7 @@ public class World {
     public void run() {
         Main.getPanel().setBackground(outerColor);
         runSystems();
+        System.out.println(GameManager.getPlayer().getWorld().equals(this));
     }
 
 

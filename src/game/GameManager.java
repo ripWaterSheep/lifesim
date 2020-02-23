@@ -1,6 +1,7 @@
-package main;
+package game;
 
 import game.Game;
+import game.ecs.entities.player.Player;
 import game.setting.layout.DefaultLayout;
 import game.setting.layout.Layout;
 import game.setting.world.World;
@@ -11,16 +12,29 @@ public class GameManager {
 
     static Game currentGame;
 
+    private static Game savedGame;
+
+
     public static Game getCurrentGame() {
         return currentGame;
     }
 
-    private static void startFrom(Layout layout) {
-        currentGame = new Game(layout);
+    public static Player getPlayer() {
+        return currentGame.getPlayer();
     }
 
+
     public static void startNew() {
-        startFrom(new DefaultLayout());
+        currentGame = new Game(new DefaultLayout());
+    }
+
+    public static void saveGame() {
+        savedGame = currentGame.copyGameState();
+    }
+
+    public static void startFromLastSave() {
+        savedGame = currentGame.copyGameState();
+        currentGame = savedGame;
     }
 
 

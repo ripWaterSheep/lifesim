@@ -2,6 +2,7 @@ package game.ecs.components;
 
 import game.ecs.entities.Entity;
 import game.setting.world.World;
+import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 
@@ -42,10 +43,14 @@ public class SpawnerComponent implements CopyableComponent {
     }
 
 
-        private void spawnAt(double x, double y, World world) {
+    private void spawnAt(double x, double y, World world) {
         Entity spawnedEntity = spawnTemplate.copyInitialState();
-        allSpawn.add(spawnedEntity);
         world.add(spawnedEntity);
+        allSpawn.add(spawnedEntity);
+
+        for (PositionComponent pos: spawnedEntity.getAll(PositionComponent.class)) {
+            pos.set(x, y);
+        }
 
         lastSpawnTime = getCurrentTime();
     }

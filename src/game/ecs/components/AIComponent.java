@@ -17,10 +17,10 @@ public class AIComponent implements CopyableComponent {
     }
 
 
-    private final double followDistance;
+    private final double detectionRange;
 
-    public double getFollowDistance() {
-        return followDistance;
+    public double getDetectionRange() {
+        return detectionRange;
     }
 
 
@@ -32,16 +32,16 @@ public class AIComponent implements CopyableComponent {
 
 
 
-    public AIComponent(PathFinding pathFinding, double followDistance, boolean doRandomMovement) {
+    public AIComponent(PathFinding pathFinding, double detectionRange, boolean doRandomMovement) {
         this.pathFinding = pathFinding;
-        this.followDistance = followDistance;
+        this.detectionRange = detectionRange;
         this.doRandomMovement = doRandomMovement;
     }
 
 
     @Override
     public AIComponent copyInitialState() {
-        return new AIComponent(pathFinding, followDistance, doRandomMovement);
+        return new AIComponent(pathFinding, detectionRange, doRandomMovement);
     }
 
     @Override

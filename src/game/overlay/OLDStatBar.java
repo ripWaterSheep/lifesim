@@ -1,5 +1,6 @@
 package game.overlay;
 
+import game.GameManager;
 import game.ecs.components.HealthComponent;
 import game.ecs.components.PositionComponent;
 import game.ecs.components.StatsComponent;
@@ -35,7 +36,7 @@ public class OLDStatBar {
 
 
     public static void retrieveValues() {
-        Player player = Player.getInstance();
+        Player player = GameManager.getPlayer();
         PositionComponent pos = player.get(PositionComponent.class);
         HealthComponent health = player.get(HealthComponent.class);
         StatsComponent stats = player.get(StatsComponent.class);

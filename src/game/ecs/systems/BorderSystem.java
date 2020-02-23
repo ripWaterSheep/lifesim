@@ -6,17 +6,19 @@ import game.ecs.components.PositionComponent;
 import game.ecs.components.SpatialComponent;
 import game.ecs.entities.Entity;
 import game.setting.world.BorderTypes;
+import game.setting.world.World;
 
 import static util.Geometry.testIntersection;
 import static util.MyMath.clamp;
 
 
-public class BorderSystem implements IterableSystem {
-
+public class BorderSystem extends IterableSystem {
 
     private BorderTypes borderType;
 
-    public BorderSystem(BorderTypes borderType) {
+
+    public BorderSystem(World world, BorderTypes borderType) {
+        super(world);
         this.borderType = borderType;
     }
 
@@ -27,7 +29,7 @@ public class BorderSystem implements IterableSystem {
 
             for (PositionComponent pos: entity.getAll(PositionComponent.class)) {
                 for (SpatialComponent shape : entity.getAll(SpatialComponent.class)) {
-                    for (SpatialComponent floorSpace : entity.getWorld().getFloor().getAll(SpatialComponent.class)) {
+                    for (SpatialComponent floorSpace : world.getFloor().getAll(SpatialComponent.class)) {
                         boolean overEdge = !testIntersection(floorSpace.getShape(), shape.getShape());
 
                         switch (borderType) {

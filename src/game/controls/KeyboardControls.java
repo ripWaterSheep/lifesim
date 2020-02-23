@@ -14,12 +14,13 @@ import static util.TimeUtil.getCurrentTime;
 public class KeyboardControls {
 
 
-    private static boolean upPressed = false;
-    private static boolean downPressed = false;
-    private static boolean leftPressed = false;
-    private static boolean rightPressed = false;
-    private static boolean spacePressed = false;
-    private static boolean shiftPressed = false;
+    private static boolean anyKeyPressed = false,
+            upPressed = false,
+            downPressed = false,
+            leftPressed = false,
+            rightPressed = false,
+            spacePressed = false,
+            shiftPressed = false;
 
 
     public static boolean getUpPressed() {
@@ -46,11 +47,15 @@ public class KeyboardControls {
         return shiftPressed;
     }
 
+    public static boolean getAnyKeyPressed() {
+        return anyKeyPressed;
+    }
 
-    private static long leftReadTime = 0;
-    private static long rightReadTime = 0;
-    private static long upReadTime = 0;
-    private static long downReadTime = 0;
+
+    private static long leftReadTime = 0,
+            rightReadTime = 0,
+            upReadTime = 0,
+            downReadTime = 0;
 
     public static long getUpReadTime() {
         return upReadTime;
@@ -69,18 +74,13 @@ public class KeyboardControls {
     }
 
 
-    private static int lastNumPressed = 1;
-
-    public static int getLastNumPressed() {
-        return lastNumPressed;
-    }
-
-
     private static KeyAdapter keyAdapter = new KeyAdapter() {
 
         @Override
         public void keyPressed(KeyEvent e) {
             //IterableSystem.out.println("key pressed: " + e.getKeyChar());
+
+            anyKeyPressed = true;
             int keyCode = e.getKeyCode();
             switch (keyCode) {
                 case VK_W:
@@ -115,12 +115,16 @@ public class KeyboardControls {
                     shiftPressed = true;
                     break;
             }
+
+            Cheats.cheatLogic(keyCode);
         }
 
 
         @Override
         public void keyReleased(KeyEvent e) {
             //IterableSystem.out.println("key released: " + e.toString());
+            anyKeyPressed = false;
+
             int keyCode = e.getKeyCode();
             switch (keyCode) {
                 case VK_W:
@@ -156,14 +160,18 @@ public class KeyboardControls {
     };
 
 
+
     private static FocusAdapter AFKKeyPreventor = new FocusAdapter() {
 
         @Override
         public void focusLost(FocusEvent e) {
+            anyKeyPressed = false;
             upPressed = false;
             downPressed = false;
             leftPressed = false;
             rightPressed = false;
+            spacePressed = false;
+            shiftPressed = false;
         }
     };
 

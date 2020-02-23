@@ -1,5 +1,7 @@
 package main;
 
+import game.GameManager;
+
 import javax.swing.*;
 
 

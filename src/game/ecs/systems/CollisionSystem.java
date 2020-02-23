@@ -3,22 +3,23 @@ package game.ecs.systems;
 import game.ecs.components.*;
 import game.ecs.entities.Entity;
 import game.ecs.entities.player.Player;
+import game.setting.world.World;
 
 import static util.Geometry.testIntersection;
 
 
-/**
- *
- */
-public class CollisionSystem implements IterableSystem {
+public class CollisionSystem extends IterableSystem {
 
+    public CollisionSystem(World world) {
+        super(world);
+    }
 
     @Override
     public void run(Entity entity) {
         /* The use of for loops for referencing a single type of component is useful because it takes away the need to
          * check if the component exists and to create a local var for reference separately.
          */
-        for (Entity entity2 : entity.getWorld().getEntities()) {
+        for (Entity entity2 : world.getEntities()) {
             if (!entity.equals(entity2)) {
                 for (SpatialComponent spacial : entity.getAll(SpatialComponent.class)) {
                     for (SpatialComponent spacial2 : entity2.getAll(SpatialComponent.class)) {
@@ -28,7 +29,6 @@ public class CollisionSystem implements IterableSystem {
                             interactionSubsystem(entity, entity2);
                             projectileSubsystem(entity, entity2);
                             aiSubsystem(entity, entity2);
-                            System.out.println(entity.getName() + "  " + entity2.getName());
 
                         }
                     }
@@ -63,7 +63,7 @@ public class CollisionSystem implements IterableSystem {
     private void projectileSubsystem(Entity entity, Entity entity2) {
         for (ProjectileComponent projectile: entity.getAll(ProjectileComponent.class)) {
             if (projectile.shouldDestroyOnImpact()) {
-                entity.destroy();
+                world.remove(entity);
             }
         }
     }
@@ -75,7 +75,6 @@ public class CollisionSystem implements IterableSystem {
                 if (ai.getPathFinding().equals(AIComponent.PathFinding.PURSUE)) {
                     for (MovementComponent movement : entity.getAll(MovementComponent.class)) {
                         movement.setMoving(false);
-                        System.out.println("YITE"+entity2.getName());
                     }
                 }
             }

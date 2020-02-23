@@ -4,7 +4,7 @@ import game.ecs.components.HealthComponent;
 import game.ecs.components.StatsComponent;
 import game.ecs.entities.player.Player;
 import game.setting.world.World;
-import main.GameManager;
+import game.GameManager;
 import util.TimeUtil;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import static java.awt.event.KeyEvent.*;
 class Cheats {
 
     static void cheatLogic(int key) {
-        Player player = Player.getInstance();
+        Player player = GameManager.getPlayer();
         StatsComponent stats = player.get(StatsComponent.class);
         if (KeyboardControls.getShiftPressed()) {
             switch (key) {
@@ -58,7 +58,7 @@ class Cheats {
     static void cycleWorlds(int index) {
         ArrayList<World> allWorlds = GameManager.getAllWorlds();
 
-        World newWorld = Player.getInstance().getWorld();
+        World newWorld = GameManager.getPlayer().getWorld();
         int currentIndex = allWorlds.indexOf(newWorld);
 
         try {// Increment or decrement(if negative) current index and set player world to world at new index.
@@ -73,7 +73,7 @@ class Cheats {
             }
         }
 
-        Player.getInstance().setWorld(newWorld);
+        GameManager.getPlayer().setWorld(newWorld);
     }
 
 

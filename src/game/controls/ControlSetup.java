@@ -6,8 +6,9 @@ public class ControlSetup {
 
 
     public static void initListeners(JPanel panel) {
-        KeyboardControls.init(panel);
-        MouseControls.init(panel);
+
+        //KeyboardControls.init(panel);
+        //MouseControls.init(panel);
     }
 
 }

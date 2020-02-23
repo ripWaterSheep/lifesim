@@ -1,23 +1,30 @@
 package game.ecs.systems;
 
+import game.GameManager;
 import game.ecs.components.AIComponent;
 import game.ecs.components.PositionComponent;
 import game.ecs.components.ProjectileComponent;
 import game.ecs.components.SpawnerComponent;
 import game.ecs.entities.Entity;
 import game.ecs.entities.player.Player;
+import game.setting.world.World;
 
 
 import static util.Geometry.*;
 
-public class SpawnSystem implements IterableSystem {
+public class SpawnSystem extends IterableSystem {
 
     private static final int MAX_ENTITIES = 50;
 
 
+    public SpawnSystem(World world) {
+        super(world);
+    }
+
+
     @Override
     public void run(Entity entity) {
-        if (entity.getWorld().getEntities().size() < MAX_ENTITIES) {
+        if (world.getEntities().size() < MAX_ENTITIES) {
             doSpawning(entity);
         }
     }
@@ -28,13 +35,13 @@ public class SpawnSystem implements IterableSystem {
             for (SpawnerComponent spawner : entity.getAll(SpawnerComponent.class)) {
                 boolean doSpawning = true;
 
-                double distanceFromPlayer = getDistanceBetween(Player.getInstance().getPos(), pos);
+                double distanceFromPlayer = getDistanceBetween(GameManager.getPlayer().getPos(), pos);
 
                 if (distanceFromPlayer > spawner.getActiveRange()) {
                     doSpawning = false;
                 }
                 for (AIComponent ai: entity.getAll(AIComponent.class)) {
-                    if (distanceFromPlayer > ai.getFollowDistance())
+                    if (distanceFromPlayer > ai.getDetectionRange())
                         doSpawning = false;
                 }
                 for (ProjectileComponent projectile: entity.getAll(ProjectileComponent.class)) {
@@ -44,7 +51,7 @@ public class SpawnSystem implements IterableSystem {
 
 
                 if (doSpawning) {
-                    spawner.attemptSpawn(pos.getX(), pos.getY(), entity.getWorld());
+                    spawner.attemptSpawn(pos.getX(), pos.getY(), world);
                 }
             }
         }

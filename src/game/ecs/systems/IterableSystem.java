@@ -1,9 +1,16 @@
 package game.ecs.systems;
 
 import game.ecs.entities.Entity;
+import game.setting.world.World;
 
-public interface IterableSystem {
+public abstract class IterableSystem {
 
-    void run(Entity entity);
+    public final World world;
+
+    public IterableSystem(World world) {
+        this.world = world;
+    }
+
+    public abstract void run(Entity entity);
 
 }

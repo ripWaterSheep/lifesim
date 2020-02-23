@@ -1,5 +1,6 @@
 package game.overlay;
 
+import game.GameManager;
 import game.ecs.components.PositionComponent;
 import game.ecs.entities.player.Player;
 import main.Main;
@@ -30,7 +31,7 @@ public class StatMenu implements DrawableOverlay {
     public void draw(Graphics g) {
         this.g = g;
 
-        writeValue("X", Player.getInstance().get(PositionComponent.class).getX());
+        writeValue("X", GameManager.getPlayer().get(PositionComponent.class).getX());
 
     }
 

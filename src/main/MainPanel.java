@@ -1,7 +1,8 @@
 package main;
 
-import game.Game;
+import game.GameManager;
 import game.controls.ControlSetup;
+import game.overlay.DrawableOverlay;
 import game.overlay.OverlayManager;
 
 
@@ -13,8 +14,8 @@ import java.awt.*;
 
 public class MainPanel extends JPanel {
 
-    public int defaultWidth = 1500;
-    public int defaultHeight = 900;
+    private static final int defaultWidth = 1500;
+    private static final int defaultHeight = 900;
 
     public Rectangle getRect() { return new Rectangle(0, 0, getWidth(), getHeight()); }
 
@@ -24,6 +25,10 @@ public class MainPanel extends JPanel {
 
 
     public final OverlayManager overlayManager = new OverlayManager();
+
+    public void addOverlay(DrawableOverlay overlay) {
+        overlayManager.add(overlay);
+    }
 
 
     private Graphics currentGraphics;

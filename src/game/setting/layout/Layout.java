@@ -43,11 +43,11 @@ public abstract class Layout {
     }
 
 
-    public Layout copyCurrentSaveState() {
+    public Layout copyWorldStates() {
         Layout savedLayout = new DefaultLayout();
-            for (World world: worlds) {
+        for (World world: worlds) {
             for (Entity entity: world.getEntities()) {
-                for (CopyableComponent component: entity.getComponents()) {
+                for (CopyableComponent component: new ArrayList<>(entity.getComponents())) {
                     entity.add(component.copyInitialState());
                 }
                 world.add(entity);
@@ -56,5 +56,6 @@ public abstract class Layout {
         }
         return savedLayout;
     }
+
 
 }

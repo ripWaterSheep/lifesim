@@ -17,19 +17,6 @@ public class Entity {
     }
 
 
-    protected World world;
-
-    public World getWorld() {
-        return world;
-    }
-
-
-    public void setWorld(World world) {
-        if (this.world == null)
-            this.world = world;
-    }
-
-
     private String name;
     public String getName() {
         return name;
@@ -38,13 +25,6 @@ public class Entity {
 
     public Entity(String name) {
         this.name = name;
-    }
-
-
-    public void destroy() {
-        if (world != null) {
-            world.remove(this);
-        }
     }
 
 
@@ -83,7 +63,6 @@ public class Entity {
             newEntity.add(component.copyInitialState());
         }
 
-        world.add(newEntity);
         return newEntity;
     }
 
@@ -95,7 +74,6 @@ public class Entity {
             newEntity.add(component.copyCurrentState());
         }
 
-        world.add(newEntity);
         return newEntity;
     }
 
