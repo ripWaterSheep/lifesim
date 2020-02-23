@@ -5,7 +5,7 @@ import game.ecs.entities.Entity;
 import game.ecs.entities.player.Player;
 import game.setting.world.World;
 
-import static util.Geometry.testIntersection;
+import static util.Geometry.areIntersecting;
 
 
 public class CollisionSystem extends IterableSystem {
@@ -23,11 +23,10 @@ public class CollisionSystem extends IterableSystem {
             if (!entity.equals(entity2)) {
                 for (SpatialComponent spacial : entity.getAll(SpatialComponent.class)) {
                     for (SpatialComponent spacial2 : entity2.getAll(SpatialComponent.class)) {
-                        if (testIntersection(spacial.getShape(), spacial2.getShape())) {
+                        if (areIntersecting(spacial.getShape(), spacial2.getShape())) {
 
                             combatSubsystem(entity, entity2);
                             interactionSubsystem(entity, entity2);
-                            projectileSubsystem(entity, entity2);
                             aiSubsystem(entity, entity2);
 
                         }
@@ -42,7 +41,21 @@ public class CollisionSystem extends IterableSystem {
     private void combatSubsystem(Entity entity, Entity entity2) {
         for (AttackComponent attack : entity.getAll(AttackComponent.class)) {
             for (HealthComponent health : entity2.getAll(HealthComponent.class)) {
-                attack.doDamageTo(health);
+                boolean doDamage = true;
+
+                for (AttackComponent attack2: entity2.getAll(AttackComponent.class)) {
+                    doDamage = attack.isPlayerAlly() != attack2.isPlayerAlly();
+                }
+                if (attack.isPlayerAlly() && entity2 instanceof Player) {
+                    doDamage = false;
+                }
+
+                if (doDamage) {
+                    attack.doDamageTo(health);
+                    if (attack.shouldDestroyOnImpact()) {
+                        world.remove(entity);
+                    }
+                }
             }
         }
     }
@@ -60,21 +73,12 @@ public class CollisionSystem extends IterableSystem {
     }
 
 
-    private void projectileSubsystem(Entity entity, Entity entity2) {
-        for (ProjectileComponent projectile: entity.getAll(ProjectileComponent.class)) {
-            if (projectile.shouldDestroyOnImpact()) {
-                world.remove(entity);
-            }
-        }
-    }
-
-
     private void aiSubsystem(Entity entity, Entity entity2) {
         if (entity2 instanceof Player) {
             for (AIComponent ai : entity.getAll(AIComponent.class)) {
                 if (ai.getPathFinding().equals(AIComponent.PathFinding.PURSUE)) {
                     for (MovementComponent movement : entity.getAll(MovementComponent.class)) {
-                        movement.setMoving(false);
+                        movement.beStationary();
                     }
                 }
             }

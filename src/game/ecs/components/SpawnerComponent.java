@@ -36,10 +36,10 @@ public class SpawnerComponent implements CopyableComponent {
     }
 
 
-    public SpawnerComponent(Entity spawnTemplate, long spawnInterval, double activeRange) {
-        this.spawnTemplate = spawnTemplate;
+    public SpawnerComponent(long spawnInterval, double activeRange, Entity spawnTemplate) {
         this.spawnInterval = spawnInterval;
         this.activeRange = activeRange;
+        this.spawnTemplate = spawnTemplate;
     }
 
 
@@ -65,12 +65,12 @@ public class SpawnerComponent implements CopyableComponent {
 
     @Override
     public SpawnerComponent copyInitialState() {
-        return new SpawnerComponent(spawnTemplate, spawnInterval, activeRange);
+        return new SpawnerComponent(spawnInterval, activeRange, spawnTemplate);
     }
 
     @Override
     public SpawnerComponent copyCurrentState() {
-        SpawnerComponent spawner = new SpawnerComponent(spawnTemplate, spawnInterval, activeRange);
+        SpawnerComponent spawner = new SpawnerComponent(spawnInterval, activeRange, spawnTemplate);
         spawner.lastSpawnTime = lastSpawnTime;
         spawner.allSpawn = allSpawn;
         return spawner;

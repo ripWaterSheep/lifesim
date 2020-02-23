@@ -15,6 +15,10 @@ public class MovementComponent implements CopyableComponent {
         currentSpeed *= ratio;
     }
 
+    public void beStationary() {
+        currentSpeed = 0;
+    }
+
     public void resetSpeed() {
         currentSpeed = initialSpeed;
     }
@@ -45,17 +49,6 @@ public class MovementComponent implements CopyableComponent {
     }
 
 
-    private boolean moving = true;
-
-    public boolean isMoving() {
-        return moving;
-    }
-
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
-
-
     public MovementComponent(double speed, double angle) {
         currentSpeed = speed;
         initialSpeed = speed;
@@ -72,8 +65,6 @@ public class MovementComponent implements CopyableComponent {
     public void setMovementTowardsAngle() {
         movementX = -(currentSpeed * Math.cos(Math.toRadians(angle)));
         movementY = -(currentSpeed * Math.sin(Math.toRadians(angle)));
-        moving = true;
-        resetSpeed();
     }
 
     @Override

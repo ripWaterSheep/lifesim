@@ -24,7 +24,6 @@ public final class Player extends Entity {
             world.remove(this);
 
         world = newWorld;
-        //System.out.println(world);
         world.add(this);
     }
 

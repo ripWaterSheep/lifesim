@@ -1,15 +1,13 @@
 package game.ecs.entities.player;
 
-import com.sun.tools.javac.Main;
-import game.controls.KeyboardControls;
+import game.controls.BetterKey;
+import game.controls.BetterMouse;
 import game.ecs.components.*;
-import game.controls.MouseControls;
+
 import game.ecs.entities.Entity;
-import javafx.geometry.Pos;
-import main.MainPanel;
 import util.Geometry;
 
-import static game.controls.KeyboardControls.*;
+import static game.controls.BetterKeyboard.*;
 import static java.lang.Math.sqrt;
 
 public class PlayerControls {
@@ -29,24 +27,32 @@ public class PlayerControls {
 
 
     private void movementControls() {
+        boolean up, down, left, right;
 
-        boolean up = false, down = false, left = false, right = false;
+        final BetterKey upkey = k_w;
+        final BetterKey leftKey = k_a;
+        final BetterKey downkey = k_s;
+        final BetterKey rightKey = k_d;
 
-        if (getLeftPressed() && getRightPressed()) {
-            if (getLeftReadTime() > getRightReadTime()) right = true;
-            else left = true;
-        } else if (getLeftPressed()) left = true;
-        else if (getRightPressed()) right = true;
-
-        if (getUpPressed() && getDownPressed()) {
-            if (getUpReadTime() > getDownReadTime()) up = true;
-            else down = true;
-        } else if (getUpPressed()) up = true;
-        else if (getDownPressed()) down = true;
+        if (leftKey.isPressed() && rightKey.isPressed()) {
+            left = leftKey.getReadTime() < rightKey.getReadTime();
+            right = !left;
+        } else {
+            left = leftKey.isPressed();
+            right = rightKey.isPressed();
+        } if (upkey.isPressed() && downkey.isPressed()) {
+            up = upkey.getReadTime() < downkey.getReadTime();
+            down = !up;
+        } else {
+            up = upkey.isPressed();
+            down = downkey.isPressed();
+        }
 
         for (MovementComponent movement : player.getAll(MovementComponent.class)) {
             movement.setAngle(getIntendedAngle(up, down, left, right));
-            movement.setMoving(up || down || left || right);
+            if (up || down || left || right) {
+                movement.setMovementTowardsAngle();
+            } else movement.beStationary();
         }
     }
 
@@ -71,31 +77,30 @@ public class PlayerControls {
 
 
     private void sprintControls() {
-        if (getSpacePressed()) {
+        if (k_space.isPressed()) {
             player.get(MovementComponent.class).setSpeedRatio(1.5);
         }
     }
 
 
-
     private void weaponControls() {
 
-        if (MouseControls.getRightClicked()) {
+        if (BetterMouse.right.isClicked()) {
             double strength = player.get(StatsComponent.class).getStrength();
 
             double size = 9 + (strength / 275);
-            double angle = Geometry.getAngleBetween(MouseControls.getLastClickX(), MouseControls.getLastClickY(), main.Main.getPanel().getMidWidth(), main.Main.getPanel().getMidHeight());
+            double angle = Geometry.getAngleBetween(BetterMouse.right.getX(), BetterMouse.right.getY(), main.Main.getPanel().getMidWidth(), main.Main.getPanel().getMidHeight());
             double damage = sqrt((strength / 16) + 1);
             System.out.println(damage);
 
 
-            if (MouseControls.getRightClicked()) {
+            if (BetterMouse.right.isClicked()) {
                 player.getWorld().add(new Entity("Player Bullet")
                         .add(player.getPos().copyCurrentState())
                         .add(new SpatialComponent(size, size, true))
                         .add(new MovementComponent(40, angle))
-                        .add(new AttackComponent(damage))
-                        .add(new ProjectileComponent(700, true))
+                        .add(new AttackComponent(damage, true, true))
+                        .add(new ProjectileComponent(700))
                 );
                 /*player.get(SpawnerComponent.class).attemptSpawn(
                         player.getPos().getX(), player.getPos().getY(), player.getWorld());*/

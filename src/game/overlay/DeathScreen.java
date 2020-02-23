@@ -1,11 +1,8 @@
 package game.overlay;
 
-import game.Game;
 import game.GameManager;
-import game.controls.KeyboardControls;
-import game.controls.MouseControls;
-import game.ecs.entities.player.Player;
-import main.MainPanel;
+import game.controls.BetterKeyboard;
+import game.controls.BetterMouse;
 import util.drawing.DrawString;
 import util.drawing.FontManager;
 
@@ -31,7 +28,7 @@ public class DeathScreen implements DrawableOverlay {
         g.setFont(font);
         DrawString.drawCenteredString(g, "OOF, YOU DIED!", rect, font, textColor);
 
-        if (MouseControls.getLeftClicked() || KeyboardControls.getAnyKeyPressed()) {
+        if (BetterMouse.left.isClicked() || BetterKeyboard.isAnyKeyPressed()) {
             GameManager.startFromLastSave();
         }
     }

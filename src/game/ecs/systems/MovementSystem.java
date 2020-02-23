@@ -3,7 +3,6 @@ package game.ecs.systems;
 import game.GameManager;
 import game.ecs.components.*;
 import game.ecs.entities.Entity;
-import game.ecs.entities.player.Player;
 import game.setting.world.World;
 
 import static util.Geometry.*;
@@ -27,7 +26,7 @@ public class MovementSystem extends IterableSystem {
                     for (SpawnerComponent spawner: entity.getAll(SpawnerComponent.class)) {
                         for (ProjectileComponent projectile: spawner.getSpawnTemplate().getAll(ProjectileComponent.class)) {
                             if (projectile.getMovementRange() < playerDistance) {
-                                movement.setMoving(false);
+                                movement.beStationary();
                             }
                         }
                     }
@@ -44,14 +43,13 @@ public class MovementSystem extends IterableSystem {
                             movement.setAngle(getRand(0, 359));
                         }
                     } else {
-                        movement.setMoving(false);
+                        movement.beStationary();
                     }
                 }
 
-                if (movement.isMoving()) {
-                    movement.setMovementTowardsAngle();
-                    pos.translate(movement.getMovementX(), movement.getMovementY());
-                }
+                movement.setMovementTowardsAngle();
+                pos.translate(movement.getMovementX(), movement.getMovementY());
+                movement.resetSpeed();
 
             }
         }

@@ -16,7 +16,7 @@ class Cheats {
     static void cheatLogic(int key) {
         Player player = GameManager.getPlayer();
         StatsComponent stats = player.get(StatsComponent.class);
-        if (KeyboardControls.getShiftPressed()) {
+        if (BetterKeyboard.k_shift.isPressed()) {
             switch (key) {
                 case VK_N:
                     cycleWorlds(1);

@@ -8,7 +8,7 @@ import game.ecs.entities.Entity;
 import game.setting.world.BorderTypes;
 import game.setting.world.World;
 
-import static util.Geometry.testIntersection;
+import static util.Geometry.areIntersecting;
 import static util.MyMath.clamp;
 
 
@@ -30,7 +30,7 @@ public class BorderSystem extends IterableSystem {
             for (PositionComponent pos: entity.getAll(PositionComponent.class)) {
                 for (SpatialComponent shape : entity.getAll(SpatialComponent.class)) {
                     for (SpatialComponent floorSpace : world.getFloor().getAll(SpatialComponent.class)) {
-                        boolean overEdge = !testIntersection(floorSpace.getShape(), shape.getShape());
+                        boolean overEdge = !areIntersecting(floorSpace.getShape(), shape.getShape());
 
                         switch (borderType) {
                             case WALLED:
@@ -39,13 +39,13 @@ public class BorderSystem extends IterableSystem {
                                 pos.set(x, y);
                                 break;
 
-                            case LAVA_ISLAND:
+                            case ISLAND:
                                 if (overEdge) {
                                     for (HealthComponent health : entity.getAll(HealthComponent.class)) {
                                         health.loseHealth(1);
                                     }
                                     for (MovementComponent movement : entity.getAll(MovementComponent.class)) {
-                                        movement.setSpeedRatio(0.15);
+                                        movement.setSpeedRatio(0.4);
                                     }
                                 }
                                 break;

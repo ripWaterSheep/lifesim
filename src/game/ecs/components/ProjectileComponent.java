@@ -9,23 +9,15 @@ public class ProjectileComponent implements CopyableComponent {
     }
 
 
-    private final boolean destroyOnImpact;
 
-    public boolean shouldDestroyOnImpact() {
-        return destroyOnImpact;
-    }
-
-
-
-    public ProjectileComponent(double movementRange, boolean destroyOnImpact) {
+    public ProjectileComponent(double movementRange) {
         this.movementRange = movementRange;
-        this.destroyOnImpact = destroyOnImpact;
     }
 
 
     @Override
     public ProjectileComponent copyInitialState() {
-        return new ProjectileComponent(movementRange, destroyOnImpact);
+        return new ProjectileComponent(movementRange);
     }
 
     @Override

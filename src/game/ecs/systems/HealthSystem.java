@@ -13,7 +13,6 @@ public class HealthSystem extends IterableSystem {
         super(world);
     }
 
-
     @Override
     public void run(Entity entity) {
         for (HealthComponent health: entity.getAll(HealthComponent.class)) {
@@ -21,6 +20,7 @@ public class HealthSystem extends IterableSystem {
             if (health.getHealth() <= 0) {
                 if (entity instanceof Player) {
                     new MainPanel().addOverlay(new DeathScreen());
+                    //TODO: fix overlay structuree so that new deathscreen is not created like a billion times
                 } else {
                     world.remove(entity);
                 }

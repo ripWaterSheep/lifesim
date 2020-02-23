@@ -1,10 +1,11 @@
 package util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 
 public class MyMath {
-
 
     /** Return true if input is within range. */
     public static boolean inRange(int val, int min, int max) {
@@ -27,6 +28,19 @@ public class MyMath {
         else number = Math.max(val, max);
         return number;
     }
+
+
+    public static boolean isMin(long testedNum, long... otherNums) {
+        Arrays.sort(otherNums);
+        long min = otherNums[0];
+        return testedNum > min;
+    }
+
+    public static long getMin(long... nums) {
+        Arrays.sort(nums);
+        return (int)nums[0];
+    }
+
 
 
 

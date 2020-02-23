@@ -9,6 +9,7 @@ import game.ecs.entities.player.Player;
 import game.setting.world.World;
 import main.MainPanel;
 import util.drawing.DrawString;
+import util.drawing.FontManager;
 
 import java.awt.*;
 
@@ -27,23 +28,25 @@ public class RenderSystem extends IterableSystem {
 
     @Override
     public void run(Entity entity) {
-        //if (graphicsPanel.getCurrentGraphics() != null) {
-            Graphics2D g2d = (Graphics2D) graphicsPanel.getCurrentGraphics().create();
+        Graphics2D g2d = (Graphics2D) graphicsPanel.getCurrentGraphics().create();
 
-            for (PositionComponent pos : entity.getAll(PositionComponent.class)) {
-                for (SpatialComponent spatial : entity.getAll(SpatialComponent.class)) {
+        for (PositionComponent pos : entity.getAll(PositionComponent.class)) {
+            for (SpatialComponent spatial : entity.getAll(SpatialComponent.class)) {
 
-                    calculateDisplayPos(entity, spatial, pos);
+                calculateDisplayPos(entity, spatial, pos);
 
-                    for (AppearanceComponent appearance : entity.getAll(AppearanceComponent.class)) {
-                        appearance.draw(g2d, spatial.getShape());
+                for (AppearanceComponent appearance : entity.getAll(AppearanceComponent.class)) {
+                    appearance.draw(g2d, spatial.getShape());
 
-                        for (LabelComponent label : entity.getAll(LabelComponent.class)) {
-                            DrawString.drawCenteredString(g2d, entity.getName(),
-                                    spatial.getShape().getBounds(), label.getFont(), label.getTextColor());
-                        }
+                    for (LabelComponent label : entity.getAll(LabelComponent.class)) {
+                        DrawString.drawCenteredString(g2d, entity.getName(),
+                                spatial.getShape().getBounds(), label.getFont(), label.getTextColor());
                     }
-             //   }
+                }
+
+                for (HealthComponent health: entity.getAll(HealthComponent.class)) {
+                    DrawString.drawCenteredString(g2d, ((int)health.getHealth())+"", spatial.getShape().getBounds(), FontManager.getMainFont(25), Color.WHITE);
+                }
             }
         }
     }

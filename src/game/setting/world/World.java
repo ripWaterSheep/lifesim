@@ -37,6 +37,8 @@ public class World {
         systems.add(new CollisionSystem(this));
         systems.add(new BorderSystem(this, borderType));
         systems.add(new RenderSystem(this, Main.getPanel()));
+        systems.add(new HealthSystem(this));
+        systems.add(new SpawnSystem(this));
 
         floor = new Entity(name + "Floor")
                 .add(new PositionComponent(0, 0))
@@ -74,7 +76,7 @@ public class World {
 
     private void runSystems() {
         for (IterableSystem system: systems) {
-            for (Entity entity: entities) {
+            for (Entity entity: new ArrayList<>(entities)) {
                 system.run(entity);
             }
         }
@@ -84,7 +86,6 @@ public class World {
     public void run() {
         Main.getPanel().setBackground(outerColor);
         runSystems();
-        System.out.println(GameManager.getPlayer().getWorld().equals(this));
     }
 
 

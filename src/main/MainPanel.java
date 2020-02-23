@@ -1,7 +1,7 @@
 package main;
 
 import game.GameManager;
-import game.controls.ControlSetup;
+import game.controls.ControlManager;
 import game.overlay.DrawableOverlay;
 import game.overlay.OverlayManager;
 
@@ -42,7 +42,7 @@ public class MainPanel extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
         setSize(defaultWidth, defaultHeight);
-        ControlSetup.initListeners(this);
+        ControlManager.init(this);
     }
 
 
@@ -52,9 +52,11 @@ public class MainPanel extends JPanel {
         super.paintComponent(g);
         currentGraphics = g;
 
+        ControlManager.run();
         GameManager.getCurrentGame().run();
         //overlayManager.draw(g);
-
+        
+        ControlManager.reset();
         sleep(9);
         repaint();
     }

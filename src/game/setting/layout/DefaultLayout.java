@@ -15,17 +15,19 @@ public class DefaultLayout extends Layout {
 
     public DefaultLayout() {
 
-        createWorld(new World("Town", 5000, 5000, new Color(60, 159, 75), new Color(201, 193, 126), LAVA_ISLAND)
-                //.add(new Structure("Hi", 0, 0, 100, 100, false, new Color(100, 100, 100)))
-                //.add(new Structure("Horizontal Road", 0, 0, 6500, 200, false, Color.DARK_GRAY))
-                //.add(new Structure("Vertical Road", 0, 0, 200, 6500, false, Color.DARK_GRAY))
+        createWorld(new World("Town", 5000, 5000, new Color(60, 159, 75), new Color(201, 193, 126), FREE)
+                .add(new Entity("Road")
+                        .add(new PositionComponent(0, 0))
+                        .add(new SpatialComponent(6500, 200, false))
+                        .add(new SpatialComponent(200, 6500, false))
+                        .add(new AppearanceComponent(Color.DARK_GRAY))
+                )
 
 
                 .add(new Entity("Gym")
                         .add(new PositionComponent(-1500, -450))
                         .add(new SpatialComponent(800, 500, false))
                         .add(new AppearanceComponent("Gym"))
-                        //.add(new AppearanceComponent(Color.GRAY))
 
                         .add(new InteractionComponent() {
                             @Override
@@ -38,21 +40,26 @@ public class DefaultLayout extends Layout {
                              }
                              @Override
                              public void teleport(Player player) {
-                                 player.goTo(getEntity("House"));
-                                 System.out.println("dab");
+                                 //player.goTo(getEntity("House"));
                              }
                          })
                 )
 
-                .add(new Entity("Creature test")
-                        .add(new PositionComponent(250, 250))
+                .add(new Entity("ZombieSpawner")
+                        .add(new PositionComponent(500, 400))
                         .add(new SpatialComponent(100, 100, false))
-                        .add(new AppearanceComponent(Color.BLUE))
-                        .add(new MovementComponent(6))
-                        .add(new AIComponent(AIComponent.PathFinding.PURSUE, 400, true))
-                        .add(new HealthComponent(10))
-                        .add(new AttackComponent(5))
-                    )
+                        .add(new AppearanceComponent(Color.DARK_GRAY))
+                        .add(new SpawnerComponent(1000, 500,
+                                new Entity("")
+                                        .add(new PositionComponent(0, 0))
+                                        .add(new SpatialComponent(100, 100, true))
+                                        .add(new AppearanceComponent(new Color(80, 103, 78)))
+                                        .add(new MovementComponent(10))
+                                        .add(new AIComponent(AIComponent.PathFinding.PURSUE, 400, true))
+                                        .add(new HealthComponent(25))
+                                        .add(new AttackComponent(5, false, false))
+                                ))
+                )
         );
 
         createWorld(new World("House Interior", 1000, 900, new Color(230, 210, 140), new Color(100, 80, 50), WALLED)
