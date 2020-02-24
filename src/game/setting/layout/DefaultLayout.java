@@ -8,14 +8,22 @@ import game.setting.world.World;
 
 import java.awt.*;
 
-import static game.setting.world.BorderTypes.*;
+
 
 
 public class DefaultLayout extends Layout {
 
     public DefaultLayout() {
 
-        createWorld(new World("Town", 5000, 5000, new Color(60, 159, 75), new Color(201, 193, 126), FREE)
+        createWorld(new World("Town", new Color(201, 193, 126))
+                .add(new Entity("Grass")
+                        .add(new PositionComponent(0, 0))
+                        .add(new AppearanceComponent(new Color(60, 159, 75)))
+                        .add(new SpatialComponent(2000, 500, false))
+                        .add(new SpatialComponent(500, 2000, false))
+                        .add(new SolidComponent(true))
+                )
+
                 .add(new Entity("Road")
                         .add(new PositionComponent(0, 0))
                         .add(new SpatialComponent(6500, 200, false))
@@ -23,11 +31,11 @@ public class DefaultLayout extends Layout {
                         .add(new AppearanceComponent(Color.DARK_GRAY))
                 )
 
-
                 .add(new Entity("Gym")
                         .add(new PositionComponent(-1500, -450))
                         .add(new SpatialComponent(800, 500, false))
                         .add(new AppearanceComponent("Gym"))
+                        .add(new SolidComponent(false))
 
                         .add(new InteractionComponent() {
                             @Override
@@ -62,7 +70,7 @@ public class DefaultLayout extends Layout {
                 )
         );
 
-        createWorld(new World("House Interior", 1000, 900, new Color(230, 210, 140), new Color(100, 80, 50), WALLED)
+        createWorld(new World("House Interior", new Color(100, 80, 50))
                         .add(new Structure("House Door", 0 , 900*0.5, 150, 20, false, new Color(190, 170, 80))
                                 .add(new InteractionComponent() {
                                     @Override
@@ -75,8 +83,7 @@ public class DefaultLayout extends Layout {
                                         player.goTo(getEntity("House"));
                                     }
                                 }))
-                        .add(new Structure("House Bed", -200, -300, 250, 150,false, new Color(0, 114, 168))
-                        )
+                        .add(new Structure("House Bed", -200, -300, 250, 150,false, new Color(0, 114, 168)))
         );
     }
 }

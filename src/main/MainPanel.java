@@ -24,10 +24,10 @@ public class MainPanel extends JPanel {
     public int getMidHeight() { return getHeight()/2; }
 
 
-    public final OverlayManager overlayManager = new OverlayManager();
+    private final OverlayManager overlayManager = new OverlayManager();
 
-    public void addOverlay(DrawableOverlay overlay) {
-        overlayManager.add(overlay);
+    public OverlayManager getOverlayManager() {
+        return overlayManager;
     }
 
 
@@ -54,7 +54,7 @@ public class MainPanel extends JPanel {
 
         ControlManager.run();
         GameManager.getCurrentGame().run();
-        //overlayManager.draw(g);
+        overlayManager.draw(g);
         
         ControlManager.reset();
         sleep(9);

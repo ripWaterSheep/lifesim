@@ -20,9 +20,7 @@ public class MovementSystem extends IterableSystem {
             for (MovementComponent movement : entity.getAll(MovementComponent.class)) {
                 for (AIComponent ai : entity.getAll(AIComponent.class)) {
 
-                    double followAngle = getAngleBetween(GameManager.getPlayer().getPos(), pos);
                     double playerDistance = getDistanceBetween(GameManager.getPlayer().getPos(), pos);
-
                     for (SpawnerComponent spawner: entity.getAll(SpawnerComponent.class)) {
                         for (ProjectileComponent projectile: spawner.getSpawnTemplate().getAll(ProjectileComponent.class)) {
                             if (projectile.getMovementRange() < playerDistance) {
@@ -31,6 +29,8 @@ public class MovementSystem extends IterableSystem {
                         }
                     }
 
+                    double followAngle = getAngleBetween(GameManager.getPlayer().getPos(), pos);
+
                     if (playerDistance < ai.getDetectionRange()) {
 
                         if (ai.getPathFinding() == AIComponent.PathFinding.PURSUE) {
@@ -38,6 +38,7 @@ public class MovementSystem extends IterableSystem {
                         } else {
                             movement.setAngle(180 - followAngle);
                         }
+
                     } else if (ai.doesRandomMovement()) {
                         if (getRand(0, 1000) < 5) {
                             movement.setAngle(getRand(0, 359));

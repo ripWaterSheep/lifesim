@@ -1,7 +1,6 @@
 package game.controls;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
@@ -39,7 +38,7 @@ public class BetterMouse {
         @Override
         public void mousePressed(MouseEvent e) {
             for (BetterMouseButton mouseEvent: buttons) {
-                if (mouseEvent.getEventCode() == e.getButton()) {
+                if (mouseEvent.getIntCode() == e.getButton()) {
                     mouseEvent.doPress();
                     mouseEvent.setPos(e.getLocationOnScreen());
                 }
@@ -49,7 +48,7 @@ public class BetterMouse {
         @Override
         public void mouseReleased(MouseEvent e) {
             for (BetterMouseButton mouseEvent: buttons) {
-                if (mouseEvent.getEventCode() == e.getButton()) {
+                if (mouseEvent.getIntCode() == e.getButton()) {
                     mouseEvent.doRelease();
                 }
             }

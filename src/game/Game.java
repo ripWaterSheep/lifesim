@@ -19,6 +19,7 @@ public class Game {
     }
 
 
+
     public Game(Layout layout) {
         this.layout = layout;
 
@@ -32,8 +33,9 @@ public class Game {
     }
 
 
+
     public Game copyGameState() {
-        return new Game(layout.copyWorldStates());
+        return new Game(layout.copyCurrentState());
     }
 
 }

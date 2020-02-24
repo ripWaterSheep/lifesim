@@ -20,8 +20,8 @@ public class BetterMouseButton extends BetterControl {
     }
 
 
-    BetterMouseButton(int mouseEvent) {
-        super(mouseEvent);
+    BetterMouseButton(int mouseButtonCode) {
+        super(mouseButtonCode);
         BetterMouse.buttons.add(this);
     }
 

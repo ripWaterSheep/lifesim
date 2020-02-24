@@ -19,30 +19,6 @@ public class MyMath {
     public static int clamp(int val, int min, int max) { return Math.max(min, Math.min(max, val)); }
 
 
-    /** Keep input outside of a range */
-    public static int clampOut(int val, int min, int max) {
-        int avg = betterRound((float)min + (float)max)/2;
-        int number;
-        if (val >= avg)
-            number = Math.min(val, min);
-        else number = Math.max(val, max);
-        return number;
-    }
-
-
-    public static boolean isMin(long testedNum, long... otherNums) {
-        Arrays.sort(otherNums);
-        long min = otherNums[0];
-        return testedNum > min;
-    }
-
-    public static long getMin(long... nums) {
-        Arrays.sort(nums);
-        return (int)nums[0];
-    }
-
-
-
 
     public static int betterRound(double a) { return (int)Math.round(a); }
 

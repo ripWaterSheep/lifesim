@@ -1,6 +1,5 @@
 package game.setting.layout;
 
-import game.ecs.components.CopyableComponent;
 import game.ecs.entities.Entity;
 import game.setting.world.World;
 
@@ -22,7 +21,7 @@ public abstract class Layout {
 
     protected World getWorld(String worldName) {
         World foundWorld = null;
-        for (World world: worlds) {
+        for (World world : worlds) {
             foundWorld = world;
         }
 
@@ -32,7 +31,7 @@ public abstract class Layout {
 
     protected Entity getEntity(String entityName) {
         Entity desiredEntity = null;
-        for (World world: worlds) {
+        for (World world : worlds) {
             if (world.getEntityWithName(entityName) != null) {
                 desiredEntity = world.getEntityWithName(entityName);
                 break;
@@ -43,19 +42,14 @@ public abstract class Layout {
     }
 
 
-    public Layout copyWorldStates() {
-        Layout savedLayout = new DefaultLayout();
-        for (World world: worlds) {
-            for (Entity entity: world.getEntities()) {
-                for (CopyableComponent component: new ArrayList<>(entity.getComponents())) {
-                    entity.add(component.copyInitialState());
-                }
-                world.add(entity);
-            }
-            savedLayout.createWorld(world);
+    public Layout copyCurrentState() {
+        Layout newLayout = new DefaultLayout();
+        for (World world : worlds) {
+            newLayout.createWorld(world.copyCurrentState());
         }
-        return savedLayout;
+        return newLayout;
     }
+
 
 
 }

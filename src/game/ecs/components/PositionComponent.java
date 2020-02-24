@@ -33,7 +33,7 @@ public class PositionComponent implements CopyableComponent {
         y += vertical;
     }
 
-    public void set(double x, double y) {
+    public void goTo(double x, double y) {
         this.x = x;
         this.y = y;
     }

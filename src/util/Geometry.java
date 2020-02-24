@@ -4,9 +4,11 @@ import game.ecs.components.PositionComponent;
 
 import java.awt.*;
 import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.sqrt;
 import static util.MyMath.betterRound;
 
 
@@ -41,7 +43,7 @@ public class Geometry {
         return angle;
     }
 
-    public static boolean areIntersecting(Shape shapeA, Shape shapeB) {
+    public static boolean testIntersection(Shape shapeA, Shape shapeB) {
         Area areaA = new Area(shapeA);
         areaA.intersect(new Area(shapeB));
         return !areaA.isEmpty();

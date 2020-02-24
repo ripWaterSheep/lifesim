@@ -26,6 +26,7 @@ public class GameManager {
 
     public static void startNew() {
         currentGame = new Game(new DefaultLayout());
+        savedGame = new Game(new DefaultLayout());
     }
 
     public static void saveGame() {
@@ -33,8 +34,8 @@ public class GameManager {
     }
 
     public static void startFromLastSave() {
-        savedGame = currentGame.copyGameState();
         currentGame = savedGame;
+        savedGame = currentGame.copyGameState();
     }
 
 

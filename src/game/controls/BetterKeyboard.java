@@ -61,6 +61,16 @@ public final class BetterKeyboard {
     public static final BetterKey k_shift = new BetterKey(VK_SHIFT);
 
 
+    public static boolean isAnyKeyClicked() {
+        for (BetterKey key: keys) {
+            if (key.isClicked()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     static void init(JPanel panel) {
         panel.addKeyListener(keyAdapter);
@@ -81,32 +91,23 @@ public final class BetterKeyboard {
     }
 
 
-    public static boolean isAnyKeyPressed() {
-        for (BetterKey key: keys) {
-            if (key.isPressed())
-                return true;
-        }
-        return false;
-    }
-
-
-
     private static KeyAdapter keyAdapter = new KeyAdapter() {
 
         @Override
         public void keyPressed(KeyEvent e) {
+            int keyCode = e.getKeyCode();
             for (BetterKey key: keys) {
-                if (key.getEventCode() == e.getKeyCode()) {
+                if (key.getIntCode() == keyCode) {
                     key.doPress();
                 }
-                Cheats.cheatLogic(e.getKeyCode());
+                Cheats.cheatLogic(keyCode);
             }
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
             for (BetterKey key: keys) {
-                if (key.getEventCode() == e.getKeyCode()) {
+                if (key.getIntCode() == e.getKeyCode()) {
                     key.doRelease();
                 }
             }

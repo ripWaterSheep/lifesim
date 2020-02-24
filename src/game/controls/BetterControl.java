@@ -2,20 +2,20 @@ package game.controls;
 
 public abstract class BetterControl {
 
-    protected final int eventCode;
+    protected final int intCode;
 
-    boolean clicked = false;
-    boolean pressed = false;
+    private boolean clicked = false;
+    private boolean pressed = false;
 
 
     private int readTime = 0;
 
-    public BetterControl(int eventCode) {
-        this.eventCode = eventCode;
+    public BetterControl(int intCode) {
+        this.intCode = intCode;
     }
 
-    public int getEventCode() {
-        return eventCode;
+    public int getIntCode() {
+        return intCode;
     }
 
     public int getReadTime() {

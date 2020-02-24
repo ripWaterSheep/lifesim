@@ -8,7 +8,7 @@ public class AttackComponent implements CopyableComponent {
 
     private final boolean destroyOnImpact;
 
-    public boolean shouldDestroyOnImpact() {
+    public boolean willDestroyOnImpact() {
         return destroyOnImpact;
     }
 

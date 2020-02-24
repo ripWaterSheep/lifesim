@@ -1,5 +1,6 @@
 package game.ecs.systems;
 
+import game.Game;
 import game.ecs.components.HealthComponent;
 import game.ecs.entities.Entity;
 import game.ecs.entities.player.Player;
@@ -19,7 +20,7 @@ public class HealthSystem extends IterableSystem {
 
             if (health.getHealth() <= 0) {
                 if (entity instanceof Player) {
-                    new MainPanel().addOverlay(new DeathScreen());
+                    //DeathScreen.show();
                     //TODO: fix overlay structuree so that new deathscreen is not created like a billion times
                 } else {
                     world.remove(entity);
