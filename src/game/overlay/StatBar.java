@@ -20,7 +20,6 @@ public class StatBar implements DrawableOverlay {
     private static final int LEFT_PADDING = 0;
     private static final int BOTTOM_PADDING = 0;
 
-    private static final int BAR_WIDTH = 500;
     private static final int BAR_HEIGHT = 40;
 
     private static final int BAR_OPACITY = 125;
@@ -40,11 +39,11 @@ public class StatBar implements DrawableOverlay {
         Player player = GameManager.getPlayer();
         StatsComponent stats = player.get(StatsComponent.class);
 
-        drawBar("Intellect", stats.getIntellect(), 0.2, StatsComponent.Colors.energyColor);
-        drawBar("Money", stats.getMoney(), 0.1, StatsComponent.Colors.energyColor);
-        drawBar("Strength", stats.getStrength(), 0.2, StatsComponent.Colors.energyColor);
-        drawBar("Energy", stats.getEnergy(), 0.2, StatsComponent.Colors.energyColor);
-        drawBar("Health", player.get(HealthComponent.class).getHealth(), 0.2, StatsComponent.Colors.energyColor);
+        drawBar("Intellect", stats.getIntellect(), 0.2, 1000, StatsComponent.Colors.intellectColor);
+        drawBar("Money", stats.getMoney(), 0.02, 10000, StatsComponent.Colors.moneyColor);
+        drawBar("Strength", stats.getStrength(), 0.2, 1000, StatsComponent.Colors.strengthColor);
+        drawBar("Energy", stats.getEnergy(), 0.2, 1000, StatsComponent.Colors.energyColor);
+        drawBar("Health", player.get(HealthComponent.class).getHealth(), 0.2, 1000, HealthComponent.Colors.bloodColor);
 
         writeValue("World", player.getWorld().getName());
         writeNum("Y", player.getPos().getY());
@@ -70,9 +69,12 @@ public class StatBar implements DrawableOverlay {
     }
 
 
-    private <T> void drawBar(String label, double data, double scale, Color color) {
+    private <T> void drawBar(String label, double data, double scale, double maxDataVal, Color color) {
         int y = Main.getPanel().getHeight() - ((getCurrentBarNum()) * BAR_HEIGHT) + BOTTOM_PADDING;
         int statWidth = betterRound(data * scale);
+
+        g.setColor(Color.BLACK);
+        g.drawRect(LEFT_PADDING, y, betterRound(maxDataVal * scale), BAR_HEIGHT);
 
         g.setColor(applyOpacity(color, BAR_OPACITY));
         g.fillRect(LEFT_PADDING, y, statWidth, BAR_HEIGHT);
@@ -86,7 +88,7 @@ public class StatBar implements DrawableOverlay {
 
         int textY = getPanel().getHeight() - (getCurrentBarNum()*BAR_HEIGHT) - BOTTOM_PADDING;
         DrawString.drawVerticallyCenteredString(g, formattedString, LEFT_PADDING,
-                new Rectangle(LEFT_PADDING, textY, BAR_WIDTH, BAR_HEIGHT), FontManager.getMainFont(TEXT_SIZE), Color.WHITE);
+                new Rectangle(LEFT_PADDING, textY, 0, BAR_HEIGHT), FontManager.getMainFont(TEXT_SIZE), Color.WHITE);
         nextLine();
     }
 

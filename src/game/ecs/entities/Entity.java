@@ -71,6 +71,7 @@ public class Entity {
         Entity newEntity = new Entity("Copy of " + name);
 
         for (CopyableComponent component: components) {
+            System.out.println(component);
             newEntity.add(component.copyCurrentState());
         }
 

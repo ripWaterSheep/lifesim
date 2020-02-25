@@ -8,21 +8,29 @@ import java.awt.geom.Ellipse2D;
  */
 public class SpatialComponent implements CopyableComponent {
 
+
     private double width;
+    private double height;
+    private final double initialWidth;
+    private final double initialHeight;
+
     public double getWidth() {
         return width;
     }
+
     public double getMidWidth() {
         return width/2;
     }
 
-    private double height;
+
     public double getHeight() {
         return height;
     }
+
     public double getMidHeight() {
-        return height/2;
+        return height / 2;
     }
+
 
     public void grow(double amount) {
         width += amount;
@@ -62,18 +70,21 @@ public class SpatialComponent implements CopyableComponent {
     public SpatialComponent(double width, double height, boolean elliptical) {
         this.width = width;
         this.height = height;
+        initialWidth = width;
+        initialHeight = height;
+
         this.elliptical = elliptical;
     }
 
 
     @Override
     public SpatialComponent copyInitialState() {
-        return new SpatialComponent(width, height, elliptical);
+        return new SpatialComponent(initialWidth, initialHeight, elliptical);
     }
 
 
     @Override
     public SpatialComponent copyCurrentState() {
-        return null;
+        return new SpatialComponent(width, height, elliptical);
     }
 }

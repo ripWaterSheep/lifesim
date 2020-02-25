@@ -66,10 +66,16 @@ public class DefaultLayout extends Layout {
         );
 
         createWorld(new World("House Interior", new Color(100, 80, 50))
+                .add(new Entity("Hard Wood Flooring")
+                        .add(new PositionComponent(0, 0))
+                        .add(new SpatialComponent(1500, 900, false))
+                        .add(new AppearanceComponent(new Color(201, 190, 127)))
+                        .add(new SolidComponent(true))
+                )
                 .add(new Entity("House Door")
                         .add(new PositionComponent(0, 900*0.5))
                         .add(new SpatialComponent(150, 20, false))
-                        .add(new AppearanceComponent(new Color(190, 170, 80)))
+                        .add(new AppearanceComponent(new Color(184, 163, 71)))
                         .add(new InteractionComponent() {
                             @Override
                             public void interact(StatsComponent stats) {
@@ -87,12 +93,6 @@ public class DefaultLayout extends Layout {
                     .add(new SpatialComponent(250, 150, false))
                     .add(new AppearanceComponent(new Color(0, 115, 169))
                 ))
-                .add(new Entity("Grass")
-                        .add(new PositionComponent(0, 0))
-                        .add(new AppearanceComponent(new Color(60, 159, 75)))
-                        .add(new SpatialComponent(6500, 1500, false))
-                        .add(new SpatialComponent(1500, 6500, false))
-                )
         );
     }
 }
