@@ -6,6 +6,7 @@ public class AIComponent implements CopyableComponent {
 
     /** Define whether to pursue or evade the location of player instance */
     public enum PathFinding {
+        NONE,
         PURSUE,
         EVADE
     }
@@ -24,24 +25,24 @@ public class AIComponent implements CopyableComponent {
     }
 
 
-    private final boolean doRandomMovement;
+    private final double randomness;
 
-    public boolean doesRandomMovement() {
-        return doRandomMovement;
+    public double getRandomness() {
+        return randomness;
     }
 
 
 
-    public AIComponent(PathFinding pathFinding, double detectionRange, boolean doRandomMovement) {
+    public AIComponent(PathFinding pathFinding, double detectionRange, double randomness) {
         this.pathFinding = pathFinding;
         this.detectionRange = detectionRange;
-        this.doRandomMovement = doRandomMovement;
+        this.randomness = randomness;
     }
 
 
     @Override
     public AIComponent copyInitialState() {
-        return new AIComponent(pathFinding, detectionRange, doRandomMovement);
+        return new AIComponent(pathFinding, detectionRange, randomness);
     }
 
     @Override

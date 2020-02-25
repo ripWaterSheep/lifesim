@@ -34,7 +34,7 @@ public class SpatialComponent implements CopyableComponent {
     }
 
 
-    public final boolean elliptical;
+    private final boolean elliptical;
     public boolean isElliptical() {
         return elliptical;
     }

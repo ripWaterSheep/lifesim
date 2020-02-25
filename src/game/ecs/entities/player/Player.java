@@ -44,6 +44,13 @@ public final class Player extends Entity {
     }
 
 
+    public PositionComponent getPos() {
+        PositionComponent pos = get(PositionComponent.class);
+        if (pos == null)
+            return new PositionComponent(0, 0);
+        return pos;
+    }
+
     public void goTo(Entity entity) {
         get(PositionComponent.class).goTo(entity.get(PositionComponent.class));
     }

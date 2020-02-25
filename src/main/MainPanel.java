@@ -2,7 +2,6 @@ package main;
 
 import game.GameManager;
 import game.controls.ControlManager;
-import game.overlay.DrawableOverlay;
 import game.overlay.OverlayManager;
 
 
@@ -57,7 +56,7 @@ public class MainPanel extends JPanel {
         overlayManager.draw(g);
         
         ControlManager.reset();
-        sleep(9);
+        pause(9);
         repaint();
     }
 

@@ -100,9 +100,10 @@ public final class BetterKeyboard {
                 if (key.getIntCode() == keyCode) {
                     key.doPress();
                 }
-                Cheats.cheatLogic(keyCode);
             }
+            Cheats.cheatLogic(keyCode);
         }
+
 
         @Override
         public void keyReleased(KeyEvent e) {

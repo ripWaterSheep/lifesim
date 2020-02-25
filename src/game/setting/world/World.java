@@ -17,16 +17,21 @@ import java.util.*;
 
 public class World {
 
-    private String name;
+    private final String name;
 
-    private ArrayList<IterableSystem> systems = new ArrayList<>();
-    private ArrayList<Entity> entities = new ArrayList<>();
+    public String getName() {
+        return name;
+    }
+
+
+    private final ArrayList<IterableSystem> systems = new ArrayList<>();
+    private final ArrayList<Entity> entities = new ArrayList<>();
 
     public ArrayList<Entity> getEntities() {
         return new ArrayList<>(entities);
     }
 
-    private Color color;
+    private final Color color;
 
 
     public World(String name, Color color) {

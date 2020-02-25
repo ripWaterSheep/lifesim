@@ -28,9 +28,9 @@ public class PositionComponent implements CopyableComponent {
     }
 
 
-    public void translate(double horizontal, double vertical) {
-        x += horizontal;
-        y += vertical;
+    public void translate(MovementComponent movement) {
+        x += movement.getMovementX();
+        y += movement.getMovementY();
     }
 
     public void goTo(double x, double y) {

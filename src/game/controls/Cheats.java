@@ -5,11 +5,12 @@ import game.ecs.components.StatsComponent;
 import game.ecs.entities.player.Player;
 import game.setting.world.World;
 import game.GameManager;
-import util.TimeUtil;
 
 import java.util.ArrayList;
 
 import static java.awt.event.KeyEvent.*;
+import static util.TimeUtil.pause;
+
 
 class Cheats {
 
@@ -20,11 +21,11 @@ class Cheats {
             switch (key) {
                 case VK_N:
                     cycleWorlds(1);
-                    TimeUtil.sleep(45);
+                    pause(15);
                     break;
                 case VK_B:
                     cycleWorlds(-1);
-                    TimeUtil.sleep(45);
+                    pause(15);
                     break;
                 case VK_1:
                     player.get(HealthComponent.class).gainHealth(100);
@@ -67,7 +68,7 @@ class Cheats {
         } catch (IndexOutOfBoundsException e) {
 
             if (index > 0) {
-                newWorld  =allWorlds.get(index - 1); // Wraparound to the first world
+                newWorld  = allWorlds.get(index - 1); // Wraparound to the first world
             } else if (index < 0) {
                 newWorld = allWorlds.get(allWorlds.size() + index); // Wraparound to the last world
             }

@@ -8,10 +8,10 @@ public class OverlayManager implements DrawableOverlay {
 
     ArrayList<DrawableOverlay> overlays = new ArrayList<>();
 
-    private StatMenu statMenu = new StatMenu();
+    private StatBar statBar = new StatBar();
 
     public OverlayManager() {
-        overlays.add(statMenu);
+        overlays.add(statBar);
         //overlays.add(new DeathScreen());
     }
 

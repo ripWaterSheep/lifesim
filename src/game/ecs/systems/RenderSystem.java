@@ -43,10 +43,6 @@ public class RenderSystem extends IterableSystem {
                                 spatial.getShape().getBounds(), label.getFont(), label.getTextColor());
                     }
                 }
-
-                for (HealthComponent health: entity.getAll(HealthComponent.class)) {
-                    DrawString.drawCenteredString(g2d, ((int)health.getHealth())+"", spatial.getShape().getBounds(), FontManager.getMainFont(25), Color.WHITE);
-                }
             }
         }
     }

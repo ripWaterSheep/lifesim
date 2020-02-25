@@ -5,7 +5,7 @@ import game.setting.world.World;
 
 import java.util.ArrayList;
 
-import static util.TimeUtil.getCurrentTime;
+
 
 public class SpawnerComponent implements CopyableComponent {
 
@@ -47,16 +47,16 @@ public class SpawnerComponent implements CopyableComponent {
         world.add(spawnedEntity);
         allSpawn.add(spawnedEntity);
 
-        for (PositionComponent pos: spawnedEntity.getAll(PositionComponent.class)) {
+        for (PositionComponent pos : spawnedEntity.getAll(PositionComponent.class)) {
             pos.goTo(x, y);
         }
 
-        lastSpawnTime = getCurrentTime();
+        lastSpawnTime = System.currentTimeMillis();
     }
 
 
     public void attemptSpawn(double x, double y, World world) {
-        if (getCurrentTime() - lastSpawnTime >= spawnInterval && allSpawn.size() < MAX_SPAWN) {
+        if (System.currentTimeMillis() - lastSpawnTime >= spawnInterval && allSpawn.size() < MAX_SPAWN) {
             spawnAt(x, y, world);
         }
     }

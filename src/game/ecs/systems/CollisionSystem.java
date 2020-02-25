@@ -106,10 +106,27 @@ public class CollisionSystem extends IterableSystem {
                             // If entity is already inside another shape in the entity (if entity has multiple shape components),
                             // don't restrict the position (break out of the loop to prevent restricting position inside).
                             for (SpatialComponent checkedSpatial: entity2.getAll(SpatialComponent.class)) {
-                                for (SolidComponent checkedSolid: entity2.getAll(SolidComponent.class)) {
-                                    if (checkedSpatial != spatial2) {
+                                if (checkedSpatial != spatial2) {
+                                    for (SolidComponent checkedSolid: entity2.getAll(SolidComponent.class)) {
                                         if (checkedSolid.willKeepInside() && testIntersection(checkedSpatial.getShape(), spatial1.getShape())) {
-                                            return;
+                                            double angleToCenter = getAngleBetween(pos2, pos1);
+                                            //System.out.println(angleToCenter);
+
+                                            /*if (spatial2.isElliptical()) {
+                                                //x1 = clamp(x1, spatial2.getMidWidth() * cos(toRadians(angleToCenter)),
+                                                //      spatial2.getMidWidth() * cos(toRadians(angleToCenter)));
+                                                //x1 = min(x1, spatial2.getMidWidth() * sin(toRadians(angleToCenter)))+pos2.getX();
+                                                //y1 = min(y1, spatial2.getMidHeight() * sin(toRadians(angleToCenter)))+pos2.getY();
+
+                                                x1 = clamp(x1, -spatial2.getMidWidth() * cos(toRadians(angleToCenter)) + pos2.getX(),
+                                                        spatial2.getWidth() * cos(toRadians(angleToCenter)) + pos2.getX());
+                                                //y1 = (spatial2.getMidHeight() * Math.sin(angleToCenter)) + pos2.getY();
+
+                                                //y1 = clamp(y1, spatial2.getMidHeight() * sin(toRadians(angleToCenter)),
+                                                //      spatial2.getMidHeight() * sin(toRadians(angleToCenter)));
+                                                pos1.goTo(x1, y1);*/
+                                                return;
+                                           // }
                                         }
                                     }
                                 }
