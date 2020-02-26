@@ -49,6 +49,13 @@ public class MovementComponent implements CopyableComponent {
     }
 
 
+    public double currentDistance = 0;
+
+    public double getCurrentDistance() {
+        return currentDistance;
+    }
+
+
     public MovementComponent(double speed, double angle) {
         currentSpeed = speed;
         initialSpeed = speed;
@@ -65,6 +72,7 @@ public class MovementComponent implements CopyableComponent {
     public void setMovementTowardsAngle() {
         movementX = -(currentSpeed * Math.cos(Math.toRadians(angle)));
         movementY = -(currentSpeed * Math.sin(Math.toRadians(angle)));
+        currentDistance += currentSpeed;
     }
 
     @Override

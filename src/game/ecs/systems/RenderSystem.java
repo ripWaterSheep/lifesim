@@ -53,6 +53,7 @@ public class RenderSystem extends IterableSystem {
      */
     public void calculateDisplayPos(Entity entity, SpatialComponent spatial, PositionComponent pos) {
         double displayX, displayY;
+
         if (entity instanceof Player) {
             displayX = getPanel().getMidWidth() - spatial.getMidWidth();
             displayY =  getPanel().getMidHeight() - spatial.getMidHeight();

@@ -18,8 +18,8 @@ import static util.MyMath.betterRound;
 
 public class StatBar implements DrawableOverlay {
 
-    private static final int LEFT_PADDING = 0;
-    private static final int BOTTOM_PADDING = 0;
+    private static final int LEFT_PADDING = 4;
+    private static final int BOTTOM_PADDING = 4;
 
     private static final int BAR_HEIGHT = 40;
 
@@ -71,7 +71,7 @@ public class StatBar implements DrawableOverlay {
 
 
     private <T> void drawBar(String label, double data, double scale, double maxDataVal, Color color) {
-        int y = Main.getPanel().getHeight() - ((getCurrentBarNum()) * BAR_HEIGHT) + BOTTOM_PADDING;
+        int y = Main.getPanel().getHeight() - ((getCurrentBarNum()) * BAR_HEIGHT) - BOTTOM_PADDING;
         int dataWidth = betterRound(min(data, maxDataVal) * scale);
 
         g.setColor(Color.BLACK);
@@ -88,7 +88,7 @@ public class StatBar implements DrawableOverlay {
         String formattedString = format(label, data+"");
 
         int textY = getPanel().getHeight() - (getCurrentBarNum()*BAR_HEIGHT) - BOTTOM_PADDING;
-        DrawString.drawVerticallyCenteredString(g, formattedString, LEFT_PADDING,
+        DrawString.drawVerticallyCenteredString(g, formattedString, LEFT_PADDING+3,
                 new Rectangle(LEFT_PADDING, textY, 0, BAR_HEIGHT), FontManager.getMainFont(TEXT_SIZE), Color.WHITE);
         nextLine();
     }

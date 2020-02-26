@@ -38,11 +38,12 @@ public class World {
         this.name = name;
         this.color = color;
 
+        systems.add(new RenderSystem(this, Main.getPanel()));
         systems.add(new MovementSystem(this));
         systems.add(new CollisionSystem(this));
-        systems.add(new RenderSystem(this, Main.getPanel()));
         systems.add(new HealthSystem(this));
         systems.add(new SpawnSystem(this));
+
     }
 
 
@@ -91,7 +92,6 @@ public class World {
     public void run() {
         Main.getPanel().setBackground(color);
         runSystems();
-        System.out.println(entities.size());
     }
 
 }

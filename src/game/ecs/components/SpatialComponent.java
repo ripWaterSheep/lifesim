@@ -48,7 +48,7 @@ public class SpatialComponent implements CopyableComponent {
     }
 
     /** These are the literal x and y values on the screen that the top right corner of the shape is located */
-    private double displayX, displayY;
+    private double displayX = 10000, displayY = 10000;
 
 
     public void setDisplayPos(double x, double y) {

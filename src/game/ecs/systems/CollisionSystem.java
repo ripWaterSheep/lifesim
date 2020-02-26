@@ -66,16 +66,7 @@ public class CollisionSystem extends IterableSystem {
                     }
                 }
             }
-            // Destroy on impact if specified if touching solid entity
-            if (attack1.willDestroyOnImpact()) {
-                for(SolidComponent solid2: entity2.getAll(SolidComponent.class)) {
-                    if (!solid2.willKeepInside()) {
-                        world.remove(entity1);
 
-                        System.out.println(entity1.getName() +"  "+ entity2.getName());
-                    }
-                }
-            }
         }
     }
 
