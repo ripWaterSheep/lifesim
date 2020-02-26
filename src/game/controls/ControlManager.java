@@ -15,11 +15,4 @@ public class ControlManager {
         BetterMouse.run();
     }
 
-
-    public static void reset() {
-        BetterKeyboard.reset();
-        BetterMouse.reset();
-    }
-
-
 }

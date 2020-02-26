@@ -25,13 +25,6 @@ public class BetterMouse {
         }
     }
 
-    static void reset() {
-        for (BetterMouseButton button: buttons) {
-            button.reset();
-        }
-    }
-
-
 
     private static MouseAdapter mouseAdapter = new MouseAdapter() {
 

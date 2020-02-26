@@ -28,7 +28,7 @@ public class SpatialComponent implements CopyableComponent {
     }
 
     public double getMidHeight() {
-        return height / 2;
+        return height/2;
     }
 
 

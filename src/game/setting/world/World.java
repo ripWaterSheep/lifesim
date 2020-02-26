@@ -91,6 +91,7 @@ public class World {
     public void run() {
         Main.getPanel().setBackground(color);
         runSystems();
+        System.out.println(entities.size());
     }
 
 }

@@ -11,6 +11,7 @@ import util.drawing.FontManager;
 
 import java.awt.*;
 
+import static java.lang.Math.min;
 import static main.Main.getPanel;
 import static util.ColorMethods.applyOpacity;
 import static util.MyMath.betterRound;
@@ -71,13 +72,13 @@ public class StatBar implements DrawableOverlay {
 
     private <T> void drawBar(String label, double data, double scale, double maxDataVal, Color color) {
         int y = Main.getPanel().getHeight() - ((getCurrentBarNum()) * BAR_HEIGHT) + BOTTOM_PADDING;
-        int statWidth = betterRound(data * scale);
+        int dataWidth = betterRound(min(data, maxDataVal) * scale);
 
         g.setColor(Color.BLACK);
         g.drawRect(LEFT_PADDING, y, betterRound(maxDataVal * scale), BAR_HEIGHT);
 
         g.setColor(applyOpacity(color, BAR_OPACITY));
-        g.fillRect(LEFT_PADDING, y, statWidth, BAR_HEIGHT);
+        g.fillRect(LEFT_PADDING, y, dataWidth, BAR_HEIGHT);
 
         writeValue(label, data);
     }

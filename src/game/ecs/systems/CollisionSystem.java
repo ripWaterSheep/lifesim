@@ -1,9 +1,13 @@
 package game.ecs.systems;
 
+import com.sun.tools.javac.Main;
 import game.ecs.components.*;
 import game.ecs.entities.Entity;
 import game.ecs.entities.player.Player;
 import game.setting.world.World;
+import main.MainPanel;
+
+import java.awt.*;
 
 import static java.lang.Math.*;
 import static util.Geometry.getAngleBetween;
@@ -44,21 +48,31 @@ public class CollisionSystem extends IterableSystem {
 
 
     private void combatSubsystem(Entity entity1, Entity entity2) {
-        for (AttackComponent attack : entity1.getAll(AttackComponent.class)) {
-            for (HealthComponent health : entity2.getAll(HealthComponent.class)) {
+        for (AttackComponent attack1 : entity1.getAll(AttackComponent.class)) {
+            for (HealthComponent health2 : entity2.getAll(HealthComponent.class)) {
                 boolean doDamage = true;
 
                 for (AttackComponent attack2: entity2.getAll(AttackComponent.class)) {
-                    doDamage = attack.isPlayerAlly() != attack2.isPlayerAlly();
+                    doDamage = attack1.isPlayerAlly() != attack2.isPlayerAlly();
                 }
-                if (attack.isPlayerAlly() && entity2 instanceof Player) {
+                if (attack1.isPlayerAlly() && entity2 instanceof Player) {
                     doDamage = false;
                 }
 
                 if (doDamage) {
-                    attack.doDamageTo(health);
-                    if (attack.willDestroyOnImpact()) {
+                    attack1.doDamageTo(health2);
+                    if (attack1.willDestroyOnImpact()) {
                         world.remove(entity1);
+                    }
+                }
+            }
+            // Destroy on impact if specified if touching solid entity
+            if (attack1.willDestroyOnImpact()) {
+                for(SolidComponent solid2: entity2.getAll(SolidComponent.class)) {
+                    if (!solid2.willKeepInside()) {
+                        world.remove(entity1);
+
+                        System.out.println(entity1.getName() +"  "+ entity2.getName());
                     }
                 }
             }

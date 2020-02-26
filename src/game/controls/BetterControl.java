@@ -4,7 +4,6 @@ public abstract class BetterControl {
 
     protected final int intCode;
 
-    private boolean clicked = false;
     private boolean pressed = false;
 
 
@@ -47,8 +46,5 @@ public abstract class BetterControl {
         }
     }
 
-    void reset() {
-        clicked = false;
-    }
 
 }

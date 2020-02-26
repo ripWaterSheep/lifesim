@@ -7,6 +7,8 @@ import game.ecs.components.*;
 import game.ecs.entities.Entity;
 import util.Geometry;
 
+import java.awt.*;
+
 import static game.controls.BetterKeyboard.*;
 import static java.lang.Math.sqrt;
 
@@ -88,23 +90,20 @@ public class PlayerControls {
         if (BetterMouse.right.isClicked()) {
             double strength = player.get(StatsComponent.class).getStrength();
 
-            double size = 9 + (strength / 275);
+            double size = 10 + (strength / 275);
             double angle = Geometry.getAngleBetween(BetterMouse.right.getX(), BetterMouse.right.getY(), main.Main.getPanel().getMidWidth(), main.Main.getPanel().getMidHeight());
             double damage = sqrt((strength / 16) + 1);
             System.out.println(damage);
 
 
-            if (BetterMouse.right.isClicked()) {
-                player.getWorld().add(new Entity("Player Bullet")
-                        .add(player.getPos().copyCurrentState())
-                        .add(new SpatialComponent(size, size, true))
-                        .add(new MovementComponent(40, angle))
-                        .add(new AttackComponent(damage, true, true))
-                        .add(new ProjectileComponent(700))
-                );
-                /*player.get(SpawnerComponent.class).attemptSpawn(
-                        player.getPos().getX(), player.getPos().getY(), player.getWorld());*/
-            }
+            player.getWorld().add(new Entity("Player Bullet")
+                    .add(player.getPos().copyCurrentState())
+                    .add(new SpatialComponent(size, size, true))
+                    .add(new AppearanceComponent(new Color(31, 31, 31)))
+                    .add(new MovementComponent(50, angle))
+                    .add(new AttackComponent(damage, true, true))
+                    .add(new ProjectileComponent(700))
+            );
         }
     }
 

@@ -1,6 +1,7 @@
 package main;
 
 import game.GameManager;
+import game.controls.BetterMouse;
 import game.controls.ControlManager;
 import game.overlay.OverlayManager;
 
@@ -54,8 +55,7 @@ public class MainPanel extends JPanel {
         ControlManager.run();
         GameManager.getCurrentGame().run();
         overlayManager.draw(g);
-        
-        ControlManager.reset();
+
         pause(9);
         repaint();
     }

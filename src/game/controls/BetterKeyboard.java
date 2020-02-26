@@ -84,12 +84,6 @@ public final class BetterKeyboard {
         }
     }
 
-    static void reset() {
-        for (BetterKey key: keys) {
-            key.reset();
-        }
-    }
-
 
     private static KeyAdapter keyAdapter = new KeyAdapter() {
 
