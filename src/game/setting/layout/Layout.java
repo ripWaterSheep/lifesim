@@ -14,12 +14,12 @@ public abstract class Layout {
     }
 
 
-    protected void createWorld(World world) {
+    protected final void createWorld(World world) {
         worlds.add(world);
     }
 
 
-    protected World getWorld(String worldName) {
+    public final World getWorld(String worldName) {
         World foundWorld = null;
         for (World world : worlds) {
             foundWorld = world;
@@ -29,7 +29,7 @@ public abstract class Layout {
     }
 
 
-    public Layout copyCurrentState() {
+    public final Layout copyCurrentState() {
         Layout newLayout = new DefaultLayout();
         for (World world : worlds) {
             newLayout.createWorld(world.copyCurrentState());

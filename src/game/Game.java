@@ -35,7 +35,9 @@ public class Game {
 
 
     public Game copyGameState() {
-        return new Game(layout.copyCurrentState());
+        Game newGame = new Game(layout.copyCurrentState());
+        //newGame.player = player.copyCurrentState();
+        return newGame;
     }
 
 }

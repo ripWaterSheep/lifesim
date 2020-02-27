@@ -1,5 +1,6 @@
 package game.setting.layout;
 
+import game.GameManager;
 import game.ecs.components.*;
 import game.ecs.entities.Entity;
 import game.ecs.entities.player.Player;
@@ -22,19 +23,18 @@ public class DefaultLayout extends Layout {
                 )
                 .add(new Entity("Road")
                         .add(new PositionComponent(0, 0))
-                        .add(new SpatialComponent(7000, 200, false))
-                        .add(new SpatialComponent(200, 7000, false))
+                        .add(new SpatialComponent(8000, 200, false))
+                        .add(new SpatialComponent(200, 6000, false))
                         .add(new AppearanceComponent(Color.DARK_GRAY))
                 )
                 .add(new Entity("House")
                         .add(new PositionComponent(500, -400))
                         .add(new SpatialComponent(450, 350, false))
-                        .add(new AppearanceComponent(new Color(201, 190, 127)))
+                        .add(new AppearanceComponent(new Color(100, 80, 50)))
                         .add(new InteractionComponent() {
                             @Override
-                            public void teleport(Player player) {
+                            public void onClick(Player player) {
                                 player.goToEntity("House Door");
-                                System.out.println("EW byb");
                             }
                         })
 
@@ -43,10 +43,9 @@ public class DefaultLayout extends Layout {
                         .add(new PositionComponent(-1500, -450))
                         .add(new SpatialComponent(800, 500, false))
                         .add(new AppearanceComponent("Gym"))
-                        .add(new SolidComponent(false))
                         .add(new InteractionComponent() {
                             @Override
-                             public void interact(StatsComponent stats) {
+                             public void onTouch(HealthComponent health, StatsComponent stats) {
                                  if (stats.hasEnoughMoney(1.125)) {
                                      stats.strengthen(1);
                                      stats.loseMoney(1.25);
@@ -54,7 +53,7 @@ public class DefaultLayout extends Layout {
                                  }
                              }
                              @Override
-                             public void teleport(Player player) {
+                             public void onClick(Player player) {
                                  //player.goTo(getEntity("House"));
                              }
                          })
@@ -89,19 +88,24 @@ public class DefaultLayout extends Layout {
                         .add(new SpatialComponent(150, 20, false))
                         .add(new AppearanceComponent(new Color(184, 163, 71)))
                         .add(new InteractionComponent() {
-                            public void interact(StatsComponent stats) {
-                                stats.energize(1);
-                            }
-                            public void teleport(Player player) {
+                            @Override
+                            public void onClick(Player player) {
                                 player.goToEntity("House");
                             }
                         }))
 
                 .add(new Entity("House Bed")
-                    .add(new PositionComponent(-200, -300))
-                    .add(new SpatialComponent(250, 150, false))
-                    .add(new AppearanceComponent(new Color(0, 115, 169))
-                ))
+                       .add(new PositionComponent(-200, -300))
+                        .add(new SpatialComponent(250, 150, false))
+                        .add(new AppearanceComponent(new Color(0, 115, 169)))
+                        .add(new InteractionComponent() {
+                            @Override
+                            public void onTouch(HealthComponent health, StatsComponent stats) {
+                                GameManager.saveGame();
+                                System.out.println(GameManager.getCurrentGame());
+                            }
+                        })
+                )
         );
     }
 }
