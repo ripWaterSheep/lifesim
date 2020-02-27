@@ -66,6 +66,7 @@ public class World {
                 break;
             }
         }
+        System.out.println(desiredEntity);
         return desiredEntity;
     }
 

@@ -33,12 +33,12 @@ public class PositionComponent implements CopyableComponent {
         y += movement.getMovementY();
     }
 
-    public void goTo(double x, double y) {
+    public void set(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public void goTo(PositionComponent pos) {
+    public void set(PositionComponent pos) {
         x = pos.x;
         y = pos.y;
     }

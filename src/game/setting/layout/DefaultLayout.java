@@ -26,6 +26,19 @@ public class DefaultLayout extends Layout {
                         .add(new SpatialComponent(200, 7000, false))
                         .add(new AppearanceComponent(Color.DARK_GRAY))
                 )
+                .add(new Entity("House")
+                        .add(new PositionComponent(500, -400))
+                        .add(new SpatialComponent(450, 350, false))
+                        .add(new AppearanceComponent(new Color(201, 190, 127)))
+                        .add(new InteractionComponent() {
+                            @Override
+                            public void teleport(Player player) {
+                                player.goToEntity("House Door");
+                                System.out.println("EW byb");
+                            }
+                        })
+
+                )
                 .add(new Entity("Gym")
                         .add(new PositionComponent(-1500, -450))
                         .add(new SpatialComponent(800, 500, false))
@@ -76,14 +89,11 @@ public class DefaultLayout extends Layout {
                         .add(new SpatialComponent(150, 20, false))
                         .add(new AppearanceComponent(new Color(184, 163, 71)))
                         .add(new InteractionComponent() {
-                            @Override
                             public void interact(StatsComponent stats) {
                                 stats.energize(1);
                             }
-
-                            @Override
                             public void teleport(Player player) {
-                                player.goTo(getEntity("House"));
+                                player.goToEntity("House");
                             }
                         }))
 

@@ -56,6 +56,7 @@ public class MovementComponent implements CopyableComponent {
     }
 
 
+
     public MovementComponent(double speed, double angle) {
         currentSpeed = speed;
         initialSpeed = speed;

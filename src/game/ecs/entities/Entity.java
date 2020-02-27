@@ -1,9 +1,12 @@
 package game.ecs.entities;
 
 import game.ecs.components.CopyableComponent;
+import game.ecs.components.InteractionComponent;
 import game.ecs.components.PositionComponent;
+import game.setting.layout.DefaultLayout;
 import game.setting.world.World;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -29,6 +32,10 @@ public class Entity {
 
 
     public Entity add(CopyableComponent component) {
+        /*if (component instanceof InteractionComponent) {
+            component = component.copyInitialState();
+            System.out.println(component.getClass());
+        }*/
         components.add(component);
         return this;
     }
@@ -54,6 +61,16 @@ public class Entity {
         );
     }
 
+
+    public <T extends CopyableComponent> ArrayList<T> getAll2(Class<T> filteringClass) {
+        ArrayList<T> desiredComponents = new ArrayList<>();
+        for (CopyableComponent component: components) {
+            if (filteringClass.isInstance(component)) {
+                desiredComponents.add((T) component);
+            }
+        }
+        return desiredComponents;
+    }
 
 
     public Entity copyInitialState() {

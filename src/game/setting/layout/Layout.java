@@ -29,19 +29,6 @@ public abstract class Layout {
     }
 
 
-    protected Entity getEntity(String entityName) {
-        Entity desiredEntity = null;
-        for (World world : worlds) {
-            if (world.getEntityWithName(entityName) != null) {
-                desiredEntity = world.getEntityWithName(entityName);
-                break;
-            }
-        }
-
-        return desiredEntity;
-    }
-
-
     public Layout copyCurrentState() {
         Layout newLayout = new DefaultLayout();
         for (World world : worlds) {

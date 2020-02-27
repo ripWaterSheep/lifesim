@@ -1,13 +1,11 @@
 package game.ecs.systems;
 
-import com.sun.tools.javac.Main;
+import game.controls.BetterMouse;
 import game.ecs.components.*;
 import game.ecs.entities.Entity;
 import game.ecs.entities.player.Player;
+import game.setting.layout.DefaultLayout;
 import game.setting.world.World;
-import main.MainPanel;
-
-import java.awt.*;
 
 import static java.lang.Math.*;
 import static util.Geometry.getAngleBetween;
@@ -72,11 +70,11 @@ public class CollisionSystem extends IterableSystem {
 
 
     private void interactionSubsystem(Entity entity1, Entity entity2) {
-        for (InteractionComponent interaction: entity1.getAll(InteractionComponent.class)) {
+        for (InteractionComponent interaction: entity1.getAll2(InteractionComponent.class)) {
             for (StatsComponent stats: entity2.getAll(StatsComponent.class)) {
                 interaction.interact(stats);
             }
-            if (entity2 instanceof Player) {
+            if (entity2 instanceof Player && BetterMouse.left.isClicked()) {
                 interaction.teleport((Player) entity2);
             }
         }
@@ -159,7 +157,7 @@ public class CollisionSystem extends IterableSystem {
                             }
                         }
 
-                        pos1.goTo(x1, y1);
+                        pos1.set(x1, y1);
                     }
 
                 }

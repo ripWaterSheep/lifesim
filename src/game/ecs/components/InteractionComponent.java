@@ -25,4 +25,10 @@ public class InteractionComponent implements CopyableComponent {
     public InteractionComponent copyCurrentState() {
         return copyInitialState();
     }
+
+
+
+    public InteractionComponent testGetter() {
+        return this;
+    }
 }

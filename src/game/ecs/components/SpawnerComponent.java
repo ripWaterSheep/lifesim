@@ -48,7 +48,7 @@ public class SpawnerComponent implements CopyableComponent {
         allSpawn.add(spawnedEntity);
 
         for (PositionComponent pos : spawnedEntity.getAll(PositionComponent.class)) {
-            pos.goTo(x, y);
+            pos.set(x, y);
         }
 
         lastSpawnTime = System.currentTimeMillis();

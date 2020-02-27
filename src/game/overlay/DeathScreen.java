@@ -31,16 +31,18 @@ public class DeathScreen implements DrawableOverlay {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(bgColor);
-        Rectangle rect = main.Main.getPanel().getRect();
+        if (showing) {
+            g.setColor(bgColor);
+            Rectangle rect = main.Main.getPanel().getRect();
 
-        ((Graphics2D) g).fill(rect);
-        g.setFont(font);
-        DrawString.drawCenteredString(g, "OOF, YOU DIED!", rect, font, textColor);
+            ((Graphics2D) g).fill(rect);
+            g.setFont(font);
+            DrawString.drawCenteredString(g, "OOF, YOU DIED!", rect, font, textColor);
 
-        if (BetterMouse.left.isClicked() || BetterKeyboard.isAnyKeyClicked()) {
-            GameManager.startFromLastSave();
-            showing = false;
+            if (BetterMouse.left.isClicked() || BetterKeyboard.isAnyKeyClicked()) {
+                GameManager.startFromLastSave();
+                showing = false;
+            }
         }
     }
 

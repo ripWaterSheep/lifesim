@@ -1,5 +1,6 @@
 package game.ecs.entities.player;
 
+import game.GameManager;
 import game.ecs.components.*;
 import game.ecs.entities.Entity;
 import game.setting.world.World;
@@ -51,8 +52,32 @@ public final class Player extends Entity {
         return pos;
     }
 
-    public void goTo(Entity entity) {
-        get(PositionComponent.class).goTo(entity.get(PositionComponent.class));
+
+    public void goToWorld(String worldName) {
+        for (World world: GameManager.getAllWorlds()) {
+            if (world.getName().equals(worldName)) {
+                setWorld(world);
+            }
+        }
     }
+
+
+    public void goToEntity(String entityName) throws IllegalArgumentException {
+        for (World world: GameManager.getAllWorlds()) {
+            Entity entity = world.getEntityWithName(entityName);
+            if (entity != null) {
+                if (entity.getName().equals(entityName)) {
+                    for (PositionComponent newPos: entity.getAll(PositionComponent.class)) {
+                        getPos().set(newPos);
+                        setWorld(world);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+
+
 
 }

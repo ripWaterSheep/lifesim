@@ -21,11 +21,11 @@ public class StatBar implements DrawableOverlay {
     private static final int LEFT_PADDING = 4;
     private static final int BOTTOM_PADDING = 4;
 
-    private static final int BAR_HEIGHT = 40;
+    private static final int BAR_HEIGHT = 36;
 
     private static final int BAR_OPACITY = 125;
 
-    private static final int TEXT_SIZE = 30;
+    private static final int TEXT_SIZE = 28;
 
 
     private Graphics g;
