@@ -2,7 +2,6 @@ package game.overlay;
 
 import game.GameManager;
 import game.ecs.components.HealthComponent;
-import game.ecs.components.PositionComponent;
 import game.ecs.components.StatsComponent;
 import game.ecs.entities.player.Player;
 import main.Main;
@@ -47,8 +46,8 @@ public class StatBar implements DrawableOverlay {
         drawBar("Health", player.get(HealthComponent.class).getHealth(), 0.2, 1000, HealthComponent.Colors.bloodColor);
 
         writeValue("World", player.getWorld().getName());
-        writeNum("Y", player.getPos().getY());
-        writeNum("X", player.getPos().getX());
+        writeRoundedVal("Y", player.getPos().getY());
+        writeRoundedVal("X", player.getPos().getX());
 
 
         currentBarNum = 1;
@@ -70,20 +69,6 @@ public class StatBar implements DrawableOverlay {
     }
 
 
-    private <T> void drawBar(String label, double data, double scale, double maxDataVal, Color color) {
-        int y = Main.getPanel().getHeight() - ((getCurrentBarNum()) * BAR_HEIGHT) - BOTTOM_PADDING;
-        int dataWidth = betterRound(min(data, maxDataVal) * scale);
-
-        g.setColor(Color.BLACK);
-        g.drawRect(LEFT_PADDING, y, betterRound(maxDataVal * scale), BAR_HEIGHT);
-
-        g.setColor(applyOpacity(color, BAR_OPACITY));
-        g.fillRect(LEFT_PADDING, y, dataWidth, BAR_HEIGHT);
-
-        writeValue(label, data);
-    }
-
-
     private <T> void writeValue(String label, T data) {
         String formattedString = format(label, data+"");
 
@@ -94,8 +79,23 @@ public class StatBar implements DrawableOverlay {
     }
 
 
-    private <T> void writeNum(String label, double data) {
+    private <T> void writeRoundedVal(String label, double data) {
         writeValue(label, betterRound(data));
     }
+
+
+    private <T> void drawBar(String label, double data, double scale, double maxDataVal, Color color) {
+        int y = Main.getPanel().getHeight() - ((getCurrentBarNum()) * BAR_HEIGHT) - BOTTOM_PADDING;
+        int dataWidth = betterRound(min(data, maxDataVal) * scale);
+
+        g.setColor(Color.BLACK);
+        g.drawRect(LEFT_PADDING, y, betterRound(maxDataVal * scale), BAR_HEIGHT);
+
+        g.setColor(applyOpacity(color, BAR_OPACITY));
+        g.fillRect(LEFT_PADDING, y, dataWidth, BAR_HEIGHT);
+
+        writeRoundedVal(label, data);
+    }
+
 
 }

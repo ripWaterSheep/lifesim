@@ -56,7 +56,7 @@ public class MainPanel extends JPanel {
         GameManager.getCurrentGame().run();
         overlayManager.draw(g);
 
-        pause(9);
+        pause(8);
         repaint();
     }
 

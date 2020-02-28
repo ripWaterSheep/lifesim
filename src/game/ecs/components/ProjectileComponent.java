@@ -20,8 +20,4 @@ public class ProjectileComponent implements CopyableComponent {
         return new ProjectileComponent(movementRange);
     }
 
-    @Override
-    public ProjectileComponent copyCurrentState() {
-        return copyInitialState();
-    }
 }

@@ -1,13 +1,10 @@
 package game.ecs.systems;
 
-import game.Game;
 import game.ecs.components.HealthComponent;
-import game.ecs.components.ProjectileComponent;
 import game.ecs.entities.Entity;
 import game.ecs.entities.player.Player;
 import game.overlay.DeathScreen;
-import game.setting.world.World;
-import main.MainPanel;
+import game.setting.World;
 
 public class HealthSystem extends IterableSystem {
 

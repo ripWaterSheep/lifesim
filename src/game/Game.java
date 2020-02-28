@@ -1,7 +1,7 @@
 package game;
 
 import game.ecs.entities.player.Player;
-import game.setting.layout.Layout;
+import game.setting.Layout;
 
 
 public class Game {
@@ -30,14 +30,6 @@ public class Game {
     public void run() {
         player.control();
         player.getWorld().run();
-    }
-
-
-
-    public Game copyGameState() {
-        Game newGame = new Game(layout.copyCurrentState());
-        //newGame.player = player.copyCurrentState();
-        return newGame;
     }
 
 }

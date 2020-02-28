@@ -40,7 +40,7 @@ public class DeathScreen implements DrawableOverlay {
             DrawString.drawCenteredString(g, "OOF, YOU DIED!", rect, font, textColor);
 
             if (BetterMouse.left.isClicked() || BetterKeyboard.isAnyKeyClicked()) {
-                GameManager.startFromLastSave();
+                GameManager.startNew();
                 showing = false;
             }
         }

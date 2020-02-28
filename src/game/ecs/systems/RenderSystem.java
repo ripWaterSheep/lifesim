@@ -6,10 +6,9 @@ import game.ecs.components.LabelComponent;
 import game.ecs.components.SpatialComponent;
 import game.ecs.entities.Entity;
 import game.ecs.entities.player.Player;
-import game.setting.world.World;
+import game.setting.World;
 import main.MainPanel;
 import util.drawing.DrawString;
-import util.drawing.FontManager;
 
 import java.awt.*;
 

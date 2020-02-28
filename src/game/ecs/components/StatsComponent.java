@@ -75,11 +75,6 @@ public class StatsComponent implements CopyableComponent {
         return new StatsComponent();
     }
 
-    @Override
-    public StatsComponent copyCurrentState() {
-        return new StatsComponent(energy, strength, money, intellect);
-    }
-
 
     public static class Colors {
         public static final Color energyColor = new Color(255, 120, 0);

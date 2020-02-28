@@ -1,7 +1,7 @@
 package game.ecs.systems;
 
 import game.ecs.entities.Entity;
-import game.setting.world.World;
+import game.setting.World;
 
 public abstract class IterableSystem {
 

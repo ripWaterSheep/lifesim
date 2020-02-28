@@ -3,7 +3,7 @@ package game.ecs.systems;
 import game.GameManager;
 import game.ecs.components.*;
 import game.ecs.entities.Entity;
-import game.setting.world.World;
+import game.setting.World;
 
 import static util.Geometry.*;
 import static util.MyMath.getRand;

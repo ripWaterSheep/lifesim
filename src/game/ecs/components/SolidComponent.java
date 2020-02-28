@@ -8,7 +8,6 @@ public class SolidComponent implements CopyableComponent {
         return keepInside;
     }
 
-
     public SolidComponent(boolean keepInside) {
         this.keepInside = keepInside;
     }
@@ -16,11 +15,6 @@ public class SolidComponent implements CopyableComponent {
 
     @Override
     public SolidComponent copyInitialState() {
-        return new SolidComponent(keepInside);
-    }
-
-    @Override
-    public SolidComponent copyCurrentState() {
         return new SolidComponent(keepInside);
     }
 

@@ -43,11 +43,6 @@ public class HealthComponent implements CopyableComponent {
     }
 
 
-    @Override
-    public HealthComponent copyCurrentState() {
-        return new HealthComponent(health);
-    }
-
     public static class Colors {
         public static final Color bloodColor = new Color(255, 0, 0);
     }

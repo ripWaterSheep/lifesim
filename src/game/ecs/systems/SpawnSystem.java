@@ -6,7 +6,7 @@ import game.ecs.components.PositionComponent;
 import game.ecs.components.ProjectileComponent;
 import game.ecs.components.SpawnerComponent;
 import game.ecs.entities.Entity;
-import game.setting.world.World;
+import game.setting.World;
 
 
 import static util.Geometry.*;

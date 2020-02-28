@@ -40,8 +40,4 @@ public class LabelComponent implements CopyableComponent {
     }
 
 
-    @Override
-    public LabelComponent copyCurrentState() {
-        return copyInitialState();
-    }
 }

@@ -49,7 +49,6 @@ public class PositionComponent implements CopyableComponent {
         return new PositionComponent(initialX, initialY);
     }
 
-    @Override
     public PositionComponent copyCurrentState() {
         return new PositionComponent(x, y);
     }

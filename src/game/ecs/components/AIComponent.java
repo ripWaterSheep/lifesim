@@ -45,9 +45,4 @@ public class AIComponent implements CopyableComponent {
         return new AIComponent(pathFinding, detectionRange, randomness);
     }
 
-    @Override
-    public AIComponent copyCurrentState() {
-        return copyInitialState();
-    }
-
 }

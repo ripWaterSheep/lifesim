@@ -3,7 +3,7 @@ package game.controls;
 import game.ecs.components.HealthComponent;
 import game.ecs.components.StatsComponent;
 import game.ecs.entities.player.Player;
-import game.setting.world.World;
+import game.setting.World;
 import game.GameManager;
 
 import java.util.ArrayList;

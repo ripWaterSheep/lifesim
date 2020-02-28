@@ -1,6 +1,5 @@
 package game.ecs.components;
 
-
 import java.awt.*;
 
 import static util.drawing.ImageManager.loadImage;
@@ -53,11 +52,6 @@ public class AppearanceComponent implements CopyableComponent {
     @Override
     public AppearanceComponent copyInitialState() {
         return new AppearanceComponent(color, image);
-    }
-
-    @Override
-    public AppearanceComponent copyCurrentState() {
-        return copyInitialState();
     }
 
 }

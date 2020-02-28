@@ -3,10 +3,9 @@ package game.ecs.entities.player;
 import game.GameManager;
 import game.ecs.components.*;
 import game.ecs.entities.Entity;
-import game.setting.world.World;
+import game.setting.World;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public final class Player extends Entity {
 
@@ -76,26 +75,6 @@ public final class Player extends Entity {
                 }
             }
         }
-    }
-
-
-
-    public Player copyCurrentState() {
-        Player newPlayer = new Player();
-
-        ArrayList<CopyableComponent> playerComponents = new ArrayList<>(getComponents());
-        System.out.println(playerComponents);
-        newPlayer.getComponents().clear();
-
-        for (CopyableComponent component: playerComponents) {
-            if (component instanceof HealthComponent) {
-                newPlayer.add(component.copyInitialState());
-            }
-            newPlayer.add(component.copyCurrentState());
-        }
-
-
-        return newPlayer;
     }
 
 

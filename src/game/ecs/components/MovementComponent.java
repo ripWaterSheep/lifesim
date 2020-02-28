@@ -81,8 +81,4 @@ public class MovementComponent implements CopyableComponent {
         return new MovementComponent(initialSpeed, initialAngle);
     }
 
-    @Override
-    public CopyableComponent copyCurrentState() {
-        return new MovementComponent(currentSpeed, angle);
-    }
 }

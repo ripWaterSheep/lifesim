@@ -1,7 +1,7 @@
 package game.ecs.components;
 
 import game.ecs.entities.Entity;
-import game.setting.world.World;
+import game.setting.World;
 
 import java.util.ArrayList;
 
@@ -65,14 +65,6 @@ public class SpawnerComponent implements CopyableComponent {
     @Override
     public SpawnerComponent copyInitialState() {
         return new SpawnerComponent(spawnInterval, activeRange, spawnTemplate);
-    }
-
-    @Override
-    public SpawnerComponent copyCurrentState() {
-        SpawnerComponent spawner = new SpawnerComponent(spawnInterval, activeRange, spawnTemplate);
-        spawner.lastSpawnTime = lastSpawnTime;
-        spawner.allSpawn = allSpawn;
-        return spawner;
     }
 
 }

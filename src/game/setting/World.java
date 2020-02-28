@@ -1,12 +1,6 @@
-package game.setting.world;
+package game.setting;
 
-import game.GameManager;
-import game.ecs.components.AppearanceComponent;
-import game.ecs.components.CopyableComponent;
-import game.ecs.components.PositionComponent;
-import game.ecs.components.SpatialComponent;
 import game.ecs.entities.Entity;
-import game.ecs.entities.player.Player;
 import game.ecs.systems.*;
 import game.ecs.systems.IterableSystem;
 import main.Main;
@@ -67,15 +61,6 @@ public class World {
             }
         }
         return desiredEntity;
-    }
-
-
-    public World copyCurrentState() {
-        World newWorld = new World(name, color);
-        for (Entity entity: entities) {
-            newWorld.add(entity.copyCurrentState());
-        }
-        return newWorld;
     }
 
 

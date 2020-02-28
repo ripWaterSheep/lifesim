@@ -8,9 +8,4 @@ public interface CopyableComponent {
      */
     CopyableComponent copyInitialState();
 
-    /** Allows instances of implemented class to duplicate their current state.
-     * This enables the game to save the current game state for a savepoint that the payer returns to on death..
-     */
-    CopyableComponent copyCurrentState();
-
 }

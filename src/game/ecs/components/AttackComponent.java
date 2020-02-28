@@ -37,8 +37,4 @@ public class AttackComponent implements CopyableComponent {
         return new AttackComponent(damage, destroyOnImpact, playerAlly);
     }
 
-    @Override
-    public AttackComponent copyCurrentState() {
-        return copyInitialState();
-    }
 }

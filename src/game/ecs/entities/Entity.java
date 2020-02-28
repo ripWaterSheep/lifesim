@@ -1,12 +1,7 @@
 package game.ecs.entities;
 
 import game.ecs.components.CopyableComponent;
-import game.ecs.components.InteractionComponent;
-import game.ecs.components.PositionComponent;
-import game.setting.layout.DefaultLayout;
-import game.setting.world.World;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -78,17 +73,6 @@ public class Entity {
 
         for (CopyableComponent component: components) {
             newEntity.add(component.copyInitialState());
-        }
-
-        return newEntity;
-    }
-
-
-    public Entity copyCurrentState() {
-        Entity newEntity = new Entity("Copy of " + name);
-
-        for (CopyableComponent component: components) {
-            newEntity.add(component.copyCurrentState());
         }
 
         return newEntity;

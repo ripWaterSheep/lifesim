@@ -82,9 +82,4 @@ public class SpatialComponent implements CopyableComponent {
         return new SpatialComponent(initialWidth, initialHeight, elliptical);
     }
 
-
-    @Override
-    public SpatialComponent copyCurrentState() {
-        return new SpatialComponent(width, height, elliptical);
-    }
 }
