@@ -9,9 +9,8 @@ import java.awt.*;
 
 public final class Player extends Entity {
 
-
-    private PlayerControls controls = new PlayerControls(this);
-
+    private PlayerControls controls;
+    private StatsManagement statsManagement;
 
     protected World world;
 
@@ -36,6 +35,9 @@ public final class Player extends Entity {
         add(new MovementComponent(12));
         add(new HealthComponent(1000));
         add(new StatsComponent());
+
+        controls = new PlayerControls(this);
+        statsManagement = new StatsManagement(this);
     }
 
 

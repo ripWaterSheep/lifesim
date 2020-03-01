@@ -15,7 +15,7 @@ import static util.MyMath.betterRound;
 public class Geometry {
 
     public static double getDistanceBetween(PositionComponent pos1, PositionComponent pos2) {
-        return abs(betterRound(Point2D.distance(pos1.getX(), pos1.getY(), pos2.getX(), pos2.getY())));
+        return abs(betterRound(Point2D.distance(pos1.getX(), pos1.getY(),pos2.getX(), pos2.getY())));
     }
 
 

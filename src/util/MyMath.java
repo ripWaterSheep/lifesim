@@ -12,12 +12,15 @@ public class MyMath {
         return val >= min && val <= max;
     }
 
+    public static double scale(final double valueIn, final double baseMin, final double baseMax, final double newMin, final double newMax) {
+        return ((newMax - newMin) * (valueIn - baseMin) / (baseMax - baseMin)) + newMin;
+    }
+
 
     /** Ensure input is inside a certain range. */
     public static double clamp(double val, double min, double max) { return Math.max(min, Math.min(max, val)); }
 
     public static int clamp(int val, int min, int max) { return Math.max(min, Math.min(max, val)); }
-
 
 
     public static int betterRound(double a) { return (int)Math.round(a); }

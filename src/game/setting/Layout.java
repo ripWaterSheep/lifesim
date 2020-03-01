@@ -167,6 +167,17 @@ public class Layout {
                         .add(new AppearanceComponent(new Color(201, 190, 127)))
                         .add(new SolidComponent(true))
                 )
+                .add(new Entity("Hallway")
+                        .add(new PositionComponent(1250, 0))
+                        .add(new SpatialComponent(1000, 300, false))
+                        .add(new AppearanceComponent(new Color(201, 190, 127)))
+                        .add(new SolidComponent(true))
+                ).add(new Entity("Bedroom")
+                        .add(new PositionComponent(250, 0))
+                        .add(new SpatialComponent(600, 600, false))
+                        .add(new AppearanceComponent(new Color(201, 190, 127)))
+                        .add(new SolidComponent(true))
+                )
                 .add(new Entity("House Door")
                         .add(new PositionComponent(0, 900*0.5))
                         .add(new SpatialComponent(150, 20, false))
@@ -189,6 +200,7 @@ public class Layout {
                             }
                         })
                 )
+
         );
 
         worlds.add(new World("City", new Color(100, 205, 131))
@@ -218,7 +230,35 @@ public class Layout {
                 )
         );
 
-        worlds.add(new World("Farm", new Color(110, 176, 22)));
+        worlds.add(new World("Farm", new Color(87, 176, 62))
+
+        );
+
+        worlds.add(new World("Moon", new Color(5, 6, 10))
+                .add(new Entity("Surface")
+                        .add(new PositionComponent(0, 0))
+                        .add(new SpatialComponent(3000, 3000, false))
+                        .add(new AppearanceComponent(new Color(140, 140, 140)))
+                        .add(new SolidComponent(true))
+                )
+                .add(new Entity("Ken")
+                        .add(new PositionComponent(100, 1000))
+                        .add(new SpatialComponent(300, 250, false))
+                        .add(new AppearanceComponent("kenface"))
+                        .add(new MovementComponent(15))
+                        .add(new AIComponent(AIComponent.PathFinding.PURSUE, 300, 5))
+                        .add(new HealthComponent(1000))
+                        .add(new AttackComponent(8, false, false))
+                )
+        );
+
+        worlds.add(new World("Daddyland", new Color(255, 200, 240))
+                .add(new Entity("Joshe")
+                        .add(new PositionComponent(-1000, -1000))
+
+                )
+
+        );
 
     }
 

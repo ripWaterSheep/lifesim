@@ -108,65 +108,55 @@ public class CollisionSystem extends IterableSystem {
                         final double y2 = pos2.getY();
 
                         if (solid.willKeepInside()) {
-                            // If entity is already inside another shape in the entity (if entity has multiple shape components),
-                            // don't restrict the position (break out of the loop to prevent restricting position inside).
-                            for (SpatialComponent checkedSpatial: entity2.getAll(SpatialComponent.class)) {
-                                if (checkedSpatial != spatial2) {
-                                    for (SolidComponent checkedSolid: entity2.getAll(SolidComponent.class)) {
-                                        if (checkedSolid.willKeepInside() && testIntersection(checkedSpatial.getShape(), spatial1.getShape())) {
-                                            return;
+                            for (Entity checkedEntity: world.getEntities()) {
+                                // If entity is already inside another shape in the entity (if entity has multiple shape components),
+                                // don't restrict the position (break out of the loop to prevent restricting position inside).
+                                for (SpatialComponent checkedSpatial : checkedEntity.getAll(SpatialComponent.class)) {
+                                    if (checkedSpatial != spatial2) {
+                                        for (SolidComponent checkedSolid : checkedEntity.getAll(SolidComponent.class)) {
+                                            if (checkedSolid.willKeepInside() && testIntersection(spatial1.getShape(), checkedSpatial.getShape())) {
+                                                return;
+                                            }
                                         }
                                     }
                                 }
                             }
-                            if (spatial2.isElliptical()) {
 
+                            // Keep entity's position inside the solid entity.
+                            if (spatial2.isElliptical()) {
                                 double angleToCenter = getAngleBetween(pos2, pos1);
 
                                 double xDiff = abs(x1-x2);
                                 double curveX = (spatial2.getMidWidth()-spatial1.getMidWidth()) * cos(toRadians(angleToCenter));
-
-                                if (xDiff > abs(curveX)) {
-                                    x1 = curveX + x2;
-                                }
+                                if (xDiff > abs(curveX)) x1 = curveX + x2;
 
                                 double yDiff = abs(y1-y2);
                                 double curveY = (spatial2.getMidHeight()-spatial1.getMidHeight()) * sin(toRadians(angleToCenter));
-
-                                if (yDiff > abs(curveY)) {
-                                    y1 = curveY + y2;
-                                }
+                                if (yDiff > abs(curveY)) y1 = curveY + y2;
 
                             } else {
                                 double diffMidWidths = spatial2.getMidWidth() - spatial1.getMidWidth();
                                 double diffMidHeights = spatial2.getMidHeight() - spatial1.getMidHeight();
 
-                                x1 = clamp(x1, x2 - diffMidWidths, x2 + diffMidWidths);
-                                y1 = clamp(y1, y2 - diffMidHeights, y2 + diffMidHeights);
+                                x1 = clamp(x1, x2 - diffMidWidths-1, x2 + diffMidWidths+1);
+                                y1 = clamp(y1, y2 - diffMidHeights-1, y2 + diffMidHeights+1);
                             }
 
                         } else {
 
+                            // Keep entity's position outside the solid entity.
                             if (spatial2.isElliptical()) {
-
                                 double angleToCenter = getAngleBetween(pos2, pos1);
 
                                 double xDiff = abs(x1-x2);
                                 double curveX = (spatial2.getMidWidth()+spatial1.getMidWidth()) * cos(toRadians(angleToCenter));
-
-                                if (xDiff < abs(curveX)) {
-                                    x1 = curveX + x2;
-                                }
+                                if (xDiff < abs(curveX)) x1 = curveX + x2;
 
                                 double yDiff = abs(y1-y2);
                                 double curveY = (spatial2.getMidHeight()+spatial1.getMidHeight()) * sin(toRadians(angleToCenter));
-
-                                if (yDiff < abs(curveY)) {
-                                    y1 = curveY + y2;
-                                }
+                                if (yDiff < abs(curveY)) y1 = curveY + y2;
 
                             } else {
-                            // Keep entity's position outside the solid entity
 
                             double combinedMidWidth = spatial2.getMidWidth()+spatial1.getMidWidth();
                             double combinedMidHeight = spatial2.getMidHeight()+spatial1.getMidHeight();

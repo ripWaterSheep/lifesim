@@ -29,11 +29,21 @@ public class HealthComponent implements CopyableComponent {
         health -= amount;
     }
 
+    private final double killLoot;
+
+    public double getKillLoot() {
+        return killLoot;
+    }
+
+    public HealthComponent(double health, double killLoot) {
+        initialHealth = health;
+        this.health = health;
+        this.killLoot = killLoot;
+    }
 
 
     public HealthComponent(double health) {
-        initialHealth = health;
-        this.health = health;
+        this(health, 0);
     }
 
 

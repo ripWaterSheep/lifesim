@@ -11,13 +11,18 @@ import java.awt.*;
 
 import static game.controls.BetterKeyboard.*;
 import static java.lang.Math.sqrt;
+import static util.MyMath.scale;
 
 public class PlayerControls {
 
     private Player player;
+    private StatsComponent stats;
+    private MovementComponent movement;
 
     PlayerControls(Player player) {
         this.player = player;
+        stats = player.get(StatsComponent.class);
+        this.movement = player.get(MovementComponent.class);
     }
 
 
@@ -25,6 +30,7 @@ public class PlayerControls {
         sprintControls();
         movementControls();
         weaponControls();
+        movement.multiplySpeed(scale(stats.getEnergy(), 0, 1000, 0.65, 1));;
     }
 
 
@@ -50,12 +56,13 @@ public class PlayerControls {
             down = downkey.isPressed();
         }
 
-        for (MovementComponent movement : player.getAll(MovementComponent.class)) {
-            movement.setAngle(getIntendedAngle(up, down, left, right));
-            if (up || down || left || right) {
-                movement.setMovementTowardsAngle();
-            } else movement.beStationary();
-        }
+        movement.setAngle(getIntendedAngle(up, down, left, right));
+
+        if (up || down || left || right) {
+            movement.setMovementTowardsAngle();
+            stats.tire(0.02);
+        } else
+            movement.beStationary();
     }
 
 
@@ -80,13 +87,13 @@ public class PlayerControls {
 
     private void sprintControls() {
         if (k_space.isPressed()) {
-            player.get(MovementComponent.class).setSpeedRatio(1.5);
+            player.get(MovementComponent.class).multiplySpeed(1.5);
+            stats.tire(0.1);
         }
     }
 
 
     private void weaponControls() {
-
         if (BetterMouse.right.isClicked()) {
             double strength = player.get(StatsComponent.class).getStrength();
 
@@ -94,7 +101,6 @@ public class PlayerControls {
             double angle = Geometry.getAngleBetween(BetterMouse.right.getX(), BetterMouse.right.getY(), main.Main.getPanel().getMidWidth(), main.Main.getPanel().getMidHeight());
             double damage = sqrt((strength / 16) + 1);
             System.out.println(damage);
-
 
             player.getWorld().add(new Entity("Player Bullet")
                     .add(player.getPos().copyCurrentState())
