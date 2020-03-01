@@ -1,11 +1,9 @@
 package game.ecs.systems;
 
 import game.GameManager;
-import game.ecs.components.AIComponent;
-import game.ecs.components.PositionComponent;
-import game.ecs.components.ProjectileComponent;
-import game.ecs.components.SpawnerComponent;
+import game.ecs.components.*;
 import game.ecs.entities.Entity;
+import game.ecs.entities.player.Player;
 import game.setting.World;
 
 
@@ -36,18 +34,17 @@ public class SpawnSystem extends IterableSystem {
 
                 double distanceFromPlayer = getDistanceBetween(GameManager.getPlayer().getPos(), pos);
 
-                if (distanceFromPlayer > spawner.getActiveRange()) {
-                    doSpawning = false;
-                }
+                // If entity has AI and player is farther away than AI detection range, don't spawn.
                 for (AIComponent ai: entity.getAll(AIComponent.class)) {
                     if (distanceFromPlayer > ai.getDetectionRange())
                         doSpawning = false;
                 }
-                for (ProjectileComponent projectile: entity.getAll(ProjectileComponent.class)) {
+
+                //If the entity spawns a projectile and the player is out of range, don't spawn.
+                for (ProjectileComponent projectile: spawner.getSpawnTemplate().getAll(ProjectileComponent.class)) {
                     if (distanceFromPlayer > projectile.getMovementRange())
                         doSpawning = false;
                 }
-
 
                 if (doSpawning) {
                     spawner.attemptSpawn(pos.getX(), pos.getY(), world);

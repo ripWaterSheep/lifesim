@@ -2,6 +2,7 @@ package game.ecs.components;
 
 import java.awt.*;
 
+import static util.ColorMethods.applyOpacity;
 import static util.drawing.ImageManager.loadImage;
 
 
@@ -14,7 +15,6 @@ public class AppearanceComponent implements CopyableComponent {
     public Color getColor() {
         return color;
     }
-
 
     private final Image image;
 
@@ -44,7 +44,7 @@ public class AppearanceComponent implements CopyableComponent {
 
         if (image != null) {
             Rectangle rect = shape.getBounds();
-            g2d.drawImage(image, (int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight(), null);
+            g2d.drawImage(image, rect.x, rect.y, rect.width, rect.height, null);
         }
     }
 

@@ -19,7 +19,6 @@ public final class Player extends Entity {
         return world;
     }
 
-
     public void setWorld(World newWorld) {
         if (world != null)
             world.remove(this);
@@ -42,14 +41,6 @@ public final class Player extends Entity {
 
     public void control() {
         controls.run();
-    }
-
-
-    public PositionComponent getPos() {
-        PositionComponent pos = get(PositionComponent.class);
-        if (pos == null)
-            return new PositionComponent(0, 0);
-        return pos;
     }
 
 

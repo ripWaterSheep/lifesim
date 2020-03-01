@@ -1,33 +1,46 @@
 package game.ecs.systems;
 
 import game.GameManager;
+import game.controls.BetterMouse;
 import game.ecs.components.*;
 import game.ecs.components.LabelComponent;
 import game.ecs.components.SpatialComponent;
 import game.ecs.entities.Entity;
 import game.ecs.entities.player.Player;
 import game.setting.World;
+import main.Main;
 import main.MainPanel;
 import util.drawing.DrawString;
 
 import java.awt.*;
 
+import static java.lang.Math.PI;
 import static main.Main.getPanel;
+import static util.MyMath.clamp;
 
 
 public class RenderSystem extends IterableSystem {
 
     MainPanel graphicsPanel;
 
-    public RenderSystem(World world, MainPanel graphicsPanel) {
+    private static double mapScale = 0.88;
+
+    private static double getMapScaleReciprocal() {
+        return 1/mapScale;
+    }
+
+
+    public RenderSystem(World world) {
         super(world);
-        this.graphicsPanel = graphicsPanel;
+        this.graphicsPanel = Main.getPanel();
     }
 
 
     @Override
     public void run(Entity entity) {
         Graphics2D g2d = (Graphics2D) graphicsPanel.getCurrentGraphics().create();
+        mapScale = BetterMouse.getMouseWheelPos();
+        g2d.scale(mapScale, mapScale);
 
         for (PositionComponent pos : entity.getAll(PositionComponent.class)) {
             for (SpatialComponent spatial : entity.getAll(SpatialComponent.class)) {
@@ -54,12 +67,12 @@ public class RenderSystem extends IterableSystem {
         double displayX, displayY;
 
         if (entity instanceof Player) {
-            displayX = getPanel().getMidWidth() - spatial.getMidWidth();
-            displayY =  getPanel().getMidHeight() - spatial.getMidHeight();
+            displayX = getPanel().getMidWidth()*getMapScaleReciprocal() - spatial.getMidWidth();
+            displayY =  getPanel().getMidHeight()*getMapScaleReciprocal() - spatial.getMidHeight();
         } else {
             PositionComponent playerPos = GameManager.getPlayer().get(PositionComponent.class);
-            displayX = pos.getX()-playerPos.getX() - spatial.getMidWidth() + getPanel().getMidWidth();
-            displayY = pos.getY()-playerPos.getY() - spatial.getMidHeight() + getPanel().getMidHeight();
+            displayX = pos.getX()-playerPos.getX() - spatial.getMidWidth() + getPanel().getMidWidth()*getMapScaleReciprocal();
+            displayY = pos.getY()-playerPos.getY() - spatial.getMidHeight() + getPanel().getMidHeight()*getMapScaleReciprocal();
         }
         spatial.setDisplayPos(displayX, displayY);
     }

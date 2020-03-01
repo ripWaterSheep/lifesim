@@ -3,6 +3,7 @@ package main;
 import game.GameManager;
 
 import javax.swing.*;
+import java.awt.*;
 
 
 public class Main {
@@ -21,6 +22,8 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(panel);
         frame.setVisible(true);
+        frame.setMinimumSize(new Dimension(500, 500));
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
 

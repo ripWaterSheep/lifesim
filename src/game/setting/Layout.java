@@ -6,7 +6,8 @@ import game.ecs.entities.player.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+
+import static util.MyMath.getRand;
 
 
 public class Layout {
@@ -24,17 +25,18 @@ public class Layout {
                 .add(new Entity("Grass")
                         .add(new PositionComponent(0, 0))
                         .add(new AppearanceComponent(new Color(60, 159, 75)))
-                        .add(new SpatialComponent(8000, 7000, true))
+                        .add(new SpatialComponent(8000, 7000, false))
+                        .add(new SolidComponent(true))
                 )
                 .add(new Entity("Road")
                         .add(new PositionComponent(0, 0))
-                        .add(new SpatialComponent(8000, 20, false))
+                        .add(new SpatialComponent(8000, 250, false))
                         .add(new SpatialComponent(250, 7000, false))
                         .add(new AppearanceComponent(Color.DARK_GRAY))
                 )
                 .add(new Entity("House")
                         .add(new PositionComponent(600, -500))
-                        .add(new SpatialComponent(450, 350, false))
+                        .add(new SpatialComponent(500, 400, false))
                         .add(new AppearanceComponent(new Color(100, 80, 50)))
                         .add(new LabelComponent(50))
                         .add(new InteractionComponent() {
@@ -45,14 +47,14 @@ public class Layout {
                         })
                 )
                 .add(new Entity("School")
-                        .add(new PositionComponent(650, 700))
+                        .add(new PositionComponent(550, 650))
                         .add(new SpatialComponent(400, 600, false))
                         .add(new AppearanceComponent(new Color(180, 117, 84)))
                         .add(new LabelComponent(50))
                         .add(new InteractionComponent() {
                             @Override
                             public void onTouch() {
-                                stats.gainIntellect(1);
+                                stats.gainIntellect(0.45);
                                 stats.tire(0.2);
                             }
                         })
@@ -65,14 +67,14 @@ public class Layout {
                         .add(new InteractionComponent() {
                             @Override
                             public void onTouch() {
-                                stats.gainMoney(Math.max(stats.getIntellect()/350, 0.1));
+                                stats.gainMoney(Math.max(stats.getIntellect()/300, 0.1));
                                 stats.tire(0.25);
                             }
                         })
                 )
                 .add(new Entity("Restaurant")
                         .add(new PositionComponent(-600, -550))
-                        .add(new SpatialComponent(500, 400, false))
+                        .add(new SpatialComponent(500, 450, false))
                         .add(new AppearanceComponent( new Color(255, 213, 125)))
                         .add(new LabelComponent(50))
                         .add(new InteractionComponent(){
@@ -86,8 +88,8 @@ public class Layout {
                         })
                 )
                 .add(new Entity("Gym")
-                        .add(new PositionComponent(-1650, -550))
-                        .add(new SpatialComponent(800, 500, false))
+                        .add(new PositionComponent(-1600, -550))
+                        .add(new SpatialComponent(850, 500, false))
                         .add(new AppearanceComponent("Gym"))
                         .add(new InteractionComponent() {
                             @Override
@@ -98,14 +100,10 @@ public class Layout {
                                      stats.tire(0.5);
                                  }
                              }
-                             @Override
-                             public void onClick() {
-                                 player.goToEntity("House");
-                             }
                          })
                 )
                 .add(new Entity("Hospital")
-                        .add(new PositionComponent(-600, -1350))
+                        .add(new PositionComponent(-600, -1500))
                         .add(new SpatialComponent(500, 500, false))
                         .add(new AppearanceComponent(new Color(210, 210, 210)))
                         .add(new LabelComponent(50))
@@ -120,9 +118,10 @@ public class Layout {
                         })
                 )
                 .add(new Entity("Train Station")
-                        .add(new PositionComponent(700, 2100))
-                        .add(new SpatialComponent(600, 400, false))
+                        .add(new PositionComponent(600, 2200))
+                        .add(new SpatialComponent(400, 600, false))
                         .add(new AppearanceComponent(new Color(100, 100, 100)))
+                        .add(new LabelComponent(50))
                         .add(new InteractionComponent() {
                             public void onClick() {
                                 if (stats.hasEnoughMoney(10000)) {
@@ -133,21 +132,34 @@ public class Layout {
                         })
                 )
                 .add(new Entity("Zombie Spawner")
-                        .add(new PositionComponent(-2200, 300))
+                        .add(new PositionComponent(-1500, 1500))
                         .add(new SpatialComponent(100, 100, false))
                         .add(new AppearanceComponent(Color.DARK_GRAY))
-                        .add(new SpawnerComponent(1000, 500,
+                        .add(new SpawnerComponent(8000,
                                 new Entity("")
                                         .add(new PositionComponent(0, 0))
                                         .add(new SpatialComponent(65, 65, true))
                                         .add(new AppearanceComponent(new Color(80, 103, 78)))
                                         .add(new MovementComponent(11))
-                                        .add(new AIComponent(AIComponent.PathFinding.PURSUE, 600, 6))
+                                        .add(new AIComponent(AIComponent.PathFinding.PURSUE, 800, 8))
                                         .add(new HealthComponent(25))
-                                        .add(new AttackComponent(5, false, false))
+                                        .add(new AttackComponent(2, false, false))
                                 ))
                 )
+                .add(new Entity("$")
+                        .add(new PositionComponent(getRand(-8000, 8000), getRand(-7000, 7000)))
+                        .add(new SpatialComponent(65, 40, false))
+                        .add(new AppearanceComponent(new Color(100, 150, 100)))
+                        .add(new InteractionComponent() {
+                            @Override
+                            public void onTouch() {
+                                stats.gainMoney(100);
+                                entity.getPos().set(getRand(-8000, 8000), getRand(-7000, 7000));
+                            }
+                        })
+                    )
         );
+
         worlds.add(new World("House Interior", new Color(100, 80, 50))
                 .add(new Entity("Hard Wood Flooring")
                         .add(new PositionComponent(0, 0))
@@ -173,7 +185,7 @@ public class Layout {
                         .add(new InteractionComponent() {
                             @Override
                             public void onTouch() {
-                                stats.energize(1.5);
+                                stats.energize(1.25);
                             }
                         })
                 )
@@ -191,7 +203,22 @@ public class Layout {
                         .add(new SpatialComponent(200, 6000, false))
                         .add(new AppearanceComponent(Color.DARK_GRAY))
                 )
+                .add(new Entity("VISA")
+                        .add(new PositionComponent(getRand(-6000, 6000), getRand(-6000, 6000)))
+                        .add(new SpatialComponent(60, 40, false))
+                        .add(new AppearanceComponent(new Color(210, 200, 140)))
+                        .add(new LabelComponent(16))
+                        .add(new InteractionComponent(){
+                            @Override
+                            public void onTouch() {
+                                stats.gainMoney(getRand(1, 1000));
+                                entity.getPos().set(getRand(-6000, 6000), getRand(-6000, 6000));
+                            }
+                        })
+                )
         );
+
+        worlds.add(new World("Farm", new Color(110, 176, 22)));
 
     }
 

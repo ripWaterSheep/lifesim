@@ -70,8 +70,9 @@ public class CollisionSystem extends IterableSystem {
 
 
     private void interactionSubsystem(Entity entity1, Entity entity2) {
-        for (InteractionComponent interaction: entity1.getAll2(InteractionComponent.class)) {
+        for (InteractionComponent interaction: entity1.getAll(InteractionComponent.class)) {
             interaction.setPlayer(GameManager.getPlayer());
+            interaction.setEntity(entity1);
             if (entity2 instanceof Player) {
                 interaction.onTouch();
                 if (BetterMouse.left.isClicked()) {
@@ -113,36 +114,58 @@ public class CollisionSystem extends IterableSystem {
                                 if (checkedSpatial != spatial2) {
                                     for (SolidComponent checkedSolid: entity2.getAll(SolidComponent.class)) {
                                         if (checkedSolid.willKeepInside() && testIntersection(checkedSpatial.getShape(), spatial1.getShape())) {
-                                            double angleToCenter = getAngleBetween(pos2, pos1);
-                                            //System.out.println(angleToCenter);
-
-                                            /*if (spatial2.isElliptical()) {
-                                                //x1 = clamp(x1, spatial2.getMidWidth() * cos(toRadians(angleToCenter)),
-                                                //      spatial2.getMidWidth() * cos(toRadians(angleToCenter)));
-                                                //x1 = min(x1, spatial2.getMidWidth() * sin(toRadians(angleToCenter)))+pos2.getX();
-                                                //y1 = min(y1, spatial2.getMidHeight() * sin(toRadians(angleToCenter)))+pos2.getY();
-
-                                                x1 = clamp(x1, -spatial2.getMidWidth() * cos(toRadians(angleToCenter)) + pos2.getX(),
-                                                        spatial2.getWidth() * cos(toRadians(angleToCenter)) + pos2.getX());
-                                                //y1 = (spatial2.getMidHeight() * Math.sin(angleToCenter)) + pos2.getY();
-
-                                                //y1 = clamp(y1, spatial2.getMidHeight() * sin(toRadians(angleToCenter)),
-                                                //      spatial2.getMidHeight() * sin(toRadians(angleToCenter)));
-                                                pos1.goTo(x1, y1);*/
-                                                return;
-                                           // }
+                                            return;
                                         }
                                     }
                                 }
                             }
+                            if (spatial2.isElliptical()) {
 
-                            double diffMidWidths = spatial2.getMidWidth()-spatial1.getMidWidth();
-                            double diffMidHeights = spatial2.getMidHeight()-spatial1.getMidHeight();
+                                double angleToCenter = getAngleBetween(pos2, pos1);
 
-                            x1 = clamp(x1, x2 - diffMidWidths, x2 + diffMidWidths);
-                            y1 = clamp(y1, y2 - diffMidHeights, y2 + diffMidHeights);
+                                double xDiff = abs(x1-x2);
+                                double curveX = (spatial2.getMidWidth()-spatial1.getMidWidth()) * cos(toRadians(angleToCenter));
+
+                                if (xDiff > abs(curveX)) {
+                                    x1 = curveX + x2;
+                                }
+
+                                double yDiff = abs(y1-y2);
+                                double curveY = (spatial2.getMidHeight()-spatial1.getMidHeight()) * sin(toRadians(angleToCenter));
+
+                                if (yDiff > abs(curveY)) {
+                                    y1 = curveY + y2;
+                                }
+
+                            } else {
+                                double diffMidWidths = spatial2.getMidWidth() - spatial1.getMidWidth();
+                                double diffMidHeights = spatial2.getMidHeight() - spatial1.getMidHeight();
+
+                                x1 = clamp(x1, x2 - diffMidWidths, x2 + diffMidWidths);
+                                y1 = clamp(y1, y2 - diffMidHeights, y2 + diffMidHeights);
+                            }
 
                         } else {
+
+                            if (spatial2.isElliptical()) {
+
+                                double angleToCenter = getAngleBetween(pos2, pos1);
+
+                                double xDiff = abs(x1-x2);
+                                double curveX = (spatial2.getMidWidth()+spatial1.getMidWidth()) * cos(toRadians(angleToCenter));
+
+                                if (xDiff < abs(curveX)) {
+                                    x1 = curveX + x2;
+                                }
+
+                                double yDiff = abs(y1-y2);
+                                double curveY = (spatial2.getMidHeight()+spatial1.getMidHeight()) * sin(toRadians(angleToCenter));
+
+                                if (yDiff < abs(curveY)) {
+                                    y1 = curveY + y2;
+                                }
+
+                            } else {
                             // Keep entity's position outside the solid entity
 
                             double combinedMidWidth = spatial2.getMidWidth()+spatial1.getMidWidth();
@@ -153,8 +176,9 @@ public class CollisionSystem extends IterableSystem {
                                 else y1 = min(y1, y2 - combinedMidHeight);
 
                             } if (y1 - spatial1.getMidHeight() > y2 - spatial2.getMidHeight() && y1 + spatial1.getMidHeight() < y2 + spatial2.getMidHeight()) {
-                                if (x1 > x2) x1 = max(x1, x2 + combinedMidWidth);
-                                else x1 = min(x1, x2 - combinedMidWidth);
+                                    if (x1 > x2) x1 = max(x1, x2 + combinedMidWidth);
+                                    else x1 = min(x1, x2 - combinedMidWidth);
+                                }
                             }
                         }
 

@@ -24,7 +24,6 @@ public class PositionComponent implements CopyableComponent {
         this.y = y;
         initialX = x;
         initialY = y;
-
     }
 
 

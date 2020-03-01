@@ -1,12 +1,21 @@
 package game.setting;
 
+import game.GameManager;
+import game.ecs.components.AppearanceComponent;
+import game.ecs.components.MovementComponent;
+import game.ecs.components.PositionComponent;
+import game.ecs.components.SpatialComponent;
 import game.ecs.entities.Entity;
+import game.ecs.entities.player.Player;
 import game.ecs.systems.*;
 import game.ecs.systems.IterableSystem;
 import main.Main;
+import main.MainPanel;
 
 import java.awt.*;
 import java.util.*;
+
+import static util.MyMath.clamp;
 
 
 public class World {
@@ -32,7 +41,7 @@ public class World {
         this.name = name;
         this.color = color;
 
-        systems.add(new RenderSystem(this, Main.getPanel()));
+        systems.add(new RenderSystem(this));
         systems.add(new MovementSystem(this));
         systems.add(new CollisionSystem(this));
         systems.add(new HealthSystem(this));
@@ -62,7 +71,6 @@ public class World {
         }
         return desiredEntity;
     }
-
 
 
     private void runSystems() {

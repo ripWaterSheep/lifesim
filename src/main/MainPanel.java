@@ -14,8 +14,8 @@ import java.awt.*;
 
 public class MainPanel extends JPanel {
 
-    private static final int defaultWidth = 1500;
-    private static final int defaultHeight = 900;
+    private static final int defaultWidth = 1700;
+    private static final int defaultHeight = 950;
 
     public Rectangle getRect() { return new Rectangle(0, 0, getWidth(), getHeight()); }
 
@@ -43,6 +43,7 @@ public class MainPanel extends JPanel {
         requestFocusInWindow();
         setSize(defaultWidth, defaultHeight);
         ControlManager.init(this);
+
     }
 
 
@@ -56,7 +57,7 @@ public class MainPanel extends JPanel {
         GameManager.getCurrentGame().run();
         overlayManager.draw(g);
 
-        pause(8);
+        pause(5);
         repaint();
     }
 

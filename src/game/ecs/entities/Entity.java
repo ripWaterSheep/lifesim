@@ -1,6 +1,8 @@
 package game.ecs.entities;
 
 import game.ecs.components.CopyableComponent;
+import game.ecs.components.PositionComponent;
+import game.setting.World;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -27,10 +29,6 @@ public class Entity {
 
 
     public Entity add(CopyableComponent component) {
-        /*if (component instanceof InteractionComponent) {
-            component = component.copyInitialState();
-            System.out.println(component.getClass());
-        }*/
         components.add(component);
         return this;
     }
@@ -48,16 +46,6 @@ public class Entity {
 
 
     public <T extends CopyableComponent> ArrayList<T> getAll(Class<T> filteringClass) {
-        return new ArrayList<>(
-                components.stream()
-                        .filter(t -> t.getClass().isAssignableFrom(filteringClass))
-                        .map(t -> (T) t)
-                        .collect(Collectors.toList())
-        );
-    }
-
-
-    public <T extends CopyableComponent> ArrayList<T> getAll2(Class<T> filteringClass) {
         ArrayList<T> desiredComponents = new ArrayList<>();
         for (CopyableComponent component: components) {
             if (filteringClass.isInstance(component)) {
@@ -65,6 +53,14 @@ public class Entity {
             }
         }
         return desiredComponents;
+    }
+
+
+    public PositionComponent getPos() {
+        PositionComponent pos = get(PositionComponent.class);
+        if (pos == null)
+            return new PositionComponent(0, 0);
+        return pos;
     }
 
 

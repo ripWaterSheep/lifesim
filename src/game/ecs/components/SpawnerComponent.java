@@ -22,22 +22,12 @@ public class SpawnerComponent implements CopyableComponent {
 
 
     private final long spawnInterval;
-    private long lastSpawnTime = 0;
+    private long lastSpawnTime = System.currentTimeMillis();
 
 
-    /** Distance player must be from the entity for the entity to attempt to spawn.
-     * If it is negative, then there is no maximum range.
-     */
-    private final double activeRange;
 
-    public double getActiveRange() {
-        return activeRange;
-    }
-
-
-    public SpawnerComponent(long spawnInterval, double activeRange, Entity spawnTemplate) {
+    public SpawnerComponent(long spawnInterval, Entity spawnTemplate) {
         this.spawnInterval = spawnInterval;
-        this.activeRange = activeRange;
         this.spawnTemplate = spawnTemplate;
     }
 
@@ -64,7 +54,7 @@ public class SpawnerComponent implements CopyableComponent {
 
     @Override
     public SpawnerComponent copyInitialState() {
-        return new SpawnerComponent(spawnInterval, activeRange, spawnTemplate);
+        return new SpawnerComponent(spawnInterval, spawnTemplate);
     }
 
 }
