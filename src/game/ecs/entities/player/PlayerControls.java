@@ -61,8 +61,9 @@ public class PlayerControls {
         if (up || down || left || right) {
             movement.setMovementTowardsAngle();
             stats.tire(0.02);
-        } else
-            movement.beStationary();
+        } else {
+            movement.stopMovement();
+        }
     }
 
 

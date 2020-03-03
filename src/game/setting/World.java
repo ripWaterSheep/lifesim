@@ -1,5 +1,7 @@
 package game.setting;
 
+import game.ecs.components.PositionComponent;
+import game.ecs.components.SolidComponent;
 import game.ecs.entities.Entity;
 import game.ecs.entities.player.StatsManagement;
 import game.ecs.systems.*;
@@ -40,7 +42,6 @@ public class World {
         systems.add(new CollisionSystem(this));
         systems.add(new HealthSystem(this));
         systems.add(new SpawnSystem(this));
-
     }
 
 
@@ -49,6 +50,11 @@ public class World {
         return this;
     }
 
+
+    public World addFloor(Entity entity) {
+        entities.add(entity);
+        return this;
+    }
 
     public void remove(Entity entity) {
         entities.remove(entity);

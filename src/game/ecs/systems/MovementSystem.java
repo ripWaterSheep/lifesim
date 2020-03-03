@@ -25,7 +25,7 @@ public class MovementSystem extends IterableSystem {
                         for (ProjectileComponent projectile: spawner.getSpawnTemplate().getAll(ProjectileComponent.class)) {
                             if (projectile.getMovementRange() < playerDistance) {
                                 // If player is within shooting distance, entity doesn't need to approach player.
-                                movement.beStationary();
+                                movement.stopMovement();
                             }
                         }
                     }
@@ -42,7 +42,7 @@ public class MovementSystem extends IterableSystem {
                             movement.setAngle(getRand(0, 359));
                         }
                     } else {
-                        movement.beStationary();
+                        movement.stopMovement();
                     }
                 }
 
@@ -55,7 +55,6 @@ public class MovementSystem extends IterableSystem {
                 movement.setMovementTowardsAngle();
                 pos.translate(movement);
                 movement.resetSpeed();
-
             }
         }
     }

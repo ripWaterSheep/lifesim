@@ -173,8 +173,8 @@ public class Layout {
                         .add(new AppearanceComponent(new Color(201, 190, 127)))
                         .add(new SolidComponent(true))
                 ).add(new Entity("Bedroom")
-                        .add(new PositionComponent(250, 0))
-                        .add(new SpatialComponent(600, 600, false))
+                        .add(new PositionComponent(2150, 0))
+                        .add(new SpatialComponent(800, 800, false))
                         .add(new AppearanceComponent(new Color(201, 190, 127)))
                         .add(new SolidComponent(true))
                 )
@@ -190,7 +190,7 @@ public class Layout {
                         }))
 
                 .add(new Entity("House Bed")
-                       .add(new PositionComponent(-200, -300))
+                       .add(new PositionComponent(2300, -250))
                         .add(new SpatialComponent(250, 150, false))
                         .add(new AppearanceComponent(new Color(0, 115, 169)))
                         .add(new InteractionComponent() {

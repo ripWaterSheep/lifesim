@@ -88,7 +88,7 @@ public class CollisionSystem extends IterableSystem {
             for (AIComponent ai : entity1.getAll(AIComponent.class)) {
                 if (ai.getPathFinding().equals(AIComponent.PathFinding.PURSUE)) {
                     for (MovementComponent movement : entity1.getAll(MovementComponent.class)) {
-                        movement.beStationary();
+                        movement.stopMovement();
                     }
                 }
             }

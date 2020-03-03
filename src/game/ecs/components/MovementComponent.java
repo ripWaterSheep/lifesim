@@ -9,13 +9,18 @@ import static util.Geometry.angleWrap;
 public class MovementComponent implements CopyableComponent {
 
     private final double initialSpeed;
+
     private double currentSpeed;
+
+    public double getCurrentSpeed() {
+        return currentSpeed;
+    }
 
     public void multiplySpeed(double factor) {
         currentSpeed *= factor;
     }
 
-    public void beStationary() {
+    public void stopMovement() {
         currentSpeed = 0;
     }
 
