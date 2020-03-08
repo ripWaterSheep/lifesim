@@ -60,7 +60,7 @@ public class PlayerControls {
 
         if (up || down || left || right) {
             movement.setMovementTowardsAngle();
-            stats.tire(0.02);
+            stats.tire(0.025);
         } else {
             movement.stopMovement();
         }
@@ -89,7 +89,7 @@ public class PlayerControls {
     private void sprintControls() {
         if (k_space.isPressed()) {
             player.get(MovementComponent.class).multiplySpeed(1.5);
-            stats.tire(0.1);
+            stats.tire(0.025);
         }
     }
 

@@ -34,20 +34,18 @@ public class SpawnerComponent implements CopyableComponent {
 
     private void spawnAt(double x, double y, World world) {
         Entity spawnedEntity = spawnTemplate.copyInitialState();
+
         world.add(spawnedEntity);
         allSpawn.add(spawnedEntity);
 
-        for (PositionComponent pos : spawnedEntity.getAll(PositionComponent.class)) {
-            pos.set(x, y);
-        }
-
-        lastSpawnTime = System.currentTimeMillis();
+        spawnedEntity.add(new PositionComponent(x, y));
     }
 
 
     public void attemptSpawn(double x, double y, World world) {
         if (System.currentTimeMillis() - lastSpawnTime >= spawnInterval && allSpawn.size() < MAX_SPAWN) {
             spawnAt(x, y, world);
+            lastSpawnTime = System.currentTimeMillis();
         }
     }
 

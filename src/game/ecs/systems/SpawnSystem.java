@@ -3,13 +3,12 @@ package game.ecs.systems;
 import game.GameManager;
 import game.ecs.components.*;
 import game.ecs.entities.Entity;
-import game.ecs.entities.player.Player;
 import game.setting.World;
 
 
 import static util.Geometry.*;
 
-public class SpawnSystem extends IterableSystem {
+public class SpawnSystem extends IterativeSystem {
 
     private static final int MAX_ENTITIES = 50;
 
@@ -46,8 +45,16 @@ public class SpawnSystem extends IterableSystem {
                         doSpawning = false;
                 }
 
+                // Attempt to spawn copy of spawn template, setting its position (its own declared pos has precedence over spawner pos).
+                Entity spawnTemplate = spawner.getSpawnTemplate();
                 if (doSpawning) {
-                    spawner.attemptSpawn(pos.getX(), pos.getY(), world);
+                    for (PositionComponent spawnPos: spawnTemplate.getAll(PositionComponent.class)) {
+                        spawner.attemptSpawn(spawnPos.getX(), spawnPos.getY(), world);
+                    }
+
+                   if (spawnTemplate.get(PositionComponent.class) == null) {
+                        spawner.attemptSpawn(pos.getX(), pos.getY(), world);
+                   }
                 }
             }
         }

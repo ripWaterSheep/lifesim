@@ -2,7 +2,7 @@ package game.controls;
 
 import java.awt.*;
 
-public class BetterMouseButton extends BetterControl {
+public class BetterMouseButton extends BetterInput {
 
     private int x, y;
 

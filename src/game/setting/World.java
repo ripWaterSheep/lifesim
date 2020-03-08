@@ -1,11 +1,8 @@
 package game.setting;
 
-import game.ecs.components.PositionComponent;
-import game.ecs.components.SolidComponent;
 import game.ecs.entities.Entity;
-import game.ecs.entities.player.StatsManagement;
 import game.ecs.systems.*;
-import game.ecs.systems.IterableSystem;
+import game.ecs.systems.IterativeSystem;
 import main.Main;
 
 import java.awt.*;
@@ -23,7 +20,7 @@ public class World {
     }
 
 
-    private final ArrayList<IterableSystem> systems = new ArrayList<>();
+    private final ArrayList<IterativeSystem> systems = new ArrayList<>();
     private final ArrayList<Entity> entities = new ArrayList<>();
 
     public ArrayList<Entity> getEntities() {
@@ -74,7 +71,7 @@ public class World {
 
 
     private void runSystems() {
-        for (IterableSystem system: systems) {
+        for (IterativeSystem system: systems) {
             for (Entity entity: new ArrayList<>(entities)) {
                 system.run(entity);
             }

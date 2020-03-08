@@ -8,7 +8,7 @@ import game.ecs.entities.player.Player;
 import game.overlay.DeathScreen;
 import game.setting.World;
 
-public class HealthSystem extends IterableSystem {
+public class HealthSystem extends IterativeSystem {
 
     public HealthSystem(World world) {
         super(world);
@@ -20,7 +20,6 @@ public class HealthSystem extends IterableSystem {
             if (health.getHealth() <= 0) {
                 if (entity instanceof Player) {
                     DeathScreen.show();
-                    //TODO: fix overlay structuree so that new deathscreen is not created like a billion times
                 } else {
                     System.out.println("removing " + entity.getName());
                     GameManager.getPlayer().get(StatsComponent.class).gainMoney(health.getKillLoot());

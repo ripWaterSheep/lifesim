@@ -13,7 +13,7 @@ import static util.Geometry.testIntersection;
 import static util.MyMath.clamp;
 
 
-public class CollisionSystem extends IterableSystem {
+public class CollisionSystem extends IterativeSystem {
 
     public CollisionSystem(World world) {
         super(world);

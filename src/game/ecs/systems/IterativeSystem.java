@@ -3,11 +3,11 @@ package game.ecs.systems;
 import game.ecs.entities.Entity;
 import game.setting.World;
 
-public abstract class IterableSystem {
+public abstract class IterativeSystem {
 
     public final World world;
 
-    public IterableSystem(World world) {
+    public IterativeSystem(World world) {
         this.world = world;
     }
 

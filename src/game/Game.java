@@ -28,7 +28,7 @@ public class Game {
 
 
     public void run() {
-        player.control();
+        player.run();
         player.getWorld().run();
     }
 

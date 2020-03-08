@@ -14,12 +14,11 @@ import util.drawing.DrawString;
 
 import java.awt.*;
 
-import static java.lang.Math.PI;
 import static main.Main.getPanel;
 import static util.MyMath.clamp;
 
 
-public class RenderSystem extends IterableSystem {
+public class RenderSystem extends IterativeSystem {
 
     MainPanel graphicsPanel;
 

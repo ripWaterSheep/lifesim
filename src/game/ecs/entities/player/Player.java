@@ -9,9 +9,6 @@ import java.awt.*;
 
 public final class Player extends Entity {
 
-    private PlayerControls controls;
-    private StatsManagement statsManagement;
-
     protected World world;
 
     public World getWorld() {
@@ -27,6 +24,9 @@ public final class Player extends Entity {
     }
 
 
+    private final PlayerControls controls;
+
+
     public Player() {
         super("Player");
         add(new PositionComponent(0, 0));
@@ -37,13 +37,26 @@ public final class Player extends Entity {
         add(new StatsComponent());
 
         controls = new PlayerControls(this);
-        statsManagement = new StatsManagement(this);
     }
 
 
-    public void control() {
+    public void run() {
+        manageStats();
         controls.run();
     }
+
+
+    public void manageStats() {
+        StatsComponent stats = get(StatsComponent.class);
+        HealthComponent health = get(HealthComponent.class);
+
+        if (stats.getEnergy() <= 0) {
+            health.loseHealth(0.5);
+        }
+
+        stats.tire(0.025);
+    }
+
 
 
     public void goToWorld(String worldName) {

@@ -1,6 +1,6 @@
 package game.controls;
 
-public class BetterKey extends BetterControl {
+public class BetterKey extends BetterInput {
 
     BetterKey(int keyCode) {
         super(keyCode);

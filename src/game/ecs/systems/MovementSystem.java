@@ -9,7 +9,7 @@ import static util.Geometry.*;
 import static util.MyMath.getRand;
 
 
-public class MovementSystem extends IterableSystem {
+public class MovementSystem extends IterativeSystem {
 
     public MovementSystem(World world) {
         super(world);
@@ -37,6 +37,7 @@ public class MovementSystem extends IterableSystem {
                         } else {
                             movement.setAngle(180 - followAngle);
                         }
+                        movement.increaseAngle(getRand(-30, 30));
                     } else if (ai.getRandomness() > 0) {
                         if (getRand(0, 1000) < ai.getRandomness()) {
                             movement.setAngle(getRand(0, 359));

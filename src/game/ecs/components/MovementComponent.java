@@ -12,10 +12,6 @@ public class MovementComponent implements CopyableComponent {
 
     private double currentSpeed;
 
-    public double getCurrentSpeed() {
-        return currentSpeed;
-    }
-
     public void multiplySpeed(double factor) {
         currentSpeed *= factor;
     }
@@ -32,12 +28,12 @@ public class MovementComponent implements CopyableComponent {
     private double angle;
     private final double initialAngle;
 
-    public double getAngle() {
-        return angle;
-    }
-
     public void setAngle(double angle) {
         this.angle = angleWrap(angle);
+    }
+
+    public void increaseAngle(double angle) {
+        this.angle += angle;
     }
 
 
