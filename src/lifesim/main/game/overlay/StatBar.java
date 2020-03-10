@@ -1,0 +1,100 @@
+package lifesim.main.game.overlay;
+
+import lifesim.main.game.ecs.components.HealthComponent;
+import lifesim.main.game.ecs.components.StatsComponent;
+import lifesim.main.game.ecs.entities.player.Player;
+import lifesim.main.Game;
+import lifesim.main.util.drawing.DrawString;
+import lifesim.main.util.drawing.FontManager;
+import lifesim.main.util.ColorMethods;
+
+import java.awt.*;
+
+import static java.lang.Math.min;
+import static lifesim.main.Game.getPanel;
+import static lifesim.main.util.MyMath.betterRound;
+
+public class StatBar implements DrawableOverlay {
+
+    private static final int LEFT_PADDING = 4;
+    private static final int BOTTOM_PADDING = 4;
+
+    private static final int BAR_HEIGHT = 36;
+
+    private static final int BAR_OPACITY = 125;
+
+    private static final int TEXT_SIZE = 28;
+
+
+    private Graphics g;
+
+    private int currentBarNum = 1;
+
+
+
+    @Override
+    public void draw(Graphics g) {
+        this.g = g;
+        Player player = Game.getSession().getPlayer();
+        StatsComponent stats = player.get(StatsComponent.class);
+
+        drawBar("Intellect", stats.getIntellect(), 0.2, 1000, StatsComponent.Colors.intellectColor);
+        drawBar("Money", stats.getMoney(), 0.02, 10000, StatsComponent.Colors.moneyColor);
+        drawBar("Strength", stats.getStrength(), 0.2, 1000, StatsComponent.Colors.strengthColor);
+        drawBar("Energy", stats.getEnergy(), 0.2, 1000, StatsComponent.Colors.energyColor);
+        drawBar("Health", player.get(HealthComponent.class).getHealth(), 0.2, 1000, HealthComponent.Colors.bloodColor);
+
+        writeValue("World", player.getWorld().getName());
+        writeRoundedVal("Y", player.getPos().getY());
+        writeRoundedVal("X", player.getPos().getX());
+
+
+        currentBarNum = 1;
+    }
+
+
+
+    private void nextLine() {
+        currentBarNum += 1;
+    }
+
+    private int getCurrentBarNum() {
+        return currentBarNum;
+    }
+
+
+    private String format(String label, String data) {
+        return label + ": " + data;
+    }
+
+
+    private <T> void writeValue(String label, T data) {
+        String formattedString = format(label, data+"");
+
+        int textY = getPanel().getHeight() - (getCurrentBarNum()*BAR_HEIGHT) - BOTTOM_PADDING;
+        DrawString.drawVerticallyCenteredString(g, formattedString, LEFT_PADDING+3,
+                new Rectangle(LEFT_PADDING, textY, 0, BAR_HEIGHT), FontManager.getMainFont(TEXT_SIZE), Color.WHITE);
+        nextLine();
+    }
+
+
+    private <T> void writeRoundedVal(String label, double data) {
+        writeValue(label, betterRound(data));
+    }
+
+
+    private <T> void drawBar(String label, double data, double scale, double maxDataVal, Color color) {
+        int y = Game.getPanel().getHeight() - ((getCurrentBarNum()) * BAR_HEIGHT) - BOTTOM_PADDING;
+        int dataWidth = betterRound(min(data, maxDataVal) * scale);
+
+        g.setColor(Color.BLACK);
+        g.drawRect(LEFT_PADDING, y, betterRound(maxDataVal * scale), BAR_HEIGHT);
+
+        g.setColor(ColorMethods.applyOpacity(color, BAR_OPACITY));
+        g.fillRect(LEFT_PADDING, y, dataWidth, BAR_HEIGHT);
+
+        writeRoundedVal(label, data);
+    }
+
+
+}
