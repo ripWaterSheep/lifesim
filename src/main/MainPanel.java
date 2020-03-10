@@ -1,7 +1,6 @@
 package main;
 
 import game.GameManager;
-import game.controls.BetterMouse;
 import game.controls.ControlManager;
 import game.overlay.OverlayManager;
 

@@ -19,7 +19,7 @@ public class HealthSystem extends IterativeSystem {
         for (HealthComponent health: entity.getAll(HealthComponent.class)) {
             if (health.getHealth() <= 0) {
                 if (entity instanceof Player) {
-                    DeathScreen.show();
+                    DeathScreen.show("You lost all of your health!");
                 } else {
                     System.out.println("removing " + entity.getName());
                     GameManager.getPlayer().get(StatsComponent.class).gainMoney(health.getKillLoot());

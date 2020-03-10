@@ -1,7 +1,7 @@
 package game.ecs.systems;
 
 import game.GameManager;
-import game.controls.BetterMouse;
+import game.controls.MouseInputManager;
 import game.ecs.components.*;
 import game.ecs.components.LabelComponent;
 import game.ecs.components.SpatialComponent;
@@ -38,7 +38,7 @@ public class RenderSystem extends IterativeSystem {
     @Override
     public void run(Entity entity) {
         Graphics2D g2d = (Graphics2D) graphicsPanel.getCurrentGraphics().create();
-        mapScale = BetterMouse.getMouseWheelPos();
+        mapScale = MouseInputManager.getMouseWheelPos();
         g2d.scale(mapScale, mapScale);
 
         for (PositionComponent pos : entity.getAll(PositionComponent.class)) {

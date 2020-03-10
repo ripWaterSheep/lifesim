@@ -1,7 +1,7 @@
 package game.ecs.entities.player;
 
-import game.controls.BetterKey;
-import game.controls.BetterMouse;
+import game.controls.KeyInputListener;
+import game.controls.MouseInputManager;
 import game.ecs.components.*;
 
 import game.ecs.entities.Entity;
@@ -9,7 +9,7 @@ import util.Geometry;
 
 import java.awt.*;
 
-import static game.controls.BetterKeyboard.*;
+import static game.controls.KeyInputManager.*;
 import static java.lang.Math.sqrt;
 import static util.MyMath.scale;
 
@@ -37,10 +37,10 @@ public class PlayerControls {
     private void movementControls() {
         boolean up, down, left, right;
 
-        final BetterKey upkey = k_w;
-        final BetterKey leftKey = k_a;
-        final BetterKey downkey = k_s;
-        final BetterKey rightKey = k_d;
+        final KeyInputListener upkey = k_w;
+        final KeyInputListener leftKey = k_a;
+        final KeyInputListener downkey = k_s;
+        final KeyInputListener rightKey = k_d;
 
         if (leftKey.isPressed() && rightKey.isPressed()) {
             left = leftKey.getReadTime() < rightKey.getReadTime();
@@ -95,11 +95,11 @@ public class PlayerControls {
 
 
     private void weaponControls() {
-        if (BetterMouse.right.isClicked()) {
+        if (MouseInputManager.right.isClicked()) {
             double strength = player.get(StatsComponent.class).getStrength();
 
             double size = 10 + (strength / 275);
-            double angle = Geometry.getAngleBetween(BetterMouse.right.getX(), BetterMouse.right.getY(), main.Main.getPanel().getMidWidth(), main.Main.getPanel().getMidHeight());
+            double angle = Geometry.getAngleBetween(MouseInputManager.right.getX(), MouseInputManager.right.getY(), main.Main.getPanel().getMidWidth(), main.Main.getPanel().getMidHeight());
             double damage = sqrt((strength / 16) + 1);
             System.out.println(damage);
 

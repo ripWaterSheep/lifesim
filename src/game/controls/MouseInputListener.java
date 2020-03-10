@@ -2,7 +2,7 @@ package game.controls;
 
 import java.awt.*;
 
-public class BetterMouseButton extends BetterInput {
+public class MouseInputListener extends InputListener {
 
     private int x, y;
 
@@ -20,9 +20,9 @@ public class BetterMouseButton extends BetterInput {
     }
 
 
-    BetterMouseButton(int mouseButtonCode) {
+    MouseInputListener(int mouseButtonCode) {
         super(mouseButtonCode);
-        BetterMouse.buttons.add(this);
+        MouseInputManager.buttons.add(this);
     }
 
 }

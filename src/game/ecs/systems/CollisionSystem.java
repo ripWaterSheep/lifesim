@@ -1,7 +1,7 @@
 package game.ecs.systems;
 
 import game.GameManager;
-import game.controls.BetterMouse;
+import game.controls.MouseInputManager;
 import game.ecs.components.*;
 import game.ecs.entities.Entity;
 import game.ecs.entities.player.Player;
@@ -75,7 +75,7 @@ public class CollisionSystem extends IterativeSystem {
             interaction.setEntity(entity1);
             if (entity2 instanceof Player) {
                 interaction.onTouch();
-                if (BetterMouse.left.isClicked()) {
+                if (MouseInputManager.left.isClicked()) {
                     interaction.onClick();
                 }
             }

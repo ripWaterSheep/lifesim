@@ -6,13 +6,13 @@ public class ControlManager {
 
 
     public static void init(JPanel panel) {
-        BetterKeyboard.init(panel);
-        BetterMouse.init(panel);
+        KeyInputManager.init(panel);
+        MouseInputManager.init(panel);
     }
 
     public static void run() {
-        BetterKeyboard.run();
-        BetterMouse.run();
+        KeyInputManager.run();
+        MouseInputManager.run();
     }
 
 }

@@ -1,6 +1,6 @@
 package game.controls;
 
-public abstract class BetterInput {
+public abstract class InputListener {
 
     protected final int intCode;
 
@@ -9,7 +9,7 @@ public abstract class BetterInput {
 
     private int readTime = 0;
 
-    public BetterInput(int intCode) {
+    public InputListener(int intCode) {
         this.intCode = intCode;
     }
 
