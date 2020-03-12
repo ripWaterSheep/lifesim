@@ -2,7 +2,6 @@ package lifesim.main.game;
 
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
-import lifesim.main.util.MiscUtil;
 import lifesim.main.util.math.Vector2D;
 
 
@@ -12,21 +11,16 @@ import java.awt.*;
 import static java.lang.StrictMath.pow;
 
 
-public class GamePanel extends    JPanel {
+public class GamePanel extends JPanel {
 
-    private final int defaultWidth = 1800;
-    private final int defaultHeight = 750;
-
-    public final double renderScale = 3;
-
+    public static final double MAP_SCALE = 1.5;
 
     public Vector2D getDimensions() {
         return new Vector2D(getWidth(), getHeight());
     }
 
-
     public Vector2D getScaledDimensions() {
-        return getDimensions().getScaled(1 / pow(renderScale, 2));
+        return getDimensions().scale(1/MAP_SCALE);
     }
 
     //private final OverlayManager overlayManager = new OverlayManager();
@@ -40,7 +34,7 @@ public class GamePanel extends    JPanel {
 
         setFocusable(true);
         requestFocusInWindow();
-        setSize(defaultWidth, defaultHeight);
+        //setSize(1800, 750);
 
         KeyInputManager.init(this);
         MouseInputManager.init(this);
@@ -54,13 +48,37 @@ public class GamePanel extends    JPanel {
         KeyInputManager.run();
         MouseInputManager.run();
 
-        gameSession.render(g);
-        gameSession.update();
-
-        //overlayManager.draw(g);
-
-        MiscUtil.pause(3);
+        runSession(g);
         repaint();
     }
+
+
+    long lastTime = System.nanoTime();
+    double amountOfTicks = 60.0;
+    double ns = 1000000000 / amountOfTicks;
+    double delta = 0;
+    long timer = System.currentTimeMillis();
+    int frames = 0;
+
+
+    void runSession(Graphics g) {
+        long now = System.nanoTime();
+        delta += (now - lastTime) / ns;
+        lastTime = now;
+        while(delta >= 1) {
+            gameSession.update();
+            delta--;
+        }
+        gameSession.render(g);
+        frames++;
+
+        if(System.currentTimeMillis() - timer > 1000) {
+            timer += 1000;
+            System.out.println("FPS: " + frames);
+            frames = 0;
+        }
+    }
+
+
 
 }

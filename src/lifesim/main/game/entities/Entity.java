@@ -1,6 +1,5 @@
 package lifesim.main.game.entities;
 
-import javafx.geometry.Pos;
 import lifesim.main.game.Game;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.entities.player.Player;
@@ -37,7 +36,8 @@ public abstract class Entity {
     public Vector2D getDisplayPos() {
         Player player = Game.getSession().getPlayer();
         GamePanel panel = Game.getPanel();
-        return new Vector2D(pos.getTranslated(player.pos.getScaled(-1).getTranslated(sprite.size.scale(-0.5).getTranslated(panel.getDimensions()))));
+        //return pos.translate(player.pos).translate(sprite.size.scale(-0.5)).translate(panel.getScaledDimensions().scale(0.5));
+        return pos.translate(player.pos).translate(sprite.size.scale(-0.5));
     }
 
     public abstract void update(World world);
@@ -45,8 +45,8 @@ public abstract class Entity {
     public abstract void collision(Entity entity);
 
     public void render(Graphics2D g2d) {
-
         sprite.draw(g2d, getDisplayPos());
+        System.out.println(getDisplayPos().x);
     }
 
 }

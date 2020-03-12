@@ -15,7 +15,7 @@ public class Layout {
 
     public Layout() {
         worlds.add(
-                new World("Town", new Vector2D(100, 1000), new Color(0, 255, 100))
+                new World("Town", new Vector2D(150, 150), new Color(0, 255, 100), new Color(200, 160, 100))
         );
     }
 

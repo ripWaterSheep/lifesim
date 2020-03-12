@@ -38,8 +38,8 @@ public final class GameSession {
     }
 
 
-    public void render(Graphics g2d) {
-        player.getWorld().render(g2d);
+    public void render(Graphics g) {
+        player.getWorld().render(g);
     }
 
 }

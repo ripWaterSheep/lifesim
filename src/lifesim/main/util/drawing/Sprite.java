@@ -1,5 +1,6 @@
 package lifesim.main.util.drawing;
 
+import lifesim.main.util.fileIO.ImageLoader;
 import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
@@ -52,8 +53,9 @@ public class Sprite {
 
         if (color != null) {
             g2d.setColor(color);
-            g2d.fill(shape);
-        }
+        } else
+        g2d.setColor(new Color(0, 0, 0, 150));
+        g2d.fill(shape);
 
         if (image != null) {
             Rectangle rect = shape.getBounds();

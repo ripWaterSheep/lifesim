@@ -2,8 +2,8 @@ package lifesim.main.util.math;
 
 import java.awt.*;
 import java.awt.geom.Area;
-import java.awt.geom.Point2D;
-import java.util.Vector;
+
+import static java.lang.Math.abs;
 
 
 public class Geometry {
@@ -28,6 +28,11 @@ public class Geometry {
         Area areaA = new Area(shapeA);
         areaA.intersect(new Area(shapeB));
         return !areaA.isEmpty();
+    }
+
+
+    public static boolean isOutOfBoundsAbs(Vector2D v1, Vector2D bounds) {
+        return (abs(v1.x) > abs(bounds.x) || abs(v1.y) > abs(bounds.y));
     }
 
 

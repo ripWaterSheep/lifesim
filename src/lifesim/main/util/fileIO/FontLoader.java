@@ -1,4 +1,4 @@
-package lifesim.main.util.drawing;
+package lifesim.main.util.fileIO;
 
 import java.awt.*;
 import java.io.File;
