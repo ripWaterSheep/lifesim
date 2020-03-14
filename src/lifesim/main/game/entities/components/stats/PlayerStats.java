@@ -68,12 +68,14 @@ public class PlayerStats extends HealthStats {
 
     @Override
     public void collision(Entity owner, Entity entity) {
-
+        super.collision(owner, entity);
     }
 
 
     @Override
     public void run(Entity owner) {
+        super.run(owner);
+
         energy -= 0.1;
     }
 

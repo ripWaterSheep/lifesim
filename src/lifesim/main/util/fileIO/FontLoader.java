@@ -20,11 +20,12 @@ public class FontLoader {
 
 
     public static Font loadFont(String name, int size) {
+        String path = FILE_PATH + name + FILE_ENDING;
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(FILE_PATH + name + FILE_ENDING)));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(path)));
         } catch (IOException|FontFormatException e) {
-            //Handle exception
+            System.out.println("Cannot find file : " + path);
             e.printStackTrace();
         }
 

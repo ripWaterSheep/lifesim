@@ -5,7 +5,7 @@ import lifesim.main.game.entities.Entity;
 public class HealthStats extends DamageStats {
 
     private double health;
-    private  final double initialHealth;
+    private final double initialHealth;
 
 
     public HealthStats(double damage, double health) {
@@ -34,6 +34,8 @@ public class HealthStats extends DamageStats {
 
     @Override
     public void run(Entity owner) {
+        health -= 1;
+
         if (health <= 0)
             owner.removeFromWorld();
     }

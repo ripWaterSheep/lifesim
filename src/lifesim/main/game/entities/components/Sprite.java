@@ -9,19 +9,21 @@ import java.awt.geom.Ellipse2D;
 
 public class Sprite {
 
-    public final Vector2D size;
-
     protected Image image;
-
+    public final Vector2D size;
     private final Color color;
     private final boolean elliptical;
 
 
-    public Sprite(String imageName) {
-        image = ImageLoader.loadImage(imageName);
+    public Sprite(Image image) {
+        this.image = image;
         size = new Vector2D(image.getWidth(null), image.getHeight(null));
         color = null;
         elliptical = false;
+    }
+
+    public Sprite(String imageName) {
+        this(ImageLoader.loadImage(imageName));
     }
 
 
@@ -39,6 +41,7 @@ public class Sprite {
     }
 
 
+
     public Shape getShapeAt(Vector2D pos) {
         int x = (int) pos.x;
         int y = (int) pos.y;
@@ -48,10 +51,7 @@ public class Sprite {
     }
 
 
-    public void update(Entity entity) { }
-
-
-    public void render(Graphics2D g2d, Vector2D pos) {
+    public void render(Graphics2D g2d, Vector2D pos, Entity entity) {
         Shape shape = getShapeAt(pos);
 
         if (color != null) {
@@ -61,6 +61,7 @@ public class Sprite {
 
         if (image != null) {
             Rectangle rect = shape.getBounds();
+            size.set(new Vector2D(image.getWidth(null), image.getHeight(null)));
             g2d.drawImage(image, rect.x, rect.y, rect.width, rect.height, null);
         }
     }

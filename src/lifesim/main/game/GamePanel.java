@@ -21,7 +21,7 @@ public class GamePanel extends JPanel {
 
         setFocusable(true);
         requestFocusInWindow();
-        //setSize(1800, 750);
+        setSize(1600, 950);
 
         KeyInputManager.init(this);
         MouseInputManager.init(this);

@@ -1,15 +1,18 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.entities.components.AnimatedSprite;
+import lifesim.main.game.entities.components.DirectionalAnimatedSprite;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.setting.World;
 import lifesim.main.game.entities.components.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.fileIO.ImageLoader;
+
+import java.awt.*;
 
 public class MovementEntity extends Entity {
 
     public final Vector2D movement = new Vector2D(0, 0);
-
     protected final double defaultSpeed;
 
 
@@ -24,6 +27,15 @@ public class MovementEntity extends Entity {
     }
 
 
+    @Override
+    public boolean isStill() {
+        return movement.x == 0 && movement.y == 0;
+    }
+
+    @Override
+    public double getDirection() {
+        return movement.getDirection();
+    }
 
     @Override
     public void update(World world) {
@@ -31,4 +43,9 @@ public class MovementEntity extends Entity {
         pos.set(pos.translate(movement));
     }
 
+
+    @Override
+    public void render(Graphics2D g2d) {
+        super.render(g2d);
+    }
 }

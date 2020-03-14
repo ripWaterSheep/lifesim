@@ -38,11 +38,20 @@ public class Entity {
 
 
     public Shape getHitBox() {
-        return sprite.getShapeAt(getDisplayPos());
+        return sprite.getShapeAt(pos);
     }
 
     public boolean isTouching(Entity entity) {
         return testIntersection(getHitBox(), entity.getHitBox());
+    }
+
+
+    public boolean isStill() {
+        return true;
+    }
+
+    public double getDirection() {
+        return 0;
     }
 
 
@@ -52,7 +61,7 @@ public class Entity {
     }
 
 
-    public boolean getRemoveRequested() {
+    public boolean isRemoveRequested() {
         return removeRequested;
     }
 
@@ -75,8 +84,7 @@ public class Entity {
     }
 
     public void render(Graphics2D g2d) {
-        sprite.render(g2d, getDisplayPos());
-        sprite.update(this);
+        sprite.render(g2d, getDisplayPos(), this);
     }
 
 }

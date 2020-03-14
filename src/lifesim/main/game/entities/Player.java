@@ -2,11 +2,9 @@ package lifesim.main.game.entities;
 
 import lifesim.main.game.controls.KeyInputListener;
 import lifesim.main.game.controls.KeyInputManager;
-import lifesim.main.game.entities.components.AnimatedSprite;
+import lifesim.main.game.entities.components.*;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.setting.World;
-import lifesim.main.game.entities.components.Sprite;
-import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 
@@ -17,7 +15,15 @@ public final class Player extends MovementEntity {
 
 
     public Player() {
-        super("Player", new AnimatedSprite(35, "player_standing1", "player_standing2", "player_standing3", "player_standing4", "player_standing3", "player_standing2") , new Vector2D(0, 0), 10,
+        super("Player", new DirectionalAnimatedSprite(
+                        new Animation(100, "player_idle_1"),
+                        new Animation(100,"player_l_1", "player_l_2"),
+                        new Animation(100, "player_b_1", "player_b_2"),
+                        new Animation(100, "player_r_1", "player_r_2"),
+                        new Animation(100, "player_f_1", "player_f_2")
+                //new Animation(100, "Eh Walk Right 1", "Eh Walk Right 2", "Eh Walk Right 3", "Eh Walk Right 4")
+                ),
+                new Vector2D(0, 0), 6,
                 new PlayerStats(1000, 1000, 0, 0, 0));
     }
 
@@ -37,36 +43,6 @@ public final class Player extends MovementEntity {
     }
 
 
-    public void control() {
-        boolean up, down, left, right;
-
-        final KeyInputListener upkey = KeyInputManager.k_w;
-        final KeyInputListener leftKey = KeyInputManager.k_a;
-        final KeyInputListener downkey = KeyInputManager.k_s;
-        final KeyInputListener rightKey = KeyInputManager.k_d;
-
-        if (leftKey.isPressed() && rightKey.isPressed()) {
-            left = leftKey.getReadTime() < rightKey.getReadTime();
-            right = !left;
-        } else {
-            left = leftKey.isPressed();
-            right = rightKey.isPressed();
-        }
-        if (upkey.isPressed() && downkey.isPressed()) {
-            up = upkey.getReadTime() < downkey.getReadTime();
-            down = !up;
-        } else {
-            up = upkey.isPressed();
-            down = downkey.isPressed();
-        }
-
-        if (up || down || left || right) {
-            movement.setMagnDir(calculateSpeed(), getIntendedAngle(up, down, left, right));
-        } else {
-            movement.set(0, 0);
-        }
-    }
-
 
     private double calculateSpeed() {
         double speed = defaultSpeed;
@@ -78,8 +54,38 @@ public final class Player extends MovementEntity {
     }
 
 
-    private double getIntendedAngle(boolean up, boolean down, boolean left, boolean right) {
+    public void control() {
+        boolean up, down, left, right;
 
+        final KeyInputListener upKey = KeyInputManager.k_w;
+        final KeyInputListener leftKey = KeyInputManager.k_a;
+        final KeyInputListener downKey = KeyInputManager.k_s;
+        final KeyInputListener rightKey = KeyInputManager.k_d;
+
+        if (leftKey.isPressed() && rightKey.isPressed()) {
+            left = leftKey.getReadTime() < rightKey.getReadTime();
+            right = !left;
+        } else {
+            left = leftKey.isPressed();
+            right = rightKey.isPressed();
+        }
+        if (upKey.isPressed() && downKey.isPressed()) {
+            up = upKey.getReadTime() < downKey.getReadTime();
+            down = !up;
+        } else {
+            up = upKey.isPressed();
+            down = downKey.isPressed();
+        }
+
+        if (up || down || left || right) {
+            movement.setMagnDir(calculateSpeed(), getIntendedAngle(up, down, left, right));
+        } else {
+            movement.set(0, 0);
+        }
+    }
+
+
+    private double getIntendedAngle(boolean up, boolean down, boolean left, boolean right) {
         double angle = 0;
         // Get angles for different key directions (makes going diagonal the same speed as horizontal or vertical)
         if (up) {
@@ -90,8 +96,8 @@ public final class Player extends MovementEntity {
             if (left) angle = 315;
             else if (right) angle = 225;
             else angle = 270;
-        } else if (right) angle = 180;
-        else if (left) angle = 0;
+        } else if (left) angle = 0;
+        else if (right) angle = 180;
 
         return angle;
     }
@@ -104,9 +110,4 @@ public final class Player extends MovementEntity {
         control();
     }
 
-
-    @Override
-    public void render(Graphics2D g2d) {
-        super.render(g2d);
-    }
 }

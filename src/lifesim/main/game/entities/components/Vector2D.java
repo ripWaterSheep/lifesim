@@ -27,7 +27,7 @@ public class Vector2D {
     }
 
     public double getDirection() {
-        return toDegrees(Math.atan2(x, y));
+        return toDegrees(Math.atan2(y, x));
     }
 
 

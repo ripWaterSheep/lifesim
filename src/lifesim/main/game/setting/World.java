@@ -2,6 +2,9 @@ package lifesim.main.game.setting;
 
 import lifesim.main.game.Game;
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.entities.TempEntity;
+import lifesim.main.game.entities.components.AnimatedSprite;
+import lifesim.main.game.entities.components.Animation;
 import lifesim.main.game.entities.components.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
 
@@ -59,17 +62,31 @@ public class World {
     }
 
 
+
+    public void doGarbageCollection(Entity entity) {
+        // Remove entity from world if requested, effectively destroying the entity.
+        if (entity.isRemoveRequested()) {
+            entities.remove(entity);
+
+            // Spawn the big boom. (Only not for temp entities since boom itself is a temp entity, otherwise it would spawn itself indefinitely).
+            if (!(entity instanceof TempEntity))
+            add(new TempEntity("Boom", new AnimatedSprite(
+                    new Animation(35, "boom_1", "boom_2", "boom_3", "boom_4", "boom_5", "boom_6", "boom_7", "boom_8")), new Vector2D(entity.pos).scale(-1)));
+        }
+    }
+
+
+
     public void update() {
-        for (Entity entity: entities) {
+        for (Entity entity: getEntities()) {
             entity.update(this);
 
-            for (Entity entity2: entities) {
+            for (Entity entity2: getEntities()) {
                 if (entity.isTouching(entity2) && entity != entity2)
                 entity.collision(entity2);
-
-                // Remove entity from world if requested, effectively destroying the entity.
-                if (entity.getRemoveRequested()) entity.removeFromWorld();
             }
+
+            doGarbageCollection(entity);
             // Keep the entity within the world.
             entity.pos.clampAbs(size.scale((0.5)).translate(entity.sprite.size.scale(-0.5)));
         }
