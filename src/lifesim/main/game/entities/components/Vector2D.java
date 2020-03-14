@@ -1,4 +1,4 @@
-package lifesim.main.util.math;
+package lifesim.main.game.entities.components;
 
 import java.awt.geom.Point2D;
 

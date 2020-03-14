@@ -1,8 +1,7 @@
 package lifesim.main.game;
 
 
-import lifesim.main.game.entities.Entity;
-import lifesim.main.game.entities.player.Player;
+import lifesim.main.game.entities.Player;
 import lifesim.main.game.setting.Layout;
 import lifesim.main.game.setting.World;
 

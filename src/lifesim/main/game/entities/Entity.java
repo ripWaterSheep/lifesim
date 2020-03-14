@@ -1,28 +1,41 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.Game;
-import lifesim.main.game.GamePanel;
-import lifesim.main.game.entities.player.Player;
+import lifesim.main.game.entities.components.stats.BasicStats;
+import lifesim.main.game.entities.components.stats.PlayerStats;
+import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.setting.World;
-import lifesim.main.util.drawing.Sprite;
-import lifesim.main.util.math.Vector2D;
+import lifesim.main.game.entities.components.Sprite;
+import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 
 import static lifesim.main.util.math.Geometry.testIntersection;
 
 
-public abstract class Entity {
+public class Entity {
 
     public final String name;
     public final Vector2D pos;
     public final Sprite sprite;
+    public final Stats stats;
 
-    public Entity(String name, Sprite sprite, Vector2D pos) {
+    // if removeRequested is true, the world containing the entity will remove it from the world.
+    private boolean removeRequested = false;
+
+
+    public Entity(String name, Sprite sprite, Vector2D pos, Stats stats) {
         this.name = name;
         this.sprite = sprite;
         this.pos = pos;
+        this.stats = stats;
     }
+
+
+    public Entity(String name, Sprite sprite, Vector2D pos) {
+        this(name, sprite, pos, new BasicStats());
+    }
+
 
     public Shape getHitBox() {
         return sprite.getShapeAt(getDisplayPos());
@@ -35,18 +48,35 @@ public abstract class Entity {
 
     public Vector2D getDisplayPos() {
         Player player = Game.getSession().getPlayer();
-        GamePanel panel = Game.getPanel();
-        //return pos.translate(player.pos).translate(sprite.size.scale(-0.5)).translate(panel.getScaledDimensions().scale(0.5));
         return pos.translate(player.pos).translate(sprite.size.scale(-0.5));
     }
 
-    public abstract void update(World world);
 
-    public abstract void collision(Entity entity);
+    public boolean getRemoveRequested() {
+        return removeRequested;
+    }
+
+    public void removeFromWorld() {
+        removeRequested = true;
+    }
+
+
+    public void onTouch(Player player, PlayerStats stats) { }
+
+    public void onClick(Player player, PlayerStats stats) { }
+
+
+    public void collision(Entity entity) {
+        stats.collision(this, entity);
+    }
+
+    public void update(World world) {
+        stats.run(this);
+    }
 
     public void render(Graphics2D g2d) {
-        sprite.draw(g2d, getDisplayPos());
-        System.out.println(getDisplayPos().x);
+        sprite.render(g2d, getDisplayPos());
+        sprite.update(this);
     }
 
 }

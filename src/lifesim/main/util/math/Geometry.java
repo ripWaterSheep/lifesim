@@ -1,5 +1,7 @@
 package lifesim.main.util.math;
 
+import lifesim.main.game.entities.components.Vector2D;
+
 import java.awt.*;
 import java.awt.geom.Area;
 

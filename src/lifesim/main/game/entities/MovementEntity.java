@@ -1,25 +1,28 @@
 package lifesim.main.game.entities;
 
+import lifesim.main.game.entities.components.AnimatedSprite;
+import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.setting.World;
-import lifesim.main.util.drawing.Sprite;
-import lifesim.main.util.math.Vector2D;
+import lifesim.main.game.entities.components.Sprite;
+import lifesim.main.game.entities.components.Vector2D;
 
-public class MovementEntity extends DamageEntity {
+public class MovementEntity extends Entity {
 
-    protected Vector2D movement = new Vector2D(0, 0);
+    public final Vector2D movement = new Vector2D(0, 0);
 
     protected final double defaultSpeed;
 
 
-    public MovementEntity(String name, Sprite sprite, Vector2D pos, double speed, double angle, double damage) {
-        super(name, sprite, pos, damage);
+    public MovementEntity(String name, Sprite sprite, Vector2D pos, double speed, double angle, Stats stats) {
+        super(name, sprite, pos, stats);
         defaultSpeed = speed;
         movement.setMagnDir(speed, angle);
     }
 
-    public MovementEntity(String name, Sprite sprite, Vector2D pos, double speed, double damage) {
-        this(name, sprite, pos, speed, 0, damage);
+    public MovementEntity(String name, Sprite sprite, Vector2D pos, double speed, Stats stats) {
+        this(name, sprite, pos, speed, 0, stats);
     }
+
 
 
     @Override
@@ -28,8 +31,4 @@ public class MovementEntity extends DamageEntity {
         pos.set(pos.translate(movement));
     }
 
-    @Override
-    public void collision(Entity entity) {
-
-    }
 }

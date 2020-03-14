@@ -1,21 +1,19 @@
 package lifesim.main.game.setting;
 
-import com.sun.tools.javac.Main;
 import lifesim.main.game.Game;
-import lifesim.main.game.GamePanel;
 import lifesim.main.game.entities.Entity;
-import lifesim.main.game.entities.StructureEntity;
-import lifesim.main.game.entities.player.Player;
-import lifesim.main.util.drawing.Sprite;
-import lifesim.main.util.math.Vector2D;
+import lifesim.main.game.entities.components.Sprite;
+import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 import java.util.*;
 
-import static lifesim.main.game.GamePanel.MAP_SCALE;
 
 
 public class World {
+
+    public static final double MAP_SCALE = 5;
+
 
     public final String name;
 
@@ -29,7 +27,7 @@ public class World {
         this.name = name;
         this.size = size;
 
-        add(new StructureEntity("Floor", new Sprite(size, color, false), new Vector2D(0, 0)));
+        add(new Entity("Floor", new Sprite(size, color, false), new Vector2D(0, 0)));
         this.outerColor = outerColor;
     }
 
@@ -68,23 +66,25 @@ public class World {
             for (Entity entity2: entities) {
                 if (entity.isTouching(entity2) && entity != entity2)
                 entity.collision(entity2);
+
+                // Remove entity from world if requested, effectively destroying the entity.
+                if (entity.getRemoveRequested()) entity.removeFromWorld();
             }
-            entity.pos.clampAbs(size.scale((0.5)).translate(entity.sprite.size.scale(-MAP_SCALE/2)));
+            // Keep the entity within the world.
+            entity.pos.clampAbs(size.scale((0.5)).translate(entity.sprite.size.scale(-0.5)));
         }
     }
 
 
-    public void render(Graphics g2d) {
+    public void render(Graphics g) {
         Game.getPanel().setBackground(outerColor);
 
-        for (Entity entity: entities) {
-            g2d = g2d.create();
-            ((Graphics2D) g2d).scale(MAP_SCALE, MAP_SCALE);
-            g2d.translate((int) (Game.getPanel().getDimensions().x/MAP_SCALE/2), (int) (Game.getPanel().getDimensions().y/MAP_SCALE/2));
-            g2d.setColor(Color.YELLOW);
-            g2d.fillRect(0, 0, 100, 100);
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.translate((int) (Game.getPanel().getDimensions().x/2), (int) (Game.getPanel().getDimensions().y/2));
+        g2d.scale(MAP_SCALE, MAP_SCALE);
 
-            entity.render((Graphics2D) g2d);
+        for (Entity entity: entities) {
+            entity.render(g2d);
         }
     }
 

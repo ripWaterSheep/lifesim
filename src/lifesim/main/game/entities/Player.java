@@ -1,35 +1,28 @@
-package lifesim.main.game.entities.player;
+package lifesim.main.game.entities;
 
-import lifesim.main.game.Game;
-import lifesim.main.game.Game.*;
-import lifesim.main.game.GamePanel;
 import lifesim.main.game.controls.KeyInputListener;
 import lifesim.main.game.controls.KeyInputManager;
-import lifesim.main.game.entities.HealthEntity;
+import lifesim.main.game.entities.components.AnimatedSprite;
+import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.setting.World;
-import lifesim.main.util.drawing.Sprite;
-import lifesim.main.util.math.Vector2D;
+import lifesim.main.game.entities.components.Sprite;
+import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 
 
-public final class Player extends HealthEntity {
+public final class Player extends MovementEntity {
 
     private World world;
 
-    private double energy;
-    private double strength;
-    private double money;
-    private double intellect;
-
 
     public Player() {
-        super("Player", new Sprite("Eh Walk Right 1"), new Vector2D(0, 0), 10, 1000, 0);
+        super("Player", new AnimatedSprite(35, "player_standing1", "player_standing2", "player_standing3", "player_standing4", "player_standing3", "player_standing2") , new Vector2D(0, 0), 10,
+                new PlayerStats(1000, 1000, 0, 0, 0));
     }
 
 
     public Vector2D getDisplayPos() {
-        //return new Vector2D(Game.getPanel().getScaledDimensions().scale(0.5/GamePanel.MAP_SCALE)).translate(sprite.size.scale(-0.5));
         return sprite.size.scale(-0.5);
     }
 
@@ -79,7 +72,7 @@ public final class Player extends HealthEntity {
         double speed = defaultSpeed;
         if (KeyInputManager.k_space.isPressed()) {
             speed *= 1.5;
-            energy -= 0.025;
+            ((PlayerStats) stats).tire(0.025);
         }
         return speed;
     }
@@ -105,65 +98,9 @@ public final class Player extends HealthEntity {
 
 
 
-    public double getEnergy() {
-        return energy;
-    }
-
-    public void energize(double amount) {
-        energy += amount;
-    }
-
-    public void tire(double amount) {
-        energy -= amount;
-    }
-
-
-    public double getStrength() {
-        return strength;
-    }
-
-    public void strengthen(double amount) {
-        strength += amount;
-    }
-
-
-    public double getMoney() {
-        return money;
-    }
-
-    public void gainMoney(double amount) {
-        money += amount;
-    }
-
-    public void loseMoney(double amount) {
-        money -= amount;
-    }
-
-    public boolean hasEnoughMoney(double amount) {
-        return (money >= amount);
-    }
-
-
-    public double getIntellect() {
-        return intellect;
-    }
-
-    public void gainIntellect(double amount) {
-        intellect += amount;
-    }
-
-
-    public void manageStats() {
-        energy -= 0.1;
-    }
-
-
-
     @Override
     public void update(World world) {
         super.update(world);
-
-        manageStats();
         control();
     }
 

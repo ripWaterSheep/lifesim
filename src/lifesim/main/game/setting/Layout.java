@@ -1,6 +1,8 @@
 package lifesim.main.game.setting;
 
-import lifesim.main.util.math.Vector2D;
+import lifesim.main.game.entities.Entity;
+import lifesim.main.game.entities.components.Sprite;
+import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,7 +17,9 @@ public class Layout {
 
     public Layout() {
         worlds.add(
-                new World("Town", new Vector2D(150, 150), new Color(0, 255, 100), new Color(200, 160, 100))
+                new World("Town", new Vector2D(750, 750), new Color(60, 159, 75), new Color(201, 193, 126))
+                        .add(new Entity("vRoad", new Sprite(new Vector2D(50, 750), new Color(41, 41, 41), false), new Vector2D(0, 0)))
+                        .add(new Entity("hRoad", new Sprite(new Vector2D(750, 50), new Color(41, 41, 41), false), new Vector2D(0, 0)))
         );
     }
 

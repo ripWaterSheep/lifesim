@@ -1,7 +1,8 @@
 package lifesim.main.game.controls;
 
 import lifesim.main.game.Game;
-import lifesim.main.game.entities.player.Player;
+import lifesim.main.game.entities.Player;
+import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.setting.World;
 import lifesim.main.util.MiscUtil;
 
@@ -14,6 +15,8 @@ class Cheats {
 
     static void cheatLogic(int key) {
         Player player = Game.getSession().getPlayer();
+        PlayerStats stats = (PlayerStats) player.stats;
+
         if (KeyInputManager.k_shift.isPressed()) {
             switch (key) {
                 case VK_N:
@@ -25,23 +28,23 @@ class Cheats {
                     MiscUtil.pause(15);
                     break;
                 case VK_1:
-                    player.gainHealth(100);
+                    stats.gainHealth(100);
                     break;
                 case VK_2:
-                    player.energize(100);
+                    stats.energize(100);
                     break;
                 case VK_3:
-                    player.strengthen(100);
+                    stats.strengthen(100);
                     break;
                 case VK_4:
-                    player.gainMoney(100);
+                    stats.gainMoney(100);
                     break;
                 case VK_5:
-                    player.gainIntellect(100);
+                    stats.gainIntellect(100);
                     break;
 
                 case VK_K:
-                    player.loseHealth(10000);
+                    stats.loseHealth(10000);
                     break;
 
                 case VK_R:

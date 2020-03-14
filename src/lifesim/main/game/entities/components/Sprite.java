@@ -1,7 +1,7 @@
-package lifesim.main.util.drawing;
+package lifesim.main.game.entities.components;
 
+import lifesim.main.game.entities.Entity;
 import lifesim.main.util.fileIO.ImageLoader;
-import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -11,7 +11,7 @@ public class Sprite {
 
     public final Vector2D size;
 
-    private final Image image;
+    protected Image image;
 
     private final Color color;
     private final boolean elliptical;
@@ -27,7 +27,7 @@ public class Sprite {
 
     public Sprite(String imageName, double scale) {
         this(imageName);
-        size.scale(scale);
+        size.set(size.scale(scale));
     }
 
 
@@ -48,14 +48,16 @@ public class Sprite {
     }
 
 
-    public void draw(Graphics2D g2d, Vector2D pos) {
+    public void update(Entity entity) { }
+
+
+    public void render(Graphics2D g2d, Vector2D pos) {
         Shape shape = getShapeAt(pos);
 
         if (color != null) {
             g2d.setColor(color);
-        } else
-        g2d.setColor(new Color(0, 0, 0, 150));
-        g2d.fill(shape);
+            g2d.fill(shape);
+        }
 
         if (image != null) {
             Rectangle rect = shape.getBounds();

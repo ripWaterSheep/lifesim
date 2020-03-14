@@ -1,6 +1,6 @@
-package lifesim.main.util.drawing;
+package lifesim.main.util;
 
-import lifesim.main.util.math.Vector2D;
+import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 

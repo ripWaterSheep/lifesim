@@ -2,29 +2,16 @@ package lifesim.main.game;
 
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
-import lifesim.main.util.math.Vector2D;
+import lifesim.main.game.entities.components.Vector2D;
 
 
 import javax.swing.*;
 import java.awt.*;
 
-import static java.lang.StrictMath.pow;
-
 
 public class GamePanel extends JPanel {
 
-    public static final double MAP_SCALE = 1.5;
-
-    public Vector2D getDimensions() {
-        return new Vector2D(getWidth(), getHeight());
-    }
-
-    public Vector2D getScaledDimensions() {
-        return getDimensions().scale(1/MAP_SCALE);
-    }
-
     //private final OverlayManager overlayManager = new OverlayManager();
-
 
     GameSession gameSession;
 
@@ -40,6 +27,10 @@ public class GamePanel extends JPanel {
         MouseInputManager.init(this);
     }
 
+    public Vector2D getDimensions() {
+        return new Vector2D(getWidth(), getHeight());
+    }
+
 
     @Override
     public void paintComponent(Graphics g) {
@@ -47,8 +38,8 @@ public class GamePanel extends JPanel {
 
         KeyInputManager.run();
         MouseInputManager.run();
-
         runSession(g);
+
         repaint();
     }
 
@@ -59,7 +50,6 @@ public class GamePanel extends JPanel {
     double delta = 0;
     long timer = System.currentTimeMillis();
     int frames = 0;
-
 
     void runSession(Graphics g) {
         long now = System.nanoTime();
