@@ -43,9 +43,19 @@ public class Vector2D {
     }
 
 
-    public void setMagnDir(double magnitude, double deg) {
+
+    public void setXMagnDir(double magnitude, double deg) {
         x = magnitude * Math.cos(Math.toRadians(deg));
+    }
+
+    public void setYMagnDir(double magnitude, double deg) {
         y = magnitude * Math.sin(Math.toRadians(deg));
+    }
+
+
+    public void setMagnDir(double magnitude, double deg) {
+        setXMagnDir(magnitude, deg);
+        setYMagnDir(magnitude, deg);
     }
 
 

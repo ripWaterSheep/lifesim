@@ -1,4 +1,4 @@
-package lifesim.main.game.entities.components;
+package lifesim.main.game.entities.components.sprites;
 
 import lifesim.main.util.fileIO.ImageLoader;
 
@@ -46,7 +46,7 @@ public class Animation {
     }
 
 
-    public Image retrieveNextFrame() {
+    public Image getNextFrame() {
         Image currentFrame = animationCycle.get(currentFrameIndex);
         if (System.currentTimeMillis() - lastFrameTime > frameInterval && cycleStarted) {
             currentFrame = animationCycle.get(currentFrameIndex);

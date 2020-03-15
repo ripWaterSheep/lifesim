@@ -3,13 +3,15 @@ package lifesim.main.game.entities;
 import lifesim.main.game.controls.KeyInputListener;
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.entities.components.*;
+import lifesim.main.game.entities.components.sprites.Animation;
+import lifesim.main.game.entities.components.sprites.DirectionalAnimatedSprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.setting.World;
 
-import java.awt.*;
+import static java.lang.Math.abs;
 
 
-public final class Player extends MovementEntity {
+public final class Player extends InventoryEntity {
 
     private World world;
 
@@ -24,7 +26,7 @@ public final class Player extends MovementEntity {
 
                 //new Animation(100, "Eh Walk Right 1", "Eh Walk Right 2", "Eh Walk Right 3", "Eh Walk Right 4")
                 ),
-                new Vector2D(0, 0), 6,
+                new Vector2D(0, 0), 4,
                 new PlayerStats(1000, 1000, 0, 0, 0));
     }
 
@@ -43,16 +45,6 @@ public final class Player extends MovementEntity {
         newWorld.add(this);
     }
 
-
-
-    private double calculateSpeed() {
-        double speed = defaultSpeed;
-        if (KeyInputManager.k_space.isPressed()) {
-            speed *= 1.5;
-            ((PlayerStats) stats).tire(0.025);
-        }
-        return speed;
-    }
 
 
     public void control() {
@@ -79,10 +71,27 @@ public final class Player extends MovementEntity {
         }
 
         if (up || down || left || right) {
-            movement.setMagnDir(calculateSpeed(), getIntendedAngle(up, down, left, right));
+            if (left || right)
+                movement.setXMagnDir(getIntendedSpeed(), getIntendedAngle(up, down, left, right));
+            if (up || down)
+                movement.setYMagnDir(getIntendedSpeed(), getIntendedAngle(up, down, left, right));
         } else {
-            movement.set(0, 0);
+            movement.set(movement.scale(0.85));
+
+            double speedThreshold = 0.12;
+            if (abs(movement.x) < speedThreshold) movement.x = 0;
+            if (abs(movement.y) < speedThreshold) movement.y = 0;
         }
+    }
+
+
+    private double getIntendedSpeed() {
+        double speed = defaultSpeed;
+        if (KeyInputManager.k_space.isPressed()) {
+            speed *= 1.5;
+            ((PlayerStats) stats).tire(0.025);
+        }
+        return speed;
     }
 
 

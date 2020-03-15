@@ -1,6 +1,7 @@
-package lifesim.main.game.entities.components;
+package lifesim.main.game.entities.components.sprites;
 
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.util.fileIO.ImageLoader;
 
 import java.awt.*;
@@ -51,7 +52,7 @@ public class Sprite {
     }
 
 
-    public void render(Graphics2D g2d, Vector2D pos, Entity entity) {
+    public void render(Graphics2D g2d, Vector2D pos, Vector2D movement) {
         Shape shape = getShapeAt(pos);
 
         if (color != null) {
@@ -65,6 +66,5 @@ public class Sprite {
             g2d.drawImage(image, rect.x, rect.y, rect.width, rect.height, null);
         }
     }
-
 
 }

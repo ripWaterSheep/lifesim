@@ -1,7 +1,7 @@
-package lifesim.main.game.entities.components;
+package lifesim.main.game.entities.components.sprites;
 
 import lifesim.main.game.entities.Entity;
-import lifesim.main.util.math.MyMath;
+import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -25,8 +25,8 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
 
 
     @Override
-    public void render(Graphics2D g2d, Vector2D pos, Entity entity) {
-        if (entity.isStill()) {
+    public void render(Graphics2D g2d, Vector2D pos, Vector2D movement) {
+        if (movement.getMagnitude() == 0) {
             animation = idleAnimation;
         } else {
             /* Get animation based on entity's direction.
@@ -37,7 +37,7 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
             */
 
             // Scale angle from 0-360 to 0-1
-            double angleRatio = ((entity.getDirection())/360);
+            double angleRatio = ((movement.getDirection())/360);
             // Multiply by total num of animations
             angleRatio *= movementAnimations.size();
 
@@ -52,7 +52,7 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
                 }
             }
         }
-        super.render(g2d, pos, entity);
+        super.render(g2d, pos, movement);
     }
 
 }

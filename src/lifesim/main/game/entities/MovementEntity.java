@@ -1,12 +1,9 @@
 package lifesim.main.game.entities;
 
-import lifesim.main.game.entities.components.AnimatedSprite;
-import lifesim.main.game.entities.components.DirectionalAnimatedSprite;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.setting.World;
-import lifesim.main.game.entities.components.Sprite;
+import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.util.fileIO.ImageLoader;
 
 import java.awt.*;
 
@@ -43,4 +40,8 @@ public class MovementEntity extends Entity {
         pos.set(pos.translate(movement));
     }
 
+    @Override
+    public void render(Graphics2D g2d) {
+        sprite.render(g2d, getDisplayPos(), movement);
+    }
 }

@@ -73,7 +73,7 @@ public class PlayerStats extends HealthStats {
     public void collision(Entity owner, Entity entity) {
         super.collision(owner, entity);
 
-        entity.onTouch((Player) owner, this);
+        entity.whileTouching((Player) owner, this);
         
         if (MouseInputManager.left.isClicked())
             entity.onClick((Player) owner, this);

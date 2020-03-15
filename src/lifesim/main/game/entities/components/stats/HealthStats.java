@@ -7,6 +7,8 @@ public class HealthStats extends DamageStats {
     private double health;
     private final double initialHealth;
 
+    private double reductionFactor = 1;
+
 
     public HealthStats(double damage, double health) {
         super(damage);
@@ -18,19 +20,22 @@ public class HealthStats extends DamageStats {
         this(0, health);
     }
 
+
     public void gainHealth(double amount) {
         health += amount;
     }
 
     public void loseHealth(double amount) {
-        health -= amount;
+        health -= amount*reductionFactor;
+    }
+
+    public void setReductionFactor(double reductionFactor) {
+        this.reductionFactor = reductionFactor;
     }
 
 
     @Override
-    public void collision(Entity owner, Entity entity) {
-
-    }
+    public void collision(Entity owner, Entity entity) { }
 
     @Override
     public void run(Entity owner) {

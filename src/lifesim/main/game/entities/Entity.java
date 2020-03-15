@@ -5,10 +5,8 @@ import lifesim.main.game.entities.components.stats.BasicStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.setting.World;
-import lifesim.main.game.entities.components.Sprite;
+import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.util.DrawString;
-import lifesim.main.util.fileIO.FontLoader;
 
 import java.awt.*;
 
@@ -72,7 +70,7 @@ public class Entity {
     }
 
 
-    public void onTouch(Player player, PlayerStats stats) { }
+    public void whileTouching(Player player, PlayerStats stats) { }
 
     public void onClick(Player player, PlayerStats stats) { }
 
@@ -81,12 +79,13 @@ public class Entity {
         stats.collision(this, entity);
     }
 
+
     public void update(World world) {
         stats.run(this);
     }
 
     public void render(Graphics2D g2d) {
-        sprite.render(g2d, getDisplayPos(), this);
+        sprite.render(g2d, getDisplayPos(), new Vector2D(0, 0));
     }
 
 }

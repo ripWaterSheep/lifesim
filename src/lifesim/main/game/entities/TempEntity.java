@@ -1,10 +1,8 @@
 package lifesim.main.game.entities;
 
-import lifesim.main.game.entities.components.AnimatedSprite;
-import lifesim.main.game.entities.components.Sprite;
+import lifesim.main.game.entities.components.sprites.AnimatedSprite;
+import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.game.entities.components.stats.Stats;
-import lifesim.main.game.setting.World;
 
 import java.awt.*;
 

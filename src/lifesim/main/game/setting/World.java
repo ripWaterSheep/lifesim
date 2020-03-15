@@ -3,9 +3,9 @@ package lifesim.main.game.setting;
 import lifesim.main.game.Game;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.TempEntity;
-import lifesim.main.game.entities.components.AnimatedSprite;
-import lifesim.main.game.entities.components.Animation;
-import lifesim.main.game.entities.components.Sprite;
+import lifesim.main.game.entities.components.sprites.AnimatedSprite;
+import lifesim.main.game.entities.components.sprites.Animation;
+import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
@@ -15,6 +15,7 @@ import java.util.*;
 
 public class World {
 
+    // Constant graphics scale for all entities shown in each world (No effect on overlays).
     public static final double MAP_SCALE = 7;
 
 
@@ -71,7 +72,7 @@ public class World {
             // Spawn the big boom. (Only not for temp entities since boom itself is a temp entity, otherwise it would spawn itself indefinitely).
             if (!(entity instanceof TempEntity))
             add(new TempEntity("Boom", new AnimatedSprite(
-                    new Animation(35, "boom_1", "boom_2", "boom_3", "boom_4", "boom_5", "boom_6", "boom_7", "boom_8")), new Vector2D(entity.pos).scale(-1)));
+                    new Animation(40, "boom_1", "boom_2", "boom_3", "boom_4", "boom_5", "boom_6", "boom_7", "boom_8")), new Vector2D(entity.pos).scale(-1)));
         }
     }
 
@@ -84,7 +85,6 @@ public class World {
             for (Entity entity2: getEntities()) {
                 if (entity.isTouching(entity2) && entity != entity2) {
                     entity.collision(entity2);
-                    System.out.println(entity.name + "  " + entity2.name);
                 }
             }
 
