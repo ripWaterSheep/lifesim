@@ -43,9 +43,4 @@ public class MovementEntity extends Entity {
         pos.set(pos.translate(movement));
     }
 
-
-    @Override
-    public void render(Graphics2D g2d) {
-        super.render(g2d);
-    }
 }

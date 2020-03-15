@@ -45,7 +45,11 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
             try {
                 animation = movementAnimations.get(chosenIndex);
             } catch (Exception e) {
-                animation = movementAnimations.get(movementAnimations.size()-1);
+
+                try {
+                    animation = movementAnimations.get(movementAnimations.size()-1);
+                } catch (Exception e2) {
+                }
             }
         }
         super.render(g2d, pos, entity);

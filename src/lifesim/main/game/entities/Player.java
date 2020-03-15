@@ -16,11 +16,12 @@ public final class Player extends MovementEntity {
 
     public Player() {
         super("Player", new DirectionalAnimatedSprite(
-                        new Animation(100, "player_idle_1"),
-                        new Animation(100,"player_l_1", "player_l_2"),
-                        new Animation(100, "player_b_1", "player_b_2"),
-                        new Animation(100, "player_r_1", "player_r_2"),
-                        new Animation(100, "player_f_1", "player_f_2")
+                new Animation(200, "player_idle_1", "player_idle_2"),
+                new Animation(100, "player_left_1", "player_left_2"),
+                new Animation(100, "player_backward_1", "player_backward_2"),
+                new Animation(100, "player_right_1", "player_right_2"),
+                new Animation(100, "player_forward_1", "player_forward_2")
+
                 //new Animation(100, "Eh Walk Right 1", "Eh Walk Right 2", "Eh Walk Right 3", "Eh Walk Right 4")
                 ),
                 new Vector2D(0, 0), 6,
@@ -101,7 +102,6 @@ public final class Player extends MovementEntity {
 
         return angle;
     }
-
 
 
     @Override

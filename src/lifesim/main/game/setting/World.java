@@ -15,7 +15,7 @@ import java.util.*;
 
 public class World {
 
-    public static final double MAP_SCALE = 5;
+    public static final double MAP_SCALE = 7;
 
 
     public final String name;
@@ -82,8 +82,10 @@ public class World {
             entity.update(this);
 
             for (Entity entity2: getEntities()) {
-                if (entity.isTouching(entity2) && entity != entity2)
-                entity.collision(entity2);
+                if (entity.isTouching(entity2) && entity != entity2) {
+                    entity.collision(entity2);
+                    System.out.println(entity.name + "  " + entity2.name);
+                }
             }
 
             doGarbageCollection(entity);

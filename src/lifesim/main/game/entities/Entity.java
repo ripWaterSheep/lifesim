@@ -7,6 +7,8 @@ import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.setting.World;
 import lifesim.main.game.entities.components.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.DrawString;
+import lifesim.main.util.fileIO.FontLoader;
 
 import java.awt.*;
 
@@ -38,7 +40,7 @@ public class Entity {
 
 
     public Shape getHitBox() {
-        return sprite.getShapeAt(pos);
+        return sprite.getShapeAt(getDisplayPos());
     }
 
     public boolean isTouching(Entity entity) {

@@ -1,6 +1,8 @@
 package lifesim.main.game.entities.components.stats;
 
+import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.entities.Player;
 
 public class PlayerStats extends HealthStats {
 
@@ -66,9 +68,15 @@ public class PlayerStats extends HealthStats {
     }
 
 
+
     @Override
     public void collision(Entity owner, Entity entity) {
         super.collision(owner, entity);
+
+        entity.onTouch((Player) owner, this);
+        
+        if (MouseInputManager.left.isClicked())
+            entity.onClick((Player) owner, this);
     }
 
 
