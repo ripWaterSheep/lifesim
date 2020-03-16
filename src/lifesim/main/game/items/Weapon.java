@@ -19,7 +19,7 @@ public class Weapon extends Item {
 
     @Override
     public void onClick(World world, Entity entity) {
-        world.add(spawnEntity);
+        world.add(spawnEntity, entity.pos);
     }
 
 }

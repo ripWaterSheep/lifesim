@@ -41,7 +41,7 @@ public class HealthStats extends DamageStats {
     public void run(Entity owner) {
         if (health <= 0)
             owner.removeFromWorld();
-        System.out.println(health);
+        //System.out.println(health);
     }
 
 }

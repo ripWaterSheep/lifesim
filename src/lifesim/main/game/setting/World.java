@@ -7,10 +7,10 @@ import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.game.entities.components.stats.DamageStats;
 
 import java.awt.*;
 import java.util.*;
-
 
 
 public class World {
@@ -31,7 +31,7 @@ public class World {
         this.name = name;
         this.size = size;
 
-        add(new Entity("Floor", new Sprite(size, color, false), new Vector2D(0, 0)));
+        add(new Entity("Floor", new Sprite(size, color, false)), new Vector2D(0, 0));
         this.outerColor = outerColor;
     }
 
@@ -40,8 +40,9 @@ public class World {
     }
 
 
-    public World add(Entity entity) {
+    public World add(Entity entity, Vector2D pos) {
         entities.add(entity);
+        entity.pos.set(pos);
         return this;
     }
 
@@ -70,9 +71,9 @@ public class World {
             entities.remove(entity);
 
             // Spawn the big boom. (Only not for temp entities since boom itself is a temp entity, otherwise it would spawn itself indefinitely).
-            if (!(entity instanceof TempEntity))
+            if (!(entity.name.equals("Boom")))
             add(new TempEntity("Boom", new AnimatedSprite(
-                    new Animation(40, "boom_1", "boom_2", "boom_3", "boom_4", "boom_5", "boom_6", "boom_7", "boom_8")), new Vector2D(entity.pos).scale(-1)));
+                    new Animation(40, "boom_1", "boom_2", "boom_3", "boom_4", "boom_5", "boom_6", "boom_7", "boom_8")), new DamageStats(50)), entity.pos);
         }
     }
 

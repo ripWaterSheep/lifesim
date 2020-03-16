@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.geom.Area;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.decrementExact;
+import static lifesim.main.util.math.MyMath.inRange;
 
 
 public class Geometry {
@@ -35,6 +37,19 @@ public class Geometry {
 
     public static boolean isOutOfBoundsAbs(Vector2D v1, Vector2D bounds) {
         return (abs(v1.x) > abs(bounds.x) || abs(v1.y) > abs(bounds.y));
+    }
+
+
+    public static double getAvgAngle(double angle1, double angle2) {
+        double angle;
+        angle1 = angleWrap(angle1);
+        angle2 = angleWrap(angle2);
+
+        if (inRange(angle1 - angle2, 0, 180) || inRange(angle2 - angle1, 0, 180))
+        angle = angleWrap(angle1 + angle2)/2;
+        else angle = angleWrap(-(angle1 + angle2 + 180)/2);
+
+        return angle;
     }
 
 

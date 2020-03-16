@@ -9,8 +9,8 @@ public class DroppedItemEntity extends Entity {
 
     private final Item item;
 
-    public DroppedItemEntity(String name, Sprite sprite, Vector2D pos, Item item) {
-        super(name, sprite, pos);
+    public DroppedItemEntity(String name, Sprite sprite, Item item) {
+        super(name, sprite);
         this.item = item;
     }
 

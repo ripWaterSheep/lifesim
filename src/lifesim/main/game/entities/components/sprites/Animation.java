@@ -14,10 +14,11 @@ public class Animation {
 
     protected int currentFrameIndex = 0;
 
-    private long lastFrameTime = 0;
+    private long lastFrameTime = System.currentTimeMillis();
     private long lastCycleTime = System.currentTimeMillis();
 
     private boolean cycleStarted = true;
+    private int totalCycles = 0;
 
 
     public Animation(int frameInterval, String... imageNames) {
@@ -42,21 +43,23 @@ public class Animation {
 
 
     public boolean isAtEndOfCycle() {
-        return currentFrameIndex == animationCycle.size()-1;
+        return totalCycles >= 1;
     }
 
 
     public Image getNextFrame() {
         Image currentFrame = animationCycle.get(currentFrameIndex);
+
         if (System.currentTimeMillis() - lastFrameTime > frameInterval && cycleStarted) {
             currentFrame = animationCycle.get(currentFrameIndex);
 
-            currentFrameIndex += 1;
+            currentFrameIndex++;
 
             if (currentFrameIndex > animationCycle.size() - 1) {
                 currentFrameIndex = 0;
                 cycleStarted = false;
                 lastCycleTime = System.currentTimeMillis();
+                totalCycles++;
             }
             else currentFrame = animationCycle.get(currentFrameIndex);
 

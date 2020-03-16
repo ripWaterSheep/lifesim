@@ -15,14 +15,8 @@ public class ProjectileEntity extends MovementEntity {
 
 
     public ProjectileEntity(String name, Sprite sprite, double speed, Stats stats, double movementRange) {
-        super(name, sprite, new Vector2D(0, 0), speed, 0, stats);
+        super(name, sprite, speed, 0, stats);
         this.movementRange = movementRange;
-    }
-
-
-    public void launchAt(Vector2D pos, double directionDeg) {
-        launched = true;
-        movement.setMagnDir(defaultSpeed, directionDeg);
     }
 
 

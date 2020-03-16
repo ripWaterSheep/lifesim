@@ -22,7 +22,7 @@ public class Item {
 
 
     public void drop(World world, Vector2D pos) {
-        world.add(new DroppedItemEntity("Dropped " + name, sprite, pos, this));
+        world.add(new DroppedItemEntity("Dropped " + name, sprite, this), pos);
     }
 
 

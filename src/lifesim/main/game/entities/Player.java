@@ -19,15 +19,15 @@ public final class Player extends InventoryEntity {
     public Player() {
         super("Player", new DirectionalAnimatedSprite(
                 new Animation(200, "player_idle_1", "player_idle_2"),
-                new Animation(100, "player_left_1", "player_left_2"),
-                new Animation(100, "player_backward_1", "player_backward_2"),
-                new Animation(100, "player_right_1", "player_right_2"),
-                new Animation(100, "player_forward_1", "player_forward_2")
+                        new Animation(120, "player_right_1", "player_right_2"),
+                new Animation(120, "player_forward_1", "player_forward_2"),
+                        new Animation(120, "player_left_1", "player_left_2"),
+                new Animation(120, "player_backward_1", "player_backward_2")
 
                 //new Animation(100, "Eh Walk Right 1", "Eh Walk Right 2", "Eh Walk Right 3", "Eh Walk Right 4")
                 ),
-                new Vector2D(0, 0), 4,
-                new PlayerStats(1000, 1000, 0, 0, 0));
+                4,
+                new PlayerStats(1, 1000, 0, 0, 0));
     }
 
 
@@ -42,46 +42,41 @@ public final class Player extends InventoryEntity {
 
     public void setWorld(World newWorld) {
         world = newWorld;
-        newWorld.add(this);
+        newWorld.add(this, new Vector2D(0, 0));
     }
-
 
 
     public void control() {
         boolean up, down, left, right;
+        final KeyInputListener upKey = KeyInputManager.k_w,
+                leftKey = KeyInputManager.k_a,
+                downKey = KeyInputManager.k_s,
+                rightKey = KeyInputManager.k_d;
 
-        final KeyInputListener upKey = KeyInputManager.k_w;
-        final KeyInputListener leftKey = KeyInputManager.k_a;
-        final KeyInputListener downKey = KeyInputManager.k_s;
-        final KeyInputListener rightKey = KeyInputManager.k_d;
-
-        if (leftKey.isPressed() && rightKey.isPressed()) {
-            left = leftKey.getReadTime() < rightKey.getReadTime();
+        // Go in the direction of keys that are pressed, with keys pressed earlier having precedence over more recently pressed keys.
+        left = leftKey.isPressed();
+        right = rightKey.isPressed();
+        if (left && right) {
+            left = leftKey.getPressTime() < rightKey.getPressTime();
             right = !left;
-        } else {
-            left = leftKey.isPressed();
-            right = rightKey.isPressed();
         }
-        if (upKey.isPressed() && downKey.isPressed()) {
-            up = upKey.getReadTime() < downKey.getReadTime();
+        up = upKey.isPressed();
+        down = downKey.isPressed();
+        if (up && down) {
+            up = upKey.getPressTime() < downKey.getPressTime();
             down = !up;
-        } else {
-            up = upKey.isPressed();
-            down = downKey.isPressed();
         }
 
-        if (up || down || left || right) {
-            if (left || right)
-                movement.setXMagnDir(getIntendedSpeed(), getIntendedAngle(up, down, left, right));
-            if (up || down)
-                movement.setYMagnDir(getIntendedSpeed(), getIntendedAngle(up, down, left, right));
-        } else {
-            movement.set(movement.scale(0.85));
+        double frictionDecelerationFactor = 0.87;
+        if (left || right) movement.setXMagnDir(getIntendedSpeed(), getIntendedAngle(up, down, left, right));
+        else movement.x *= frictionDecelerationFactor;
+        if (up || down) movement.setYMagnDir(getIntendedSpeed(), getIntendedAngle(up, down, left, right));
+        else movement.y *= frictionDecelerationFactor;
 
-            double speedThreshold = 0.12;
-            if (abs(movement.x) < speedThreshold) movement.x = 0;
-            if (abs(movement.y) < speedThreshold) movement.y = 0;
-        }
+
+        double speedThreshold = 0.15;
+        if (abs(movement.x) < speedThreshold) movement.x = 0;
+        if (abs(movement.y) < speedThreshold) movement.y = 0;
     }
 
 
@@ -93,6 +88,7 @@ public final class Player extends InventoryEntity {
         }
         return speed;
     }
+
 
 
     private double getIntendedAngle(boolean up, boolean down, boolean left, boolean right) {

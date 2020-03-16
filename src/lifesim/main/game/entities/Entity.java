@@ -24,16 +24,15 @@ public class Entity {
     private boolean removeRequested = false;
 
 
-    public Entity(String name, Sprite sprite, Vector2D pos, Stats stats) {
+    public Entity(String name, Sprite sprite, Stats stats) {
         this.name = name;
         this.sprite = sprite;
-        this.pos = pos;
+        this.pos = new Vector2D(0, 0);
         this.stats = stats;
     }
 
-
-    public Entity(String name, Sprite sprite, Vector2D pos) {
-        this(name, sprite, pos, new BasicStats());
+    public Entity(String name, Sprite sprite) {
+        this(name, sprite, new BasicStats());
     }
 
 
@@ -46,18 +45,9 @@ public class Entity {
     }
 
 
-    public boolean isStill() {
-        return true;
-    }
-
-    public double getDirection() {
-        return 0;
-    }
-
-
     public Vector2D getDisplayPos() {
         Player player = Game.getSession().getPlayer();
-        return pos.translate(player.pos).translate(sprite.size.scale(-0.5));
+        return pos.translate(player.pos.scale(-1)).translate(sprite.size.scale(-0.5));
     }
 
 

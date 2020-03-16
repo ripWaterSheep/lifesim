@@ -12,11 +12,11 @@ import java.awt.*;
 
 public class InventoryEntity extends MovementEntity {
 
-    private final Inventory inventory = new Inventory();;
+    private final Inventory inventory = new Inventory();
 
 
-    public InventoryEntity(String name, Sprite sprite, Vector2D pos, double speed, Stats stats) {
-        super(name, sprite, pos, speed, stats);
+    public InventoryEntity(String name, Sprite sprite, double speed, Stats stats) {
+        super(name, sprite, speed, stats);
     }
 
 

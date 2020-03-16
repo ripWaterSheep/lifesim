@@ -13,26 +13,16 @@ public class MovementEntity extends Entity {
     protected final double defaultSpeed;
 
 
-    public MovementEntity(String name, Sprite sprite, Vector2D pos, double speed, double angle, Stats stats) {
-        super(name, sprite, pos, stats);
+    public MovementEntity(String name, Sprite sprite, double speed, double angle, Stats stats) {
+        super(name, sprite, stats);
         defaultSpeed = speed;
         movement.setMagnDir(speed, angle);
     }
 
-    public MovementEntity(String name, Sprite sprite, Vector2D pos, double speed, Stats stats) {
-        this(name, sprite, pos, speed, 0, stats);
+    public MovementEntity(String name, Sprite sprite, double speed, Stats stats) {
+        this(name, sprite, speed, 0, stats);
     }
 
-
-    @Override
-    public boolean isStill() {
-        return movement.x == 0 && movement.y == 0;
-    }
-
-    @Override
-    public double getDirection() {
-        return movement.getDirection();
-    }
 
     @Override
     public void update(World world) {
