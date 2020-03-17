@@ -5,7 +5,7 @@ import lifesim.main.game.entities.Entity;
 public class BasicStats implements Stats {
 
     @Override
-    public void collision(Entity owner, Entity entity) {
+    public void handleCollisions(Entity owner, Entity entity) {
 
     }
 

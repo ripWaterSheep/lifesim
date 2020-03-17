@@ -4,10 +4,9 @@ import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 import java.awt.geom.Area;
+import java.awt.geom.Point2D;
 
 import static java.lang.Math.abs;
-import static java.lang.Math.decrementExact;
-import static lifesim.main.util.math.MyMath.inRange;
 
 
 public class Geometry {
@@ -15,18 +14,43 @@ public class Geometry {
     /** Keeps angle within 0 to 360 degrees while preserving angle measure */
     public static double angleWrap(double deg) {
         while (deg < 0) deg += 360;
-        while (deg > 360) deg -= 360;
+        while (deg >= 360) deg -= 360;
 
         return deg;
     }
 
 
-    public static double getAngleBetween(double x1, double y1, double x2, double y2) {
-        double angle = MyMath.betterRound(Math.toDegrees(Math.atan2(y2 - y1, x2 - x1)));
+    /** Returns the angle of the angle bisector in between two sides,
+     * effectively the average of the angle.
+     */
+    public static double getAngleBisector(double side1Angle, double side2Angle) {
+        double angle;
+        side1Angle = angleWrap(side1Angle);
+        side2Angle = angleWrap(side2Angle);
+
+        if (abs(side1Angle - side2Angle) <= 180)
+            //If the difference between angles is <= 180, return the average angle
+            angle = (side1Angle+side2Angle)/2;
+        else // If the difference between angles > 180, return the the average angle + 180 since that side is the smallest.
+            // This makes the angle truly in between the two angles by accounting for the 360-0 angle wrap.
+            angle = (side1Angle+side2Angle)/2 + 180;
+
+        return angleWrap(angle);
+    }
+
+
+    public static double getAngleBetween(Vector2D v1, Vector2D v2) {
+        double angle = MyMath.betterRound(Math.toDegrees(Math.atan2(v2.y -v1.y, v2.x - v1.x)));
         angle = angleWrap(angle);
 
         return angle;
     }
+
+
+    public static double getDistanceBetween(Vector2D v1, Vector2D v2) {
+        return Math.abs(MyMath.betterRound(Point2D.distance(v1.x, v1.y, v2.x, v2.y)));
+    }
+
 
     public static boolean testIntersection(Shape shapeA, Shape shapeB) {
         Area areaA = new Area(shapeA);
@@ -39,18 +63,6 @@ public class Geometry {
         return (abs(v1.x) > abs(bounds.x) || abs(v1.y) > abs(bounds.y));
     }
 
-
-    public static double getAvgAngle(double angle1, double angle2) {
-        double angle;
-        angle1 = angleWrap(angle1);
-        angle2 = angleWrap(angle2);
-
-        if (inRange(angle1 - angle2, 0, 180) || inRange(angle2 - angle1, 0, 180))
-        angle = angleWrap(angle1 + angle2)/2;
-        else angle = angleWrap(-(angle1 + angle2 + 180)/2);
-
-        return angle;
-    }
 
 
 }

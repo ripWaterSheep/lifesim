@@ -15,7 +15,7 @@ public class ProjectileEntity extends MovementEntity {
 
 
     public ProjectileEntity(String name, Sprite sprite, double speed, Stats stats, double movementRange) {
-        super(name, sprite, speed, 0, stats);
+        super(name, sprite, stats, speed);
         this.movementRange = movementRange;
     }
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Animation {
 
-    private final ArrayList<Image> animationCycle = new ArrayList<>();
+    private final ArrayList<Image> frames = new ArrayList<>();
     private final int frameInterval;
     private final int cycleInterval;
 
@@ -21,24 +21,18 @@ public class Animation {
     private int totalCycles = 0;
 
 
-    public Animation(int frameInterval, String... imageNames) {
-        this.frameInterval = frameInterval;
-        cycleInterval = 0;
+    public Animation(int frameInterval, int cycleInterval, String... imageNames) {
+        this.frameInterval = frameInterval;this.cycleInterval = cycleInterval;
 
         for (String imageName: imageNames) {
             Image image = ImageLoader.loadImage(imageName);
-            animationCycle.add(image);
+            frames.add(image);
         }
+
     }
 
-    public Animation(int frameInterval, int cycleInterval, String... imageNames) {
-        this.frameInterval = frameInterval;
-        this.cycleInterval = cycleInterval;
-
-        for (String imageName: imageNames) {
-            Image image = ImageLoader.loadImage(imageName);
-            animationCycle.add(image);
-        }
+    public Animation(int frameInterval, String... imageNames) {
+        this(frameInterval, 0, imageNames);
     }
 
 
@@ -46,22 +40,26 @@ public class Animation {
         return totalCycles >= 1;
     }
 
+    public boolean hasStarted() {
+        return currentFrameIndex > 0 || totalCycles > 0;
+    }
+
 
     public Image getNextFrame() {
-        Image currentFrame = animationCycle.get(currentFrameIndex);
+        Image currentFrame = frames.get(currentFrameIndex);
 
         if (System.currentTimeMillis() - lastFrameTime > frameInterval && cycleStarted) {
-            currentFrame = animationCycle.get(currentFrameIndex);
+            currentFrame = frames.get(currentFrameIndex);
 
             currentFrameIndex++;
 
-            if (currentFrameIndex > animationCycle.size() - 1) {
+            if (currentFrameIndex > frames.size() - 1) {
                 currentFrameIndex = 0;
                 cycleStarted = false;
                 lastCycleTime = System.currentTimeMillis();
                 totalCycles++;
             }
-            else currentFrame = animationCycle.get(currentFrameIndex);
+            else currentFrame = frames.get(currentFrameIndex);
 
             lastFrameTime = System.currentTimeMillis();
         }

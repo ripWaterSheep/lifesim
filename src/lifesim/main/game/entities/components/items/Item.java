@@ -1,4 +1,4 @@
-package lifesim.main.game.items;
+package lifesim.main.game.entities.components.items;
 
 import lifesim.main.game.entities.DroppedItemEntity;
 import lifesim.main.game.entities.Entity;
@@ -21,8 +21,8 @@ public class Item {
     }
 
 
-    public void drop(World world, Vector2D pos) {
-        world.add(new DroppedItemEntity("Dropped " + name, sprite, this), pos);
+    public DroppedItemEntity getDroppedEntity() {
+       return new DroppedItemEntity("Dropped " + name, sprite, this);
     }
 
 

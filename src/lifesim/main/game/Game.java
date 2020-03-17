@@ -6,7 +6,7 @@ import lifesim.main.util.MiscUtil;
 
 import javax.swing.*;
 
-import static lifesim.main.util.math.Geometry.getAvgAngle;
+import static lifesim.main.util.math.Geometry.getAngleBisector;
 
 
 public class Game {
@@ -41,7 +41,6 @@ public class Game {
 
     public static void main(String[] args) {
         start();
-        System.out.println(getAvgAngle(-180, -90));
     }
 
 }

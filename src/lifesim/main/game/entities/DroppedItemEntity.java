@@ -1,9 +1,8 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.entities.components.sprites.Sprite;
-import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.game.items.Item;
+import lifesim.main.game.entities.components.items.Item;
 
 public class DroppedItemEntity extends Entity {
 

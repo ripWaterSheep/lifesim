@@ -4,7 +4,7 @@ import lifesim.main.game.entities.Entity;
 
 public interface Stats {
 
-    void collision(Entity owner, Entity entity);
+    void handleCollisions(Entity owner, Entity entity);
     void run(Entity owner);
 
 }

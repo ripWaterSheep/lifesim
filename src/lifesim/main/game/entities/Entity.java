@@ -59,14 +59,16 @@ public class Entity {
         removeRequested = true;
     }
 
+    public void onRemoval(World world) { }
+
 
     public void whileTouching(Player player, PlayerStats stats) { }
 
     public void onClick(Player player, PlayerStats stats) { }
 
 
-    public void collision(Entity entity) {
-        stats.collision(this, entity);
+    public void handleCollisions(Entity entity) {
+        stats.handleCollisions(this, entity);
     }
 
 

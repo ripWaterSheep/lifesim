@@ -1,4 +1,4 @@
-package lifesim.main.game.items;
+package lifesim.main.game.entities.components.items;
 
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.components.sprites.Sprite;

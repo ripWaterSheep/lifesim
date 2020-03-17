@@ -68,12 +68,13 @@ public class World {
     public void doGarbageCollection(Entity entity) {
         // Remove entity from world if requested, effectively destroying the entity.
         if (entity.isRemoveRequested()) {
+            entity.onRemoval(this);
             entities.remove(entity);
 
             // Spawn the big boom. (Only not for temp entities since boom itself is a temp entity, otherwise it would spawn itself indefinitely).
             if (!(entity.name.equals("Boom")))
             add(new TempEntity("Boom", new AnimatedSprite(
-                    new Animation(40, "boom_1", "boom_2", "boom_3", "boom_4", "boom_5", "boom_6", "boom_7", "boom_8")), new DamageStats(50)), entity.pos);
+                    new Animation(40, "boom_1", "boom_2", "boom_3", "boom_4", "boom_5", "boom_6", "boom_7", "boom_8")), false, new DamageStats(50)), entity.pos);
         }
     }
 
@@ -85,7 +86,7 @@ public class World {
 
             for (Entity entity2: getEntities()) {
                 if (entity.isTouching(entity2) && entity != entity2) {
-                    entity.collision(entity2);
+                    entity.handleCollisions(entity2);
                 }
             }
 

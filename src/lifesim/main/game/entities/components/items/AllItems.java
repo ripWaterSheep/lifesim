@@ -1,6 +1,5 @@
-package lifesim.main.game.items;
+package lifesim.main.game.entities.components.items;
 
-import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.ProjectileEntity;
 import lifesim.main.game.entities.TempEntity;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
@@ -19,7 +18,6 @@ public final class AllItems {
 
     public static final Weapon bomb = new Weapon("Bomb", new Sprite("bomb_1"),
             new TempEntity("Bomb", new AnimatedSprite(new Animation(70,
-                    "bomb_1", "bomb_2", "bomb_3", "bomb_4", "bomb_3", "bomb_2", "bomb_1", "bomb_2", "bomb_3", "bomb_4", "bomb_5", "bomb_6"))));
-
+                    "bomb_1", "bomb_2", "bomb_3", "bomb_4", "bomb_3", "bomb_2", "bomb_1", "bomb_2", "bomb_3", "bomb_4", "bomb_5", "bomb_6")), true));
 
 }

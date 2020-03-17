@@ -1,16 +1,15 @@
-package lifesim.main.game.entities.components;
+package lifesim.main.game.entities.components.items;
 
 
 import lifesim.main.game.entities.Entity;
-import lifesim.main.game.items.AllItems;
-import lifesim.main.game.items.Armor;
-import lifesim.main.game.items.Item;
-import lifesim.main.game.items.Weapon;
+import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.game.entities.components.items.AllItems;
+import lifesim.main.game.entities.components.items.Armor;
+import lifesim.main.game.entities.components.items.Item;
 import lifesim.main.game.setting.World;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Inventory {
 
@@ -19,8 +18,8 @@ public class Inventory {
     private Item selectedItem = AllItems.standardGun;
 
 
-    public Inventory() {
-
+    public ArrayList<Item> getItems() {
+        return new ArrayList<>(items);
     }
 
 

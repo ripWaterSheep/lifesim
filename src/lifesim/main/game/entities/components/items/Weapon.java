@@ -1,11 +1,8 @@
-package lifesim.main.game.items;
+package lifesim.main.game.entities.components.items;
 
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.components.sprites.Sprite;
-import lifesim.main.game.entities.components.stats.DamageStats;
 import lifesim.main.game.setting.World;
-
-import javax.swing.border.EmptyBorder;
 
 public class Weapon extends Item {
 

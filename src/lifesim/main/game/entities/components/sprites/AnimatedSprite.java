@@ -8,6 +8,7 @@ import java.awt.*;
 public class AnimatedSprite extends Sprite {
 
     protected Animation animation;
+    private boolean paused = false;
 
 
     public AnimatedSprite(Animation animation) {
@@ -20,10 +21,16 @@ public class AnimatedSprite extends Sprite {
         return animation;
     }
 
+    public void pauseFrame() {
+        paused = true;
+    }
+
 
     @Override
     public void render(Graphics2D g2d, Vector2D pos, Vector2D movement) {
-        image = animation.getNextFrame();
+        if (!paused) {
+            image = animation.getNextFrame();
+        } else paused = false;
         super.render(g2d, pos, movement);
     }
 

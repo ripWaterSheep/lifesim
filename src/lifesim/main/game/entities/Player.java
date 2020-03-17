@@ -7,6 +7,9 @@ import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.DirectionalAnimatedSprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.setting.World;
+import lifesim.main.util.math.Geometry;
+
+import java.util.ArrayList;
 
 import static java.lang.Math.abs;
 
@@ -25,9 +28,9 @@ public final class Player extends InventoryEntity {
                 new Animation(120, "player_backward_1", "player_backward_2")
 
                 //new Animation(100, "Eh Walk Right 1", "Eh Walk Right 2", "Eh Walk Right 3", "Eh Walk Right 4")
-                ),
-                4,
-                new PlayerStats(1, 1000, 0, 0, 0));
+        ),
+                new PlayerStats(1, 1000, 0, 0, 0), 4);
+        movement.set(0, 0);
     }
 
 
@@ -53,7 +56,8 @@ public final class Player extends InventoryEntity {
                 downKey = KeyInputManager.k_s,
                 rightKey = KeyInputManager.k_d;
 
-        // Go in the direction of keys that are pressed, with keys pressed earlier having precedence over more recently pressed keys.
+        // Determine intended direction based on key presses.
+        // If both keys in opposite directions are pressed, then keys pressed more recently have precedence over earlier pressed keys.
         left = leftKey.isPressed();
         right = rightKey.isPressed();
         if (left && right) {
@@ -67,16 +71,25 @@ public final class Player extends InventoryEntity {
             down = !up;
         }
 
-        double frictionDecelerationFactor = 0.87;
-        if (left || right) movement.setXMagnDir(getIntendedSpeed(), getIntendedAngle(up, down, left, right));
+        // Get the correct angle based on combination of up, down, left, and right.
+        double angle = 0;
+        if (up) {
+            if (left) angle = 45;
+            else if (right) angle = 135;
+            else angle = 90;
+        } else if (down) {
+            if (left) angle = 315;
+            else if (right) angle = 225;
+            else angle = 270;
+        } else if (left) angle = 0;
+        else if (right) angle = 180;
+
+        // Move along x or y axis is needed, else slow down due to friction.
+        double frictionDecelerationFactor = 0.85;
+        if (left || right) movement.setXMagnDir(getIntendedSpeed(), angle);
         else movement.x *= frictionDecelerationFactor;
-        if (up || down) movement.setYMagnDir(getIntendedSpeed(), getIntendedAngle(up, down, left, right));
+        if (up || down) movement.setYMagnDir(getIntendedSpeed(), angle);
         else movement.y *= frictionDecelerationFactor;
-
-
-        double speedThreshold = 0.15;
-        if (abs(movement.x) < speedThreshold) movement.x = 0;
-        if (abs(movement.y) < speedThreshold) movement.y = 0;
     }
 
 
@@ -90,29 +103,16 @@ public final class Player extends InventoryEntity {
     }
 
 
-
-    private double getIntendedAngle(boolean up, boolean down, boolean left, boolean right) {
-        double angle = 0;
-        // Get angles for different key directions (makes going diagonal the same speed as horizontal or vertical)
-        if (up) {
-            if (left) angle = 45;
-            else if (right) angle = 135;
-            else angle = 90;
-        } else if (down) {
-            if (left) angle = 315;
-            else if (right) angle = 225;
-            else angle = 270;
-        } else if (left) angle = 0;
-        else if (right) angle = 180;
-
-        return angle;
+    @Override
+    protected void move() {
+        super.move();
+        control();
     }
 
 
     @Override
-    public void update(World world) {
-        super.update(world);
-        control();
+    public void onRemoval(World world) {
+        super.onRemoval(world);
     }
 
 }

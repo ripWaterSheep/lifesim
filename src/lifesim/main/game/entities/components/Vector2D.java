@@ -3,6 +3,7 @@ package lifesim.main.game.entities.components;
 import java.awt.geom.Point2D;
 
 import static java.lang.Math.toDegrees;
+import static lifesim.main.util.math.Geometry.angleWrap;
 import static lifesim.main.util.math.MyMath.clamp;
 
 
@@ -27,7 +28,7 @@ public class Vector2D {
     }
 
     public double getDirection() {
-        return toDegrees(Math.atan2(y, x));
+        return angleWrap(toDegrees(Math.atan2(y, x)));
     }
 
 

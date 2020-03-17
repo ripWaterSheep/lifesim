@@ -1,6 +1,5 @@
 package lifesim.main.game.entities.components.sprites;
 
-import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
@@ -41,15 +40,11 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
             // Multiply by total num of animations
             angleRatio *= movementAnimations.size();
 
-            int chosenIndex = betterRound(angleRatio);
+            int chosenIndex = (int) betterRound(angleRatio);
             try {
                 animation = movementAnimations.get(chosenIndex);
             } catch (Exception e) {
-
-                try {
-                    animation = movementAnimations.get(movementAnimations.size()-1);
-                } catch (Exception e2) {
-                }
+                animation = movementAnimations.get(movementAnimations.size()-1);
             }
         }
         super.render(g2d, pos, movement);

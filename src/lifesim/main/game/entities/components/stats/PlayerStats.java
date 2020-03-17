@@ -4,6 +4,8 @@ import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.Player;
 
+import java.awt.*;
+
 public class PlayerStats extends HealthStats {
 
     private double energy;
@@ -70,8 +72,8 @@ public class PlayerStats extends HealthStats {
 
 
     @Override
-    public void collision(Entity owner, Entity entity) {
-        super.collision(owner, entity);
+    public void handleCollisions(Entity owner, Entity entity) {
+        super.handleCollisions(owner, entity);
 
         entity.whileTouching((Player) owner, this);
         
@@ -86,5 +88,15 @@ public class PlayerStats extends HealthStats {
 
         energy -= 0.1;
     }
+
+
+
+    public static class Colors {
+        public static final Color energyColor = new Color(255, 120, 0);
+        public static final Color strengthColor = new Color(255, 255, 20);
+        public static final Color moneyColor = new Color(10, 255, 0);
+        public static final Color intellectColor = new Color(0, 0, 255);
+    }
+
 
 }

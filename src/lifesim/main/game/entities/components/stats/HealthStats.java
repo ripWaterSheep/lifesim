@@ -2,6 +2,8 @@ package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
 
+import java.awt.*;
+
 public class HealthStats extends DamageStats {
 
     private double health;
@@ -21,6 +23,10 @@ public class HealthStats extends DamageStats {
     }
 
 
+    public double getHealth() {
+        return health;
+    }
+
     public void gainHealth(double amount) {
         health += amount;
     }
@@ -29,19 +35,28 @@ public class HealthStats extends DamageStats {
         health -= amount*reductionFactor;
     }
 
+
     public void setReductionFactor(double reductionFactor) {
         this.reductionFactor = reductionFactor;
     }
 
 
     @Override
-    public void collision(Entity owner, Entity entity) { }
+    public void handleCollisions(Entity owner, Entity entity) {
+        super.handleCollisions(owner, entity);
+    }
 
     @Override
     public void run(Entity owner) {
         if (health <= 0)
             owner.removeFromWorld();
-        //System.out.println(health);
     }
+
+
+
+    public static class Colors {
+        public static final Color bloodColor = new Color(255, 0, 0);
+    }
+
 
 }

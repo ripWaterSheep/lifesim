@@ -13,21 +13,25 @@ public class MovementEntity extends Entity {
     protected final double defaultSpeed;
 
 
-    public MovementEntity(String name, Sprite sprite, double speed, double angle, Stats stats) {
+    public MovementEntity(String name, Sprite sprite, Stats stats, double speed) {
         super(name, sprite, stats);
         defaultSpeed = speed;
-        movement.setMagnDir(speed, angle);
+        movement.setMagnDir(speed, 0);
     }
 
-    public MovementEntity(String name, Sprite sprite, double speed, Stats stats) {
-        this(name, sprite, speed, 0, stats);
+
+    protected void move() {
+        pos.set(pos.translate(movement));
+
+        // Fully stop if speed is tiny
+        //if (movement.x < 0.07) movement.x = 0;
     }
 
 
     @Override
     public void update(World world) {
         super.update(world);
-        pos.set(pos.translate(movement));
+        move();
     }
 
     @Override

@@ -19,7 +19,7 @@ public class DamageStats extends BasicStats {
 
 
     @Override
-    public void collision(Entity owner, Entity entity) {
+    public void handleCollisions(Entity owner, Entity entity) {
         if (entity.stats instanceof HealthStats) {
             ((HealthStats) entity.stats).loseHealth(damage);
             if (destroyOnDamage) owner.removeFromWorld();
