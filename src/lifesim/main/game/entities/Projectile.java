@@ -24,10 +24,9 @@ public class Projectile extends MovementEntity {
     }
 
 
-    public Projectile copyInitialState(double direction) {
-        Projectile copy = new Projectile(name, sprite, stats, defaultSpeed, movementRange);
-        copy.movement.setMagnDir(defaultSpeed, direction);
-        return copy;
+    @Override
+    public Projectile copyInitialState() {
+        return new Projectile(name, sprite, stats.copyInitialState(), defaultSpeed, movementRange);
     }
 
 

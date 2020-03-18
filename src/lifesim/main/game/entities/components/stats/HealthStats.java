@@ -1,5 +1,6 @@
 package lifesim.main.game.entities.components.stats;
 
+import com.sun.security.auth.module.LdapLoginModule;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.components.Alliance;
 
@@ -8,6 +9,10 @@ import java.awt.*;
 import static java.lang.Math.max;
 
 public class HealthStats extends DamageStats {
+
+    public static class Colors {
+        public static final Color bloodColor = new Color(255, 0, 0);
+    }
 
     private double health;
     private final double initialHealth;
@@ -49,16 +54,17 @@ public class HealthStats extends DamageStats {
 
 
     @Override
+    public HealthStats copyInitialState() {
+        return new HealthStats(damage, initialHealth, alliance);
+    }
+
+
+    @Override
     public void run(Entity owner) {
         health = max(0, health);
         if (health <= 0)
             owner.die();
 
-    }
-
-
-    public static class Colors {
-        public static final Color bloodColor = new Color(255, 0, 0);
     }
 
 

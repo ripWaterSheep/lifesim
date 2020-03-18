@@ -43,6 +43,10 @@ public class Vector2D {
         this.y = y;
     }
 
+    public void setDirection(double deg) {
+        setMagnDir(getMagnitude(), deg);
+    }
+
 
     public void setXMagnDir(double magnitude, double deg) {
         x = -magnitude * Math.cos(Math.toRadians(deg));

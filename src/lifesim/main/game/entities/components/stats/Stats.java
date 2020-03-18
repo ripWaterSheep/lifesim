@@ -5,8 +5,9 @@ import lifesim.main.game.handlers.World;
 
 public interface Stats {
 
-    void handleCollisions(Entity owner, Entity entity);
     void onDeath(Entity owner, World world);
+    void handleCollisions(Entity owner, Entity entity);
+    Stats copyInitialState();
     void run(Entity owner);
 
 }

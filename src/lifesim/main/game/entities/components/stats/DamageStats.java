@@ -9,10 +9,10 @@ import lifesim.main.game.handlers.World;
 
 public class DamageStats extends BasicStats {
 
-    private final double damage;
+    protected final double damage;
     private final boolean dieOnDamage;
 
-    // Dictates which entities may attack it.
+    // Dictates which entities the owner entity may may damage and which entities may damage the owner.
     public final Alliance alliance;
 
 
@@ -22,16 +22,22 @@ public class DamageStats extends BasicStats {
         this.dieOnDamage = dieOnDamage;
     }
 
+
     public DamageStats(double damage, Alliance alliance) {
         this(damage, alliance, false);
     }
 
-
     @Override
     public void onDeath(Entity owner, World world) {
+        if (!owner.name.equals("Death Animation"))
         world.add(new TempEntity("Death Animation", new AnimatedSprite(new Animation(40,
-                "boom_1", "boom_2", "boom_3", "boom_4", "boom_5", "boom_6", "boom_7", "boom_8")),
-                false), owner.pos);
+                "boom_1", "boom_2", "boom_3", "boom_4", "boom_5", "boom_6", "boom_7", "boom_8")), new DamageStats(10, alliance, false), false), owner.pos);
+    }
+
+
+    @Override
+    public DamageStats copyInitialState() {
+        return new DamageStats(damage, alliance, dieOnDamage);
     }
 
     @Override
@@ -46,7 +52,11 @@ public class DamageStats extends BasicStats {
             ((HealthStats) entity.stats).loseHealth(damage);
             if (dieOnDamage) {
                 owner.die();
+                System.out.println("3w at");
             }
+
+            if (owner instanceof TempEntity) ((TempEntity) owner).startAnimation();
+
         }
     }
 

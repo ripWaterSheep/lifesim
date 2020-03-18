@@ -36,6 +36,11 @@ public class Entity {
     }
 
 
+    public Entity copyInitialState() {
+        return new Entity(name, sprite, stats.copyInitialState());
+    }
+
+
     public Shape getHitBox() {
         return sprite.getShapeAt(getDisplayPos());
     }
@@ -64,6 +69,7 @@ public class Entity {
     }
 
 
+
     public void whileTouching(Player player, PlayerStats stats) { }
 
     public void onClick(Player player, PlayerStats stats) { }
@@ -72,7 +78,6 @@ public class Entity {
     public void handleCollisions(Entity entity) {
         stats.handleCollisions(this, entity);
     }
-
 
     public void update(World world) {
         stats.run(this);

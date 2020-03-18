@@ -9,24 +9,35 @@ import java.awt.*;
 
 public class TempEntity extends Entity {
 
+    private final boolean waitForTouch;
     private boolean animationStarted;
 
-    public TempEntity(String name, Sprite sprite, boolean startOnTouch) {
-        this(name, sprite, startOnTouch, new BasicStats());
-        animationStarted = !startOnTouch;
+    public TempEntity(String name, Sprite sprite, Stats stats, boolean waitForTouch) {
+        super(name, sprite, stats);
+        this.waitForTouch = waitForTouch;
+        this.animationStarted = !waitForTouch;
     }
 
-    public TempEntity(String name, Sprite sprite, boolean startOnTouch, Stats stats) {
-        super(name, sprite, stats);
-        this.animationStarted = !startOnTouch;
+    public TempEntity(String name, Sprite sprite, boolean waitForTouch) {
+        this(name, sprite, new BasicStats(), waitForTouch);
+    }
+
+    @Override
+    public TempEntity copyInitialState() {
+        return new TempEntity(name, sprite, stats.copyInitialState(), waitForTouch);
+    }
+
+
+    public void startAnimation() {
+        animationStarted = true;
     }
 
 
     @Override
     public void handleCollisions(Entity entity) {
         super.handleCollisions(entity);
-        if (entity instanceof MovementEntity)
-            animationStarted = true;
+        //if (entity instanceof MovementEntity)
+          //  animationStarted = true;
     }
 
     @Override

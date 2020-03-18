@@ -11,6 +11,11 @@ public class BasicStats implements Stats {
     }
 
     @Override
+    public Stats copyInitialState() {
+        return this;
+    }
+
+    @Override
     public void run(Entity owner) {
 
     }

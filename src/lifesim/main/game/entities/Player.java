@@ -7,6 +7,7 @@ import lifesim.main.game.entities.components.*;
 import lifesim.main.game.entities.components.items.Inventory;
 import lifesim.main.game.entities.components.items.Item;
 import lifesim.main.game.entities.components.items.Weapon;
+import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.DirectionalAnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Sprite;
@@ -24,6 +25,10 @@ public final class Player extends MovementEntity {
 
     private Item selectedItem = new Weapon("Player Weapon", new Sprite("bread"),
             new Projectile("Bullet", new Sprite("bread"), new DamageStats(50, Alliance.PLAYER, true), 15, 100));
+
+
+    private Item bomb = new Weapon("Bomb", new Sprite("bomb_1"), new TempEntity("Bomb",
+            new AnimatedSprite(new Animation(60, "bomb_1", "bomb_2", "bomb_3", "bomb_4", "bomb_5", "bomb_6")), new DamageStats(3, Alliance.PLAYER, true), true));
 
 
     public Player() {
@@ -109,7 +114,6 @@ public final class Player extends MovementEntity {
         speed *= ((PlayerStats) stats).getEnergy()/1000;
         speed += 0.6;
 
-        System.out.println(speed);
         if (KeyInputManager.k_space.isPressed()) {
             speed *= 1.5;
         }
@@ -129,7 +133,7 @@ public final class Player extends MovementEntity {
     public void update(World world) {
         super.update(world);
         if (MouseInputManager.right.isClicked()) {
-            selectedItem.onClick(world, this);
+            bomb.onClick(world, this);
         }
 
         selectedItem.whileHolding(world, this);
