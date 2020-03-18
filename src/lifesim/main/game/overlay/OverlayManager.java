@@ -7,22 +7,20 @@ import java.awt.*;
 import java.util.ArrayList;
 
 
-public class OverlayManager extends Overlay {
+public class OverlayManager {
 
-    ArrayList<Overlay> overlays = new ArrayList<>();
-
+    private ArrayList<Overlay> overlays = new ArrayList<>();
 
     public OverlayManager(GamePanel panel, Player player) {
-        super(panel, player);
         overlays.add(new StatBar(panel, player));
-        //overlays.add(new DeathScreen());
+        overlays.add(new DeathScreen(panel, player));
+        overlays.add(new InventoryGUI(panel, player));
     }
 
-    public void draw(Graphics g) {
+    public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
-
         for (Overlay overlay: overlays) {
-            overlay.draw(g2d);
+            overlay.render(g2d);
         }
     }
 }

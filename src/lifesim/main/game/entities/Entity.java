@@ -4,7 +4,7 @@ import lifesim.main.game.Game;
 import lifesim.main.game.entities.components.stats.BasicStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.entities.components.stats.Stats;
-import lifesim.main.game.setting.World;
+import lifesim.main.game.handlers.World;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
 
@@ -20,8 +20,8 @@ public class Entity {
     public final Sprite sprite;
     public final Stats stats;
 
-    // if removeRequested is true, the world containing the entity will remove it from the world.
-    private boolean removeRequested = false;
+    // If true, the world containing the entity will remove it from the world.
+    private boolean gcRequested = false;
 
 
     public Entity(String name, Sprite sprite, Stats stats) {
@@ -51,15 +51,17 @@ public class Entity {
     }
 
 
-    public boolean isRemoveRequested() {
-        return removeRequested;
+    public boolean isGcRequested() {
+        return gcRequested;
     }
 
-    public void removeFromWorld() {
-        removeRequested = true;
+    public void die() {
+        gcRequested = true;
     }
 
-    public void onRemoval(World world) { }
+    public void onDeath(World world) {
+        stats.onDeath(this, world);
+    }
 
 
     public void whileTouching(Player player, PlayerStats stats) { }

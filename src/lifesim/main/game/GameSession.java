@@ -2,8 +2,8 @@ package lifesim.main.game;
 
 
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.setting.Layout;
-import lifesim.main.game.setting.World;
+import lifesim.main.game.handlers.Layout;
+import lifesim.main.game.handlers.World;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -3,6 +3,7 @@ package lifesim.main.game;
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.game.overlay.OverlayManager;
 
 
 import javax.swing.*;
@@ -11,17 +12,17 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    //private final OverlayManager overlayManager = new OverlayManager();
-
     GameSession gameSession;
+
+    private OverlayManager overlayManager;
 
 
     public GamePanel(GameSession gameSession) {
-        this.gameSession = gameSession;
-
         setFocusable(true);
+        setVisible(true);
         requestFocusInWindow();
         setSize(1600, 950);
+        init(gameSession);
 
         KeyInputManager.init(this);
         MouseInputManager.init(this);
@@ -32,14 +33,19 @@ public class GamePanel extends JPanel {
     }
 
 
+    void init(GameSession gameSession) {
+        this.gameSession = gameSession;
+        overlayManager = new OverlayManager(this, gameSession.getPlayer());
+    }
+
+
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        KeyInputManager.run();
-        MouseInputManager.run();
         runSession(g);
-
+        overlayManager.render(g);
         repaint();
     }
 
@@ -57,6 +63,9 @@ public class GamePanel extends JPanel {
         lastTime = now;
         while(delta >= 1) {
             gameSession.update();
+            MouseInputManager.run();
+            KeyInputManager.run();
+
             delta--;
         }
         gameSession.render(g);

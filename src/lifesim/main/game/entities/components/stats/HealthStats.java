@@ -1,8 +1,11 @@
 package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.entities.components.Alliance;
 
 import java.awt.*;
+
+import static java.lang.Math.max;
 
 public class HealthStats extends DamageStats {
 
@@ -12,19 +15,23 @@ public class HealthStats extends DamageStats {
     private double reductionFactor = 1;
 
 
-    public HealthStats(double damage, double health) {
-        super(damage);
+    public HealthStats(double damage, double health, Alliance alliance) {
+        super(damage, alliance);
         this.health = health;
         this.initialHealth = health;
     }
 
-    public HealthStats(double health) {
-        this(0, health);
+    public HealthStats(double health, Alliance alliance) {
+        this(0, health, alliance);
     }
 
 
     public double getHealth() {
         return health;
+    }
+
+    public boolean isAlive() {
+        return health > 0;
     }
 
     public void gainHealth(double amount) {
@@ -42,16 +49,12 @@ public class HealthStats extends DamageStats {
 
 
     @Override
-    public void handleCollisions(Entity owner, Entity entity) {
-        super.handleCollisions(owner, entity);
-    }
-
-    @Override
     public void run(Entity owner) {
+        health = max(0, health);
         if (health <= 0)
-            owner.removeFromWorld();
-    }
+            owner.die();
 
+    }
 
 
     public static class Colors {

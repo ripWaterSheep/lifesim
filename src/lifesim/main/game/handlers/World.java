@@ -1,13 +1,9 @@
-package lifesim.main.game.setting;
+package lifesim.main.game.handlers;
 
 import lifesim.main.game.Game;
 import lifesim.main.game.entities.Entity;
-import lifesim.main.game.entities.TempEntity;
-import lifesim.main.game.entities.components.sprites.AnimatedSprite;
-import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.game.entities.components.stats.DamageStats;
 
 import java.awt.*;
 import java.util.*;
@@ -16,7 +12,7 @@ import java.util.*;
 public class World {
 
     // Constant graphics scale for all entities shown in each world (No effect on overlays).
-    public static final double MAP_SCALE = 7;
+    public static final double MAP_SCALE = 6;
 
 
     public final String name;
@@ -64,20 +60,13 @@ public class World {
     }
 
 
-
     public void doGarbageCollection(Entity entity) {
         // Remove entity from world if requested, effectively destroying the entity.
-        if (entity.isRemoveRequested()) {
-            entity.onRemoval(this);
+        if (entity.isGcRequested()) {
+            entity.onDeath(this);
             entities.remove(entity);
-
-            // Spawn the big boom. (Only not for temp entities since boom itself is a temp entity, otherwise it would spawn itself indefinitely).
-            if (!(entity.name.equals("Boom")))
-            add(new TempEntity("Boom", new AnimatedSprite(
-                    new Animation(40, "boom_1", "boom_2", "boom_3", "boom_4", "boom_5", "boom_6", "boom_7", "boom_8")), false, new DamageStats(50)), entity.pos);
         }
     }
-
 
 
     public void update() {

@@ -6,7 +6,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static lifesim.main.util.math.Geometry.angleWrap;
 import static lifesim.main.util.math.MyMath.betterRound;
+import static lifesim.main.util.math.MyMath.roundToMultiple;
 
 
 public class DirectionalAnimatedSprite extends AnimatedSprite {
@@ -28,6 +30,7 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
         if (movement.getMagnitude() == 0) {
             animation = idleAnimation;
         } else {
+
             /* Get animation based on entity's direction.
             Picture that a circle is split up into arcs, with each arc corresponding to an animation.
             For whichever arc the entity's direction angle falls on, that arc's corresponding animation is chosen.
@@ -35,16 +38,21 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
             This allows 2, 4, 8, or any other number of animations to be used for 2, 4, and 8 directional animations.
             */
 
+            // Get nearest approximate angle (nearest multiple of 180 if 2 animations, nearest multiple of 90 if 4 animations)
+            //double directionalAngle = roundToMultiple(movement.getDirection(), 360.0/(movementAnimations.size()));
+            //directionalAngle = angleWrap(directionalAngle);
             // Scale angle from 0-360 to 0-1
-            double angleRatio = ((movement.getDirection())/360);
+            double angleRatio = (movement.getDirection()/360);
             // Multiply by total num of animations
             angleRatio *= movementAnimations.size();
 
-            int chosenIndex = (int) betterRound(angleRatio);
+            int chosenIndex = betterRound(angleRatio);
+
             try {
                 animation = movementAnimations.get(chosenIndex);
             } catch (Exception e) {
-                animation = movementAnimations.get(movementAnimations.size()-1);
+                animation = movementAnimations.get(3);
+                //animation = movementAnimations.get(3);
             }
         }
         super.render(g2d, pos, movement);

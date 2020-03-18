@@ -3,7 +3,7 @@ package lifesim.main.game.controls;
 import lifesim.main.game.Game;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.game.setting.World;
+import lifesim.main.game.handlers.World;
 import lifesim.main.util.MiscUtil;
 
 import java.util.ArrayList;

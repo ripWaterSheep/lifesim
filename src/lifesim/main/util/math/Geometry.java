@@ -15,7 +15,6 @@ public class Geometry {
     public static double angleWrap(double deg) {
         while (deg < 0) deg += 360;
         while (deg >= 360) deg -= 360;
-
         return deg;
     }
 

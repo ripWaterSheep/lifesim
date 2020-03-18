@@ -2,9 +2,14 @@ package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.entities.MovementEntity;
 import lifesim.main.game.entities.Player;
+import lifesim.main.game.entities.components.Alliance;
 
 import java.awt.*;
+
+import static java.lang.Math.max;
+import static java.lang.Math.sqrt;
 
 public class PlayerStats extends HealthStats {
 
@@ -14,7 +19,7 @@ public class PlayerStats extends HealthStats {
     private double intellect;
 
     public PlayerStats(double health, double energy, double strength, double money, double intellect) {
-        super(health);
+        super(0, health, Alliance.PLAYER);
         this.energy = energy;
         this.strength = strength;
         this.money = money;
@@ -86,7 +91,17 @@ public class PlayerStats extends HealthStats {
     public void run(Entity owner) {
         super.run(owner);
 
-        energy -= 0.1;
+        energy = max(0, energy);
+        strength = max(0, strength);
+        money = max(0, money);
+        intellect = max(0, intellect);
+
+        double tireAmount = 0.104;
+        if (owner instanceof MovementEntity) {
+            tireAmount += sqrt(((MovementEntity) owner).movement.getMagnitude()/200);
+        }
+
+        energy -= tireAmount;
     }
 
 

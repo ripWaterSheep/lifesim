@@ -15,6 +15,6 @@ public abstract class Overlay {
         this.player = player;
     }
 
-    abstract void draw(Graphics g);
+    abstract void render(Graphics2D g);
 
 }

@@ -1,11 +1,12 @@
 package lifesim.main.game.overlay;
 
-import lifesim.main.game.Game;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.stats.HealthStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.util.ColorMethods;
+import lifesim.main.util.DrawMethods;
+import lifesim.main.util.fileIO.Fonts;
 
 import java.awt.*;
 
@@ -17,14 +18,14 @@ public class StatBar extends Overlay {
 
     private static final int LEFT_PADDING = 4;
     private static final int BOTTOM_PADDING = 4;
-
     private static final int BAR_HEIGHT = 36;
 
-    private static final int BAR_OPACITY = 125;
+    private static final int BAR_OPACITY = 145;
 
     private static final int TEXT_SIZE = 28;
 
-    private Graphics g;
+
+    private Graphics2D g2d;
     private int currentBarNum = 1;
 
 
@@ -33,9 +34,8 @@ public class StatBar extends Overlay {
     }
 
     @Override
-    public void draw(Graphics g) {
-        this.g = g;
-        Player player = Game.getSession().getPlayer();
+    public void render(Graphics2D g2d) {
+        this.g2d = g2d;
         PlayerStats stats = (PlayerStats) player.stats;
 
         drawBar("Intellect", stats.getIntellect(), 0.2, 1000, PlayerStats.Colors.intellectColor);
@@ -71,8 +71,8 @@ public class StatBar extends Overlay {
         String formattedString = format(label, data+"");
 
         int textY = panel.getHeight() - (getCurrentBarNum()*BAR_HEIGHT) - BOTTOM_PADDING;
-        /*DrawString.drawVerticallyCenteredString(g, formattedString,
-                new Vector2D(LEFT_PADDING, textY, 0, BAR_HEIGHT), FontLoader.getMainFont(TEXT_SIZE), Color.WHITE);*/
+        DrawMethods.drawVerticallyCenteredString(g2d, formattedString, 10,
+                new Rectangle(LEFT_PADDING, textY, 0, BAR_HEIGHT), Fonts.getMainFont(TEXT_SIZE), Color.WHITE);
         nextLine();
     }
 
@@ -83,14 +83,17 @@ public class StatBar extends Overlay {
 
 
     private <T> void drawBar(String label, double data, double scale, double maxDataVal, Color color) {
-        int y = Game.getPanel().getHeight() - ((getCurrentBarNum()) * BAR_HEIGHT) - BOTTOM_PADDING;
+        int y = panel.getHeight() - ((getCurrentBarNum()) * BAR_HEIGHT) - BOTTOM_PADDING;
         int dataWidth = betterRound(min(data, maxDataVal) * scale);
 
-        g.setColor(Color.BLACK);
-        g.drawRect(LEFT_PADDING, y, betterRound(maxDataVal * scale), BAR_HEIGHT);
+        // Draw data display bar.
+        g2d.setColor(ColorMethods.applyOpacity(color, BAR_OPACITY));
+        g2d.fillRect(LEFT_PADDING, y, dataWidth, BAR_HEIGHT);
 
-        g.setColor(ColorMethods.applyOpacity(color, BAR_OPACITY));
-        g.fillRect(LEFT_PADDING, y, dataWidth, BAR_HEIGHT);
+        // Draw outline for bar
+        g2d.setColor(Color.BLACK);
+        g2d.drawRect(LEFT_PADDING, y, betterRound(maxDataVal * scale), BAR_HEIGHT);
+
 
         writeRoundedVal(label, data);
     }

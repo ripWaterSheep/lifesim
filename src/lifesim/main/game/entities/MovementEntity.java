@@ -1,11 +1,13 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.entities.components.stats.Stats;
-import lifesim.main.game.setting.World;
+import lifesim.main.game.handlers.World;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
+
+import static java.lang.Math.abs;
 
 public class MovementEntity extends Entity {
 
@@ -22,9 +24,10 @@ public class MovementEntity extends Entity {
 
     protected void move() {
         pos.set(pos.translate(movement));
-
         // Fully stop if speed is tiny
-        //if (movement.x < 0.07) movement.x = 0;
+        double stationaryThreshold = 0.05;
+        if (abs(movement.x) < stationaryThreshold) movement.x = 0;
+        if (abs(movement.y) < stationaryThreshold) movement.y = 0;
     }
 
 

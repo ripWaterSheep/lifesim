@@ -2,21 +2,28 @@ package lifesim.main.game.entities;
 
 import lifesim.main.game.controls.KeyInputListener;
 import lifesim.main.game.controls.KeyInputManager;
+import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.components.*;
+import lifesim.main.game.entities.components.items.Inventory;
+import lifesim.main.game.entities.components.items.Item;
+import lifesim.main.game.entities.components.items.Weapon;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.DirectionalAnimatedSprite;
+import lifesim.main.game.entities.components.sprites.Sprite;
+import lifesim.main.game.entities.components.stats.DamageStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.game.setting.World;
-import lifesim.main.util.math.Geometry;
-
-import java.util.ArrayList;
-
-import static java.lang.Math.abs;
+import lifesim.main.game.handlers.World;
 
 
-public final class Player extends InventoryEntity {
+
+public final class Player extends MovementEntity {
 
     private World world;
+
+    public final Inventory inventory = new Inventory();
+
+    private Item selectedItem = new Weapon("Player Weapon", new Sprite("bread"),
+            new Projectile("Bullet", new Sprite("bread"), new DamageStats(50, Alliance.PLAYER, true), 15, 100));
 
 
     public Player() {
@@ -26,10 +33,8 @@ public final class Player extends InventoryEntity {
                 new Animation(120, "player_forward_1", "player_forward_2"),
                         new Animation(120, "player_left_1", "player_left_2"),
                 new Animation(120, "player_backward_1", "player_backward_2")
-
-                //new Animation(100, "Eh Walk Right 1", "Eh Walk Right 2", "Eh Walk Right 3", "Eh Walk Right 4")
         ),
-                new PlayerStats(1, 1000, 0, 0, 0), 4);
+                new PlayerStats(1000, 1000, 0, 0, 0), 4);
         movement.set(0, 0);
     }
 
@@ -46,6 +51,11 @@ public final class Player extends InventoryEntity {
     public void setWorld(World newWorld) {
         world = newWorld;
         newWorld.add(this, new Vector2D(0, 0));
+    }
+
+
+    public void acquireItem(Item item) {
+        inventory.addItem(item);
     }
 
 
@@ -84,7 +94,7 @@ public final class Player extends InventoryEntity {
         } else if (left) angle = 0;
         else if (right) angle = 180;
 
-        // Move along x or y axis is needed, else slow down due to friction.
+        // Move along x or y axis if needed, else slow down due to friction.
         double frictionDecelerationFactor = 0.85;
         if (left || right) movement.setXMagnDir(getIntendedSpeed(), angle);
         else movement.x *= frictionDecelerationFactor;
@@ -95,9 +105,13 @@ public final class Player extends InventoryEntity {
 
     private double getIntendedSpeed() {
         double speed = defaultSpeed;
+        // Base speed on current energy level.
+        speed *= ((PlayerStats) stats).getEnergy()/1000;
+        speed += 0.6;
+
+        System.out.println(speed);
         if (KeyInputManager.k_space.isPressed()) {
             speed *= 1.5;
-            ((PlayerStats) stats).tire(0.025);
         }
         return speed;
     }
@@ -110,9 +124,14 @@ public final class Player extends InventoryEntity {
     }
 
 
-    @Override
-    public void onRemoval(World world) {
-        super.onRemoval(world);
-    }
 
+    @Override
+    public void update(World world) {
+        super.update(world);
+        if (MouseInputManager.right.isClicked()) {
+            selectedItem.onClick(world, this);
+        }
+
+        selectedItem.whileHolding(world, this);
+    }
 }

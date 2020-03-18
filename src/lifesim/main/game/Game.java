@@ -1,12 +1,10 @@
 package lifesim.main.game;
 
 
-import lifesim.main.game.setting.Layout;
+import lifesim.main.game.handlers.Layout;
 import lifesim.main.util.MiscUtil;
 
 import javax.swing.*;
-
-import static lifesim.main.util.math.Geometry.getAngleBisector;
 
 
 public class Game {
@@ -35,7 +33,7 @@ public class Game {
 
     public static void restart() {
         gameSession = new GameSession(new Layout());
-        gamePanel.gameSession = gameSession;
+        gamePanel.init(gameSession);
     }
 
 
