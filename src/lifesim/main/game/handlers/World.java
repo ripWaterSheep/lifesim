@@ -12,7 +12,7 @@ import java.util.*;
 public class World {
 
     // Constant graphics scale for all entities shown in each world (No effect on overlays).
-    public static final double MAP_SCALE = 6;
+    public static final double MAP_SCALE = 7;
 
 
     public final String name;
@@ -88,10 +88,7 @@ public class World {
 
     public void render(Graphics g) {
         Game.getPanel().setBackground(outerColor);
-
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.translate((int) (Game.getPanel().getDimensions().x/2), (int) (Game.getPanel().getDimensions().y/2));
-        g2d.scale(MAP_SCALE, MAP_SCALE);
 
         for (Entity entity: entities) {
             entity.render(g2d);

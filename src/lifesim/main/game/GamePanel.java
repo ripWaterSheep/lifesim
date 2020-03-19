@@ -9,6 +9,8 @@ import lifesim.main.game.overlay.OverlayManager;
 import javax.swing.*;
 import java.awt.*;
 
+import static lifesim.main.game.handlers.World.MAP_SCALE;
+
 
 public class GamePanel extends JPanel {
 
@@ -50,6 +52,26 @@ public class GamePanel extends JPanel {
     }
 
 
+
+    private void update() {
+        gameSession.update();
+        MouseInputManager.run();
+        KeyInputManager.run();
+    }
+
+
+
+    private void render(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.translate((int) (Game.getPanel().getDimensions().x/2), (int) (Game.getPanel().getDimensions().y/2));
+        g2d.scale(MAP_SCALE, MAP_SCALE);
+
+        gameSession.render(g);
+    }
+
+
+
+
     long lastTime = System.nanoTime();
     double amountOfTicks = 60.0;
     double ns = 1000000000 / amountOfTicks;
@@ -62,13 +84,11 @@ public class GamePanel extends JPanel {
         delta += (now - lastTime) / ns;
         lastTime = now;
         while(delta >= 1) {
-            gameSession.update();
-            MouseInputManager.run();
-            KeyInputManager.run();
-
+            update();
             delta--;
         }
-        gameSession.render(g);
+
+        render(g);
         frames++;
 
         if(System.currentTimeMillis() - timer > 1000) {

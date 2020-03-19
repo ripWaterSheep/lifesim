@@ -29,7 +29,7 @@ public class Layout {
                         .add(new Entity("hRoad", new Sprite(new Vector2D(750, 50), Color.DARK_GRAY, false)), new Vector2D(0, 0))
                         .add(new Entity("Step on me!", new Sprite(new Vector2D(20, 20), Color.BLUE, true), new DamageStats(100, Alliance.ENEMY)), new Vector2D(200, 200))
                         .add(new Enemy("yee", new AnimatedSprite(new Animation(120, "emo_1", "emo_2", "emo_3", "emo_4")),
-                                new HealthStats(3,1000, Alliance.ENEMY), 1.5, 100),  new Vector2D(150, 150))
+                                new HealthStats(3,1000, Alliance.ENEMY), 1.7, 100),  new Vector2D(150, 150))
         );
     }
 

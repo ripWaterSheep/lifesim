@@ -21,9 +21,7 @@ public class Item {
     }
 
     public DroppedItemEntity getDroppedEntity() {
-       return new DroppedItemEntity("Dropped " + name, sprite, this) {
-
-       };
+       return new DroppedItemEntity("Dropped " + name, sprite, this);
     }
 
 

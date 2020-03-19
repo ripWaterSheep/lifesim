@@ -1,10 +1,10 @@
 package lifesim.main.game.overlay;
 
-import javafx.geometry.HPos;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.components.items.Inventory;
+import lifesim.main.game.entities.components.items.inventory.Inventory;
 import lifesim.main.game.entities.components.items.Item;
+import lifesim.main.game.entities.components.items.inventory.InventorySlot;
 import lifesim.main.util.DrawMethods;
 import lifesim.main.util.fileIO.ImageLoader;
 
@@ -15,7 +15,7 @@ public class InventoryGUI extends Overlay {
 
     private static final int SLOT_SIZE = 112;
 
-    //private static final Image bg = ImageLoader.loadImage("inventory");
+    private static final Image bg = ImageLoader.loadImage("inventory");
 
 
     private Inventory inventory;
@@ -28,14 +28,14 @@ public class InventoryGUI extends Overlay {
 
 
     public void renderBG(Graphics2D g2d) {
-        /*DrawMethods.drawCenteredImage(g2d, bg, panel.getWidth()/2.0, panel.getHeight()/2.0,
-                bg.getWidth(null), bg.getHeight(null));*/
+        DrawMethods.drawCenteredImage(g2d, bg, panel.getWidth()/2.0, panel.getHeight()/2.0,
+                bg.getWidth(null), bg.getHeight(null));
     }
 
 
     void renderItems(Graphics2D g2d) {
-        for (Item item: inventory.getItems()) {
-
+        for (InventorySlot slot: inventory.getSlots()) {
+            slot.renderItem(g2d);
         }
     }
 
@@ -44,8 +44,8 @@ public class InventoryGUI extends Overlay {
 
     @Override
     void render(Graphics2D g2d) {
-        renderBG(g2d);
-        renderItems(g2d);
+        //renderBG(g2d);
+        //renderItems(g2d);
     }
 
 

@@ -4,7 +4,7 @@ import lifesim.main.game.controls.KeyInputListener;
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.components.*;
-import lifesim.main.game.entities.components.items.Inventory;
+import lifesim.main.game.entities.components.items.inventory.Inventory;
 import lifesim.main.game.entities.components.items.Item;
 import lifesim.main.game.entities.components.items.Weapon;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
@@ -24,12 +24,8 @@ public final class Player extends MovementEntity {
     public final Inventory inventory = new Inventory();
 
     private Item selectedItem = new Weapon("Player Weapon", new Sprite("bread"),
-            new Projectile("Bullet", new Sprite("bread"), new DamageStats(50, Alliance.PLAYER, true), 15, 100));
-
-
-    private Item bomb = new Weapon("Bomb", new Sprite("bomb_1"), new TempEntity("Bomb",
-            new AnimatedSprite(new Animation(60, "bomb_1", "bomb_2", "bomb_3", "bomb_4", "bomb_5", "bomb_6")), new DamageStats(3, Alliance.PLAYER, true), true));
-
+            new Projectile("Bullet", new Sprite("bread"), new DamageStats(50, Alliance.PLAYER, true),
+                    15, 100, false));
 
     public Player() {
         super("Player", new DirectionalAnimatedSprite(
@@ -41,6 +37,10 @@ public final class Player extends MovementEntity {
         ),
                 new PlayerStats(1000, 1000, 0, 0, 0), 4);
         movement.set(0, 0);
+
+        inventory.addItem(new Weapon("Bomb", new Sprite("bomb_1"), new TempEntity("Bomb",
+                new AnimatedSprite(new Animation(60, "bomb_1", "bomb_2", "bomb_3", "bomb_4", "bomb_5", "bomb_6")),
+                new DamageStats(3, Alliance.PLAYER, true), true)), 1);
     }
 
 
@@ -59,8 +59,8 @@ public final class Player extends MovementEntity {
     }
 
 
-    public void acquireItem(Item item) {
-        inventory.addItem(item);
+    public void acquireItem(Item item, int amount) {
+        inventory.addItem(item, amount);
     }
 
 
@@ -133,7 +133,7 @@ public final class Player extends MovementEntity {
     public void update(World world) {
         super.update(world);
         if (MouseInputManager.right.isClicked()) {
-            bomb.onClick(world, this);
+            selectedItem.onClick(world, this);
         }
 
         selectedItem.whileHolding(world, this);

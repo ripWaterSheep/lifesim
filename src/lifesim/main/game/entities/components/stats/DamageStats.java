@@ -52,7 +52,6 @@ public class DamageStats extends BasicStats {
             ((HealthStats) entity.stats).loseHealth(damage);
             if (dieOnDamage) {
                 owner.die();
-                System.out.println("3w at");
             }
 
             if (owner instanceof TempEntity) ((TempEntity) owner).startAnimation();
