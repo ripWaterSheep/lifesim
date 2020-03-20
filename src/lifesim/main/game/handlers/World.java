@@ -11,10 +11,6 @@ import java.util.*;
 
 public class World {
 
-    // Constant graphics scale for all entities shown in each world (No effect on overlays).
-    public static final double MAP_SCALE = 7;
-
-
     public final String name;
 
     private final ArrayList<Entity> entities = new ArrayList<>();
@@ -62,8 +58,8 @@ public class World {
 
     public void doGarbageCollection(Entity entity) {
         // Remove entity from world if requested, effectively destroying the entity.
-        if (entity.isGcRequested()) {
-            entity.onDeath(this);
+        if (entity.isRemoveRequested()) {
+            entity.onRemoval(this);
             entities.remove(entity);
         }
     }

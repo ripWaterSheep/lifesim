@@ -12,7 +12,7 @@ import java.awt.*;
 public class Item {
 
     private final String name;
-    private final Sprite sprite;
+    public final Sprite sprite;
 
 
     public Item(String name, Sprite sprite) {
@@ -33,7 +33,7 @@ public class Item {
 
 
     public void render(Graphics2D g2d, Vector2D pos) {
-        sprite.render(g2d, pos, new Vector2D(0, 0));
+        sprite.render(g2d, pos.translate(sprite.size.scale(-0.5)), new Vector2D(0, 0));
     }
 
 }

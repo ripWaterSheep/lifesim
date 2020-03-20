@@ -38,9 +38,11 @@ public final class Player extends MovementEntity {
                 new PlayerStats(1000, 1000, 0, 0, 0), 4);
         movement.set(0, 0);
 
-        inventory.addItem(new Weapon("Bomb", new Sprite("bomb_1"), new TempEntity("Bomb",
-                new AnimatedSprite(new Animation(60, "bomb_1", "bomb_2", "bomb_3", "bomb_4", "bomb_5", "bomb_6")),
-                new DamageStats(3, Alliance.PLAYER, true), true)), 1);
+        for (int i = 0; i < 1; i++) {
+            inventory.addItem(new Weapon("Bomb", new Sprite("bomb"), new TempEntity("Bomb",
+                    new AnimatedSprite(new Animation(60, "bomb_1", "bomb_2", "bomb_3", "bomb_4", "bomb_5", "bomb_6")),
+                    new DamageStats(3, Alliance.PLAYER, true), true)), 1);
+        }
     }
 
 

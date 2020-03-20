@@ -47,7 +47,7 @@ public class TempEntity extends Entity {
                 ((AnimatedSprite) sprite).pauseFrame();
 
             if (((AnimatedSprite) sprite).getAnimation().isAtEndOfCycle()) {
-                die();
+                removeFromWorld();
                 ((AnimatedSprite) sprite).pauseFrame();
             }
         }

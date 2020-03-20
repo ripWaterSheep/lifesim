@@ -31,7 +31,7 @@ public class Weapon extends Item {
 
         if (newBullet instanceof MovementEntity)
             ((MovementEntity) newBullet).movement.setDirection(getAngleBetween(MouseInputManager.right.getPos(),
-                    new Vector2D(Game.getPanel().getWidth()/2.0, Game.getPanel().getHeight()/2.0)));
+                    new Vector2D(0, 0)));
 
         world.add(newBullet, entity.pos);
     }

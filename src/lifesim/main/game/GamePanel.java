@@ -9,13 +9,13 @@ import lifesim.main.game.overlay.OverlayManager;
 import javax.swing.*;
 import java.awt.*;
 
-import static lifesim.main.game.handlers.World.MAP_SCALE;
 
 
 public class GamePanel extends JPanel {
 
-    GameSession gameSession;
+    public static final int GRAPHICS_SCALE = 6;
 
+    GameSession gameSession;
     private OverlayManager overlayManager;
 
 
@@ -30,9 +30,19 @@ public class GamePanel extends JPanel {
         MouseInputManager.init(this);
     }
 
-    public Vector2D getDimensions() {
-        return new Vector2D(getWidth(), getHeight());
+
+    public int getScaledWidth() {
+        return getWidth()/GRAPHICS_SCALE;
     }
+
+    public int getScaledHeight() {
+        return getHeight()/GRAPHICS_SCALE;
+    }
+
+    public Vector2D getScaledDimensions() {
+        return new Vector2D(getScaledWidth(), getScaledHeight());
+    }
+
 
 
     void init(GameSession gameSession) {
@@ -47,7 +57,7 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
 
         runSession(g);
-        overlayManager.render(g);
+        overlayManager.render((Graphics2D) g);
         repaint();
     }
 
@@ -63,8 +73,8 @@ public class GamePanel extends JPanel {
 
     private void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.translate((int) (Game.getPanel().getDimensions().x/2), (int) (Game.getPanel().getDimensions().y/2));
-        g2d.scale(MAP_SCALE, MAP_SCALE);
+        g2d.translate(getWidth()/2, getHeight()/2);
+        g2d.scale(GRAPHICS_SCALE, GRAPHICS_SCALE);
 
         gameSession.render(g);
     }

@@ -22,7 +22,7 @@ public class DroppedItemEntity extends Entity {
     @Override
     public void whileTouching(Player player, PlayerStats stats) {
         player.acquireItem(item, 1);
-        this.die();
+        this.removeFromWorld();
     }
 
 }

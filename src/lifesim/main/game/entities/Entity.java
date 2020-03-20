@@ -21,7 +21,7 @@ public class Entity {
     public final Stats stats;
 
     // If true, the world containing the entity will remove it from the world.
-    private boolean gcRequested = false;
+    private boolean removeRequested = false;
 
 
     public Entity(String name, Sprite sprite, Stats stats) {
@@ -41,6 +41,11 @@ public class Entity {
     }
 
 
+    public Vector2D getDisplayPos() {
+        Player player = Game.getSession().getPlayer();
+        return pos.translate(player.pos.scale(-1)).translate(sprite.size.scale(-0.5));
+    }
+
     public Shape getHitBox() {
         return sprite.getShapeAt(getDisplayPos());
     }
@@ -50,21 +55,15 @@ public class Entity {
     }
 
 
-    public Vector2D getDisplayPos() {
-        Player player = Game.getSession().getPlayer();
-        return pos.translate(player.pos.scale(-1)).translate(sprite.size.scale(-0.5));
+    public boolean isRemoveRequested() {
+        return removeRequested;
     }
 
-
-    public boolean isGcRequested() {
-        return gcRequested;
+    public void removeFromWorld() {
+        removeRequested = true;
     }
 
-    public void die() {
-        gcRequested = true;
-    }
-
-    public void onDeath(World world) {
+    public void onRemoval(World world) {
         stats.onDeath(this, world);
     }
 

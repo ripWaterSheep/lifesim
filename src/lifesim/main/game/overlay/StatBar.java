@@ -16,13 +16,14 @@ import static lifesim.main.util.math.MyMath.betterRound;
 
 public class StatBar extends Overlay {
 
-    private static final int LEFT_PADDING = 4;
-    private static final int BOTTOM_PADDING = 4;
-    private static final int BAR_HEIGHT = 36;
+    private static final int LEFT_PADDING = 2;
+    private static final int BOTTOM_PADDING = 2;
+    private static final int BAR_HEIGHT = 8;
 
     private static final int BAR_OPACITY = 145;
 
-    private static final int TEXT_SIZE = 28;
+    private static final int TEXT_SIZE = 5;
+    private static final int TEX_LEFT_PADDING = 2;
 
 
     private Graphics2D g2d;
@@ -38,17 +39,26 @@ public class StatBar extends Overlay {
         this.g2d = g2d;
         PlayerStats stats = (PlayerStats) player.stats;
 
-        drawBar("Intellect", stats.getIntellect(), 0.2, 1000, PlayerStats.Colors.intellectColor);
-        drawBar("Money", stats.getMoney(), 0.02, 10000, PlayerStats.Colors.moneyColor);
-        drawBar("Strength", stats.getStrength(), 0.2, 1000, PlayerStats.Colors.strengthColor);
-        drawBar("Energy", stats.getEnergy(), 0.2, 1000, PlayerStats.Colors.energyColor);
-        drawBar("Health", stats.getHealth(), 0.2, 1000, HealthStats.Colors.bloodColor);
+        drawBar("Intellect", stats.getIntellect(), 0.05, 1000, PlayerStats.Colors.intellectColor);
+        drawBar("Money", stats.getMoney(), 0.005, 10000, PlayerStats.Colors.moneyColor);
+        drawBar("Strength", stats.getStrength(), 0.05, 1000, PlayerStats.Colors.strengthColor);
+        drawBar("Energy", stats.getEnergy(), 0.05, 1000, PlayerStats.Colors.energyColor);
+        drawBar("Health", stats.getHealth(), 0.05, 1000, HealthStats.Colors.bloodColor);
 
         writeValue("World", player.getWorld().name);
         writeRoundedVal("Y", player.pos.x);
         writeRoundedVal("X", player.pos.y);
 
         currentBarNum = 1;
+    }
+
+
+    private int getX() {
+        return -panel.getScaledWidth()/2 + LEFT_PADDING;
+    }
+
+    private int getY() {
+        return panel.getScaledHeight()/2 - ((getCurrentBarNum()) * BAR_HEIGHT) - BOTTOM_PADDING;
     }
 
 
@@ -70,29 +80,27 @@ public class StatBar extends Overlay {
     private <T> void writeValue(String label, T data) {
         String formattedString = format(label, data+"");
 
-        int textY = panel.getHeight() - (getCurrentBarNum()*BAR_HEIGHT) - BOTTOM_PADDING;
-        DrawMethods.drawVerticallyCenteredString(g2d, formattedString, 10,
-                new Rectangle(LEFT_PADDING, textY, 0, BAR_HEIGHT), Fonts.getMainFont(TEXT_SIZE), Color.WHITE);
+        DrawMethods.drawVerticallyCenteredString(g2d, formattedString, getX() + TEX_LEFT_PADDING,
+                new Rectangle(getX(), getY(), 0, BAR_HEIGHT), Fonts.getMainFont(TEXT_SIZE), Color.WHITE);
         nextLine();
     }
 
 
-    private <T> void writeRoundedVal(String label, double data) {
+    private void writeRoundedVal(String label, double data) {
         writeValue(label, betterRound(data));
     }
 
 
-    private <T> void drawBar(String label, double data, double scale, double maxDataVal, Color color) {
-        int y = panel.getHeight() - ((getCurrentBarNum()) * BAR_HEIGHT) - BOTTOM_PADDING;
+    private void drawBar(String label, double data, double scale, double maxDataVal, Color color) {
         int dataWidth = betterRound(min(data, maxDataVal) * scale);
 
         // Draw data display bar.
         g2d.setColor(ColorMethods.applyOpacity(color, BAR_OPACITY));
-        g2d.fillRect(LEFT_PADDING, y, dataWidth, BAR_HEIGHT);
+        g2d.fillRect(getX(), getY(), dataWidth, BAR_HEIGHT);
 
         // Draw outline for bar
         g2d.setColor(Color.BLACK);
-        g2d.drawRect(LEFT_PADDING, y, betterRound(maxDataVal * scale), BAR_HEIGHT);
+        g2d.drawRect(getX(), getY(), betterRound(maxDataVal * scale), BAR_HEIGHT);
 
 
         writeRoundedVal(label, data);

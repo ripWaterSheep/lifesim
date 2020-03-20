@@ -81,6 +81,11 @@ public class Vector2D {
         return new Vector2D(x*scaleFactor, y*scaleFactor);
     }
 
+    public boolean inRect(Vector2D rectPos, Vector2D dimensions) {
+        Vector2D rectMax = rectPos.translate(dimensions);
+        return x > rectPos.x && y > rectPos.y && x < rectMax.x && y < rectMax.y;
+    }
+
 
     public String toStringComponents() {
         return "x: " + x + ", y: " + y;

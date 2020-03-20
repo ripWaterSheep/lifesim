@@ -1,7 +1,7 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.entities.components.sprites.Sprite;
-import lifesim.main.game.entities.components.stats.Stats;
+import lifesim.main.game.entities.components.stats.DamageStats;
 import lifesim.main.game.handlers.World;
 
 import java.awt.*;
@@ -17,7 +17,7 @@ public class Projectile extends MovementEntity {
     private final boolean matchSpriteAngle;
 
 
-    public Projectile(String name, Sprite sprite, Stats stats, double speed, double movementRange, boolean matchSpriteAngle) {
+    public Projectile(String name, Sprite sprite, DamageStats stats, double speed, double movementRange, boolean matchSpriteAngle) {
         super(name, sprite, stats, speed);
         this.movementRange = movementRange;
         this.matchSpriteAngle = matchSpriteAngle;
@@ -31,8 +31,9 @@ public class Projectile extends MovementEntity {
 
     @Override
     public Projectile copyInitialState() {
-        return new Projectile(name, sprite, stats.copyInitialState(), defaultSpeed, movementRange, matchSpriteAngle);
+        return new Projectile(name, sprite, (DamageStats) stats.copyInitialState(), defaultSpeed, movementRange, matchSpriteAngle);
     }
+
 
 
     @Override
@@ -43,7 +44,7 @@ public class Projectile extends MovementEntity {
         distanceTravelled += abs(movement.y);
 
         if (distanceTravelled > movementRange) {
-            die();
+            removeFromWorld();
        }
     }
 

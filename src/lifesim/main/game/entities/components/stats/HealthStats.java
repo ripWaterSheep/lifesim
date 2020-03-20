@@ -1,6 +1,5 @@
 package lifesim.main.game.entities.components.stats;
 
-import com.sun.security.auth.module.LdapLoginModule;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.components.Alliance;
 
@@ -63,7 +62,7 @@ public class HealthStats extends DamageStats {
     public void run(Entity owner) {
         health = max(0, health);
         if (health <= 0)
-            owner.die();
+            owner.removeFromWorld();
 
     }
 
