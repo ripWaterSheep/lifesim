@@ -17,8 +17,9 @@ public class Projectile extends MovementEntity {
     private final boolean matchSpriteAngle;
 
 
-    public Projectile(String name, Sprite sprite, DamageStats stats, double speed, double movementRange, boolean matchSpriteAngle) {
+    public Projectile(String name, Sprite sprite, DamageStats stats, double speed, double angle, double movementRange, boolean matchSpriteAngle) {
         super(name, sprite, stats, speed);
+        movement.setMagnDir(speed, angle);
         this.movementRange = movementRange;
         this.matchSpriteAngle = matchSpriteAngle;
     }
@@ -29,9 +30,9 @@ public class Projectile extends MovementEntity {
     }
 
 
-    @Override
-    public Projectile copyInitialState() {
-        return new Projectile(name, sprite, (DamageStats) stats.copyInitialState(), defaultSpeed, movementRange, matchSpriteAngle);
+
+    public void launchTowards(double direction) {
+        movement.setDirection(direction);
     }
 
 

@@ -11,7 +11,6 @@ public final class MouseInputManager {
 
     static final ArrayList<MouseInputListener> buttons = new ArrayList<>();
 
-
     public static final MouseInputListener left = new MouseInputListener(MouseEvent.BUTTON1);
     public static final MouseInputListener middle = new MouseInputListener(MouseEvent.BUTTON2);
     public static final MouseInputListener right = new MouseInputListener(MouseEvent.BUTTON3);
@@ -19,6 +18,7 @@ public final class MouseInputManager {
 
     public static void init(JPanel panel) {
         panel.addMouseListener(mouseAdapter);
+        panel.addMouseMotionListener(mouseAdapter);
     }
 
     public static void run() {
@@ -32,19 +32,30 @@ public final class MouseInputManager {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            for (MouseInputListener mouseEvent: buttons) {
-                if (mouseEvent.getIntCode() == e.getButton()) {
-                    mouseEvent.doPress();
-                    mouseEvent.setPos(e.getPoint());
+            for (MouseInputListener button: buttons) {
+                if (button.getIntCode() == e.getButton()) {
+                    button.doPress();
+                    button.setPos(e.getPoint());
                 }
             }
         }
 
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            for (MouseInputListener button: buttons) {
+                if (button.isPressed()) {
+                    button.setPos(e.getPoint());
+                }
+            }
+        }
+
+
         @Override
         public void mouseReleased(MouseEvent e) {
-            for (MouseInputListener mouseEvent: buttons) {
-                if (mouseEvent.getIntCode() == e.getButton()) {
-                    mouseEvent.doRelease();
+            for (MouseInputListener button: buttons) {
+                if (button.getIntCode() == e.getButton()) {
+                    button.doRelease();
                 }
             }
         }

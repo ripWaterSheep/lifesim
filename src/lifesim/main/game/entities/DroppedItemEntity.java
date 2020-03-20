@@ -15,11 +15,6 @@ public class DroppedItemEntity extends Entity {
 
 
     @Override
-    public DroppedItemEntity copyInitialState() {
-        return new DroppedItemEntity(name, sprite, item);
-    }
-
-    @Override
     public void whileTouching(Player player, PlayerStats stats) {
         player.acquireItem(item, 1);
         this.removeFromWorld();

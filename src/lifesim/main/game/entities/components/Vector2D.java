@@ -5,6 +5,7 @@ import java.awt.geom.Point2D;
 import static java.lang.Math.toDegrees;
 import static lifesim.main.util.math.Geometry.angleWrap;
 import static lifesim.main.util.math.MyMath.clamp;
+import static lifesim.main.util.math.MyMath.getRand;
 
 
 public class Vector2D {
@@ -68,6 +69,9 @@ public class Vector2D {
         y = clamp(y, -bounds.y, bounds.y);
     }
 
+    public Vector2D getRandInAbsBounds() {
+        return new Vector2D(getRand(-x, x), getRand(-y, y));
+    }
 
     public Vector2D translate(Vector2D vector) {
         return new Vector2D(x + vector.x, y + vector.y);
@@ -81,9 +85,15 @@ public class Vector2D {
         return new Vector2D(x*scaleFactor, y*scaleFactor);
     }
 
+    public Vector2D scale(double xScale, double yScale) {
+        return new Vector2D(x*xScale, y*yScale);
+    }
+
+
     public boolean inRect(Vector2D rectPos, Vector2D dimensions) {
-        Vector2D rectMax = rectPos.translate(dimensions);
-        return x > rectPos.x && y > rectPos.y && x < rectMax.x && y < rectMax.y;
+        Vector2D rectMin = rectPos.translate(dimensions.scale(-0.5));
+        Vector2D rectMax = rectPos.translate(dimensions.scale(0.5));
+        return x > rectMin.x && y > rectMin.y && x < rectMax.x && y < rectMax.y;
     }
 
 

@@ -22,12 +22,6 @@ public class TempEntity extends Entity {
         this(name, sprite, new BasicStats(), waitForTouch);
     }
 
-    @Override
-    public TempEntity copyInitialState() {
-        return new TempEntity(name, sprite, stats.copyInitialState(), waitForTouch);
-    }
-
-
     public void startAnimation() {
         animationStarted = true;
     }

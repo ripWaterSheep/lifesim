@@ -27,9 +27,8 @@ public class Layout {
                 new World("Town", new Vector2D(1500, 1500), new Color(60, 159, 75), new Color(201, 193, 126))
                         .add(new Entity("vRoad", new Sprite(new Vector2D(50, 1500), Color.DARK_GRAY, false)), new Vector2D(0, 0))
                         .add(new Entity("hRoad", new Sprite(new Vector2D(1500, 50), Color.DARK_GRAY, false)), new Vector2D(0, 0))
-                        .add(new Entity("Step on me!", new Sprite(new Vector2D(20, 20), Color.BLUE, true), new DamageStats(100, Alliance.ENEMY)), new Vector2D(200, 200))
                         .add(new Enemy("yee", new AnimatedSprite(new Animation(120, "emo_1", "emo_2", "emo_3", "emo_4")),
-                                new HealthStats(3,1000, Alliance.ENEMY), 1.7, 100),  new Vector2D(150, 150))
+                                new HealthStats(8,1000, Alliance.ENEMY), 1.8, 100),  new Vector2D(150, 150))
         );
     }
 

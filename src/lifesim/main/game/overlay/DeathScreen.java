@@ -4,7 +4,6 @@ import lifesim.main.game.Game;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.util.DrawMethods;
 import lifesim.main.util.fileIO.Fonts;
@@ -27,15 +26,29 @@ public class DeathScreen extends Overlay {
     }
 
 
+    private boolean showing = false;
+
+
+
     public DeathScreen(GamePanel panel, Player player) {
         super(panel, player);
     }
 
+    @Override
+    public void update() {
+        if (!((PlayerStats) player.stats).isAlive()) {
+            showing = true;
+            if (MouseInputManager.left.isClicked()/* || KeyInputManager.isAnyKeyClicked()*/) {
+                Game.restart();
+                showing = false;
+            }
+        }
+    }
 
 
     @Override
-    public void render(Graphics2D g2d) {
-        if (!((PlayerStats) player.stats).isAlive()) {
+    protected void render(Graphics2D g2d) {
+        if (showing) {
             g2d.setColor(bgColor);
             Rectangle rect = new Rectangle(-panel.getScaledWidth()/2, -panel.getScaledHeight()/2, panel.getScaledWidth(), panel.getScaledHeight());
             Rectangle subtitleRect = new Rectangle(0, 0, rect.width, rect.height*3/2);
@@ -46,9 +59,6 @@ public class DeathScreen extends Overlay {
             DrawMethods.drawCenteredString(g2d, "OOF, YOU DIED!", rect, font, textColor);
             DrawMethods.drawCenteredString(g2d, deathReason, subtitleRect, subtitleFont, textColor);
 
-            if (MouseInputManager.left.isClicked()/* || KeyInputManager.isAnyKeyClicked()*/) {
-                Game.restart();
-            }
         }
     }
 

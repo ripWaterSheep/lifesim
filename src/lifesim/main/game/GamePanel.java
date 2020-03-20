@@ -57,16 +57,16 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
 
         runSession(g);
-        overlayManager.render((Graphics2D) g);
         repaint();
     }
 
 
 
     private void update() {
-        gameSession.update();
         MouseInputManager.run();
         KeyInputManager.run();
+        gameSession.update();
+        overlayManager.update();
     }
 
 
@@ -77,6 +77,7 @@ public class GamePanel extends JPanel {
         g2d.scale(GRAPHICS_SCALE, GRAPHICS_SCALE);
 
         gameSession.render(g);
+        overlayManager.render((Graphics2D) g);
     }
 
 

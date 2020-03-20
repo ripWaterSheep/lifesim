@@ -21,11 +21,6 @@ public class MovementEntity extends Entity {
         movement.setMagnDir(speed, 0);
     }
 
-    @Override
-    public MovementEntity copyInitialState() {
-        return new MovementEntity(name, sprite, stats.copyInitialState(), defaultSpeed);
-    }
-
 
     protected void move() {
         pos.set(pos.translate(movement));

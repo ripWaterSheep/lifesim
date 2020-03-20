@@ -10,6 +10,7 @@ import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 
+import static lifesim.main.util.math.Geometry.isOutOfBoundsAbs;
 import static lifesim.main.util.math.Geometry.testIntersection;
 
 
@@ -36,14 +37,8 @@ public class Entity {
     }
 
 
-    public Entity copyInitialState() {
-        return new Entity(name, sprite, stats.copyInitialState());
-    }
-
-
     public Vector2D getDisplayPos() {
-        Player player = Game.getSession().getPlayer();
-        return pos.translate(player.pos.scale(-1)).translate(sprite.size.scale(-0.5));
+        return pos.translate(Game.getSession().getPlayer().pos.scale(-1));
     }
 
     public Shape getHitBox() {

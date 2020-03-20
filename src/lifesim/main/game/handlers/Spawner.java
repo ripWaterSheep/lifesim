@@ -20,7 +20,7 @@ public class Spawner {
 
         Vector2D spawnPos = new Vector2D(world.size);
         spawnPos.set(spawnPos.scale(getRand(-0.5, 0.5)));
-        world.add(spawnTemplate.copyInitialState(), spawnPos);
+        //world.add(spawnTemplate.copyInitialState(), spawnPos);
     }
 
 

@@ -35,7 +35,12 @@ public class StatBar extends Overlay {
     }
 
     @Override
-    public void render(Graphics2D g2d) {
+    public void update() {
+
+    }
+
+    @Override
+    protected void render(Graphics2D g2d) {
         this.g2d = g2d;
         PlayerStats stats = (PlayerStats) player.stats;
 

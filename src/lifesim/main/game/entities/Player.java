@@ -23,9 +23,6 @@ public final class Player extends MovementEntity {
 
     public final Inventory inventory = new Inventory();
 
-    private Item selectedItem = new Weapon("Player Weapon", new Sprite("bread"),
-            new Projectile("Bullet", new Sprite("bread"), new DamageStats(50, Alliance.PLAYER, true),
-                    15, 100, false));
 
     public Player() {
         super("Player", new DirectionalAnimatedSprite(
@@ -38,16 +35,17 @@ public final class Player extends MovementEntity {
                 new PlayerStats(1000, 1000, 0, 0, 0), 4);
         movement.set(0, 0);
 
-        for (int i = 0; i < 1; i++) {
-            inventory.addItem(new Weapon("Bomb", new Sprite("bomb"), new TempEntity("Bomb",
-                    new AnimatedSprite(new Animation(60, "bomb_1", "bomb_2", "bomb_3", "bomb_4", "bomb_5", "bomb_6")),
-                    new DamageStats(3, Alliance.PLAYER, true), true)), 1);
-        }
+        inventory.addItem(new Weapon("Player Weapon", new Sprite("bread"), new Sprite("bread"),
+                10, 15, 100, false), 1);
+
+        inventory.addItem(new Weapon("Bomb", new Sprite("bomb"),
+                new AnimatedSprite(new Animation(60, "bomb_1", "bomb_2", "bomb_3", "bomb_4", "bomb_5", "bomb_6")),
+                15, 0, 3, true), 1);
     }
 
 
     public Vector2D getDisplayPos() {
-        return sprite.size.scale(-0.5);
+        return new Vector2D(0, 0);
     }
 
 
@@ -135,9 +133,9 @@ public final class Player extends MovementEntity {
     public void update(World world) {
         super.update(world);
         if (MouseInputManager.right.isClicked()) {
-            selectedItem.onClick(world, this);
+            inventory.getSelectedItem().onClick(world, this);
         }
 
-        selectedItem.whileHolding(world, this);
+        inventory.getSelectedItem().whileHolding(world, this);
     }
 }

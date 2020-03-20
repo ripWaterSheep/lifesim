@@ -18,8 +18,15 @@ public class OverlayManager extends Overlay {
        overlays.add(new InventoryGUI(panel, player));
     }
 
+    @Override
+    public void update() {
+        for (Overlay overlay: overlays) {
+            overlay.update();
+        }
+    }
 
-        public void render(Graphics2D g2d) {
+
+    public void render(Graphics2D g2d) {
         for (Overlay overlay: overlays) {
             g2d = (Graphics2D) g2d.create();
             overlay.render(g2d);

@@ -12,28 +12,23 @@ import static lifesim.main.util.math.Geometry.getDistanceBetween;
 
 public class RangedEnemy extends Enemy {
 
-    public final Projectile bullet;
+    public final Weapon weapon;
 
     private final long shootInterval;
     private long lastShootTime = System.currentTimeMillis();
 
 
-    public RangedEnemy(String name, Sprite sprite, Stats stats, double speed, double detectionRange, long shootInterval, Projectile bullet) {
+    public RangedEnemy(String name, Sprite sprite, Stats stats, double speed, double detectionRange, long shootInterval, Weapon weapon) {
         super(name, sprite, stats, speed, detectionRange);
         this.shootInterval = shootInterval;
-        this.bullet = bullet;
+        this.weapon = weapon;
     }
 
-
-    @Override
-    public RangedEnemy copyInitialState() {
-        return new RangedEnemy(name, sprite, stats.copyInitialState(), defaultSpeed, detectionRange, shootInterval, bullet);
-    }
 
 
     private void attemptShot(World world) {
         if (System.currentTimeMillis() - lastShootTime >= shootInterval) {
-            world.add(bullet.copyInitialState(), pos);
+            weapon.onClick(world, this);
             lastShootTime = System.currentTimeMillis();
         }
     }
@@ -43,7 +38,7 @@ public class RangedEnemy extends Enemy {
     public void update(World world) {
         super.update(world);
         // Decide on suitable distance for the attack.
-        double attackDistance = bullet.getMovementRange();
+        double attackDistance = weapon.getMovementRange();
 
         if (getDistanceBetween(Game.getSession().getPlayer().pos, pos) < attackDistance) {
             attemptShot(world);

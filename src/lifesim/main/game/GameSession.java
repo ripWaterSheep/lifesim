@@ -12,23 +12,22 @@ public final class GameSession {
 
     private Player player = new Player();
 
-    public Player getPlayer() {
-        return player;
-    }
-
     private Layout layout;
-
-
-    public ArrayList<World> getAllWorlds() {
-        return layout.getWorlds();
-    }
-
 
 
     public GameSession(Layout layout) {
         this.layout = layout;
 
         player.setWorld(layout.getWorlds().get(0));
+    }
+
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public ArrayList<World> getAllWorlds() {
+        return layout.getWorlds();
     }
 
 

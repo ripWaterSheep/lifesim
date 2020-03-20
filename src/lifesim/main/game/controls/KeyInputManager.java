@@ -56,9 +56,9 @@ public final class KeyInputManager {
     public static final KeyInputListener k_down = new KeyInputListener(VK_DOWN);
     public static final KeyInputListener k_left = new KeyInputListener(VK_LEFT);
     public static final KeyInputListener k_right = new KeyInputListener(VK_RIGHT);
-
     public static final KeyInputListener k_space = new KeyInputListener(VK_SPACE);
     public static final KeyInputListener k_shift = new KeyInputListener(VK_SHIFT);
+    public static final KeyInputListener k_esc = new KeyInputListener(VK_ESCAPE);
 
 
     public static boolean isAnyKeyClicked() {

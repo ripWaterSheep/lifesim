@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class Item {
 
-    private final String name;
+    public final String name;
     public final Sprite sprite;
 
 

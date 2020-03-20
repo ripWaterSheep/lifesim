@@ -23,11 +23,6 @@ public class Enemy extends MovementEntity {
         this.detectionRange = detectionRange;
     }
 
-    @Override
-    public Enemy copyInitialState() {
-        return new Enemy(name, sprite, stats.copyInitialState(), defaultSpeed, detectionRange);
-    }
-
 
     private void decideMovement() {
         Player player = Game.getSession().getPlayer();
