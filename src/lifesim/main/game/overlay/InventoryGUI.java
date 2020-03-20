@@ -1,5 +1,6 @@
 package lifesim.main.game.overlay;
 
+import lifesim.main.game.Game;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
@@ -11,6 +12,7 @@ import lifesim.main.game.entities.components.items.inventory.InventoryStack;
 import lifesim.main.game.entities.components.sprites.Sprite;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class InventoryGUI extends Overlay {
 
@@ -37,11 +39,12 @@ public class InventoryGUI extends Overlay {
         if (KeyInputManager.k_e.isClicked()) opened = !opened;
         if (KeyInputManager.k_esc.isClicked()) opened = false;
 
-        dragItems();
+        if (opened) dragItems();
+        scrollThroughItems();
     }
 
 
-    public void dragItems() {
+    private void dragItems() {
         Vector2D mousePos = MouseInputManager.left.getPos();
 
         if (MouseInputManager.left.isClicked()) {
@@ -53,7 +56,6 @@ public class InventoryGUI extends Overlay {
                 }
             }
         }
-
         if (draggedStack != null) {
             draggedStack.drag(mousePos, inventoryBounds);
 
@@ -65,10 +67,27 @@ public class InventoryGUI extends Overlay {
     }
 
 
+    private void scrollThroughItems() {
+        ArrayList<InventoryStack> stacks = inventory.getStacks();
+        int newIndex = stacks.indexOf(inventory.getSelectedStack());
+        newIndex += MouseInputManager.getMouseWheelSpeed();
+        if (newIndex > stacks.size()-1)
+            newIndex = 0;
+        if (newIndex < 0)
+            newIndex = stacks.size()-1;
+
+        inventory.selectStack(stacks.get(newIndex));
+    }
+
+
+
 
     @Override
     protected void render(Graphics2D g2d) {
-        if (opened) {
+        if (!opened) {
+            g2d.translate(Game.getPanel().getScaledWidth()/2.0 - inventoryBounds.x*0.55, -Game.getPanel().getScaledHeight()/2.0 + inventoryBounds.y*0.7);
+            g2d.scale(0.45, 0.5);
+        }
             bg.render(g2d, new Vector2D(0, 0), new Vector2D(0, 0));
 
             if (draggedStack != null) {
@@ -78,7 +97,7 @@ public class InventoryGUI extends Overlay {
 
             for (InventoryStack stack : inventory.getStacks()) {
                 stack.renderItem(g2d);
-            }
+
         }
     }
 

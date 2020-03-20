@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 
 public final class MouseInputManager {
@@ -15,16 +16,24 @@ public final class MouseInputManager {
     public static final MouseInputListener middle = new MouseInputListener(MouseEvent.BUTTON2);
     public static final MouseInputListener right = new MouseInputListener(MouseEvent.BUTTON3);
 
+    private static int mouseWheelSpeed = 0;
+
+    public static int getMouseWheelSpeed() {
+        return mouseWheelSpeed;
+    }
+
 
     public static void init(JPanel panel) {
         panel.addMouseListener(mouseAdapter);
         panel.addMouseMotionListener(mouseAdapter);
+        panel.addMouseWheelListener(mouseAdapter);
     }
 
     public static void run() {
         for (MouseInputListener button: buttons) {
             button.run();
         }
+        mouseWheelSpeed = 0;
     }
 
 
@@ -50,6 +59,11 @@ public final class MouseInputManager {
             }
         }
 
+
+        @Override
+        public void mouseWheelMoved(MouseWheelEvent e) {
+            mouseWheelSpeed = e.getScrollAmount()/3;
+        }
 
         @Override
         public void mouseReleased(MouseEvent e) {

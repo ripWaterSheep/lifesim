@@ -63,10 +63,10 @@ public class GamePanel extends JPanel {
 
 
     private void update() {
-        MouseInputManager.run();
-        KeyInputManager.run();
         gameSession.update();
         overlayManager.update();
+        MouseInputManager.run();
+        KeyInputManager.run();
     }
 
 

@@ -41,6 +41,10 @@ public final class Player extends MovementEntity {
         inventory.addItem(new Weapon("Bomb", new Sprite("bomb"),
                 new AnimatedSprite(new Animation(60, "bomb_1", "bomb_2", "bomb_3", "bomb_4", "bomb_5", "bomb_6")),
                 15, 0, 3, true), 1);
+
+        inventory.addItem(new Weapon("Water Gun", new Sprite("water_gun"),
+                new Sprite("water_droplet"),
+                1, 10, 50, false), 1);
     }
 
 
