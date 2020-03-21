@@ -2,15 +2,13 @@ package lifesim.main.game.entities.components.items.inventory;
 
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.items.Item;
+import lifesim.main.util.DrawMethods;
+import lifesim.main.util.fileIO.Fonts;
 
 import java.awt.*;
-import java.nio.file.attribute.UserPrincipal;
-
-import static javax.swing.JComponent.isLightweightComponent;
-import static lifesim.main.game.GamePanel.GRAPHICS_SCALE;
 
 
-public class InventoryStack {
+public class ItemStack {
 
     private final Item item;
     private int amount;
@@ -20,7 +18,7 @@ public class InventoryStack {
     public Vector2D dragPos;
 
 
-    public InventoryStack(Item item, int amount, Vector2D pos) {
+    public ItemStack(Item item, int amount, Vector2D pos) {
         this.item = item;
         this.amount = amount;
         this.pos = pos;
@@ -38,7 +36,7 @@ public class InventoryStack {
 
 
     public void changeAmountBy(int amount) {
-        this.amount -= amount;
+        this.amount += amount;
     }
 
 
@@ -56,8 +54,10 @@ public class InventoryStack {
     }
 
 
-    public void renderItem(Graphics2D g2d) {
+    public void render(Graphics2D g2d) {
         item.sprite.render(g2d, dragPos, new Vector2D(0, 0));
+        DrawMethods.drawCenteredString(g2d, amount+"", new Rectangle((int) pos.x, (int) pos.y, (int) item.sprite.size.x, (int) item.sprite.size.y),
+                Fonts.getMainFont(7), Color.WHITE);
     }
 
 }

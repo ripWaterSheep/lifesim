@@ -11,7 +11,6 @@ import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.DirectionalAnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Sprite;
-import lifesim.main.game.entities.components.stats.DamageStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.handlers.World;
 
@@ -36,15 +35,15 @@ public final class Player extends MovementEntity {
         movement.set(0, 0);
 
         inventory.addItem(new Weapon("Player Weapon", new Sprite("bread"), new Sprite("bread"),
-                10, 15, 100, false), 1);
+                10, 15, 100, false), 100);
 
         inventory.addItem(new Weapon("Bomb", new Sprite("bomb"),
                 new AnimatedSprite(new Animation(60, "bomb_1", "bomb_2", "bomb_3", "bomb_4", "bomb_5", "bomb_6")),
-                15, 0, 3, true), 1);
+                15, 0, 3, true), 100);
 
         inventory.addItem(new Weapon("Water Gun", new Sprite("water_gun"),
                 new Sprite("water_droplet"),
-                1, 10, 50, false), 1);
+                1, 10, 50, false), 100);
     }
 
 
@@ -68,13 +67,12 @@ public final class Player extends MovementEntity {
     }
 
 
-    public void control() {
+    public void controlMovement() {
         boolean up, down, left, right;
         final KeyInputListener upKey = KeyInputManager.k_w,
                 leftKey = KeyInputManager.k_a,
                 downKey = KeyInputManager.k_s,
                 rightKey = KeyInputManager.k_d;
-
         // Determine intended direction based on key presses.
         // If both keys in opposite directions are pressed, then keys pressed more recently have precedence over earlier pressed keys.
         left = leftKey.isPressed();
@@ -89,7 +87,6 @@ public final class Player extends MovementEntity {
             up = upKey.getPressTime() < downKey.getPressTime();
             down = !up;
         }
-
         // Get the correct angle based on combination of up, down, left, and right.
         double angle = 0;
         if (up) {
@@ -102,7 +99,6 @@ public final class Player extends MovementEntity {
             else angle = 270;
         } else if (left) angle = 0;
         else if (right) angle = 180;
-
         // Move along x or y axis if needed, else slow down due to friction.
         double frictionDecelerationFactor = 0.85;
         if (left || right) movement.setXMagnDir(getIntendedSpeed(), angle);
@@ -125,10 +121,28 @@ public final class Player extends MovementEntity {
     }
 
 
+
+    public void controlInventory() {
+        Item selectedItem = inventory.getSelectedItem();
+        if (MouseInputManager.right.isClicked()) {
+            selectedItem.onClick(world, this);
+            inventory.depleteSelectedItem();
+        }
+        selectedItem.whileHolding(world, this);
+
+        if (KeyInputManager.k_q.isTyped()) {
+            // Drop the item behind player so it isn't picked back up when moving forward.
+            if (movement.getMagnitude() < 0.5) inventory.dropStackInWorld(world, pos.translate(0, 25));
+            else inventory.dropStackInWorld(world, pos.translate(movement.scale(-3)));
+        }
+    }
+
+
+
     @Override
     protected void move() {
         super.move();
-        control();
+        controlMovement();
     }
 
 
@@ -136,10 +150,7 @@ public final class Player extends MovementEntity {
     @Override
     public void update(World world) {
         super.update(world);
-        if (MouseInputManager.right.isClicked()) {
-            inventory.getSelectedItem().onClick(world, this);
-        }
-
-        inventory.getSelectedItem().whileHolding(world, this);
+        inventory.doGarbageCollection();
+        controlInventory();
     }
 }

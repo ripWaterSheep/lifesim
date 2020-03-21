@@ -8,7 +8,7 @@ import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.items.AllItems;
 import lifesim.main.game.entities.components.items.inventory.Inventory;
-import lifesim.main.game.entities.components.items.inventory.InventoryStack;
+import lifesim.main.game.entities.components.items.inventory.ItemStack;
 import lifesim.main.game.entities.components.sprites.Sprite;
 
 import java.awt.*;
@@ -26,7 +26,7 @@ public class InventoryGUI extends Overlay {
     private final Inventory inventory;
 
     private boolean opened = false;
-    private InventoryStack draggedStack;
+    private ItemStack draggedStack;
 
     public InventoryGUI(GamePanel panel, Player player) {
         super(panel, player);
@@ -48,7 +48,7 @@ public class InventoryGUI extends Overlay {
         Vector2D mousePos = MouseInputManager.left.getPos();
 
         if (MouseInputManager.left.isClicked()) {
-            for (InventoryStack stack: inventory.getStacks()) {
+            for (ItemStack stack: inventory.getStacks()) {
                 if (stack.getItem().sprite.containsPointAt(mousePos, stack.pos)) {
                     draggedStack = stack;
                     inventory.bringStackToFront(stack);
@@ -68,15 +68,18 @@ public class InventoryGUI extends Overlay {
 
 
     private void scrollThroughItems() {
-        ArrayList<InventoryStack> stacks = inventory.getStacks();
-        int newIndex = stacks.indexOf(inventory.getSelectedStack());
-        newIndex += MouseInputManager.getMouseWheelSpeed();
-        if (newIndex > stacks.size()-1)
-            newIndex = 0;
-        if (newIndex < 0)
-            newIndex = stacks.size()-1;
-
-        inventory.selectStack(stacks.get(newIndex));
+        if (inventory.getStacks().size() > 0) {
+            ArrayList<ItemStack> stacks = inventory.getStacks();
+            int newIndex = stacks.indexOf(inventory.getSelectedStack());
+            newIndex += MouseInputManager.getMouseWheelSpeed();
+            if (newIndex > stacks.size() - 1)
+                newIndex = 0;
+            if (newIndex < 0)
+                newIndex = stacks.size() - 1;
+            inventory.selectStack(stacks.get(newIndex));
+        } else {
+            inventory.selectNothing();
+        }
     }
 
 
@@ -85,8 +88,8 @@ public class InventoryGUI extends Overlay {
     @Override
     protected void render(Graphics2D g2d) {
         if (!opened) {
-            g2d.translate(Game.getPanel().getScaledWidth()/2.0 - inventoryBounds.x*0.55, -Game.getPanel().getScaledHeight()/2.0 + inventoryBounds.y*0.7);
-            g2d.scale(0.45, 0.5);
+            g2d.translate(Game.getPanel().getScaledWidth()/2.0 - inventoryBounds.x*0.6, -Game.getPanel().getScaledHeight()/2.0 + inventoryBounds.y*0.7);
+            g2d.scale(0.5, 0.5);
         }
             bg.render(g2d, new Vector2D(0, 0), new Vector2D(0, 0));
 
@@ -95,8 +98,8 @@ public class InventoryGUI extends Overlay {
             } else if (inventory.getSelectedItem() != AllItems.empty)
                 selectedSlot.render(g2d, inventory.getSelectedStack().pos, new Vector2D(0, 0));
 
-            for (InventoryStack stack : inventory.getStacks()) {
-                stack.renderItem(g2d);
+            for (ItemStack stack : inventory.getStacks()) {
+                stack.render(g2d);
 
         }
     }

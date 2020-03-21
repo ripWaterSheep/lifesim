@@ -11,14 +11,12 @@ public class Consumable extends Item {
     private PlayerStats stats;
 
 
-
     public Consumable(String name, Sprite sprite) {
         super(name, sprite);
     }
 
 
     public void consume(PlayerStats stats) { }
-
 
     @Override
     public void onClick(World world, Entity entity) {

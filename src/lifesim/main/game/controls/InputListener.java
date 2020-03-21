@@ -28,6 +28,11 @@ public abstract class InputListener {
     }
 
 
+    public boolean isTyped() {
+        return pressTime == 1 || pressTime > 10;
+    }
+
+
     void doPress() {
         pressed = true;
     }

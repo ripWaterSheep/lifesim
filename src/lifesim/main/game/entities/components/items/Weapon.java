@@ -40,7 +40,6 @@ public class Weapon extends Item {
     }
 
 
-
     @Override
     public void onClick(World world, Entity entity) {
         Alliance alliance = Alliance.NEUTRAL;
@@ -48,7 +47,7 @@ public class Weapon extends Item {
             alliance = ((DamageStats) entity.stats).alliance;
         }
 
-        double angle = 0;
+        double angle;
         if (alliance.equals(Alliance.PLAYER)) {
             angle = getAngleBetween(MouseInputManager.right.getPos(),
                     new Vector2D(0, 0));
@@ -56,10 +55,8 @@ public class Weapon extends Item {
             angle = getAngleBetween(Game.getSession().getPlayer().pos, entity.pos);
         }
 
-
         Projectile newProjectile = new Projectile(name+" projectile", projectileSprite,
                 new DamageStats(damage, alliance, true), speed, angle, movementRange, matchSpriteAngle);
-
 
         world.add(newProjectile, entity.pos);
     }
