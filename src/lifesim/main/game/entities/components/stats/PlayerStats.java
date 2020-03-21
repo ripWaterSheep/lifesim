@@ -104,9 +104,9 @@ public class PlayerStats extends HealthStats {
         money = max(0, money);
         intellect = max(0, intellect);
 
-        double tireAmount = 0.104;
+        double tireAmount = 0.15;
         if (owner instanceof MovementEntity) {
-            tireAmount += sqrt(((MovementEntity) owner).movement.getMagnitude()/200);
+            tireAmount += sqrt(((MovementEntity) owner).movement.getMagnitude()/250);
         }
 
         energy -= tireAmount;

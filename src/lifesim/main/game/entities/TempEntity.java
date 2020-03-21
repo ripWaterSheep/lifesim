@@ -37,12 +37,13 @@ public class TempEntity extends Entity {
     @Override
     public void render(Graphics2D g2d) {
         if (sprite instanceof AnimatedSprite) {
+            AnimatedSprite animatedSprite = (AnimatedSprite) sprite;
             if (!animationStarted)
-                ((AnimatedSprite) sprite).pauseFrame();
+                animatedSprite.pauseFrame();
 
-            if (((AnimatedSprite) sprite).getAnimation().isAtEndOfCycle()) {
+            if (animatedSprite.getAnimation().isAtEndOfCycle()) {
                 removeFromWorld();
-                ((AnimatedSprite) sprite).pauseFrame();
+                animatedSprite.pauseFrame();
             }
         }
         super.render(g2d);

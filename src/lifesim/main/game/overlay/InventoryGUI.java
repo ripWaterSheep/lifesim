@@ -7,6 +7,7 @@ import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.items.AllItems;
+import lifesim.main.game.entities.components.items.Item;
 import lifesim.main.game.entities.components.items.inventory.Inventory;
 import lifesim.main.game.entities.components.items.inventory.ItemStack;
 import lifesim.main.game.entities.components.sprites.Sprite;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 public class InventoryGUI extends Overlay {
 
     private static final Sprite bg = new Sprite("inventory");
-    private static final Sprite selectedSlot = new Sprite("selected_slot");
+    private static final Sprite selectedBubble = new Sprite("selected_slot");
 
     // Define the edges of the inside of the inventory.
     public static final Vector2D inventoryBounds = new Vector2D(bg.size.scale(0.48, 0.3).translate(0, 5));
@@ -27,6 +28,7 @@ public class InventoryGUI extends Overlay {
 
     private boolean opened = false;
     private ItemStack draggedStack;
+
 
     public InventoryGUI(GamePanel panel, Player player) {
         super(panel, player);
@@ -49,7 +51,7 @@ public class InventoryGUI extends Overlay {
 
         if (MouseInputManager.left.isClicked()) {
             for (ItemStack stack: inventory.getStacks()) {
-                if (stack.getItem().sprite.containsPointAt(mousePos, stack.pos)) {
+                if (stack.getItem().sprite.containsPointAt(mousePos, stack.lastPos)) {
                     draggedStack = stack;
                     inventory.bringStackToFront(stack);
                     inventory.selectStack(stack);
@@ -84,24 +86,28 @@ public class InventoryGUI extends Overlay {
 
 
 
-
     @Override
     protected void render(Graphics2D g2d) {
+        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.85f);
+        g2d.setComposite(ac);
+
         if (!opened) {
-            g2d.translate(Game.getPanel().getScaledWidth()/2.0 - inventoryBounds.x*0.6, -Game.getPanel().getScaledHeight()/2.0 + inventoryBounds.y*0.7);
-            g2d.scale(0.5, 0.5);
+            g2d.translate(Game.getPanel().getScaledWidth()/2.0 - inventoryBounds.x * 0.75, -Game.getPanel().getScaledHeight()/2.0 + inventoryBounds.y * 0.85);
+            g2d.scale(0.6, 0.6);
         }
-            bg.render(g2d, new Vector2D(0, 0), new Vector2D(0, 0));
+        bg.render(g2d, new Vector2D(0, 0), new Vector2D(0, 0));
 
-            if (draggedStack != null) {
-                selectedSlot.render(g2d, draggedStack.dragPos, new Vector2D(0, 0));
-            } else if (inventory.getSelectedItem() != AllItems.empty)
-                selectedSlot.render(g2d, inventory.getSelectedStack().pos, new Vector2D(0, 0));
-
-            for (ItemStack stack : inventory.getStacks()) {
-                stack.render(g2d);
-
+        // Draw the stack selection bubble over the selected stack
+        ItemStack selectedStack = inventory.getSelectedStack();
+        if (selectedStack.getItem() != AllItems.empty) {
+            selectedBubble.render(g2d, selectedStack.currentPos, new Vector2D(0, 0));
+            selectedStack.renderDetailsAt(g2d, inventoryBounds.translate(-inventoryBounds.x-4, 5));
         }
+
+        for (ItemStack stack : inventory.getStacks())
+            stack.render(g2d);
+
+
     }
 
 }

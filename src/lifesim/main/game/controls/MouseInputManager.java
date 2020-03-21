@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 
+import static lifesim.main.util.math.MyMath.clamp;
+
 public final class MouseInputManager {
 
     static final ArrayList<MouseInputListener> buttons = new ArrayList<>();
@@ -62,7 +64,7 @@ public final class MouseInputManager {
 
         @Override
         public void mouseWheelMoved(MouseWheelEvent e) {
-            mouseWheelSpeed = e.getScrollAmount()/3;
+            mouseWheelSpeed = (int )clamp(e.getPreciseWheelRotation(), -1, 1);
         }
 
         @Override

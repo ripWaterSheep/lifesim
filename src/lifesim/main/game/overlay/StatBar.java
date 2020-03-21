@@ -6,7 +6,7 @@ import lifesim.main.game.entities.components.stats.HealthStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.util.ColorMethods;
 import lifesim.main.util.DrawMethods;
-import lifesim.main.util.fileIO.Fonts;
+import lifesim.main.util.fileIO.FontLoader;
 
 import java.awt.*;
 
@@ -22,7 +22,7 @@ public class StatBar extends Overlay {
 
     private static final int BAR_OPACITY = 145;
 
-    private static final int TEXT_SIZE = 5;
+    private static final Font STAT_FONT = FontLoader.getMainFont(6);
     private static final int TEX_LEFT_PADDING = 2;
 
 
@@ -86,7 +86,7 @@ public class StatBar extends Overlay {
         String formattedString = format(label, data+"");
 
         DrawMethods.drawVerticallyCenteredString(g2d, formattedString, getX() + TEX_LEFT_PADDING,
-                new Rectangle(getX(), getY(), 0, BAR_HEIGHT), Fonts.getMainFont(TEXT_SIZE), Color.WHITE);
+                new Rectangle(getX(), getY()+1, 0, BAR_HEIGHT), STAT_FONT, Color.WHITE);
         nextLine();
     }
 

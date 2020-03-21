@@ -6,7 +6,7 @@ import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.util.DrawMethods;
-import lifesim.main.util.fileIO.Fonts;
+import lifesim.main.util.fileIO.FontLoader;
 
 import java.awt.*;
 
@@ -16,8 +16,8 @@ public class DeathScreen extends Overlay {
     private static final Color bgColor = new Color(215, 26, 26, 200);
     private static final Color textColor = new Color(125, 20, 26);
 
-    private static final Font font = Fonts.getBloodFont(30);
-    private static final Font subtitleFont = Fonts.getBloodFont(15);
+    private static final Font font = FontLoader.getBloodFont(30);
+    private static final Font subtitleFont = FontLoader.getBloodFont(15);
 
     private static String deathReason = "dab";
 

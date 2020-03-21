@@ -4,6 +4,7 @@ import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.overlay.OverlayManager;
+import lifesim.main.util.fileIO.FontLoader;
 
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    public static final int GRAPHICS_SCALE = 6;
+    public static final int GRAPHICS_SCALE = 5;
 
     GameSession gameSession;
     private OverlayManager overlayManager;
@@ -26,6 +27,7 @@ public class GamePanel extends JPanel {
         setSize(1600, 950);
         init(gameSession);
 
+        FontLoader.init();
         KeyInputManager.init(this);
         MouseInputManager.init(this);
     }
@@ -98,7 +100,6 @@ public class GamePanel extends JPanel {
             update();
             delta--;
         }
-
         render(g);
         frames++;
 

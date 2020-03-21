@@ -1,19 +1,16 @@
 package lifesim.main.game.entities.components.sprites;
 
-import lifesim.main.game.controls.MouseInputManager;
-import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.util.DrawMethods;
 import lifesim.main.util.fileIO.ImageLoader;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-import java.lang.invoke.VolatileCallSite;
 
 
 public class Sprite {
 
     protected Image image;
+    private final Vector2D initialSize;
     public final Vector2D size;
     private final Color color;
     private final boolean elliptical;
@@ -22,6 +19,7 @@ public class Sprite {
     public Sprite(Image image) {
         this.image = image;
         size = new Vector2D(image.getWidth(null), image.getHeight(null));
+        initialSize = size;
         color = null;
         elliptical = false;
     }
@@ -40,6 +38,7 @@ public class Sprite {
     public Sprite(Vector2D size, Color color, boolean elliptical) {
         image = null;
         this.size = size;
+        initialSize = size;
         this.color = color;
         this.elliptical = elliptical;
     }
@@ -50,7 +49,6 @@ public class Sprite {
     }
 
 
-
     public Shape getShapeAt(Vector2D pos) {
         int x = (int) (pos.x - (size.x/2));
         int y = (int) (pos.y -(size.y/2));
@@ -58,6 +56,7 @@ public class Sprite {
         if (elliptical) return new Ellipse2D.Double(x, y, size.x, size.y);
         else return new Rectangle.Double(x, y, size.x, size.y);
     }
+
 
 
     public void render(Graphics2D g2d, Vector2D pos, Vector2D movement) {
