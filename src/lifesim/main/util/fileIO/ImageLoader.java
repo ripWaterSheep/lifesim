@@ -2,6 +2,7 @@ package lifesim.main.util.fileIO;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,8 +13,8 @@ public class ImageLoader {
     private static final String FILE_ENDING = ".png";
 
 
-    public static Image loadImage(String name) {
-        Image image = null;
+    public static BufferedImage loadImage(String name) {
+        BufferedImage image = null;
         String path = FILE_PATH + name + FILE_ENDING;
         try {
             File file = new File(path);

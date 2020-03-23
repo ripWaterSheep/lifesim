@@ -1,6 +1,7 @@
 package lifesim.main.game.entities.enemies;
 
 import lifesim.main.game.Game;
+import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.MovementEntity;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.sprites.Sprite;
@@ -21,6 +22,11 @@ public class Enemy extends MovementEntity {
     public Enemy(String name, Sprite sprite, Stats stats, double speed, double detectionRange) {
         super(name, sprite, stats, speed);
         this.detectionRange = detectionRange;
+    }
+
+
+    public Enemy copyInitialState() {
+        return new Enemy(name, sprite, stats, defaultSpeed, detectionRange);
     }
 
 

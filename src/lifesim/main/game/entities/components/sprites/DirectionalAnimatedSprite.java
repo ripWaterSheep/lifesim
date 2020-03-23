@@ -20,8 +20,8 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
     public DirectionalAnimatedSprite(Animation idle, Animation... movement) {
         super(idle);
         this.idleAnimation = idle;
-        // Define in the order of left, backwards, right, forwards.
-        this.movementAnimations = new ArrayList(Arrays.asList(movement));
+        // Define in the order of right, forward, left, back for the sprite to match the entity's angle
+        this.movementAnimations = new ArrayList<>(Arrays.asList(movement));
     }
 
 
@@ -38,22 +38,19 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
             This allows 2, 4, 8, or any other number of animations to be used for 2, 4, and 8 directional animations.
             */
 
-            // Get nearest approximate angle (nearest multiple of 180 if 2 animations, nearest multiple of 90 if 4 animations)
-            //double directionalAngle = roundToMultiple(movement.getDirection(), 360.0/(movementAnimations.size()));
-            //directionalAngle = angleWrap(directionalAngle);
-            // Scale angle from 0-360 to 0-1
-            double angleRatio = (movement.getDirection()/360);
-            // Multiply by total num of animations
+            // Get angle ratio, converting from range 0-360 to 0-1.
+            double angleRatio = (angleWrap(movement.getDirection())/360);
+            // Multiply by total num of animations and round to get index of animation
             angleRatio *= movementAnimations.size();
-
             int chosenIndex = betterRound(angleRatio);
-
-            try {
+            if (chosenIndex == 4) chosenIndex = 3;
+           // try {
                 animation = movementAnimations.get(chosenIndex);
-            } catch (Exception e) {
+            /*} catch (Exception e) {
+                System.out.println(chosenIndex);
+                // Just use the bnac
                 animation = movementAnimations.get(3);
-                //animation = movementAnimations.get(3);
-            }
+            }*/
         }
         super.render(g2d, pos, movement);
     }

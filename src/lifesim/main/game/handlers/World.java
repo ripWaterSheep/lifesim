@@ -11,19 +11,22 @@ import java.util.*;
 
 public class World {
 
+    private static final int MAX_ENTITIES = 25;
+
     public final String name;
-
-    private final ArrayList<Entity> entities = new ArrayList<>();
-
     public final Vector2D size;
     private final Color outerColor;
 
+    private final ArrayList<Entity> entities = new ArrayList<>();
 
-    public World(String name, Vector2D size, Color color, Color outerColor) {
+    private final ArrayList<Spawner> spawners = new ArrayList<>();
+
+
+    public World(String name, double width, double height, Color color, Color outerColor) {
         this.name = name;
-        this.size = size;
+        this.size = new Vector2D(width, height);
 
-        add(new Entity("Floor", new Sprite(size, color, false)), new Vector2D(0, 0));
+        add(new Entity("Floor", new Sprite(width, height, color)), 0, 0);
         this.outerColor = outerColor;
     }
 
@@ -38,9 +41,18 @@ public class World {
         return this;
     }
 
+    public World add(Entity entity, double x, double y) {
+        return add(entity, new Vector2D(x, y));
+    }
 
     public void remove(Entity entity) {
         entities.remove(entity);
+    }
+
+
+    public World addSpawner(Spawner spawner) {
+        spawners.add(spawner);
+        return this;
     }
 
 
@@ -66,6 +78,11 @@ public class World {
 
 
     public void update() {
+        if (entities.size() < MAX_ENTITIES) {
+            for (Spawner spawner : spawners)
+                spawner.attemptSpawn(this);
+        }
+
         for (Entity entity: getEntities()) {
             entity.update(this);
 
@@ -84,9 +101,9 @@ public class World {
 
     public void render(Graphics g) {
         Game.getPanel().setBackground(outerColor);
-        Graphics2D g2d = (Graphics2D) g.create();
 
         for (Entity entity: entities) {
+            Graphics2D g2d = (Graphics2D) g.create();
             entity.render(g2d);
         }
     }

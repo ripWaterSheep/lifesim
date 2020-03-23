@@ -51,8 +51,8 @@ public class StatBar extends Overlay {
         drawBar("Health", stats.getHealth(), 0.05, 1000, HealthStats.Colors.bloodColor);
 
         writeValue("World", player.getWorld().name);
-        writeRoundedVal("Y", player.pos.x);
-        writeRoundedVal("X", player.pos.y);
+        writeRoundedVal("Y", player.pos.y);
+        writeRoundedVal("X", player.pos.x);
 
         currentBarNum = 1;
     }

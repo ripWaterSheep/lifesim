@@ -10,7 +10,6 @@ import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 
-import static lifesim.main.util.math.Geometry.isOutOfBoundsAbs;
 import static lifesim.main.util.math.Geometry.testIntersection;
 
 
@@ -59,7 +58,7 @@ public class Entity {
     }
 
     public void onRemoval(World world) {
-        stats.onDeath(this, world);
+        stats.onRemoval(this, world);
     }
 
 

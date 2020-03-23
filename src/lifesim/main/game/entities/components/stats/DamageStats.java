@@ -3,6 +3,7 @@ package lifesim.main.game.entities.components.stats;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.TempEntity;
 import lifesim.main.game.entities.components.Alliance;
+import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.handlers.World;
@@ -28,10 +29,10 @@ public class DamageStats extends BasicStats {
     }
 
     @Override
-    public void onDeath(Entity owner, World world) {
+    public void onRemoval(Entity owner, World world) {
         if (!owner.name.equals("Death Animation"))
-        world.add(new TempEntity("Death Animation", new AnimatedSprite(new Animation(40,
-                "boom_1", "boom_2", "boom_3", "boom_4", "boom_5", "boom_6", "boom_7", "boom_8")), new DamageStats(10, alliance, false), false), owner.pos);
+        world.add(new TempEntity("Death Animation", new AnimatedSprite(new Animation("boom",
+                40, new Vector2D(16, 16), 0))), owner.pos);
     }
 
 
@@ -53,8 +54,6 @@ public class DamageStats extends BasicStats {
             if (dieOnDamage) {
                 owner.removeFromWorld();
             }
-
-            if (owner instanceof TempEntity) ((TempEntity) owner).startAnimation();
 
         }
     }

@@ -25,6 +25,10 @@ public class RangedEnemy extends Enemy {
     }
 
 
+    public RangedEnemy copyInitialState() {
+        return new RangedEnemy(name, sprite, stats, defaultSpeed, detectionRange, shootInterval, weapon);
+    }
+
 
     private void attemptShot(World world) {
         if (System.currentTimeMillis() - lastShootTime >= shootInterval) {

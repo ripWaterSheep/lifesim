@@ -97,7 +97,7 @@ public class InventoryGUI extends Overlay {
         }
         bg.render(g2d, new Vector2D(0, 0), new Vector2D(0, 0));
 
-        // Draw the stack selection bubble over the selected stack
+        // Draw the stack selection bubble over the selected stack, and display item details under the inventory
         ItemStack selectedStack = inventory.getSelectedStack();
         if (selectedStack.getItem() != AllItems.empty) {
             selectedBubble.render(g2d, selectedStack.currentPos, new Vector2D(0, 0));

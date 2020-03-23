@@ -28,13 +28,14 @@ public final class Player extends MovementEntity {
 
     public Player() {
         super("Player", new DirectionalAnimatedSprite(
-                new Animation(200, "player_idle_1", "player_idle_2"),
-                        new Animation(120, "player_right_1", "player_right_2"),
-                new Animation(120, "player_forward_1", "player_forward_2"),
-                        new Animation(120, "player_left_1", "player_left_2"),
-                new Animation(120, "player_backward_1", "player_backward_2")
-        ),
-                new PlayerStats(1000, 1000, 0, 0, 0), 4);
+                new Animation("player", 200, new Vector2D(12, 16), 0),
+                new Animation("player", 100, new Vector2D(12, 16), 1),
+                new Animation("player", 100, new Vector2D(12, 16), 2),
+                new Animation("player", 100, new Vector2D(12, 16), 3),
+                new Animation("player", 100, new Vector2D(12, 16), 4)
+                ),
+            new PlayerStats(1000, 1000, 0, 0, 0), 4);
+
         movement.set(0, 0);
 
         inventory.addItem(bread, 100);
@@ -42,6 +43,8 @@ public final class Player extends MovementEntity {
         inventory.addItem(waterGun, 100);
         inventory.addItem(banana, 100);
         inventory.addItem(mysteriousPill, 100);
+        inventory.addItem(laserGun, 100);
+        inventory.addItem(coin, 100);
     }
 
 
@@ -67,8 +70,8 @@ public final class Player extends MovementEntity {
 
 
     public void controlMovement() {
-        double frictionDeceleration = 0.85;
-        movement.set(movement.scale(frictionDeceleration));
+        // Slow down due to friction, approaching zero.
+        movement.set(movement.scale(0.85));
 
         boolean up, down, left, right;
         final KeyInputListener upKey = KeyInputManager.k_w,
@@ -101,7 +104,7 @@ public final class Player extends MovementEntity {
             else angle = 270;
         } else if (left) angle = 0;
         else if (right) angle = 180;
-        // Move along x or y axis if needed, else slow down due to friction.
+        // Move along x or y axis only if needed.
         if (left || right) movement.setXMagnDir(getIntendedSpeed(), angle);
         if (up || down) movement.setYMagnDir(getIntendedSpeed(), angle);
     }
@@ -111,18 +114,12 @@ public final class Player extends MovementEntity {
         double speed = defaultSpeed;
         // Base speed on current energy level.
         double energy = ((PlayerStats) stats).getEnergy();
-        speed *= (energy/1200)+0.625;
+        speed *= (energy/1200)+0.65;
 
         if (KeyInputManager.k_space.isPressed() && energy > 0)
             speed *= 1.4;
 
         return speed;
-    }
-
-
-
-    public void controlInventory() {
-        inventory.control(this);
     }
 
 
@@ -132,12 +129,20 @@ public final class Player extends MovementEntity {
         controlMovement();
     }
 
+    @Override
+    public void handleCollisions(Entity entity) {
+        super.handleCollisions(entity);
+        entity.whileTouching(this, (PlayerStats) stats);
+        if (MouseInputManager.left.isClicked())
+            entity.onClick(this, (PlayerStats) stats);
+    }
 
     @Override
     public void update(World world) {
         super.update(world);
         inventory.doGarbageCollection();
-        controlInventory();
+
+        inventory.control(this);
     }
 
 

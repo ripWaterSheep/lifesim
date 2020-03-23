@@ -21,7 +21,7 @@ public class BasicStats implements Stats {
     }
 
     @Override
-    public void onDeath(Entity owner, World world) {
+    public void onRemoval(Entity owner, World world) {
 
     }
 }
