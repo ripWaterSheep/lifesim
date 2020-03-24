@@ -4,18 +4,22 @@ import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.util.fileIO.ImageLoader;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
 
 
 public class Sprite {
 
     protected Image image;
-    public final Vector2D size;
+    private final Vector2D size;
     private final Color color;
     private final boolean elliptical = false;
 
 
+    /** Get the image to render, maintaining the image's actual size to keep pixel scaling consistent.  */
     public Sprite(Image image) {
         this.image = image;
         size = new Vector2D(image.getWidth(null), image.getHeight(null));
@@ -41,10 +45,15 @@ public class Sprite {
         this.color = color;
     }
 
+    public Vector2D getSize() {
+        return new Vector2D(size);
+    }
+
 
     public boolean containsPointAt(Vector2D point, Vector2D pos) {
         return point.inRect(pos, size);
     }
+
 
 
     public Shape getShapeAt(Vector2D pos) {

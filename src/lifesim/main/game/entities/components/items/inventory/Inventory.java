@@ -36,7 +36,7 @@ public class Inventory {
             }
         }
         // Set the position to be randomly located inside inventory bounds
-        ItemStack newStack = new ItemStack(item, amount, InventoryGUI.inventoryBounds.translate(item.sprite.size.scale(-0.5)).getRandInAbsBounds());
+        ItemStack newStack = new ItemStack(item, amount, InventoryGUI.inventoryBounds.translate(item.sprite.getSize().scale(-0.5)).getRandInAbsBounds());
         stacks.add(newStack);
         if (selectedStack == null) selectedStack = newStack;
     }
@@ -81,16 +81,16 @@ public class Inventory {
     }
 
 
-    public void control(Player player) {
+    public void control(Player player, World world) {
 
         if (MouseInputManager.right.isClicked()) {
-            getSelectedItem().onClick(player.getWorld(), player);
+            getSelectedItem().onClick(world, player);
             selectedStack.changeAmountBy(-1);
             doGarbageCollection();
         }
-        getSelectedItem().whileHolding(player.getWorld(), player);
+        getSelectedItem().whileHolding(world, player);
 
-        if (KeyInputManager.k_q.isTyped()) {
+        if (KeyInputManager.k_q.isClicked()) {
             // Drop the item behind player so it isn't picked back up when moving forward.
             Vector2D dropPos = new Vector2D(player.pos);
             if (player.movement.getMagnitude() < player.getIntendedSpeed()) dropPos.set(dropPos.translate(0, 25));

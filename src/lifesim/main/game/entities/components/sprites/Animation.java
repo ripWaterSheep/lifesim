@@ -14,9 +14,7 @@ public class Animation {
     private final int frameInterval;
 
     protected int currentFrameIndex = 0;
-
     private long lastFrameTime = System.currentTimeMillis();
-
     private int totalCycles = 0;
 
 
@@ -24,7 +22,7 @@ public class Animation {
         this.frameInterval = frameInterval;
 
         for (String imageName: imageNames) {
-            Image image = ImageLoader.loadImage(imageName);
+            BufferedImage image = ImageLoader.loadImage(imageName);
             frames.add(image);
         }
     }
@@ -39,6 +37,13 @@ public class Animation {
             frames.add(spriteSheet.getSubimage((int) (i * spriteSize.x), (int) (row*spriteSize.y), (int) spriteSize.x, (int) spriteSize.y));
         }
     }
+
+
+    public Animation(Animation animation) {
+        frameInterval = animation.frameInterval;
+        frames.addAll(animation.frames);
+    }
+
 
 
     public boolean isAtEndOfCycle() {

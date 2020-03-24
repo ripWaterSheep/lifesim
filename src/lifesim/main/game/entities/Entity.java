@@ -1,9 +1,10 @@
 package lifesim.main.game.entities;
 
-import lifesim.main.game.Game;
+import lifesim.main.game.Main;
 import lifesim.main.game.entities.components.stats.BasicStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.entities.components.stats.Stats;
+import lifesim.main.game.entities.enemies.Enemy;
 import lifesim.main.game.handlers.World;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
@@ -36,8 +37,13 @@ public class Entity {
     }
 
 
+    public Entity copyInitialState() {
+        return new Entity(name, sprite, stats.copyInitialState());
+    }
+
+
     public Vector2D getDisplayPos() {
-        return pos.translate(Game.getSession().getPlayer().pos.scale(-1));
+        return pos.translate(Main.getPanel().getGame().getPlayer().pos.scale(-1));
     }
 
     public Shape getHitBox() {
@@ -57,10 +63,7 @@ public class Entity {
         removeRequested = true;
     }
 
-    public void onRemoval(World world) {
-        stats.onRemoval(this, world);
-    }
-
+    public void onRemoval(World world) { }
 
 
     public void whileTouching(Player player, PlayerStats stats) { }

@@ -1,7 +1,6 @@
 package lifesim.main.game.entities.enemies;
 
-import lifesim.main.game.Game;
-import lifesim.main.game.entities.Entity;
+import lifesim.main.game.Main;
 import lifesim.main.game.entities.MovementEntity;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.sprites.Sprite;
@@ -9,6 +8,7 @@ import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.World;
 
 import static lifesim.main.util.math.Geometry.*;
+import static lifesim.main.util.math.MyMath.getRand;
 
 
 public class Enemy extends MovementEntity {
@@ -25,13 +25,14 @@ public class Enemy extends MovementEntity {
     }
 
 
+    @Override
     public Enemy copyInitialState() {
-        return new Enemy(name, sprite, stats, defaultSpeed, detectionRange);
+        return new Enemy(name, sprite, stats.copyInitialState(), defaultSpeed, detectionRange);
     }
 
 
     private void decideMovement() {
-        Player player = Game.getSession().getPlayer();
+        Player player = Main.getGame().getPlayer();
         pursuing = getDistanceBetween(player.pos, pos) <= detectionRange;
         attacking = isTouching(player);
     }
@@ -40,12 +41,18 @@ public class Enemy extends MovementEntity {
     @Override
     protected void move() {
         super.move();
-        Player player = Game.getSession().getPlayer();
+        Player player = Main.getGame().getPlayer();
 
+        // Move towards player if enemy is pursuing the player.
         if (pursuing && !attacking) {
-            movement.setMagnDir(defaultSpeed, getAngleBetween(player.pos, pos));
+            movement.setMagnDir(defaultSpeed, getAngleBetween(player.pos, pos)+getRand(-30, 30));
         } else if (attacking) {
+            // Decelerate smoothly if on top of player because enemy doesn't need to be centered, just touching player.
             movement.set(movement.scale(0.7));
+        } else {
+            // Move randomly if not pursuing or attacking the player, changing directions every so often.
+            if (getRand(0, 1) < 0.02)
+                movement.setMagnDir(defaultSpeed, getRand(0, 360));
         }
     }
 

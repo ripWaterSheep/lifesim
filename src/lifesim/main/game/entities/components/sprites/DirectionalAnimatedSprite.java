@@ -44,13 +44,7 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
             angleRatio *= movementAnimations.size();
             int chosenIndex = betterRound(angleRatio);
             if (chosenIndex == 4) chosenIndex = 3;
-           // try {
                 animation = movementAnimations.get(chosenIndex);
-            /*} catch (Exception e) {
-                System.out.println(chosenIndex);
-                // Just use the bnac
-                animation = movementAnimations.get(3);
-            }*/
         }
         super.render(g2d, pos, movement);
     }

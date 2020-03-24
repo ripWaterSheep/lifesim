@@ -1,44 +1,62 @@
 package lifesim.main.game;
 
-
+import lifesim.main.game.controls.KeyInputManager;
+import lifesim.main.game.controls.MouseInputManager;
+import lifesim.main.game.entities.Player;
 import lifesim.main.game.handlers.Layout;
-import lifesim.main.util.MiscUtil;
+import lifesim.main.game.handlers.World;
+import lifesim.main.game.overlay.DeathScreen;
+import lifesim.main.game.overlay.InventoryGUI;
+import lifesim.main.game.overlay.Overlay;
+import lifesim.main.game.overlay.StatBar;
 
-import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 
 
-public class Game {
+public final class Game {
 
-    static GameSession gameSession;
+    private Player player = new Player(this);
 
-    public static GameSession getSession() {
-        return gameSession;
+    private Layout layout = new Layout();
+
+    private ArrayList<Overlay> overlays = new ArrayList<>();
+
+
+    public Game(GamePanel panel) {
+
+        player.setWorld(layout.getWorlds().get(0));
+
+        overlays.add(new StatBar(panel, player));
+        overlays.add(new DeathScreen(panel, player));
+        overlays.add(new InventoryGUI(panel, player));
     }
 
 
-    static GamePanel gamePanel;
+    public Player getPlayer() {
+        return player;
+    }
 
-    public static GamePanel getPanel() {
-        return gamePanel;
+    public ArrayList<World> getAllWorlds() {
+        return layout.getWorlds();
     }
 
 
-    public static void start() {
-        gameSession = new GameSession(new Layout());
-        gamePanel = new GamePanel(gameSession);
+    public void update() {
+        player.getWorld().update();
 
-        MiscUtil.initFrame(new JFrame(""), gamePanel);
+        for (Overlay overlay: overlays) {
+            overlay.update();
+        }
     }
 
 
-    public static void restart() {
-        gameSession = new GameSession(new Layout());
-        gamePanel.init(gameSession);
-    }
+    public void render(Graphics g) {
+        player.getWorld().render(g);
 
-
-    public static void main(String[] args) {
-        start();
+        for (Overlay overlay: overlays) {
+            overlay.render((Graphics2D) g.create());
+        }
     }
 
 }

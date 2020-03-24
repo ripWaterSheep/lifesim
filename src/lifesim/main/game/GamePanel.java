@@ -3,7 +3,6 @@ package lifesim.main.game;
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.game.overlay.OverlayManager;
 import lifesim.main.util.fileIO.FontLoader;
 
 
@@ -16,16 +15,16 @@ public class GamePanel extends JPanel {
 
     public static final int GRAPHICS_SCALE = 5;
 
-    GameSession gameSession;
-    private OverlayManager overlayManager;
+
+    private Game game;
 
 
-    public GamePanel(GameSession gameSession) {
+    public GamePanel() {
         setFocusable(true);
         setVisible(true);
         requestFocusInWindow();
         setSize(1600, 950);
-        init(gameSession);
+        startGame();
 
         FontLoader.init();
         KeyInputManager.init(this);
@@ -46,10 +45,14 @@ public class GamePanel extends JPanel {
     }
 
 
+    public Game getGame() {
+        return game;
+    }
 
-    void init(GameSession gameSession) {
-        this.gameSession = gameSession;
-        overlayManager = new OverlayManager(this, gameSession.getPlayer());
+
+
+    void startGame() {
+        game = new Game(this);
     }
 
 
@@ -65,10 +68,9 @@ public class GamePanel extends JPanel {
 
 
     private void update() {
-        gameSession.update();
-        overlayManager.update();
-        MouseInputManager.run();
-        KeyInputManager.run();
+        game.update();
+        MouseInputManager.update();
+        KeyInputManager.update();
     }
 
 
@@ -78,19 +80,18 @@ public class GamePanel extends JPanel {
         g2d.translate(getWidth()/2, getHeight()/2);
         g2d.scale(GRAPHICS_SCALE, GRAPHICS_SCALE);
 
-        gameSession.render(g);
-        overlayManager.render((Graphics2D) g);
+        game.render(g);
     }
 
 
 
 
-    long lastTime = System.nanoTime();
-    double amountOfTicks = 60.0;
-    double ns = 1000000000 / amountOfTicks;
-    double delta = 0;
-    long timer = System.currentTimeMillis();
-    int frames = 0;
+    private long lastTime = System.nanoTime();
+    private double amountOfTicks = 60.0;
+    private double ns = 1000000000 / amountOfTicks;
+    private double delta = 0;
+    private long timer = System.currentTimeMillis();
+    private int frames = 0;
 
     void runSession(Graphics g) {
         long now = System.nanoTime();

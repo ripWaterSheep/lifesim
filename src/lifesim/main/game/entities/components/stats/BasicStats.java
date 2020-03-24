@@ -6,22 +6,14 @@ import lifesim.main.game.handlers.World;
 public class BasicStats implements Stats {
 
     @Override
-    public void handleCollisions(Entity owner, Entity entity) {
-
-    }
+    public void handleCollisions(Entity owner, Entity entity) { }
 
     @Override
     public Stats copyInitialState() {
-        return this;
+        return new BasicStats();
     }
 
     @Override
-    public void run(Entity owner) {
+    public void run(Entity owner) { }
 
-    }
-
-    @Override
-    public void onRemoval(Entity owner, World world) {
-
-    }
 }

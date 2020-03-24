@@ -1,6 +1,6 @@
 package lifesim.main.game.handlers;
 
-import lifesim.main.game.Game;
+import lifesim.main.game.Main;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
@@ -11,7 +11,7 @@ import java.util.*;
 
 public class World {
 
-    private static final int MAX_ENTITIES = 25;
+    private static final int MAX_ENTITIES = 50;
 
     public final String name;
     public final Vector2D size;
@@ -93,14 +93,14 @@ public class World {
             }
 
             doGarbageCollection(entity);
-            // Keep the entity within the world.
-            entity.pos.clampAbs(size.scale((0.5)).translate(entity.sprite.size.scale(-0.5)));
+            // Keep the entity within the world's boundaries.
+            entity.pos.clampAbs(size.scale((0.5)).translate(entity.sprite.getSize().scale(-0.5)));
         }
     }
 
 
     public void render(Graphics g) {
-        Game.getPanel().setBackground(outerColor);
+        Main.getPanel().setBackground(outerColor);
 
         for (Entity entity: entities) {
             Graphics2D g2d = (Graphics2D) g.create();

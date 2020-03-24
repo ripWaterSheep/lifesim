@@ -28,18 +28,12 @@ public class DamageStats extends BasicStats {
         this(damage, alliance, false);
     }
 
-    @Override
-    public void onRemoval(Entity owner, World world) {
-        if (!owner.name.equals("Death Animation"))
-        world.add(new TempEntity("Death Animation", new AnimatedSprite(new Animation("boom",
-                40, new Vector2D(16, 16), 0))), owner.pos);
-    }
-
 
     @Override
     public DamageStats copyInitialState() {
         return new DamageStats(damage, alliance, dieOnDamage);
     }
+
 
     @Override
     public void handleCollisions(Entity owner, Entity entity) {
@@ -56,11 +50,6 @@ public class DamageStats extends BasicStats {
             }
 
         }
-    }
-
-    @Override
-    public void run(Entity owner) {
-
     }
 
 

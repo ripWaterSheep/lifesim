@@ -1,7 +1,9 @@
 package lifesim.main.game.handlers;
 
+import lifesim.main.game.entities.DroppedItemStack;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.components.Alliance;
+import lifesim.main.game.entities.components.items.inventory.ItemStack;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
@@ -12,6 +14,8 @@ import lifesim.main.game.entities.enemies.Enemy;
 
 import java.awt.*;
 import java.util.ArrayList;
+
+import static lifesim.main.game.entities.components.items.AllItems.coin;
 
 
 public class Layout {
@@ -35,9 +39,10 @@ public class Layout {
                 .add(new Entity("Hospital", new Sprite(200, 200, new Color(210, 210, 210))), -250, -550)
                 .add(new Entity("Shop", new Sprite(250, 200, new Color(200, 110, 75))), -675, 250)
                 .add(new Entity("Cave", new Sprite(200, 75, Color.GRAY)), -1000, -1000)
-                .addSpawner(new Spawner(new Enemy("yee", new AnimatedSprite(new Animation(120, "emo_1", "emo_2", "emo_3", "emo_4")),
-                        new HealthStats(6,25, Alliance.ENEMY), 2, 100), 2000))
+                .addSpawner(new Spawner(new Enemy("Emo", new AnimatedSprite(new Animation(120, "emo_1", "emo_2", "emo_3", "emo_4")),
+                        new HealthStats(6,25, Alliance.ENEMY), 3.8, 125), 2000))
         );
+        worlds.add(new World("City", 3000, 3000, new Color(180, 180, 180), new Color(100, 205, 131)));
     }
 
 }

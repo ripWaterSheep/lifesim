@@ -17,8 +17,8 @@ public class MyMath {
         return (int)Math.round(a);
     }
 
-    public static double roundToMultiple(double x, double base) {
-        return base * Math.round((float)x / base);
+    public static double roundToMultiple(double num, double base) {
+        return base * Math.round((float) num / base);
     }
 
 

@@ -1,5 +1,8 @@
 package lifesim.main.game.entities;
 
+import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.game.entities.components.sprites.AnimatedSprite;
+import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.DamageStats;
 import lifesim.main.game.handlers.World;
@@ -11,17 +14,32 @@ import static java.lang.Math.*;
 
 public class Projectile extends MovementEntity {
 
+    private static final Animation BLANK = new Animation(0, "blank");
+
     private final double movementRange;
     private double distanceTravelled;
 
     private final boolean matchSpriteAngle;
 
+    private final Animation damageAnimation;
 
-    public Projectile(String name, Sprite sprite, DamageStats stats, double speed, double angle, double movementRange, boolean matchSpriteAngle) {
+
+    public Projectile(String name, Sprite sprite, DamageStats stats, double speed, double movementRange, boolean matchSpriteAngle, Animation damageAnimation) {
         super(name, sprite, stats, speed);
-        movement.setMagnDir(speed, angle);
+        movement.setMagnDir(speed, 0);
         this.movementRange = movementRange;
         this.matchSpriteAngle = matchSpriteAngle;
+        this.damageAnimation = damageAnimation;
+    }
+
+    public Projectile(String name, Sprite sprite, DamageStats stats, double speed, double movementRange, boolean matchSpriteAngle) {
+        this(name, sprite, stats, speed, movementRange, matchSpriteAngle, BLANK);
+    }
+
+
+    @Override
+    public Projectile copyInitialState() {
+        return new Projectile(name, sprite, (DamageStats) stats.copyInitialState(), defaultSpeed, movementRange, matchSpriteAngle, new Animation(damageAnimation));
     }
 
 
@@ -29,12 +47,18 @@ public class Projectile extends MovementEntity {
         return movementRange;
     }
 
-
-
     public void launchTowards(double direction) {
         movement.setDirection(direction);
     }
 
+
+    @Override
+    public void onRemoval(World world) {
+        if (damageAnimation != null)
+            world.add(new TempEntity("Damage Animation", new AnimatedSprite(damageAnimation)), pos);
+
+        super.onRemoval(world);
+    }
 
 
     @Override

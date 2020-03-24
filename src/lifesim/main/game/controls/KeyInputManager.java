@@ -78,7 +78,7 @@ public final class KeyInputManager {
     }
 
 
-   public static void run() {
+   public static void update() {
         for (KeyInputListener key: keys) {
             key.run();
         }

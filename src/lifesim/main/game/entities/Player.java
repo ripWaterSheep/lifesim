@@ -1,16 +1,15 @@
 package lifesim.main.game.entities;
 
+import lifesim.main.game.Main;
+import lifesim.main.game.Game;
 import lifesim.main.game.controls.KeyInputListener;
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.components.*;
 import lifesim.main.game.entities.components.items.inventory.Inventory;
 import lifesim.main.game.entities.components.items.Item;
-import lifesim.main.game.entities.components.items.Weapon;
-import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.DirectionalAnimatedSprite;
-import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.handlers.World;
 
@@ -21,12 +20,13 @@ import static lifesim.main.game.entities.components.items.AllItems.*;
 
 public final class Player extends MovementEntity {
 
+    private Game game;
     private World world;
 
     public final Inventory inventory = new Inventory();
 
 
-    public Player() {
+    public Player(Game game) {
         super("Player", new DirectionalAnimatedSprite(
                 new Animation("player", 200, new Vector2D(12, 16), 0),
                 new Animation("player", 100, new Vector2D(12, 16), 1),
@@ -35,7 +35,7 @@ public final class Player extends MovementEntity {
                 new Animation("player", 100, new Vector2D(12, 16), 4)
                 ),
             new PlayerStats(1000, 1000, 0, 0, 0), 4);
-
+        this.game = game;
         movement.set(0, 0);
 
         inventory.addItem(bread, 100);
@@ -45,6 +45,7 @@ public final class Player extends MovementEntity {
         inventory.addItem(mysteriousPill, 100);
         inventory.addItem(laserGun, 100);
         inventory.addItem(coin, 100);
+        inventory.addItem(jetPack, 1000);
     }
 
 
@@ -114,7 +115,7 @@ public final class Player extends MovementEntity {
         double speed = defaultSpeed;
         // Base speed on current energy level.
         double energy = ((PlayerStats) stats).getEnergy();
-        speed *= (energy/1200)+0.65;
+        speed *= (energy/1200)+0.6;
 
         if (KeyInputManager.k_space.isPressed() && energy > 0)
             speed *= 1.4;
@@ -141,15 +142,14 @@ public final class Player extends MovementEntity {
     public void update(World world) {
         super.update(world);
         inventory.doGarbageCollection();
-
-        inventory.control(this);
+        inventory.control(this, world);
     }
 
 
     @Override
     public void render(Graphics2D g2d) {
         super.render(g2d);
-        //g2d.translate(inventory.getSelectedItem().sprite.size.x, inventory.getSelectedItem().sprite.size.y);
+        //g2d.translate(inventory.getSelectedItem().sprite.getSize().x, inventory.getSelectedItem().sprite.getSize().y);
         //inventory.getSelectedItem().render(g2d, getDisplayPos());
     }
 }

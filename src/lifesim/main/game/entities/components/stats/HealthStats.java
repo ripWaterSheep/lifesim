@@ -25,10 +25,6 @@ public class HealthStats extends DamageStats {
         this.initialHealth = health;
     }
 
-    public HealthStats(double health, Alliance alliance) {
-        this(0, health, alliance);
-    }
-
 
     public double getHealth() {
         return health;

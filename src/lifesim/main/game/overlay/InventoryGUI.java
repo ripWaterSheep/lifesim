@@ -1,13 +1,12 @@
 package lifesim.main.game.overlay;
 
-import lifesim.main.game.Game;
+import lifesim.main.game.Main;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.items.AllItems;
-import lifesim.main.game.entities.components.items.Item;
 import lifesim.main.game.entities.components.items.inventory.Inventory;
 import lifesim.main.game.entities.components.items.inventory.ItemStack;
 import lifesim.main.game.entities.components.sprites.Sprite;
@@ -17,11 +16,13 @@ import java.util.ArrayList;
 
 public class InventoryGUI extends Overlay {
 
+    private static final int GRID_SIZE = 1;
+
     private static final Sprite bg = new Sprite("inventory");
     private static final Sprite selectedBubble = new Sprite("selected_slot");
 
     // Define the edges of the inside of the inventory.
-    public static final Vector2D inventoryBounds = new Vector2D(bg.size.scale(0.48, 0.3).translate(0, 5));
+    public static final Vector2D inventoryBounds = new Vector2D(bg.getSize().scale(0.48, 0.3).translate(0, 5));
 
 
     private final Inventory inventory;
@@ -51,7 +52,7 @@ public class InventoryGUI extends Overlay {
 
         if (MouseInputManager.left.isClicked()) {
             for (ItemStack stack: inventory.getStacks()) {
-                if (stack.getItem().sprite.containsPointAt(mousePos, stack.lastPos)) {
+                if (stack.getItem().sprite.containsPointAt(mousePos, stack.inventoryPos)) {
                     draggedStack = stack;
                     inventory.bringStackToFront(stack);
                     inventory.selectStack(stack);
@@ -62,7 +63,6 @@ public class InventoryGUI extends Overlay {
             draggedStack.drag(mousePos, inventoryBounds);
 
             if (!MouseInputManager.left.isPressed() && draggedStack != null) {
-                draggedStack.release();
                 draggedStack = null;
             }
         }
@@ -87,12 +87,12 @@ public class InventoryGUI extends Overlay {
 
 
     @Override
-    protected void render(Graphics2D g2d) {
+    public void render(Graphics2D g2d) {
         AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.85f);
         g2d.setComposite(ac);
 
         if (!opened) {
-            g2d.translate(Game.getPanel().getScaledWidth()/2.0 - inventoryBounds.x * 0.75, -Game.getPanel().getScaledHeight()/2.0 + inventoryBounds.y * 0.85);
+            g2d.translate(Main.getPanel().getScaledWidth()/2.0 - inventoryBounds.x * 0.75, -Main.getPanel().getScaledHeight()/2.0 + inventoryBounds.y * 0.85);
             g2d.scale(0.6, 0.6);
         }
         bg.render(g2d, new Vector2D(0, 0), new Vector2D(0, 0));
@@ -100,7 +100,7 @@ public class InventoryGUI extends Overlay {
         // Draw the stack selection bubble over the selected stack, and display item details under the inventory
         ItemStack selectedStack = inventory.getSelectedStack();
         if (selectedStack.getItem() != AllItems.empty) {
-            selectedBubble.render(g2d, selectedStack.currentPos, new Vector2D(0, 0));
+            selectedBubble.render(g2d, selectedStack.inventoryPos, new Vector2D(0, 0));
             selectedStack.renderDetailsAt(g2d, inventoryBounds.translate(-inventoryBounds.x-4, 5));
         }
 

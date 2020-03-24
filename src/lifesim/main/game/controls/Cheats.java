@@ -1,6 +1,6 @@
 package lifesim.main.game.controls;
 
-import lifesim.main.game.Game;
+import lifesim.main.game.Main;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.handlers.World;
@@ -14,7 +14,7 @@ import static java.awt.event.KeyEvent.*;
 class Cheats {
 
     static void cheatLogic(int key) {
-        Player player = Game.getSession().getPlayer();
+        Player player = Main.getGame().getPlayer();
         PlayerStats stats = (PlayerStats) player.stats;
 
         if (KeyInputManager.k_shift.isPressed()) {
@@ -48,7 +48,7 @@ class Cheats {
                     break;
 
                 case VK_R:
-                    Game.restart();
+                    Main.restart();
             }
         }
     }
@@ -57,8 +57,8 @@ class Cheats {
      * Make player go to the next world declared in the used com.lifesim.main.game layout
      */
     static void cycleWorlds(int index) {
-        ArrayList<World> allWorlds = Game.getSession().getAllWorlds();
-        Player player = Game.getSession().getPlayer();
+        ArrayList<World> allWorlds = Main.getGame().getAllWorlds();
+        Player player = Main.getGame().getPlayer();
 
         World newWorld = player.getWorld();
         int currentIndex = allWorlds.indexOf(newWorld);

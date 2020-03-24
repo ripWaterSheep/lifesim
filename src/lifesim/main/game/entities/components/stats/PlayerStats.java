@@ -8,8 +8,7 @@ import lifesim.main.game.entities.components.Alliance;
 
 import java.awt.*;
 
-import static java.lang.Math.max;
-import static java.lang.Math.sqrt;
+import static java.lang.Math.*;
 
 public class PlayerStats extends HealthStats {
 
@@ -69,7 +68,7 @@ public class PlayerStats extends HealthStats {
         money -= amount;
     }
 
-    public boolean hasEnoughMoney(double amount) {
+    public boolean canAfford(double amount) {
         return (money >= amount);
     }
 
@@ -105,9 +104,7 @@ public class PlayerStats extends HealthStats {
         intellect = max(0, intellect);
 
         double tireAmount = 0.1;
-        if (owner instanceof MovementEntity) {
-            tireAmount += sqrt(((MovementEntity) owner).movement.getMagnitude()/250);
-        }
+        tireAmount += sqrt(((MovementEntity) owner).movement.getMagnitude()/250);
 
         energy -= tireAmount;
     }

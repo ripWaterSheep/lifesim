@@ -1,6 +1,6 @@
 package lifesim.main.game.overlay;
 
-import lifesim.main.game.Game;
+import lifesim.main.game.Main;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
@@ -39,7 +39,7 @@ public class DeathScreen extends Overlay {
         if (!((PlayerStats) player.stats).isAlive()) {
             showing = true;
             if (MouseInputManager.left.isClicked()/* || KeyInputManager.isAnyKeyClicked()*/) {
-                Game.restart();
+                Main.restart();
                 showing = false;
             }
         }
@@ -47,7 +47,7 @@ public class DeathScreen extends Overlay {
 
 
     @Override
-    protected void render(Graphics2D g2d) {
+    public void render(Graphics2D g2d) {
         if (showing) {
             g2d.setColor(bgColor);
             Rectangle rect = new Rectangle(-panel.getScaledWidth()/2, -panel.getScaledHeight()/2, panel.getScaledWidth(), panel.getScaledHeight());

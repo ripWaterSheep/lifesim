@@ -19,17 +19,13 @@ public abstract class InputListener {
         return pressTime;
     }
 
+
     public boolean isClicked() {
         return pressTime == 1;
     }
 
     public boolean isPressed() {
         return pressTime > 0;
-    }
-
-
-    public boolean isTyped() {
-        return pressTime == 1 || pressTime > 10;
     }
 
 

@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
@@ -17,10 +18,11 @@ public class ImageLoader {
         BufferedImage image = null;
         String path = FILE_PATH + name + FILE_ENDING;
         try {
-            File file = new File(path);
-            image = ImageIO.read(file); // Retrieve image from file folder
-        } catch (Exception e) {
+            image = ImageIO.read(new File(path)); // Retrieve image from file folder
+        } catch (FileNotFoundException e) {
             System.out.println("Cannot find file : " + path);
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

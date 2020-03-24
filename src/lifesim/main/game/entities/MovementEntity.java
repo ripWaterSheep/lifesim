@@ -14,22 +14,25 @@ public class MovementEntity extends Entity {
     public final Vector2D movement = new Vector2D(0, 0);
     protected final double defaultSpeed;
 
-
     public MovementEntity(String name, Sprite sprite, Stats stats, double speed) {
         super(name, sprite, stats);
         defaultSpeed = speed;
         movement.setMagnDir(speed, 0);
     }
 
+    @Override
+    public MovementEntity copyInitialState() {
+        return new MovementEntity(name, sprite, stats.copyInitialState(), defaultSpeed);
+    }
+
 
     protected void move() {
         pos.set(pos.translate(movement));
-        // Fully stop if speed is tiny
+        // Fully stop if speed is tiny.
         double stationaryThreshold = 0.05;
         if (abs(movement.x) < stationaryThreshold) movement.x = 0;
         if (abs(movement.y) < stationaryThreshold) movement.y = 0;
     }
-
 
     @Override
     public void update(World world) {

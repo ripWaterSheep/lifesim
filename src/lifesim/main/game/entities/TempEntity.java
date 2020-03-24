@@ -16,6 +16,11 @@ public class TempEntity extends Entity {
 
 
     @Override
+    public TempEntity copyInitialState() {
+        return new TempEntity(name, (AnimatedSprite) sprite);
+    }
+
+    @Override
     public void render(Graphics2D g2d) {
         AnimatedSprite animatedSprite = (AnimatedSprite) sprite;
 
