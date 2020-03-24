@@ -35,7 +35,7 @@ public abstract class InputListener {
 
     void doRelease() {
         pressed = false;
-        pressTime = 0;
+        pressTime = 0;//k
     }
 
 
