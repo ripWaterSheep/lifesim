@@ -1,7 +1,7 @@
-package lifesim.main.game.entities.components.items.inventory;
+package lifesim.main.game.items.inventory;
 
 import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.game.entities.components.items.Item;
+import lifesim.main.game.items.Item;
 import lifesim.main.util.DrawMethods;
 import lifesim.main.util.fileIO.FontLoader;
 

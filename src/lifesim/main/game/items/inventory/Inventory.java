@@ -1,12 +1,12 @@
-package lifesim.main.game.entities.components.items.inventory;
+package lifesim.main.game.items.inventory;
 
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.DroppedItemStack;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.game.entities.components.items.AllItems;
-import lifesim.main.game.entities.components.items.Item;
+import lifesim.main.game.items.AllItems;
+import lifesim.main.game.items.Item;
 import lifesim.main.game.handlers.World;
 import lifesim.main.game.overlay.InventoryGUI;
 

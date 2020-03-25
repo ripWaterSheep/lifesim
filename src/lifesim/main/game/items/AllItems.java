@@ -1,4 +1,4 @@
-package lifesim.main.game.entities.components.items;
+package lifesim.main.game.items;
 
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
@@ -22,9 +22,21 @@ public class AllItems {
     public static final Item empty = new Item("", new Sprite(0, 0, Color.BLACK));
 
 
-    /**
+    /*************
+     * Misc Items
+     *************/
+
+    public static final Item jetPack = new Item("Jet Pack", new Sprite(8, 8, Color.GRAY)) {
+        @Override
+        public void onClick(World world, Player player) {
+            player.movement.setMagnDir(150, 180+MouseInputManager.right.getAngleFromCenter());
+        }
+    };
+
+
+    /***********
      * Weapons
-     */
+     **********/
 
     private static Animation boom = new Animation("boom",40, new Vector2D(16, 16), 0);
 
@@ -46,10 +58,11 @@ public class AllItems {
             new DamageStats(25, Alliance.PLAYER, true), 0, 5, false, new Animation(boom)));
 
 
-    /**
+    /**************
      * Consumables
-     */
+     **************/
 
+    @ItemInfo(type = "Food", lore = "An innocuous loaf of bread.", abilities = "Heals 100 energy.")
     public static final Consumable bread = new Consumable("Bread", new AnimatedSprite(
             new Animation("consumables", 200, new Vector2D(8, 8), 0))) {
         @Override
@@ -58,23 +71,16 @@ public class AllItems {
         }
     };
 
-    public static final Consumable banana = new Consumable("Bread", new AnimatedSprite(
-            new Animation("consumables", 200, new Vector2D(8, 8), 1))) {
+    @ItemInfo(type = "Food", lore = "A good source of potassium.", abilities = "Heals 200 energy.")
+    public static final Consumable banana = new Consumable("Banana", new AnimatedSprite(
+            new Animation("consumables", 100, new Vector2D(8, 8), 1))) {
         @Override
         public void consume(Player player, PlayerStats stats) {
-            stats.energize(250);
+            stats.energize(200);
         }
     };
 
-
-    public static final Consumable coin = new Consumable("Coin",  new AnimatedSprite(
-            new Animation("consumables", 120, new Vector2D(8, 8), 3))) {
-        @Override
-        public void consume(Player player, PlayerStats stats) {
-            stats.gainMoney(getRand(-100, 100));
-        }
-    };
-
+    @ItemInfo(type = "Test Item", lore = "Found in your friend's medicine cabinet probably.", abilities = "???")
     public static final Consumable mysteriousPill = new Consumable("Mysterious Pill",
             new AnimatedSprite(new Animation("consumables", 300, new Vector2D(8, 8), 2))) {
         @Override
@@ -90,11 +96,14 @@ public class AllItems {
         }
     };
 
-    public static final Consumable jetPack = new Consumable("Jet Pack", new Sprite(8, 8, Color.GRAY)) {
+    @ItemInfo(type = "Test Item", lore = "Very unstable economy these days.", abilities = "Gambles anywhere from 0-100$")
+    public static final Consumable virtualCoin = new Consumable("Virtual Coin",  new AnimatedSprite(
+            new Animation("consumables", 120, new Vector2D(8, 8), 3))) {
         @Override
         public void consume(Player player, PlayerStats stats) {
-            player.movement.setMagnDir(150, 180+MouseInputManager.right.getAngleFromCenter());
+            stats.gainMoney(getRand(getRand(-100, -1000), getRand(100, 1000)));
         }
     };
+
 
 }

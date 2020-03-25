@@ -1,4 +1,4 @@
-package lifesim.main.game.entities.components.items;
+package lifesim.main.game.items;
 
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;

@@ -1,9 +1,8 @@
 package lifesim.main.game;
 
 
-import lifesim.main.util.MiscUtil;
-
 import javax.swing.*;
+import java.awt.*;
 
 
 public class Main {
@@ -18,19 +17,20 @@ public class Main {
         return gamePanel.getGame();
     }
 
-    public static void start() {
-        gamePanel = new GamePanel();
-        MiscUtil.initFrame(new JFrame(""), gamePanel);
-    }
-
-
-    public static void restart() {
-        gamePanel.startGame();
-    }
-
 
     public static void main(String[] args) {
-        start();
+        gamePanel = new GamePanel();
+        initFrame(new JFrame(""), gamePanel);
+    }
+
+    private static void initFrame(JFrame frame, GamePanel panel) {
+        frame.setSize(panel.getSize());
+        frame.setContentPane(panel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setMinimumSize(new Dimension(500, 500));
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
 }

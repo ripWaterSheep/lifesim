@@ -2,6 +2,9 @@ package lifesim.main.util.math;
 
 import java.util.Random;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 
 public class MyMath {
 
@@ -22,22 +25,14 @@ public class MyMath {
     }
 
 
-    public static double getRand(double min, double max) {
-        if (min >= max) {
-            throw new IllegalArgumentException("max must be greater than min");
-        }
-        Random r = new Random();
-        return min + (max - min) * r.nextDouble();
+    public static double getRand(double a, double b) {
+        double min = min(a, b);
+        double max = max(a, b);
+        return min + (max - min) * new Random().nextDouble();
     }
 
 
-
-    public static int getRandInt(int min, int max) {
-        if (min >= max) {
-            throw new IllegalArgumentException("max must be greater than min");
-        }
-        Random r = new Random();
-        return r.nextInt((max - min) + 1) + min;
+    public static int getRandInt(int a, int b) {
+        return (int) getRand(a, b);
     }
-
 }

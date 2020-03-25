@@ -1,14 +1,13 @@
 package lifesim.main.game.overlay;
 
-import lifesim.main.game.Main;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.game.entities.components.items.AllItems;
-import lifesim.main.game.entities.components.items.inventory.Inventory;
-import lifesim.main.game.entities.components.items.inventory.ItemStack;
+import lifesim.main.game.items.AllItems;
+import lifesim.main.game.items.inventory.Inventory;
+import lifesim.main.game.items.inventory.ItemStack;
 import lifesim.main.game.entities.components.sprites.Sprite;
 
 import java.awt.*;
@@ -48,7 +47,7 @@ public class InventoryGUI extends Overlay {
 
 
     private void dragItems() {
-        Vector2D mousePos = MouseInputManager.left.getPos();
+        Vector2D mousePos = MouseInputManager.left.getScaledPos();
 
         if (MouseInputManager.left.isClicked()) {
             for (ItemStack stack: inventory.getStacks()) {
@@ -92,7 +91,7 @@ public class InventoryGUI extends Overlay {
         g2d.setComposite(ac);
 
         if (!opened) {
-            g2d.translate(Main.getPanel().getScaledWidth()/2.0 - inventoryBounds.x * 0.75, -Main.getPanel().getScaledHeight()/2.0 + inventoryBounds.y * 0.85);
+            g2d.translate(panel.getScaledWidth()/2.0 - inventoryBounds.x * 0.75, -panel.getScaledHeight()/2.0 + inventoryBounds.y * 0.85);
             g2d.scale(0.6, 0.6);
         }
         bg.render(g2d, new Vector2D(0, 0), new Vector2D(0, 0));
@@ -106,8 +105,6 @@ public class InventoryGUI extends Overlay {
 
         for (ItemStack stack : inventory.getStacks())
             stack.render(g2d);
-
-
     }
 
 }

@@ -1,12 +1,13 @@
 package lifesim.main.game.entities.enemies;
 
+import lifesim.main.game.Game;
 import lifesim.main.game.Main;
 import lifesim.main.game.entities.Projectile;
-import lifesim.main.game.entities.components.items.Weapon;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.World;
 
+import static lifesim.main.util.math.Geometry.getAngleBetween;
 import static lifesim.main.util.math.Geometry.getDistanceBetween;
 
 public class RangedEnemy extends Enemy {
@@ -33,7 +34,7 @@ public class RangedEnemy extends Enemy {
     private void attemptShot(World world) {
         if (System.currentTimeMillis() - lastShootTime >= shootInterval) {
             Projectile newProjectile = projectile.copyInitialState();
-            newProjectile.launchTowards(9);
+            newProjectile.launchTowards(getAngleBetween(Main.getGame().getPlayer().pos, this.pos));
 
             world.add(newProjectile, pos);
             lastShootTime = System.currentTimeMillis();

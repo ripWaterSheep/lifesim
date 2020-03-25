@@ -43,7 +43,7 @@ public class Entity {
 
 
     public Vector2D getDisplayPos() {
-        return pos.translate(Main.getPanel().getGame().getPlayer().pos.scale(-1));
+        return pos.translate(Main.getGame().getPlayer().pos.scale(-1));
     }
 
     public Shape getHitBox() {

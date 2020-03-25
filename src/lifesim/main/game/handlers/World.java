@@ -1,5 +1,6 @@
 package lifesim.main.game.handlers;
 
+import lifesim.main.game.GamePanel;
 import lifesim.main.game.Main;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.components.sprites.Sprite;
@@ -99,7 +100,7 @@ public class World {
     }
 
 
-    public void render(Graphics g) {
+    public void render(Graphics g, GamePanel panel) {
         Main.getPanel().setBackground(outerColor);
 
         for (Entity entity: entities) {

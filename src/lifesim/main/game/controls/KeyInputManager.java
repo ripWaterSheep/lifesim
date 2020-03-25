@@ -63,9 +63,8 @@ public final class KeyInputManager {
 
     public static boolean isAnyKeyClicked() {
         for (KeyInputListener key: keys) {
-            if (key.isClicked()) {
+            if (key.isClicked())
                 return true;
-            }
         }
         return false;
     }
@@ -95,7 +94,6 @@ public final class KeyInputManager {
                     key.doPress();
                 }
             }
-            Cheats.cheatLogic(keyCode);
         }
 
         @Override

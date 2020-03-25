@@ -4,7 +4,6 @@ import lifesim.main.game.GamePanel;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.stats.HealthStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.util.ColorMethods;
 import lifesim.main.util.DrawMethods;
 import lifesim.main.util.fileIO.FontLoader;
 
@@ -20,10 +19,16 @@ public class StatBar extends Overlay {
     private static final int BOTTOM_PADDING = 2;
     private static final int BAR_HEIGHT = 8;
 
-    private static final int BAR_OPACITY = 145;
 
     private static final Font STAT_FONT = FontLoader.getMainFont(6);
     private static final int TEX_LEFT_PADDING = 2;
+
+
+    private static final int BAR_OPACITY = 145;
+
+    private static Color applyOpacity(Color color) {
+        return new Color(color.getRed(), color.getGreen(), color.getBlue(), BAR_OPACITY);
+    }
 
 
     private Graphics2D g2d;
@@ -100,7 +105,7 @@ public class StatBar extends Overlay {
         int dataWidth = betterRound(min(data, maxDataVal) * scale);
 
         // Draw data display bar.
-        g2d.setColor(ColorMethods.applyOpacity(color, BAR_OPACITY));
+        g2d.setColor(applyOpacity(color));
         g2d.fillRect(getX(), getY(), dataWidth, BAR_HEIGHT);
 
         // Draw outline for bar
@@ -110,6 +115,5 @@ public class StatBar extends Overlay {
 
         writeRoundedVal(label, data);
     }
-
 
 }

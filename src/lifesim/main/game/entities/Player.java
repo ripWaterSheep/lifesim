@@ -1,13 +1,12 @@
 package lifesim.main.game.entities;
 
-import lifesim.main.game.Main;
 import lifesim.main.game.Game;
 import lifesim.main.game.controls.KeyInputListener;
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.components.*;
-import lifesim.main.game.entities.components.items.inventory.Inventory;
-import lifesim.main.game.entities.components.items.Item;
+import lifesim.main.game.items.inventory.Inventory;
+import lifesim.main.game.items.Item;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.DirectionalAnimatedSprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
@@ -15,7 +14,8 @@ import lifesim.main.game.handlers.World;
 
 import java.awt.*;
 
-import static lifesim.main.game.entities.components.items.AllItems.*;
+import static java.lang.Math.abs;
+import static lifesim.main.game.items.AllItems.*;
 
 
 public final class Player extends MovementEntity {
@@ -44,7 +44,7 @@ public final class Player extends MovementEntity {
         inventory.addItem(banana, 100);
         inventory.addItem(mysteriousPill, 100);
         inventory.addItem(laserGun, 100);
-        inventory.addItem(coin, 100);
+        inventory.addItem(virtualCoin, 100);
         inventory.addItem(jetPack, 1000);
     }
 
@@ -106,8 +106,8 @@ public final class Player extends MovementEntity {
         } else if (left) angle = 0;
         else if (right) angle = 180;
         // Move along x or y axis only if needed.
-        if (left || right) movement.setXMagnDir(getIntendedSpeed(), angle);
-        if (up || down) movement.setYMagnDir(getIntendedSpeed(), angle);
+        if ((left || right) && abs(movement.x) < getIntendedSpeed()) movement.setXMagnDir(getIntendedSpeed(), angle);
+        if ((up || down) && abs(movement.y) < getIntendedSpeed()) movement.setYMagnDir(getIntendedSpeed(), angle);
     }
 
 
@@ -118,7 +118,7 @@ public final class Player extends MovementEntity {
         speed *= (energy/1200)+0.6;
 
         if (KeyInputManager.k_space.isPressed() && energy > 0)
-            speed *= 1.4;
+            speed *= 1.5;
 
         return speed;
     }

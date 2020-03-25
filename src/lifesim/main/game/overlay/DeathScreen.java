@@ -1,6 +1,5 @@
 package lifesim.main.game.overlay;
 
-import lifesim.main.game.Main;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
@@ -39,7 +38,7 @@ public class DeathScreen extends Overlay {
         if (!((PlayerStats) player.stats).isAlive()) {
             showing = true;
             if (MouseInputManager.left.isClicked()/* || KeyInputManager.isAnyKeyClicked()*/) {
-                Main.restart();
+                panel.newGame();
                 showing = false;
             }
         }

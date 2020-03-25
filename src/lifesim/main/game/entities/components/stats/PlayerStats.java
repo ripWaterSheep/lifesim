@@ -97,15 +97,11 @@ public class PlayerStats extends HealthStats {
     @Override
     public void run(Entity owner) {
         super.run(owner);
-
         energy = max(0, energy);
         strength = max(0, strength);
-        money = max(0, money);
         intellect = max(0, intellect);
 
-        double tireAmount = 0.1;
-        tireAmount += sqrt(((MovementEntity) owner).movement.getMagnitude()/250);
-
+        double tireAmount = 0.1 + sqrt(((MovementEntity) owner).movement.getMagnitude()/300);
         energy -= tireAmount;
     }
 

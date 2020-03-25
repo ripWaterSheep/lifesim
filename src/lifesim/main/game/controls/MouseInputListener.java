@@ -24,12 +24,12 @@ public class MouseInputListener extends InputListener {
         pos.set(point.x, point.y);
     }
 
-    public Vector2D getPos() {
+    public Vector2D getScaledPos() {
         return pos.scale(1.0/GamePanel.GRAPHICS_SCALE).translate(Main.getPanel().getScaledDimensions().scale(-0.5));
     }
 
     public double getAngleFromCenter() {
-        return getAngleBetween(MouseInputManager.right.getPos(), new Vector2D(0, 0));
+        return getAngleBetween(getScaledPos(), new Vector2D(0, 0));
     }
 
 

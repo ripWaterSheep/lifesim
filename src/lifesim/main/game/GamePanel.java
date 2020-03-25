@@ -18,13 +18,12 @@ public class GamePanel extends JPanel {
 
     private Game game;
 
-
     public GamePanel() {
         setFocusable(true);
         setVisible(true);
         requestFocusInWindow();
         setSize(1600, 950);
-        startGame();
+        newGame();
 
         FontLoader.init();
         KeyInputManager.init(this);
@@ -49,22 +48,17 @@ public class GamePanel extends JPanel {
         return game;
     }
 
-
-
-    void startGame() {
+    public void newGame() {
         game = new Game(this);
     }
-
 
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         runSession(g);
         repaint();
     }
-
 
 
     private void update() {
@@ -74,7 +68,6 @@ public class GamePanel extends JPanel {
     }
 
 
-
     private void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.translate(getWidth()/2, getHeight()/2);
@@ -82,7 +75,6 @@ public class GamePanel extends JPanel {
 
         game.render(g);
     }
-
 
 
 
