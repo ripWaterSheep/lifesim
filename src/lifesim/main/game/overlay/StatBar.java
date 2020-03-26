@@ -47,7 +47,7 @@ public class StatBar extends Overlay {
     @Override
     public void render(Graphics2D g2d) {
         this.g2d = g2d;
-        PlayerStats stats = (PlayerStats) player.stats;
+        PlayerStats stats = player.getStats();
 
         drawBar("Intellect", stats.getIntellect(), 0.05, 1000, PlayerStats.Colors.intellectColor);
         drawBar("Money", stats.getMoney(), 0.005, 10000, PlayerStats.Colors.moneyColor);

@@ -26,7 +26,10 @@ public class MovementEntity extends Entity {
     }
 
 
-    protected void move() {
+    @Override
+    public void update(World world, Player player) {
+        super.update(world, player);
+
         pos.set(pos.translate(movement));
         // Fully stop if speed is tiny.
         double stationaryThreshold = 0.05;
@@ -34,11 +37,6 @@ public class MovementEntity extends Entity {
         if (abs(movement.y) < stationaryThreshold) movement.y = 0;
     }
 
-    @Override
-    public void update(World world) {
-        super.update(world);
-        move();
-    }
 
     @Override
     public void render(Graphics2D g2d) {

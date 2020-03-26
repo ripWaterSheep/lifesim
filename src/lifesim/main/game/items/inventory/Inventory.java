@@ -2,7 +2,7 @@ package lifesim.main.game.items.inventory;
 
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
-import lifesim.main.game.entities.DroppedItemStack;
+import lifesim.main.game.entities.DroppedItem;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.items.AllItems;
@@ -75,7 +75,7 @@ public class Inventory {
 
 
     public void dropStackInWorld(World world, Vector2D pos) {
-        world.add(new DroppedItemStack("Dropped " + selectedStack.getItem().name, selectedStack.getItem().sprite, selectedStack), pos);
+        world.add(new DroppedItem("Dropped " + selectedStack.getItem().name, selectedStack.getItem().sprite, selectedStack.getItem(), selectedStack.getAmount()), pos);
         doGarbageCollection();
         stacks.remove(selectedStack);
     }

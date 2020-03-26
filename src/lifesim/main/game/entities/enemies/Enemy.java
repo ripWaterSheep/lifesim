@@ -4,6 +4,8 @@ import lifesim.main.game.Main;
 import lifesim.main.game.entities.MovementEntity;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.sprites.Sprite;
+import lifesim.main.game.entities.components.stats.DamageStats;
+import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.World;
 
@@ -24,25 +26,21 @@ public class Enemy extends MovementEntity {
         this.detectionRange = detectionRange;
     }
 
-
     @Override
     public Enemy copyInitialState() {
         return new Enemy(name, sprite, stats.copyInitialState(), defaultSpeed, detectionRange);
     }
 
-
-    private void decideMovement() {
-        Player player = Main.getGame().getPlayer();
-        pursuing = getDistanceBetween(player.pos, pos) <= detectionRange;
-        attacking = isTouching(player);
+    public DamageStats getStats() {
+        return (DamageStats) stats;
     }
 
 
     @Override
-    protected void move() {
-        super.move();
-        Player player = Main.getGame().getPlayer();
-
+    public void update(World world, Player player) {
+        super.update(world, player);
+        pursuing = getDistanceBetween(player.pos, pos) <= detectionRange;
+        attacking = isTouching(player);
         // Move towards player if enemy is pursuing the player.
         if (pursuing && !attacking) {
             movement.setMagnDir(defaultSpeed, getAngleBetween(player.pos, pos)+getRand(-30, 30));
@@ -56,10 +54,4 @@ public class Enemy extends MovementEntity {
         }
     }
 
-
-    @Override
-    public void update(World world) {
-        super.update(world);
-        decideMovement();
-    }
 }

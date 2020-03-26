@@ -35,7 +35,7 @@ public class DeathScreen extends Overlay {
 
     @Override
     public void update() {
-        if (!((PlayerStats) player.stats).isAlive()) {
+        if (!player.getStats().isAlive()) {
             showing = true;
             if (MouseInputManager.left.isClicked()/* || KeyInputManager.isAnyKeyClicked()*/) {
                 panel.newGame();

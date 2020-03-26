@@ -18,8 +18,7 @@ public class Consumable extends Item {
     @Override
     public void onClick(World world, Player player) {
         super.onClick(world, player);
-        consume(player, (PlayerStats) player.stats);
-
+        consume(player, player.getStats());
     }
 
 }

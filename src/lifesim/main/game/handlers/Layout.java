@@ -1,5 +1,6 @@
 package lifesim.main.game.handlers;
 
+import lifesim.main.game.Game;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.Projectile;
@@ -31,18 +32,54 @@ public class Layout {
             new World("Town", 2500, 2500, new Color(60, 159, 75), new Color(201, 193, 126))
                 .add(new Entity("vRoad", new Sprite(75, 2500, Color.DARK_GRAY)), 0, 0)
                 .add(new Entity("hRoad", new Sprite(2500, 75, Color.DARK_GRAY)), 0, 0)
-                .add(new Entity("House", new Sprite(200, 175, new Color(100, 80, 50))), 250, -200)
-                .add(new Entity("School", new Sprite(150, 200, new Color(180, 115, 85))){
+                .add(new Entity("House", new Sprite(200, 175, new Color(100, 80, 50))) {
+                    @Override
+                    public void onClick(Player player, PlayerStats stats) {
+                        //player.goTo("House Door");
+                    }
+                }, 250, -200)
+                .add(new Entity("School", new Sprite(150, 200, new Color(180, 115, 85))) {
                     @Override
                     public void whileTouching(Player player, PlayerStats stats) {
                         stats.gainIntellect(0.25);
                         stats.tire(0.05);
                     }
                 },250, 300)
-                .add(new Entity("Office", new Sprite(200, 200, new Color(150, 150, 160))), -250, 250)
-                .add(new Entity("Gym", new Sprite("gym")), -600, -200)
-                .add(new Entity("Restaurant", new Sprite(200, 200, new Color(255, 215, 125))), -250, -225)
-                .add(new Entity("Hospital", new Sprite(200, 200, new Color(210, 210, 210))), -250, -550)
+                .add(new Entity("Office", new Sprite(200, 200, new Color(150, 150, 160))) {
+                    @Override
+                    public void onClick(Player player, PlayerStats stats) {
+                        stats.gainMoney(stats.getIntellect());
+                        stats.tire(0.075);
+                    }
+                }, -250, 250)
+                .add(new Entity("Gym", new Sprite("gym")) {
+                    @Override
+                    public void onClick(Player player, PlayerStats stats) {
+                        if (stats.canAfford(0.05)) {
+                            stats.strengthen(0.5);
+                            stats.tire(0.075);
+                            stats.loseMoney(0.05);
+                        }
+                    }
+                }, -600, -200)
+                .add(new Entity("Restaurant", new Sprite(200, 200, new Color(255, 215, 125))) {
+                    @Override
+                    public void onClick(Player player, PlayerStats stats) {
+                        if (stats.canAfford(0.05)) {
+                            stats.energize(0.1);
+                            stats.loseMoney(0.05);
+                        }
+                    }
+                }, -250, -225)
+                .add(new Entity("Hospital", new Sprite(200, 200, new Color(210, 210, 210))) {
+                    @Override
+                    public void onClick(Player player, PlayerStats stats) {
+                        if (stats.canAfford(0.25)) {
+                            if (stats.getHealth() < 1000) stats.gainHealth(0.05);
+                            stats.loseMoney(0.25);
+                        }
+                    }
+                }, -250, -550)
                 .add(new Entity("Shop", new Sprite(250, 200, new Color(200, 110, 75))), -675, 250)
                 .add(new Entity("Cave", new Sprite(200, 75, Color.GRAY)), -1000, -1000)
 
@@ -52,9 +89,12 @@ public class Layout {
                 .addSpawner(new Spawner(new RangedEnemy("Nerd", new AnimatedSprite(new Animation("nerd", 300, new Vector2D(7, 16), 0)),
                     new HealthStats(6,25, Alliance.ENEMY), 3.8, 175, 1000,
                         new Projectile("Ball", new Sprite(4, 4, Color.BLACK), new DamageStats(10, Alliance.ENEMY, true),
-                                5, 75,false)), 3000))
+                                10, 200,false)), 3000))
         );
-        worlds.add(new World("City", 3000, 3000, new Color(180, 180, 180), new Color(100, 205, 131)));
+
+        worlds.add(new World("City", 3000, 3000, new Color(180, 180, 180), new Color(100, 205, 131))
+        );
+
     }
 
 }

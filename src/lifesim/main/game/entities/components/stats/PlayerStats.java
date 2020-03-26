@@ -101,7 +101,7 @@ public class PlayerStats extends HealthStats {
         strength = max(0, strength);
         intellect = max(0, intellect);
 
-        double tireAmount = 0.1 + sqrt(((MovementEntity) owner).movement.getMagnitude()/300);
+        double tireAmount = 0.1 + sqrt(((MovementEntity) owner).movement.getMagnitude()/400);
         energy -= tireAmount;
     }
 

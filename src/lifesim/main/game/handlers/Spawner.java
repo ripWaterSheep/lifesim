@@ -27,8 +27,8 @@ public class Spawner {
 
     public void attemptSpawn(World world) {
         if (System.currentTimeMillis() - lastSpawnTime > spawnInterval) {
-            Vector2D spawnPos = new Vector2D(world.size);
-            spawnPos.set(world.size.scale(getRand(-0.5, 0.5)));
+            Vector2D spawnPos = new Vector2D(world.getSize());
+            spawnPos.set(world.getSize().scale(getRand(-0.5, 0.5)));
 
             world.add(spawnTemplate.copyInitialState(), spawnPos);
             lastSpawnTime = System.currentTimeMillis();

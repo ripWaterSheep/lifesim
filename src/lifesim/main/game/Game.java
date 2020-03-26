@@ -38,9 +38,14 @@ public final class Game {
         return player;
     }
 
+    public ArrayList<World> getWorlds() {
+        return layout.getWorlds();
+    }
+
+
 
     public void update() {
-        player.getWorld().update();
+        player.getWorld().update(player);
 
         for (Overlay overlay: overlays) {
             overlay.update();
@@ -78,7 +83,7 @@ public final class Game {
 
 
     private void cheatLogic() {
-        PlayerStats stats = (PlayerStats) player.stats;
+        PlayerStats stats = player.getStats();
 
         if (KeyInputManager.k_shift.isPressed()) {
             if (KeyInputManager.k_n.isClicked()) cycleWorlds(1);

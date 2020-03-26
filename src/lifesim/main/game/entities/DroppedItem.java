@@ -1,24 +1,27 @@
 package lifesim.main.game.entities;
 
+import lifesim.main.game.items.Item;
 import lifesim.main.game.items.inventory.ItemStack;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 
-public class DroppedItemStack extends Entity {
+public class DroppedItem extends Entity {
 
-    private final ItemStack stack;
+    private final Item item;
+    private final int amount;
 
     private boolean collected = false;
 
-    public DroppedItemStack(String name, Sprite sprite, ItemStack stack) {
+    public DroppedItem(String name, Sprite sprite, Item item, int amount) {
         super(name, sprite);
-        this.stack = stack;
+        this.item = item;
+        this.amount = amount;
     }
 
 
     public void collect(Player player) {
         if (!collected) {
-            player.acquireItem(stack.getItem(), stack.getAmount());
+            player.acquireItem(item, amount);
             removeFromWorld();
             collected = true;
         }
@@ -27,7 +30,7 @@ public class DroppedItemStack extends Entity {
 
     @Override
     public Entity copyInitialState() {
-        return new DroppedItemStack(name, sprite, stack);
+        return new DroppedItem(name, sprite, item, amount);
     }
 
 

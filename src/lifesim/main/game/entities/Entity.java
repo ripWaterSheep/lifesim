@@ -4,7 +4,6 @@ import lifesim.main.game.Main;
 import lifesim.main.game.entities.components.stats.BasicStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.entities.components.stats.Stats;
-import lifesim.main.game.entities.enemies.Enemy;
 import lifesim.main.game.handlers.World;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
@@ -19,7 +18,7 @@ public class Entity {
     public final String name;
     public final Vector2D pos;
     public final Sprite sprite;
-    public final Stats stats;
+    protected final Stats stats;
 
     // If true, the world containing the entity will remove it from the world.
     private boolean removeRequested = false;
@@ -36,7 +35,6 @@ public class Entity {
         this(name, sprite, new BasicStats());
     }
 
-
     public Entity copyInitialState() {
         return new Entity(name, sprite, stats.copyInitialState());
     }
@@ -52,6 +50,10 @@ public class Entity {
 
     public boolean isTouching(Entity entity) {
         return testIntersection(getHitBox(), entity.getHitBox());
+    }
+
+    public Stats getStats() {
+        return stats;
     }
 
 
@@ -71,11 +73,11 @@ public class Entity {
     public void onClick(Player player, PlayerStats stats) { }
 
 
-    public void handleCollisions(Entity entity) {
+    public void handleCollision(Entity entity) {
         stats.handleCollisions(this, entity);
     }
 
-    public void update(World world) {
+    public void update(World world, Player player) {
         stats.run(this);
     }
 

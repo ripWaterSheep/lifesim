@@ -5,6 +5,7 @@ import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.DamageStats;
+import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.World;
 
 import java.awt.*;
@@ -42,6 +43,9 @@ public class Projectile extends MovementEntity {
         return new Projectile(name, sprite, (DamageStats) stats.copyInitialState(), defaultSpeed, movementRange, matchSpriteAngle, new Animation(damageAnimation));
     }
 
+    public DamageStats stats() {
+        return (DamageStats) stats;
+    }
 
     public double getMovementRange() {
         return movementRange;
@@ -62,8 +66,8 @@ public class Projectile extends MovementEntity {
 
 
     @Override
-    public void update(World world) {
-        super.update(world);
+    public void update(World world, Player player) {
+        super.update(world, player);
 
         distanceTravelled += abs(movement.x);
         distanceTravelled += abs(movement.y);

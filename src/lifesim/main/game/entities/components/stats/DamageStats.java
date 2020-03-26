@@ -37,14 +37,14 @@ public class DamageStats extends BasicStats {
 
     @Override
     public void handleCollisions(Entity owner, Entity entity) {
-        if (entity.stats instanceof HealthStats) {
-            HealthStats opponentStats = (HealthStats) entity.stats;
+        if (entity.getStats() instanceof HealthStats) {
+            HealthStats opponentStats = (HealthStats) entity.getStats();
 
             // Don't attack if both entities are on the same alliance, unless that alliance is neutral.
             if (alliance.equals(opponentStats.alliance) && !alliance.equals(Alliance.NEUTRAL))
                 return;
 
-            ((HealthStats) entity.stats).loseHealth(damage);
+            ((HealthStats) entity.getStats()).loseHealth(damage);
             if (dieOnDamage) {
                 owner.removeFromWorld();
             }

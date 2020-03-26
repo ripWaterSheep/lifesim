@@ -43,14 +43,13 @@ public class AllItems {
 
     public static final Weapon waterGun = new Weapon("Water Gun",
             new AnimatedSprite(new Animation("weapons", 200, new Vector2D(8, 8), 2)),
-        new Projectile("Water", new Sprite(2, 2, new Color(50, 80, 200, 150)), new DamageStats(1, Alliance.PLAYER, true),
-            12, 100, false));
+        new Projectile("Water", new Sprite(2, 2, new Color(50, 80, 220, 150)), new DamageStats(1, Alliance.PLAYER, true),
+            12, 80, false));
 
     public static final Weapon laserGun = new Weapon("Laser Gun", new AnimatedSprite(
             new Animation("weapons", 300, new Vector2D(8, 8), 3)),
         new Projectile("Laser", new Sprite(10, 1, new Color(255, 0, 25, 150)),
-            new DamageStats(3, Alliance.PLAYER, true), 35, 100, true, new Animation(boom)));
-
+            new DamageStats(3, Alliance.PLAYER, true), 35, 120, true, new Animation(boom)));
 
     public static final Weapon bomb =  new Weapon("Bomb", new AnimatedSprite(
             new Animation("weapons", 120, new Vector2D(8, 8), 0)),

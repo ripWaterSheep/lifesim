@@ -1,8 +1,8 @@
 package lifesim.main.game.handlers;
 
 import lifesim.main.game.GamePanel;
-import lifesim.main.game.Main;
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
 
@@ -15,7 +15,7 @@ public class World {
     private static final int MAX_ENTITIES = 50;
 
     public final String name;
-    public final Vector2D size;
+    private final Vector2D size;
     private final Color outerColor;
 
     private final ArrayList<Entity> entities = new ArrayList<>();
@@ -29,6 +29,11 @@ public class World {
 
         add(new Entity("Floor", new Sprite(width, height, color)), 0, 0);
         this.outerColor = outerColor;
+    }
+
+
+    public Vector2D getSize() {
+        return new Vector2D(size);
     }
 
     public ArrayList<Entity> getEntities() {
@@ -50,22 +55,9 @@ public class World {
         entities.remove(entity);
     }
 
-
     public World addSpawner(Spawner spawner) {
         spawners.add(spawner);
         return this;
-    }
-
-
-    public Entity getEntityWithName(String entityName) {
-        Entity desiredEntity = null;
-        for (Entity entity: entities) {
-            if(entity.name.equals(entityName)) {
-                desiredEntity = entity;
-                break;
-            }
-        }
-        return desiredEntity;
     }
 
 
@@ -78,19 +70,18 @@ public class World {
     }
 
 
-    public void update() {
+    public void update(Player player) {
         if (entities.size() < MAX_ENTITIES) {
             for (Spawner spawner : spawners)
                 spawner.attemptSpawn(this);
         }
 
         for (Entity entity: getEntities()) {
-            entity.update(this);
+            entity.update(this, player);
 
             for (Entity entity2: getEntities()) {
-                if (entity.isTouching(entity2) && entity != entity2) {
-                    entity.handleCollisions(entity2);
-                }
+                if (entity.isTouching(entity2) && entity != entity2)
+                    entity.handleCollision(entity2);
             }
 
             doGarbageCollection(entity);
@@ -101,7 +92,7 @@ public class World {
 
 
     public void render(Graphics g, GamePanel panel) {
-        Main.getPanel().setBackground(outerColor);
+        panel.setBackground(outerColor);
 
         for (Entity entity: entities) {
             Graphics2D g2d = (Graphics2D) g.create();

@@ -53,6 +53,9 @@ public final class Player extends MovementEntity {
         return new Vector2D(0, 0);
     }
 
+    public PlayerStats getStats() {
+        return (PlayerStats) stats;
+    }
 
     public World getWorld() {
         return world;
@@ -65,6 +68,22 @@ public final class Player extends MovementEntity {
     }
 
 
+    public void goTo(String name) {
+        for (World world: game.getWorlds()) {
+            if (world.name.equals(name)) {
+                setWorld(world);
+                return;
+            }
+            for (Entity entity: world.getEntities()) {
+                if (entity.name.equals(name)) {
+                    pos.set(entity.pos);
+                    return;
+                }
+            }
+        }
+    }
+
+
     public void acquireItem(Item item, int amount) {
         inventory.addItem(item, amount);
     }
@@ -72,7 +91,7 @@ public final class Player extends MovementEntity {
 
     public void controlMovement() {
         // Slow down due to friction, approaching zero.
-        movement.set(movement.scale(0.85));
+        movement.set(movement.scale(0.7));
 
         boolean up, down, left, right;
         final KeyInputListener upKey = KeyInputManager.k_w,
@@ -93,7 +112,7 @@ public final class Player extends MovementEntity {
             up = upKey.getPressTime() < downKey.getPressTime();
             down = !up;
         }
-        // Get the correct angle based on combination of up, down, left, and right.
+        // Get the correct angle based on combination of up/down and left/right.
         double angle = 0;
         if (up) {
             if (left) angle = 45;
@@ -115,32 +134,27 @@ public final class Player extends MovementEntity {
         double speed = defaultSpeed;
         // Base speed on current energy level.
         double energy = ((PlayerStats) stats).getEnergy();
-        speed *= (energy/1200)+0.6;
+        speed *= (energy/1100)+0.61;
 
         if (KeyInputManager.k_space.isPressed() && energy > 0)
-            speed *= 1.5;
+            speed *= 1.45;
 
         return speed;
     }
 
 
     @Override
-    protected void move() {
-        super.move();
-        controlMovement();
-    }
-
-    @Override
-    public void handleCollisions(Entity entity) {
-        super.handleCollisions(entity);
+    public void handleCollision(Entity entity) {
+    super.handleCollision(entity);
         entity.whileTouching(this, (PlayerStats) stats);
         if (MouseInputManager.left.isClicked())
             entity.onClick(this, (PlayerStats) stats);
     }
 
     @Override
-    public void update(World world) {
-        super.update(world);
+    public void update(World world, Player player) {
+        super.update(world, player);
+        controlMovement();
         inventory.doGarbageCollection();
         inventory.control(this, world);
     }
