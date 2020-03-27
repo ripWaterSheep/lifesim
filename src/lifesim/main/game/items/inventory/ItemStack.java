@@ -7,6 +7,8 @@ import lifesim.main.util.fileIO.FontLoader;
 
 import java.awt.*;
 
+import static lifesim.main.util.math.MyMath.roundToMultiple;
+
 
 public class ItemStack {
 
@@ -41,6 +43,11 @@ public class ItemStack {
     public void drag(Vector2D dragPos, Vector2D inventoryBounds) {
         inventoryPos.set(dragPos);
         inventoryPos.clampAbs(inventoryBounds.translate(item.sprite.getSize().scale(-0.5)));
+    }
+
+
+    public void snapToGrid(int gridSize) {
+        inventoryPos.set(roundToMultiple(inventoryPos.x, gridSize), roundToMultiple(inventoryPos.y, gridSize));
     }
 
 

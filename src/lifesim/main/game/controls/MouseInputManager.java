@@ -39,7 +39,7 @@ public final class MouseInputManager {
     }
 
 
-    private static MouseAdapter mouseAdapter = new MouseInputAdapter() {
+    private static final MouseAdapter mouseAdapter = new MouseInputAdapter() {
 
         @Override
         public void mousePressed(MouseEvent e) {

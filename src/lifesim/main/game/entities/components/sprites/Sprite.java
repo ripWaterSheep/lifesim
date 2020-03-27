@@ -4,11 +4,7 @@ import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.util.fileIO.ImageLoader;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.GeneralPath;
-import java.awt.image.BufferedImage;
 
 
 public class Sprite {

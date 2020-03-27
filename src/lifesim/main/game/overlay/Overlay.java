@@ -7,8 +7,8 @@ import java.awt.*;
 
 public abstract class Overlay {
 
-    protected GamePanel panel;
-    protected Player player;
+    protected final GamePanel panel;
+    protected final Player player;
 
     public Overlay(GamePanel panel, Player player) {
         this.panel = panel;

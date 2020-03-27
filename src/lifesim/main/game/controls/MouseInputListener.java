@@ -11,7 +11,7 @@ import static lifesim.main.util.math.Geometry.getAngleBetween;
 
 public class MouseInputListener extends InputListener {
 
-    private Vector2D pos = new Vector2D(0, 0);
+    private final Vector2D pos = new Vector2D(0, 0);
 
 
     MouseInputListener(int mouseButtonCode) {

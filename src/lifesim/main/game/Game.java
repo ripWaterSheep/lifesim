@@ -3,7 +3,6 @@ package lifesim.main.game;
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.Layout;
 import lifesim.main.game.handlers.World;
 import lifesim.main.game.overlay.DeathScreen;
@@ -18,11 +17,11 @@ import java.util.ArrayList;
 
 public final class Game {
 
-    private GamePanel panel;
-    private Layout layout = new Layout();
-    private Player player = new Player(this);
+    private final GamePanel panel;
+    private final Layout layout = new Layout();
+    private final Player player = new Player(this);
 
-    private ArrayList<Overlay> overlays = new ArrayList<>();
+    private final ArrayList<Overlay> overlays = new ArrayList<>();
 
 
     public Game(GamePanel panel) {
@@ -65,7 +64,7 @@ public final class Game {
 
 
     /**
-     * Make player go to the next world declared in the used com.lifesim.main.game layout
+     * Make player go to the next or previous world declared in the layout's list of worlds
      */
     private void cycleWorlds(int index) {
         ArrayList<World> allWorlds = layout.getWorlds();

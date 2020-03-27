@@ -45,22 +45,22 @@ public class Vector2D {
     }
 
     public void setDirection(double deg) {
-        setMagnDir(getMagnitude(), deg);
+        setMagDir(getMagnitude(), deg);
     }
 
 
-    public void setXMagnDir(double magnitude, double deg) {
+    public void setXMagDir(double magnitude, double deg) {
         x = -magnitude * Math.cos(Math.toRadians(deg));
     }
 
-    public void setYMagnDir(double magnitude, double deg) {
+    public void setYMagDir(double magnitude, double deg) {
         y = -magnitude * Math.sin(Math.toRadians(deg));
     }
 
 
-    public void setMagnDir(double magnitude, double deg) {
-        setXMagnDir(magnitude, deg);
-        setYMagnDir(magnitude, deg);
+    public void setMagDir(double magnitude, double deg) {
+        setXMagDir(magnitude, deg);
+        setYMagDir(magnitude, deg);
     }
 
 
@@ -101,7 +101,7 @@ public class Vector2D {
         return "x: " + x + ", y: " + y;
     }
 
-    public String toStringMagnDir() {
+    public String toStringMagDir() {
         return "Magnitude: " + getMagnitude() + ", Deg: " + getDirection();
     }
 

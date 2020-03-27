@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class Layout {
 
-    private ArrayList<World> worlds = new ArrayList<>();
+    private final ArrayList<World> worlds = new ArrayList<>();
 
     public ArrayList<World> getWorlds() {
         return worlds;

@@ -1,8 +1,6 @@
 package lifesim.main.game.entities.components.stats;
 
 
-import lifesim.main.game.entities.Entity;
-
 /** Determines which entities that the owner may attack or be attacked by.
  */
 public enum Alliance {
@@ -13,8 +11,8 @@ public enum Alliance {
     PASSIVE, // Cannot attack but may be attacked.
     INANIMATE; // Cannot attack or be attacked.
 
-    public boolean canBeAttackedBy(Alliance alliance) {;
-        return (!equals(alliance) || !alliance.equals(Alliance.NEUTRAL));
+    public boolean canBeAttackedBy(Alliance otherAlliance) {
+        return (!equals(otherAlliance) || otherAlliance.equals(NEUTRAL)) && !otherAlliance.equals(PASSIVE) && !equals(INANIMATE) && !otherAlliance.equals(INANIMATE);
     }
 
     public boolean canAttack(Alliance otherAlliance) {

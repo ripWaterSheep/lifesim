@@ -20,7 +20,7 @@ import static lifesim.main.game.items.AllItems.*;
 
 public final class Player extends Entity {
 
-    private Game game;
+    private final Game game;
     private World world;
 
     public final Inventory inventory = new Inventory();
@@ -124,8 +124,8 @@ public final class Player extends Entity {
         } else if (left) angle = 0;
         else if (right) angle = 180;
         // Move along x or y axis only if needed.
-        if ((left || right) && abs(movement.x) < speed) movement.setXMagnDir(speed, angle);
-        if ((up || down) && abs(movement.y) < speed) movement.setYMagnDir(speed, angle);
+        if ((left || right) && abs(movement.x) < speed) movement.setXMagDir(speed, angle);
+        if ((up || down) && abs(movement.y) < speed) movement.setYMagDir(speed, angle);
     }
 
 

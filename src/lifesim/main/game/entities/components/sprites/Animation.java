@@ -15,7 +15,7 @@ public class Animation {
 
     protected int currentFrameIndex = 0;
     private long lastFrameTime = System.currentTimeMillis();
-    private int totalCycles = 0;
+    private int currentCycles = 0;
 
 
     public Animation(int frameInterval, String... imageNames) {
@@ -47,7 +47,7 @@ public class Animation {
 
 
     public boolean isAtEndOfCycle() {
-        return totalCycles >= 1;
+        return currentCycles >= 1;
     }
 
 
@@ -61,7 +61,7 @@ public class Animation {
 
             if (currentFrameIndex > frames.size() - 1) {
                 currentFrameIndex = 0;
-                totalCycles++;
+                currentCycles++;
             }
             else currentFrame = frames.get(currentFrameIndex);
 

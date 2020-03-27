@@ -33,7 +33,7 @@ public class Entity {
         this.sprite = sprite;
         this.pos = new Vector2D(0, 0);
         movement = new Vector2D(0, 0);
-        movement.setMagnDir(stats.getCurrentSpeed(), 0);
+        movement.setMagDir(stats.getCurrentSpeed(), 0);
         this.stats = stats;
     }
 
@@ -63,7 +63,6 @@ public class Entity {
     }
 
     public boolean canAttack(Entity otherEntity) {
-        System.out.println(name +"  "+(stats.alliance.canAttack(otherEntity.stats.alliance) && !equals(otherEntity) && !(otherEntity instanceof Projectile)));
         return stats.alliance.canAttack(otherEntity.stats.alliance) && !equals(otherEntity) && !(otherEntity instanceof Projectile);
     }
 
@@ -92,7 +91,7 @@ public class Entity {
 
     protected void moveRandomly() {
         if (getRand(0, 1) < 0.02)
-            movement.setMagnDir(stats.getCurrentSpeed()/2, getRand(0, 360));
+            movement.setMagDir(stats.getCurrentSpeed()/2, getRand(0, 360));
     }
 
     protected void move() {

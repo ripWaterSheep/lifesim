@@ -7,10 +7,10 @@ import java.awt.*;
 public class DirectionalAnimatedSprite extends AnimatedSprite {
 
     private final Animation idle;
-    private Animation forward;
-    private Animation backward;
-    private Animation left;
-    private Animation right;
+    private final Animation forward;
+    private final Animation backward;
+    private final Animation left;
+    private final Animation right;
 
 
     public DirectionalAnimatedSprite(Animation idle, Animation forward, Animation backward, Animation left, Animation right) {

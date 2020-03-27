@@ -2,7 +2,6 @@ package lifesim.main.game.handlers;
 
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.entities.Entity;
-import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
 

@@ -29,7 +29,7 @@ public class AllItems {
     public static final Item jetPack = new Item("Jet Pack", new Sprite(8, 8, Color.GRAY)) {
         @Override
         public void onClick(World world, Player player, PlayerStats stats) {
-            player.movement.setMagnDir(150, 180+MouseInputManager.right.getAngleFromCenter());
+            player.movement.setMagDir(150, 180+MouseInputManager.right.getAngleFromCenter());
         }
     };
 
@@ -38,7 +38,7 @@ public class AllItems {
      * Weapons
      **********/
 
-    private static Animation boom = new Animation("boom",40, new Vector2D(16, 16), 0);
+    private static final Animation boom = new Animation("boom",40, new Vector2D(16, 16), 0);
 
 
     public static final Weapon waterGun = new Weapon("Water Gun",

@@ -62,6 +62,7 @@ public class InventoryGUI extends Overlay {
             draggedStack.drag(mousePos, inventoryBounds);
 
             if (!MouseInputManager.left.isPressed() && draggedStack != null) {
+                draggedStack.snapToGrid(GRID_SIZE);
                 draggedStack = null;
             }
         }

@@ -6,8 +6,6 @@ import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 
-import static java.lang.Math.abs;
-
 
 public class Geometry {
 

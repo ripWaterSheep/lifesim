@@ -84,7 +84,7 @@ public final class KeyInputManager {
     }
 
 
-    private static KeyAdapter keyAdapter = new KeyAdapter() {
+    private static final KeyAdapter keyAdapter = new KeyAdapter() {
 
         @Override
         public void keyPressed(KeyEvent e) {
@@ -108,7 +108,7 @@ public final class KeyInputManager {
     };
 
 
-    private static FocusAdapter AFKKeyPreventor = new FocusAdapter() {
+    private static final FocusAdapter AFKKeyPreventor = new FocusAdapter() {
 
         @Override
         public void focusLost(FocusEvent e) {

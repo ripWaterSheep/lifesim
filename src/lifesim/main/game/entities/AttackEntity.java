@@ -44,7 +44,7 @@ public class AttackEntity extends Entity {
         if (attacking) // Decelerate smoothly if on top of another entity because this doesn't need to be centered, just touching
             movement.set(movement.scale(0.7));
         else if (pursuing) // Follow entity's position with a little randomness, since it would otherwise overlap other entities.
-            movement.setMagnDir(stats.getCurrentSpeed(), getAngleBetween(attackTarget.pos, pos)+getRand(-30, 30));
+            movement.setMagDir(stats.getCurrentSpeed(), getAngleBetween(attackTarget.pos, pos)+getRand(-30, 30));
         else moveRandomly();
     }
 

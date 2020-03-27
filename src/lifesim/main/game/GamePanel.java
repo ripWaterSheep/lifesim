@@ -79,13 +79,13 @@ public class GamePanel extends JPanel {
 
 
     private long lastTime = System.nanoTime();
-    private double amountOfTicks = 60.0;
-    private double ns = 1000000000 / amountOfTicks;
     private double delta = 0;
     private long timer = System.currentTimeMillis();
     private int frames = 0;
 
     void runSession(Graphics g) {
+        final double amountOfTicks = 60.0;
+        final double ns = 1000000000 / amountOfTicks;
         long now = System.nanoTime();
         delta += (now - lastTime) / ns;
         lastTime = now;
