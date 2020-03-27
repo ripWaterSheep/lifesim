@@ -1,19 +1,13 @@
 package lifesim.main.game.handlers;
 
-import lifesim.main.game.Game;
-import lifesim.main.game.entities.Entity;
-import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.Projectile;
-import lifesim.main.game.entities.components.Alliance;
+import lifesim.main.game.entities.*;
+import lifesim.main.game.entities.components.stats.Alliance;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
-import lifesim.main.game.entities.components.stats.DamageStats;
-import lifesim.main.game.entities.components.stats.HealthStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.game.entities.enemies.Enemy;
-import lifesim.main.game.entities.enemies.RangedEnemy;
+import lifesim.main.game.entities.components.stats.Stats;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -44,7 +38,7 @@ public class Layout {
                         stats.gainIntellect(0.25);
                         stats.tire(0.05);
                     }
-                },250, 300)
+                },250, 250)
                 .add(new Entity("Office", new Sprite(200, 200, new Color(150, 150, 160))) {
                     @Override
                     public void onClick(Player player, PlayerStats stats) {
@@ -83,13 +77,13 @@ public class Layout {
                 .add(new Entity("Shop", new Sprite(250, 200, new Color(200, 110, 75))), -675, 250)
                 .add(new Entity("Cave", new Sprite(200, 75, Color.GRAY)), -1000, -1000)
 
-                .addSpawner(new Spawner(new Enemy("Emo", new AnimatedSprite(new Animation("emo", 120, new Vector2D(11, 16), 0)),
-                    new HealthStats(6,25, Alliance.ENEMY), 3.8, 125), 2000))
+                .addSpawner(new Spawner(new AttackEntity("Emo", new AnimatedSprite(new Animation("emo", 120, new Vector2D(11, 16), 0)),
+                    new Stats(2.8, 25, false, 8, Alliance.NEUTRAL), 125), 2000))
 
-                .addSpawner(new Spawner(new RangedEnemy("Nerd", new AnimatedSprite(new Animation("nerd", 300, new Vector2D(7, 16), 0)),
-                    new HealthStats(6,25, Alliance.ENEMY), 3.8, 175, 1000,
-                        new Projectile("Ball", new Sprite(4, 4, Color.BLACK), new DamageStats(10, Alliance.ENEMY, true),
-                                10, 200,false)), 3000))
+                .addSpawner(new Spawner(new RangedAttackEntity("Nerd", new AnimatedSprite(new Animation("nerd", 300, new Vector2D(7, 16), 0)),
+                    new Stats(3.8, 20, false,5, Alliance.NEUTRAL), 175, 1000,
+                        new Projectile("Ball", new Sprite(4, 4, Color.BLACK), new Stats(15, 10, true, 10, Alliance.NEUTRAL),
+                                200,false)), 3000))
         );
 
         worlds.add(new World("City", 3000, 3000, new Color(180, 180, 180), new Color(100, 205, 131))

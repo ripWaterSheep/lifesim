@@ -1,9 +1,8 @@
 package lifesim.main.game.entities;
 
-import lifesim.main.game.items.Item;
-import lifesim.main.game.items.inventory.ItemStack;
-import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
+import lifesim.main.game.items.Item;
+import lifesim.main.game.entities.components.sprites.Sprite;
 
 public class DroppedItem extends Entity {
 
@@ -18,6 +17,11 @@ public class DroppedItem extends Entity {
         this.amount = amount;
     }
 
+    @Override
+    public Entity copyInitialState() {
+        return new DroppedItem(name, sprite, item, amount);
+    }
+
 
     public void collect(Player player) {
         if (!collected) {
@@ -26,13 +30,6 @@ public class DroppedItem extends Entity {
             collected = true;
         }
     }
-
-
-    @Override
-    public Entity copyInitialState() {
-        return new DroppedItem(name, sprite, item, amount);
-    }
-
 
     @Override
     public void whileTouching(Player player, PlayerStats stats) {

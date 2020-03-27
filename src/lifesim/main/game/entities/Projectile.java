@@ -4,7 +4,6 @@ import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
-import lifesim.main.game.entities.components.stats.DamageStats;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.World;
 
@@ -13,7 +12,7 @@ import java.awt.*;
 import static java.lang.Math.*;
 
 
-public class Projectile extends MovementEntity {
+public class Projectile extends Entity {
 
     private static final Animation BLANK = new Animation(0, "blank");
 
@@ -25,26 +24,21 @@ public class Projectile extends MovementEntity {
     private final Animation damageAnimation;
 
 
-    public Projectile(String name, Sprite sprite, DamageStats stats, double speed, double movementRange, boolean matchSpriteAngle, Animation damageAnimation) {
-        super(name, sprite, stats, speed);
-        movement.setMagnDir(speed, 0);
+    public Projectile(String name, Sprite sprite, Stats stats, double movementRange, boolean matchSpriteAngle, Animation damageAnimation) {
+        super(name, sprite, stats);
         this.movementRange = movementRange;
         this.matchSpriteAngle = matchSpriteAngle;
         this.damageAnimation = damageAnimation;
     }
 
-    public Projectile(String name, Sprite sprite, DamageStats stats, double speed, double movementRange, boolean matchSpriteAngle) {
-        this(name, sprite, stats, speed, movementRange, matchSpriteAngle, BLANK);
+    public Projectile(String name, Sprite sprite, Stats stats, double movementRange, boolean matchSpriteAngle) {
+        this(name, sprite, stats, movementRange, matchSpriteAngle, BLANK);
     }
 
 
     @Override
     public Projectile copyInitialState() {
-        return new Projectile(name, sprite, (DamageStats) stats.copyInitialState(), defaultSpeed, movementRange, matchSpriteAngle, new Animation(damageAnimation));
-    }
-
-    public DamageStats stats() {
-        return (DamageStats) stats;
+        return new Projectile(name, sprite,  stats.copyInitialState(), movementRange, matchSpriteAngle, new Animation(damageAnimation));
     }
 
     public double getMovementRange() {
@@ -66,11 +60,9 @@ public class Projectile extends MovementEntity {
 
 
     @Override
-    public void update(World world, Player player) {
-        super.update(world, player);
-
-        distanceTravelled += abs(movement.x);
-        distanceTravelled += abs(movement.y);
+    public void update(World world) {
+        super.update(world);
+        distanceTravelled += abs(movement.x) + abs(movement.y);
 
         if (distanceTravelled > movementRange) {
             removeFromWorld();

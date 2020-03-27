@@ -3,6 +3,7 @@ package lifesim.main.game;
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.stats.PlayerStats;
+import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.Layout;
 import lifesim.main.game.handlers.World;
 import lifesim.main.game.overlay.DeathScreen;
@@ -45,7 +46,7 @@ public final class Game {
 
 
     public void update() {
-        player.getWorld().update(player);
+        player.getWorld().update();
 
         for (Overlay overlay: overlays) {
             overlay.update();

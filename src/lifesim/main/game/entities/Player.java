@@ -5,11 +5,11 @@ import lifesim.main.game.controls.KeyInputListener;
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.components.*;
+import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.items.inventory.Inventory;
 import lifesim.main.game.items.Item;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.DirectionalAnimatedSprite;
-import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.handlers.World;
 
 import java.awt.*;
@@ -18,7 +18,7 @@ import static java.lang.Math.abs;
 import static lifesim.main.game.items.AllItems.*;
 
 
-public final class Player extends MovementEntity {
+public final class Player extends Entity {
 
     private Game game;
     private World world;
@@ -34,7 +34,7 @@ public final class Player extends MovementEntity {
                 new Animation("player", 100, new Vector2D(12, 16), 3),
                 new Animation("player", 100, new Vector2D(12, 16), 4)
                 ),
-            new PlayerStats(1000, 1000, 0, 0, 0), 4);
+            new PlayerStats(4, 100000, 1000, 0, 0, 0));
         this.game = game;
         movement.set(0, 0);
 
@@ -90,9 +90,8 @@ public final class Player extends MovementEntity {
 
 
     public void controlMovement() {
-        // Slow down due to friction, approaching zero.
-        movement.set(movement.scale(0.7));
-
+        movement.set(movement.scale(0.7));// Slow down due to friction, approaching zero.
+        double speed = stats.getCurrentSpeed();
         boolean up, down, left, right;
         final KeyInputListener upKey = KeyInputManager.k_w,
                 leftKey = KeyInputManager.k_a,
@@ -125,38 +124,25 @@ public final class Player extends MovementEntity {
         } else if (left) angle = 0;
         else if (right) angle = 180;
         // Move along x or y axis only if needed.
-        if ((left || right) && abs(movement.x) < getIntendedSpeed()) movement.setXMagnDir(getIntendedSpeed(), angle);
-        if ((up || down) && abs(movement.y) < getIntendedSpeed()) movement.setYMagnDir(getIntendedSpeed(), angle);
-    }
-
-
-    public double getIntendedSpeed() {
-        double speed = defaultSpeed;
-        // Base speed on current energy level.
-        double energy = ((PlayerStats) stats).getEnergy();
-        speed *= (energy/1100)+0.61;
-
-        if (KeyInputManager.k_space.isPressed() && energy > 0)
-            speed *= 1.45;
-
-        return speed;
+        if ((left || right) && abs(movement.x) < speed) movement.setXMagnDir(speed, angle);
+        if ((up || down) && abs(movement.y) < speed) movement.setYMagnDir(speed, angle);
     }
 
 
     @Override
     public void handleCollision(Entity entity) {
     super.handleCollision(entity);
-        entity.whileTouching(this, (PlayerStats) stats);
+        entity.whileTouching(this, getStats());
         if (MouseInputManager.left.isClicked())
-            entity.onClick(this, (PlayerStats) stats);
+            entity.onClick(this, getStats());
     }
 
     @Override
-    public void update(World world, Player player) {
-        super.update(world, player);
+    public void update(World world) {
+        super.update(world);
         controlMovement();
         inventory.doGarbageCollection();
-        inventory.control(this, world);
+        inventory.control(world, this, getStats());
     }
 
 

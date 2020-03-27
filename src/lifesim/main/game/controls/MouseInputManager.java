@@ -47,7 +47,6 @@ public final class MouseInputManager {
                 if (button.getIntCode() == e.getButton()) {
                     button.doPress();
                     button.setPos(e.getPoint());
-                    System.out.println(e.getButton() +"  "  +button.getPressTime());
                 }
             }
         }

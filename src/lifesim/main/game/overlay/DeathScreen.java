@@ -3,7 +3,6 @@ package lifesim.main.game.overlay;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.util.DrawMethods;
 import lifesim.main.util.fileIO.FontLoader;
 

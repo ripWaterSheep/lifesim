@@ -4,6 +4,7 @@ import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.Projectile;
 import lifesim.main.game.entities.components.sprites.Sprite;
+import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.handlers.World;
 
 
@@ -19,7 +20,7 @@ public class Weapon extends Item {
 
 
     @Override
-    public void onClick(World world, Player player) {
+    public void onClick(World world, Player player , PlayerStats stats) {
         Projectile newProjectile = projectile.copyInitialState();
         newProjectile.launchTowards(MouseInputManager.right.getAngleFromCenter());
 

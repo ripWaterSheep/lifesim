@@ -1,6 +1,6 @@
-package lifesim.main.game.entities.components.stats;
+package lifesim.main.game.entities.components.stats.statusEffects;
 
-public enum StatusEffect {
+public enum StatusEffectType {
     NORMAL,
     HORMONAL,
     FLYING,

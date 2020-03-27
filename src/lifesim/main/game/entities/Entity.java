@@ -1,7 +1,7 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.Main;
-import lifesim.main.game.entities.components.stats.BasicStats;
+import lifesim.main.game.entities.components.stats.Alliance;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.World;
@@ -10,15 +10,19 @@ import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 
+import static java.lang.Math.abs;
 import static lifesim.main.util.math.Geometry.testIntersection;
+import static lifesim.main.util.math.MyMath.getRand;
 
 
 public class Entity {
 
     public final String name;
-    public final Vector2D pos;
     public final Sprite sprite;
     protected final Stats stats;
+
+    public final Vector2D pos;
+    public final Vector2D movement;
 
     // If true, the world containing the entity will remove it from the world.
     private boolean removeRequested = false;
@@ -28,11 +32,13 @@ public class Entity {
         this.name = name;
         this.sprite = sprite;
         this.pos = new Vector2D(0, 0);
+        movement = new Vector2D(0, 0);
+        movement.setMagnDir(stats.getCurrentSpeed(), 0);
         this.stats = stats;
     }
 
     public Entity(String name, Sprite sprite) {
-        this(name, sprite, new BasicStats());
+        this(name, sprite, new Stats(0, 100, true, 0, Alliance.INANIMATE));
     }
 
     public Entity copyInitialState() {
@@ -56,6 +62,11 @@ public class Entity {
         return stats;
     }
 
+    public boolean canAttack(Entity otherEntity) {
+        System.out.println(name +"  "+(stats.alliance.canAttack(otherEntity.stats.alliance) && !equals(otherEntity) && !(otherEntity instanceof Projectile)));
+        return stats.alliance.canAttack(otherEntity.stats.alliance) && !equals(otherEntity) && !(otherEntity instanceof Projectile);
+    }
+
 
     public boolean isRemoveRequested() {
         return removeRequested;
@@ -65,24 +76,43 @@ public class Entity {
         removeRequested = true;
     }
 
-    public void onRemoval(World world) { }
+    public void onRemoval(World world) {
 
-
-    public void whileTouching(Player player, PlayerStats stats) { }
-
-    public void onClick(Player player, PlayerStats stats) { }
-
-
-    public void handleCollision(Entity entity) {
-        stats.handleCollisions(this, entity);
     }
 
-    public void update(World world, Player player) {
-        stats.run(this);
+
+    public void whileTouching(Player player, PlayerStats stats) {
+
+    }
+
+    public void onClick(Player player, PlayerStats stats) {
+
+    }
+
+
+    protected void moveRandomly() {
+        if (getRand(0, 1) < 0.02)
+            movement.setMagnDir(stats.getCurrentSpeed()/2, getRand(0, 360));
+    }
+
+    protected void move() {
+        pos.set(pos.translate(movement));
+        double frictionThreshold = 0.05;
+        if (abs(movement.x) < frictionThreshold) movement.x = 0;
+        if (abs(movement.y) < frictionThreshold) movement.y = 0;
+    }
+
+    public void handleCollision(Entity entity) {
+        stats.onCollision(this, entity);
+    }
+
+    public void update(World world) {
+        stats.update(this);
+        move();
     }
 
     public void render(Graphics2D g2d) {
-        sprite.render(g2d, getDisplayPos(), new Vector2D(0, 0));
+        sprite.render(g2d, getDisplayPos(), movement);
     }
 
 }

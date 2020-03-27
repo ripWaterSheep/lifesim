@@ -9,6 +9,8 @@ import lifesim.main.game.entities.components.Vector2D;
 import java.awt.*;
 import java.util.*;
 
+import static lifesim.main.util.math.Geometry.getDistanceBetween;
+
 
 public class World {
 
@@ -41,6 +43,23 @@ public class World {
     }
 
 
+    public Entity getClosestOpposingEntity(Entity entity, double detectionDistance) {
+        Entity currentClosest = entity;
+        double currentClosestDistance = detectionDistance;
+        for (Entity entity2: entities) {
+            double distance = getDistanceBetween(entity.pos, entity2.pos);
+            if (distance < currentClosestDistance) {
+                if (entity.canAttack(entity2)) {
+                    currentClosest = entity2;
+                    currentClosestDistance = distance;
+                }
+            }
+        }
+        System.out.println(entity.name+"  "+currentClosest.name);
+        return currentClosest;
+    }
+
+
     public World add(Entity entity, Vector2D pos) {
         entities.add(entity);
         entity.pos.set(pos);
@@ -70,23 +89,23 @@ public class World {
     }
 
 
-    public void update(Player player) {
+    public void update() {
         if (entities.size() < MAX_ENTITIES) {
             for (Spawner spawner : spawners)
                 spawner.attemptSpawn(this);
         }
 
         for (Entity entity: getEntities()) {
-            entity.update(this, player);
+            entity.update(this);
 
             for (Entity entity2: getEntities()) {
                 if (entity.isTouching(entity2) && entity != entity2)
                     entity.handleCollision(entity2);
             }
 
+            entity.pos.clampAbs(size.scale((0.5)).translate(entity.sprite.getSize().scale(-0.5)));
             doGarbageCollection(entity);
             // Keep the entity within the world's boundaries.
-            entity.pos.clampAbs(size.scale((0.5)).translate(entity.sprite.getSize().scale(-0.5)));
         }
     }
 

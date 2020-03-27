@@ -5,6 +5,7 @@ import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.DroppedItem;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.items.AllItems;
 import lifesim.main.game.items.Item;
 import lifesim.main.game.handlers.World;
@@ -81,19 +82,19 @@ public class Inventory {
     }
 
 
-    public void control(Player player, World world) {
+    public void control(World world, Player player, PlayerStats stats) {
 
         if (MouseInputManager.right.isClicked()) {
-            getSelectedItem().onClick(world, player);
+            getSelectedItem().onClick(world, player, stats);
             selectedStack.changeAmountBy(-1);
             doGarbageCollection();
         }
-        getSelectedItem().whileHolding(world, player);
+        getSelectedItem().whileHolding(world, player, stats);
 
         if (KeyInputManager.k_q.isClicked()) {
             // Drop the item behind player so it isn't picked back up when moving forward.
             Vector2D dropPos = new Vector2D(player.pos);
-            if (player.movement.getMagnitude() < player.getIntendedSpeed()) dropPos.set(dropPos.translate(0, 25));
+            if (player.movement.getMagnitude() < player.getStats().getCurrentSpeed()) dropPos.set(dropPos.translate(0, 25));
             else dropPos.set(dropPos.translate(player.movement.scale(-5)));
             dropStackInWorld(player.getWorld(), dropPos);
         }

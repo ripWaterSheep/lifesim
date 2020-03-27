@@ -2,9 +2,6 @@ package lifesim.main.game.handlers;
 
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.game.entities.enemies.Enemy;
-
-import java.util.ArrayList;
 
 import static lifesim.main.util.math.MyMath.getRand;
 
@@ -13,13 +10,13 @@ public class Spawner {
     private static final int MAX_ENTITIES = 25;
 
 
-    private final Enemy spawnTemplate;
+    private final Entity spawnTemplate;
 
     private final long spawnInterval;
     private long lastSpawnTime = System.currentTimeMillis();
 
 
-    public Spawner(Enemy spawnTemplate, long spawnInterval) {
+    public Spawner(Entity spawnTemplate, long spawnInterval) {
         this.spawnTemplate = spawnTemplate;
         this.spawnInterval = spawnInterval;
     }

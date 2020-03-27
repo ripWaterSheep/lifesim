@@ -2,8 +2,8 @@ package lifesim.main.game.overlay;
 
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.components.stats.HealthStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
+import lifesim.main.game.entities.components.stats.StatsColors;
 import lifesim.main.util.DrawMethods;
 import lifesim.main.util.fileIO.FontLoader;
 
@@ -49,11 +49,11 @@ public class StatBar extends Overlay {
         this.g2d = g2d;
         PlayerStats stats = player.getStats();
 
-        drawBar("Intellect", stats.getIntellect(), 0.05, 1000, PlayerStats.Colors.intellectColor);
-        drawBar("Money", stats.getMoney(), 0.005, 10000, PlayerStats.Colors.moneyColor);
-        drawBar("Strength", stats.getStrength(), 0.05, 1000, PlayerStats.Colors.strengthColor);
-        drawBar("Energy", stats.getEnergy(), 0.05, 1000, PlayerStats.Colors.energyColor);
-        drawBar("Health", stats.getHealth(), 0.05, 1000, HealthStats.Colors.bloodColor);
+        drawBar("Intellect", stats.getIntellect(), 0.05, 1000, StatsColors.intellectColor);
+        drawBar("Money", stats.getMoney(), 0.005, 10000, StatsColors.moneyColor);
+        drawBar("Strength", stats.getStrength(), 0.05, 1000, StatsColors.strengthColor);
+        drawBar("Energy", stats.getEnergy(), 0.05, 1000, StatsColors.energyColor);
+        drawBar("Health", stats.getHealth(), 0.05, 1000, StatsColors.healthColor);
 
         writeValue("World", player.getWorld().name);
         writeRoundedVal("Y", player.pos.y);
