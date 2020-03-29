@@ -49,7 +49,7 @@ public class AllItems {
     public static final Weapon laserGun = new Weapon("Laser Gun", new AnimatedSprite(
             new Animation("weapons", 300, new Vector2D(8, 8), 3)),
         new Projectile("Laser", new Sprite(10, 1, new Color(255, 0, 25, 150)),
-            new Stats(20, 10, true, 3, Alliance.PLAYER), 150, true, new Animation(boom)));
+            new Stats(20, 10, true, 0, Alliance.PLAYER), 150, true, new Animation(boom)));
 
     public static final Weapon bomb =  new Weapon("Bomb", new AnimatedSprite(
             new Animation("weapons", 120, new Vector2D(8, 8), 0)),

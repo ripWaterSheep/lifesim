@@ -2,29 +2,26 @@ package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.Projectile;
-import lifesim.main.game.entities.components.stats.statusEffects.StatusEffect;
-import lifesim.main.game.entities.components.stats.statusEffects.StatusEffectType;
 
 import java.util.ArrayList;
 
+
 public class Stats {
 
-    protected double speed;
     protected final double defaultSpeed;
+    protected double speedMultiplier = 1;
 
     private double health;
+    private double protectionMultiplier = 1;
     private final double initialHealth;
-    private boolean invulnerable;
+    private final boolean invulnerable;
     private final double damage;
-    private double damageProtection = 1;
-    public final Alliance alliance;
+    private double damageMultiplier = 1;
 
-    private final ArrayList<StatusEffect> currentStatusEffects = new ArrayList<>();
-    private final ArrayList<StatusEffect> offeredStatusEffects = new ArrayList<>();
+    public final Alliance alliance;
 
 
     public Stats(double speed, double health, boolean invulnerable, double damage, Alliance alliance) {
-        this.speed = speed;
         this.defaultSpeed = speed;
 
         this.health = health;
@@ -35,18 +32,13 @@ public class Stats {
     }
 
 
-    public Stats addOfferedStatusEffect(StatusEffect statusEffect) {
-        offeredStatusEffects.add(statusEffect);
-        return this;
-    }
-
     public Stats copyInitialState() {
         return new Stats(defaultSpeed, initialHealth, invulnerable, damage, alliance);
     }
 
 
     public double getCurrentSpeed() {
-        return speed;
+        return defaultSpeed*speedMultiplier;
     }
 
     public boolean isAlive() {
@@ -62,20 +54,14 @@ public class Stats {
     }
 
     public void loseHealth(double amount) {
-        if (!invulnerable) health -= amount*damageProtection;
+        if (!invulnerable) health -= amount * protectionMultiplier;
     }
 
-
-    public void inflictStatusEffect(StatusEffect statusEffect) {
-        currentStatusEffects.add(statusEffect);
-    }
 
     public void onCollision(Entity owner, Entity otherEntity) {
         if (!owner.canAttack(otherEntity)) return;
 
-        otherEntity.getStats().loseHealth(damage);
-        for (StatusEffect statusEffect: offeredStatusEffects)
-            otherEntity.getStats().inflictStatusEffect(statusEffect);
+        otherEntity.getStats().loseHealth(damage*damageMultiplier);
         if (owner instanceof Projectile) owner.removeFromWorld();
     }
 
@@ -83,17 +69,6 @@ public class Stats {
     public void update(Entity owner) {
         if (health <= 0 && !invulnerable)
             owner.removeFromWorld();
-
-        for (StatusEffect statusEffect: currentStatusEffects) {
-            if (statusEffect.isOfType(StatusEffectType.BURNING)) {
-                if (System.currentTimeMillis() % 800 == 0) loseHealth(1);
-            }
-            if (statusEffect.isOfType(StatusEffectType.FLYING)) {
-                invulnerable = true;
-            }
-        }
-        currentStatusEffects.removeIf(StatusEffect::isOver);
-        speed = defaultSpeed;
     }
 
 }

@@ -76,14 +76,13 @@ public class Inventory {
 
 
     public void dropStackInWorld(World world, Vector2D pos) {
+        stacks.remove(selectedStack);
         world.add(new DroppedItem("Dropped " + selectedStack.getItem().name, selectedStack.getItem().sprite, selectedStack.getItem(), selectedStack.getAmount()), pos);
         doGarbageCollection();
-        stacks.remove(selectedStack);
     }
 
 
     public void control(World world, Player player, PlayerStats stats) {
-
         if (MouseInputManager.right.isClicked()) {
             getSelectedItem().onClick(world, player, stats);
             selectedStack.changeAmountBy(-1);

@@ -34,7 +34,7 @@ public final class Player extends Entity {
                 new Animation("player", 100, new Vector2D(12, 16), 3),
                 new Animation("player", 100, new Vector2D(12, 16), 4)
                 ),
-            new PlayerStats(4, 100000, 1000, 0, 0, 0));
+            new PlayerStats(4, 10000, 1000, 0, 0, 0));
         this.game = game;
         movement.set(0, 0);
 

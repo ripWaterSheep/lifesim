@@ -26,11 +26,11 @@ public class PlayerStats extends Stats {
     @Override
     public double getCurrentSpeed() {
         // Base speed on current energy level.
-        speed *= (energy / 1100) + 0.61;
+        speedMultiplier = (energy / 1100) + 0.61;
         if (KeyInputManager.k_space.isPressed() && energy > 0)
-            speed *= 1.45;
+            speedMultiplier *= 1.45;
 
-        return speed;
+        return super.getCurrentSpeed();
     }
 
 

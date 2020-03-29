@@ -41,7 +41,7 @@ public class RangedAttackEntity extends AttackEntity {
     @Override
     protected void evaluateAttackState() {
         double distance = getDistanceBetween(attackTarget.pos, pos);
-        pursuing = distance <= detectionRange && distance >= projectile.getMovementRange()/2;
+        pursuing = distance <= detectionRange && !equals(attackTarget);
         attacking = (distance < projectile.getMovementRange() && !equals(attackTarget));
 
     }

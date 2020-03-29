@@ -23,7 +23,7 @@ public class Spawner {
 
 
     public void attemptSpawn(World world) {
-        if (System.currentTimeMillis() - lastSpawnTime > spawnInterval) {
+        if (System.currentTimeMillis() - lastSpawnTime >= spawnInterval) {
             Vector2D spawnPos = new Vector2D(world.getSize());
             spawnPos.set(world.getSize().scale(getRand(-0.5, 0.5)));
 
