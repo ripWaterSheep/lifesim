@@ -10,7 +10,7 @@ import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 
-import static java.lang.Math.abs;
+import static java.lang.Math.*;
 import static lifesim.main.util.math.Geometry.testIntersection;
 import static lifesim.main.util.math.MyMath.getRand;
 
@@ -66,6 +66,10 @@ public class Entity {
         return stats.alliance.canAttack(otherEntity.stats.alliance) && !equals(otherEntity) && !(otherEntity instanceof Projectile);
     }
 
+    public boolean canBeAttackedBy(Entity otherEntity) {
+        return stats.alliance.canBeAttackedBy(otherEntity.stats.alliance) && !equals(otherEntity);
+    }
+
 
     public boolean isRemoveRequested() {
         return removeRequested;
@@ -88,7 +92,6 @@ public class Entity {
 
     }
 
-
     protected void moveRandomly() {
         if (getRand(0, 1) < 0.02)
             movement.setMagDir(stats.getCurrentSpeed()/2, getRand(0, 360));
@@ -108,6 +111,9 @@ public class Entity {
     public void update(World world) {
         stats.update(this);
         move();
+        // Keep the entity within the world's boundaries.
+        if (stats.getCurrentSpeed() > 0)
+            pos.clampIn(new Vector2D(0, 0), world.getSize().scale(0.5).translate(sprite.getSize().scale(-0.5)));
     }
 
     public void render(Graphics2D g2d) {

@@ -58,6 +58,19 @@ public class Stats {
     }
 
 
+    public void buffSpeed(double multiplier) {
+        speedMultiplier *= multiplier;
+    }
+
+    public void buffProtection(double multiplier) {
+        protectionMultiplier *= multiplier;
+    }
+
+    public void buffDamage(double multiplier) {
+        damageMultiplier *= multiplier;
+    }
+
+
     public void onCollision(Entity owner, Entity otherEntity) {
         if (!owner.canAttack(otherEntity)) return;
 
@@ -69,6 +82,9 @@ public class Stats {
     public void update(Entity owner) {
         if (health <= 0 && !invulnerable)
             owner.removeFromWorld();
+        speedMultiplier = 1;
+        protectionMultiplier = 1;
+        damageMultiplier = 1;
     }
 
 }

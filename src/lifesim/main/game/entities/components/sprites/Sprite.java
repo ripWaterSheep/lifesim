@@ -6,6 +6,8 @@ import lifesim.main.util.fileIO.ImageLoader;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
+import static lifesim.main.util.math.MyMath.betterRound;
+
 
 public class Sprite {
 
@@ -53,8 +55,8 @@ public class Sprite {
 
 
     public Shape getShapeAt(Vector2D pos) {
-        int x = (int) (pos.x - (size.x/2));
-        int y = (int) (pos.y -(size.y/2));
+        int x = betterRound(pos.x - (size.x/2));
+        int y = betterRound(pos.y -(size.y/2));
 
         if (elliptical) return new Ellipse2D.Double(x, y, size.x, size.y);
         else return new Rectangle.Double(x, y, size.x, size.y);
@@ -72,7 +74,7 @@ public class Sprite {
 
         if (image != null) {
             Rectangle rect = shape.getBounds();
-            size.set(new Vector2D(image.getWidth(null), image.getHeight(null)));
+            //size.set(new Vector2D(image.getWidth(null), image.getHeight(null)));
             g2d.drawImage(image, rect.x, rect.y, rect.width, rect.height, null);
         }
     }

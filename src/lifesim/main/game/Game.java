@@ -45,7 +45,7 @@ public final class Game {
 
 
     public void update() {
-        player.getWorld().update();
+        player.getWorld().update(player);
 
         for (Overlay overlay: overlays) {
             overlay.update();

@@ -23,16 +23,16 @@ public class Layout {
 
     public Layout() {
         worlds.add(
-            new World("Town", 2500, 2500, new Color(60, 159, 75), new Color(201, 193, 126))
-                .add(new Entity("vRoad", new Sprite(75, 2500, Color.DARK_GRAY)), 0, 0)
-                .add(new Entity("hRoad", new Sprite(2500, 75, Color.DARK_GRAY)), 0, 0)
+            new World("Town", 2250, 2250, new Color(60, 160, 75), new Color(200, 190, 125))
+                .add(new Entity("vRoad", new Sprite(75, 2250, Color.DARK_GRAY)), 0, 0)
+                .add(new Entity("hRoad", new Sprite(2250, 75, Color.DARK_GRAY)), 0, 0)
                 .add(new Entity("House", new Sprite(200, 175, new Color(100, 80, 50))) {
                     @Override
                     public void onClick(Player player, PlayerStats stats) {
-                        //player.goTo("House Door");
+                        player.goTo("Home Door");
                     }
                 }, 250, -200)
-                .add(new Entity("School", new Sprite(150, 200, new Color(180, 115, 85))) {
+                .add(new Entity("School", new Sprite(150, 200, new Color(179, 96, 71))) {
                     @Override
                     public void whileTouching(Player player, PlayerStats stats) {
                         stats.gainIntellect(0.25);
@@ -75,16 +75,28 @@ public class Layout {
                     }
                 }, -250, -550)
                 .add(new Entity("Shop", new Sprite(250, 200, new Color(200, 110, 75))), -675, 250)
-                .add(new Entity("Cave", new Sprite(200, 75, Color.GRAY)), -1000, -1000)
+                .add(new Entity("Cave", new Sprite(200, 75, Color.LIGHT_GRAY)), -800, -800)
 
                 .addSpawner(new Spawner(new AttackEntity("Emo", new AnimatedSprite(new Animation("emo", 120, new Vector2D(11, 16), 0)),
-                    new Stats(2.8, 25, false, 8, Alliance.ENEMY), 125), 2000))
+                    new Stats(3.5, 25, false, 8, Alliance.ENEMY), 150), 2000))
 
                 .addSpawner(new Spawner(new RangedAttackEntity("Nerd", new AnimatedSprite(new Animation("nerd", 300, new Vector2D(7, 16), 0)),
-                    new Stats(3.8, 20, false,5, Alliance.ENEMY), 175, 1000,
+                    new Stats(3.8, 20, false,5, Alliance.ENEMY), 200, 1000,
                         new Projectile("Ball", new Sprite(4, 4, Color.BLACK), new Stats(15, 10, true, 10, Alliance.ENEMY),
-                                200,false)), 3000))
+                                125,false)), 3000))
         );
+
+
+        worlds.add(new World("Home", 300, 225, new Color(230, 210, 140), new Color(100, 80, 50))
+            .add(new Entity("Home Door", new Sprite(2, 30, new Color(167, 155, 81))) {
+                @Override
+                public void onClick(Player player, PlayerStats stats) {
+                    player.goTo("House");
+                }
+            }, 150, 0)
+
+        );
+
 
         worlds.add(new World("City", 3000, 3000, new Color(180, 180, 180), new Color(100, 205, 131))
         );

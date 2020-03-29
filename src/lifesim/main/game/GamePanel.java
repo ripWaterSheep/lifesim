@@ -13,7 +13,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    public static final int GRAPHICS_SCALE = 5;
+    public static final double GRAPHICS_SCALE = 4.8;
 
 
     private Game game;
@@ -32,11 +32,11 @@ public class GamePanel extends JPanel {
 
 
     public int getScaledWidth() {
-        return getWidth()/GRAPHICS_SCALE;
+        return (int) (getWidth()/GRAPHICS_SCALE);
     }
 
     public int getScaledHeight() {
-        return getHeight()/GRAPHICS_SCALE;
+        return (int) (getHeight()/GRAPHICS_SCALE);
     }
 
     public Vector2D getScaledDimensions() {

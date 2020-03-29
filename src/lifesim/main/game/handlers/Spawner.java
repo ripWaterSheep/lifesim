@@ -1,6 +1,7 @@
 package lifesim.main.game.handlers;
 
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.Vector2D;
 
 import static lifesim.main.util.math.MyMath.getRand;
@@ -22,7 +23,7 @@ public class Spawner {
     }
 
 
-    public void attemptSpawn(World world) {
+    public void attemptSpawn(World world, Player player) {
         if (System.currentTimeMillis() - lastSpawnTime >= spawnInterval) {
             Vector2D spawnPos = new Vector2D(world.getSize());
             spawnPos.set(world.getSize().scale(getRand(-0.5, 0.5)));

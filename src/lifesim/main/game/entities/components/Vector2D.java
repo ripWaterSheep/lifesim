@@ -1,11 +1,12 @@
 package lifesim.main.game.entities.components;
 
+import lifesim.main.util.math.MyMath;
+
 import java.awt.geom.Point2D;
 
 import static java.lang.Math.toDegrees;
 import static lifesim.main.util.math.Geometry.angleWrap;
-import static lifesim.main.util.math.MyMath.clamp;
-import static lifesim.main.util.math.MyMath.getRand;
+import static lifesim.main.util.math.MyMath.*;
 
 
 public class Vector2D {
@@ -64,9 +65,9 @@ public class Vector2D {
     }
 
 
-    public void clampAbs(Vector2D bounds) {
-        x = clamp(x, -bounds.x, bounds.x);
-        y = clamp(y, -bounds.y, bounds.y);
+    public void clampIn(Vector2D pos, Vector2D size) {
+        x = clamp(x, pos.x-size.x, pos.x+size.x);
+        y = clamp(y,pos.y-size.y, pos.y+size.y);
     }
 
     public Vector2D getRandInAbsBounds() {

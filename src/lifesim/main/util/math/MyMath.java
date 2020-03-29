@@ -8,11 +8,15 @@ import static java.lang.Math.min;
 
 public class MyMath {
 
-
     /** Ensure input is inside a certain range. */
     public static double clamp(double val, double bound1, double bound2) {
-        if (bound1 < bound2) return Math.max(bound1, Math.min(bound2, val));
-        else return Math.max(bound2, Math.min(bound1, val));
+        double min, max;
+        if (bound1 < bound2) {
+            min = bound1; max = bound2;
+        } else {
+            min = bound2; max = bound1;
+        }
+        return Math.max(min, Math.min(max, val));
     }
 
 

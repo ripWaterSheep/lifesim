@@ -4,6 +4,8 @@ import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.World;
 
+import java.util.function.Predicate;
+
 import static lifesim.main.util.math.Geometry.*;
 import static lifesim.main.util.math.MyMath.getRand;
 
@@ -29,7 +31,7 @@ public class AttackEntity extends Entity {
 
 
     protected void evaluateAttackState() {
-        pursuing = getDistanceBetween(attackTarget.pos, pos) <= detectionRange;
+        pursuing = getDistanceBetween(attackTarget.pos, pos) <= detectionRange && !attacking;
         attacking = isTouching(attackTarget);
     }
 
@@ -38,13 +40,15 @@ public class AttackEntity extends Entity {
     public void update(World world) {
         super.update(world);
         evaluateAttackState();
-        // Move towards player if this is pursuing another entity.
-        attackTarget = world.getClosestOpposingEntity(this, detectionRange);
+        // Choose the attack target that is the closest entity within range that this can attack.
+        attackTarget = world.getClosestEntity(this, detectionRange, this::canAttack);
 
-        if (attacking) // Decelerate smoothly if on top of another entity because this doesn't need to be centered, just touching
+        // Move towards player if this is pursuing another entity.
+
+        if (pursuing) // Follow entity's position with a little randomness, since it would otherwise overlap other entities.
+        movement.setMagDir(stats.getCurrentSpeed(), getAngleBetween(attackTarget.pos, pos)+getRand(-30, 30));
+        else if (attacking) // Decelerate smoothly if on top of another entity because this doesn't need to be centered, just touching
             movement.set(movement.scale(0.7));
-        else if (pursuing) // Follow entity's position with a little randomness, since it would otherwise overlap other entities.
-            movement.setMagDir(stats.getCurrentSpeed(), getAngleBetween(attackTarget.pos, pos)+getRand(-30, 30));
         else moveRandomly();
     }
 

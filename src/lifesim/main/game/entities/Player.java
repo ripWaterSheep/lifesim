@@ -76,6 +76,7 @@ public final class Player extends Entity {
             }
             for (Entity entity: world.getEntities()) {
                 if (entity.name.equals(name)) {
+                    setWorld(world);
                     pos.set(entity.pos);
                     return;
                 }
@@ -90,7 +91,7 @@ public final class Player extends Entity {
 
 
     public void controlMovement() {
-        movement.set(movement.scale(0.7));// Slow down due to friction, approaching zero.
+        movement.set(movement.scale(0.8));// Slow down due to friction, approaching zero.
         double speed = stats.getCurrentSpeed();
         boolean up, down, left, right;
         final KeyInputListener upKey = KeyInputManager.k_w,

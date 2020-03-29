@@ -2,12 +2,15 @@ package lifesim.main.game.handlers;
 
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 import java.util.*;
+import java.util.function.Predicate;
 
+import static lifesim.main.util.math.Geometry.angleWrap;
 import static lifesim.main.util.math.Geometry.getDistanceBetween;
 
 
@@ -42,19 +45,19 @@ public class World {
     }
 
 
-    public Entity getClosestOpposingEntity(Entity entity, double detectionDistance) {
+    /** Get the closest entity in a world to an entity within a certain range.*/
+    public Entity getClosestEntity(Entity entity, double range, Predicate<Entity> filter) {
         Entity currentClosest = entity;
-        double currentClosestDistance = detectionDistance;
+        double currentClosestDistance = range;
         for (Entity entity2: entities) {
             double distance = getDistanceBetween(entity.pos, entity2.pos);
             if (distance < currentClosestDistance) {
-                if (entity.canAttack(entity2)) {
+                if (filter.test(entity2)) { // Filter method must evaluate to true when entity passed as parameter.
                     currentClosest = entity2;
                     currentClosestDistance = distance;
                 }
             }
         }
-        System.out.println(entity.name+"  "+currentClosest.name);
         return currentClosest;
     }
 
@@ -88,10 +91,10 @@ public class World {
     }
 
 
-    public void update() {
+    public void update(Player player) {
         if (entities.size() < MAX_ENTITIES) {
             for (Spawner spawner : spawners)
-                spawner.attemptSpawn(this);
+                spawner.attemptSpawn(this, player);
         }
 
         for (Entity entity: getEntities()) {
@@ -102,9 +105,7 @@ public class World {
                     entity.handleCollision(entity2);
             }
 
-            entity.pos.clampAbs(size.scale((0.5)).translate(entity.sprite.getSize().scale(-0.5)));
             doGarbageCollection(entity);
-            // Keep the entity within the world's boundaries.
         }
     }
 
