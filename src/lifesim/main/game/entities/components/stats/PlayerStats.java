@@ -9,7 +9,7 @@ import static java.lang.Math.max;
 import static java.lang.Math.sqrt;
 
 
-public class PlayerStats extends Stats {
+public class PlayerStats extends HealthStats {
 
     private double energy;
     private double strength;
@@ -17,7 +17,7 @@ public class PlayerStats extends Stats {
     private double intellect;
 
     public PlayerStats(double speed, double health, double energy, double strength, double money, double intellect) {
-        super(speed, health, false, 0, Alliance.PLAYER);
+        super(speed, 0, Alliance.PLAYER, health);
         this.energy = energy;
         this.strength = strength;
         this.money = money;
@@ -92,12 +92,11 @@ public class PlayerStats extends Stats {
         strength = max(0, strength);
         intellect = max(0, intellect);
 
+        speedMultiplier *= (energy/5000) + 0.8;
         if (KeyInputManager.k_space.isPressed() && energy > 0)
             speedMultiplier *= 1.45;
-        speedMultiplier *= (energy/5000) + 0.8;
 
-        double tireAmount = 0.1 + sqrt(player.movement.getMagnitude()/450);
-        energy -= tireAmount;
+        energy -= 0.1 + sqrt(player.movement.getMagnitude()/450);
     }
 
 

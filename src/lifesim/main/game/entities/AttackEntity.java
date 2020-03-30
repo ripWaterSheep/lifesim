@@ -1,10 +1,9 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.entities.components.sprites.Sprite;
+import lifesim.main.game.entities.components.stats.BasicStats;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.World;
-
-import java.util.function.Predicate;
 
 import static lifesim.main.util.math.Geometry.*;
 import static lifesim.main.util.math.MyMath.getRand;

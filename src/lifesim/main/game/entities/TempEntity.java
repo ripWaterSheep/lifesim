@@ -4,6 +4,7 @@ import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 
 import java.awt.*;
 
+
 /** A temporary entity only intended to run through a single sprite animation cycle; used for effects such as explosions */
 public class TempEntity extends Entity {
 

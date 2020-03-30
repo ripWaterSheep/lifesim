@@ -3,6 +3,7 @@ package lifesim.main.game.entities;
 import lifesim.main.game.Main;
 import lifesim.main.game.entities.components.stats.Alliance;
 import lifesim.main.game.entities.components.stats.PlayerStats;
+import lifesim.main.game.entities.components.stats.BasicStats;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.World;
 import lifesim.main.game.entities.components.sprites.Sprite;
@@ -12,7 +13,6 @@ import java.awt.*;
 
 import static java.lang.Math.*;
 import static lifesim.main.util.math.Geometry.testIntersection;
-import static lifesim.main.util.math.MyMath.getRand;
 
 
 public class Entity {
@@ -38,8 +38,8 @@ public class Entity {
     }
 
     public Entity(String name, Sprite sprite) {
-        this(name, sprite, new Stats(0, 100, true, 0, Alliance.INANIMATE));
-    }
+        this(name, sprite, new BasicStats(0, 0, Alliance.INANIMATE));
+}
 
     public Entity copyInitialState() {
         return new Entity(name, sprite, stats.copyInitialState());
@@ -64,7 +64,7 @@ public class Entity {
 
 
     public boolean canAttack(Entity otherEntity) {
-        return stats.alliance.canAttack(otherEntity.stats.alliance) && !equals(otherEntity) && !(otherEntity instanceof Projectile);
+        return stats.getAlliance().canAttack(otherEntity.stats.getAlliance()) && !equals(otherEntity) && !(otherEntity instanceof Projectile);
     }
 
 

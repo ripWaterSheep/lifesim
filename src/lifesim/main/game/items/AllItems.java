@@ -7,13 +7,12 @@ import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
+import lifesim.main.game.entities.components.stats.HealthStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.game.entities.components.stats.Stats;
-import lifesim.main.game.handlers.Spawner;
+import lifesim.main.game.entities.components.stats.BasicStats;
 import lifesim.main.game.handlers.World;
 
 import java.awt.*;
-import java.util.SortedMap;
 
 import static lifesim.main.util.math.MyMath.getRand;
 import static lifesim.main.util.math.MyMath.getRandInt;
@@ -46,17 +45,17 @@ public class AllItems {
     public static final Item waterGun = new SpawnItem("Water Gun",
             new AnimatedSprite(new Animation("weapons", 200, new Vector2D(8, 8), 2)),
         new Projectile("Water", new Sprite(2, 2, new Color(50, 80, 220, 150)),
-                new Stats(12, 10, true, 1, Alliance.PLAYER), 120, false));
+                new BasicStats(12, 1, Alliance.PLAYER), 120, false));
 
     public static final Item laserGun = new SpawnItem("Laser Gun", new AnimatedSprite(
             new Animation("weapons", 300, new Vector2D(8, 8), 3)),
         new Projectile("Laser", new Sprite(10, 1, new Color(255, 0, 25, 150)),
-            new Stats(20, 10, true, 3, Alliance.PLAYER), 150, true, new Animation(boom)));
+            new BasicStats(20, 3, Alliance.PLAYER), 150, true, new Animation(boom)));
 
     public static final Item bomb =  new SpawnItem("Bomb", new AnimatedSprite(
             new Animation("weapons", 120, new Vector2D(8, 8), 0)),
         new Projectile("Bomb", new AnimatedSprite(new Animation("bomb", 75, new Vector2D(9, 16), 0)),
-            new Stats(0, 10, true, 20, Alliance.PLAYER), 5, false, new Animation(boom)));
+            new BasicStats(0, 20, Alliance.PLAYER), 5, false, new Animation(boom)));
 
 
     /************
@@ -65,11 +64,10 @@ public class AllItems {
 
 
     public static final Item allyTest = new SpawnItem("Ally test", new Sprite(8, 8, new Color(50, 100, 255)),
-            new RangedAttackEntity("Ally", new Sprite(16, 16, new Color(50, 100, 255)),
-            new Stats(3, 100, false, 3, Alliance.PLAYER), 150, 3000,
-                    new Projectile("Bullet", new Sprite(2, 2, new Color(39, 41, 39, 150)),
-                    new Stats(6, 15, true, 20, Alliance.PLAYER), 150, true, new Animation(boom))));
-
+            new RangedAttackEntity("Ally", new Sprite(8, 8, new Color(50, 100, 255)),
+            new HealthStats(3, 3, Alliance.PLAYER, 30), 200, 3000,
+                    new Projectile("Bullet", new Sprite(2, 2, new Color(0, 0, 0, 150)),
+                    new BasicStats(6,  12, Alliance.PLAYER), 150, false, new Animation(boom))));
 
 
     /**************
@@ -103,7 +101,7 @@ public class AllItems {
             double amount = getRand(-500, 300);
 
             switch (randStat) {
-                case 1: stats.gainHealth(amount); break;
+                case 1: stats.heal(amount); break;
                 case 2: stats.energize(amount); break;
                 case 5: stats.gainIntellect(amount); break;
             }

@@ -3,6 +3,7 @@ package lifesim.main.game.entities;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
+import lifesim.main.game.entities.components.stats.BasicStats;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.World;
 
@@ -30,7 +31,7 @@ public class Projectile extends Entity {
         this.damageAnimation = damageAnimation;
     }
 
-    public Projectile(String name, Sprite sprite, Stats stats, double movementRange, boolean matchSpriteAngle) {
+    public Projectile(String name, Sprite sprite, BasicStats stats, double movementRange, boolean matchSpriteAngle) {
         this(name, sprite, stats, movementRange, matchSpriteAngle, BLANK);
     }
 

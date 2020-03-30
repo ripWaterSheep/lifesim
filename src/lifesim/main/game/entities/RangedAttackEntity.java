@@ -1,6 +1,7 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.entities.components.sprites.Sprite;
+import lifesim.main.game.entities.components.stats.BasicStats;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.World;
 

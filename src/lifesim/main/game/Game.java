@@ -88,12 +88,12 @@ public final class Game {
         if (KeyInputManager.k_shift.isPressed()) {
             if (KeyInputManager.k_n.isClicked()) cycleWorlds(1);
             if (KeyInputManager.k_b.isClicked()) cycleWorlds(-1);
-            if (KeyInputManager.k_1.isPressed()) stats.gainHealth(10);
+            if (KeyInputManager.k_1.isPressed()) stats.heal(10);
             if (KeyInputManager.k_2.isPressed()) stats.energize(10);
             if (KeyInputManager.k_3.isPressed()) stats.strengthen(10);
             if (KeyInputManager.k_4.isPressed()) stats.gainMoney(10);
             if (KeyInputManager.k_5.isPressed()) stats.gainIntellect(10);
-            if (KeyInputManager.k_k.isClicked()) stats.loseHealth(10000);
+            if (KeyInputManager.k_k.isClicked()) stats.hit(10000);
             if (KeyInputManager.k_r.isClicked()) panel.newGame();
         }
     }

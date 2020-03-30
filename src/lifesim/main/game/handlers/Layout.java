@@ -6,8 +6,9 @@ import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
+import lifesim.main.game.entities.components.stats.HealthStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.game.entities.components.stats.Stats;
+import lifesim.main.game.entities.components.stats.BasicStats;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class Layout {
                     @Override
                     public void onClick(Player player, PlayerStats stats) {
                         if (stats.canAfford(0.25)) {
-                            if (stats.getHealth() < 1000) stats.gainHealth(0.05);
+                            if (stats.getHealth() < 1000) stats.heal(0.05);
                             stats.loseMoney(0.25);
                         }
                     }
@@ -78,12 +79,12 @@ public class Layout {
                 .add(new Entity("Cave", new Sprite(200, 75, Color.LIGHT_GRAY)), -800, -800)
 
                 .addSpawner(new Spawner(new AttackEntity("Emo", new AnimatedSprite(new Animation("emo", 120, new Vector2D(11, 16), 0)),
-                    new Stats(3, 25, false, 8, Alliance.ENEMY), 150), 2000))
+                    new HealthStats(3, 8, Alliance.ENEMY, 25), 150), 1500))
 
                 .addSpawner(new Spawner(new RangedAttackEntity("Nerd", new AnimatedSprite(new Animation("nerd", 300, new Vector2D(7, 16), 0)),
-                    new Stats(2.5, 20, false,5, Alliance.ENEMY), 200, 1000,
-                        new Projectile("Ball", new Sprite(4, 4, Color.BLACK), new Stats(15, 10, true, 10, Alliance.ENEMY),
-                                125,false)), 3000))
+                    new HealthStats(2.5, 5, Alliance.ENEMY, 20), 200, 1000,
+                        new Projectile("Ball", new Sprite(4, 4, Color.BLACK), new BasicStats(15, 10, Alliance.ENEMY),
+                                125,false)), 2500))
         );
 
 
