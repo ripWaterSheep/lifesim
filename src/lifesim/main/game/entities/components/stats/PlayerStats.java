@@ -8,6 +8,7 @@ import lifesim.main.game.entities.Player;
 import static java.lang.Math.max;
 import static java.lang.Math.sqrt;
 
+
 public class PlayerStats extends Stats {
 
     private double energy;
@@ -21,16 +22,6 @@ public class PlayerStats extends Stats {
         this.strength = strength;
         this.money = money;
         this.intellect = intellect;
-    }
-
-    @Override
-    public double getCurrentSpeed() {
-        // Base speed on current energy level.
-        speedMultiplier = (energy / 1100) + 0.61;
-        if (KeyInputManager.k_space.isPressed() && energy > 0)
-            speedMultiplier *= 1.45;
-
-        return super.getCurrentSpeed();
     }
 
 
@@ -84,24 +75,28 @@ public class PlayerStats extends Stats {
 
 
     @Override
-    public void onCollision(Entity owner, Entity otherEntity) {
-        super.onCollision(owner, otherEntity);
+    public void onCollision(Entity player, Entity otherEntity) {
+        super.onCollision(player, otherEntity);
 
-        otherEntity.whileTouching((Player) owner, this);
+        otherEntity.whileTouching((Player) player, this);
         
         if (MouseInputManager.left.isClicked())
-            otherEntity.onClick((Player) owner, this);
+            otherEntity.onClick((Player) player, this);
     }
 
 
     @Override
-    public void update(Entity owner) {
-        super.update(owner);
+    public void update(Entity player) {
+        super.update(player);
         energy = max(0, energy);
         strength = max(0, strength);
         intellect = max(0, intellect);
 
-        double tireAmount = 0.1 + sqrt(owner.movement.getMagnitude()/400);
+        if (KeyInputManager.k_space.isPressed() && energy > 0)
+            speedMultiplier *= 1.45;
+        speedMultiplier *= (energy/5000) + 0.8;
+
+        double tireAmount = 0.1 + sqrt(player.movement.getMagnitude()/450);
         energy -= tireAmount;
     }
 

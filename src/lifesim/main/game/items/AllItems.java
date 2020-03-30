@@ -1,8 +1,7 @@
 package lifesim.main.game.items;
 
 import lifesim.main.game.controls.MouseInputManager;
-import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.Projectile;
+import lifesim.main.game.entities.*;
 import lifesim.main.game.entities.components.stats.Alliance;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
@@ -10,9 +9,12 @@ import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.entities.components.stats.Stats;
+import lifesim.main.game.handlers.Spawner;
 import lifesim.main.game.handlers.World;
 
 import java.awt.*;
+import java.util.SortedMap;
+
 import static lifesim.main.util.math.MyMath.getRand;
 import static lifesim.main.util.math.MyMath.getRandInt;
 
@@ -41,20 +43,33 @@ public class AllItems {
     private static final Animation boom = new Animation("boom",40, new Vector2D(16, 16), 0);
 
 
-    public static final Weapon waterGun = new Weapon("Water Gun",
+    public static final Item waterGun = new SpawnItem("Water Gun",
             new AnimatedSprite(new Animation("weapons", 200, new Vector2D(8, 8), 2)),
         new Projectile("Water", new Sprite(2, 2, new Color(50, 80, 220, 150)),
                 new Stats(12, 10, true, 1, Alliance.PLAYER), 120, false));
 
-    public static final Weapon laserGun = new Weapon("Laser Gun", new AnimatedSprite(
+    public static final Item laserGun = new SpawnItem("Laser Gun", new AnimatedSprite(
             new Animation("weapons", 300, new Vector2D(8, 8), 3)),
         new Projectile("Laser", new Sprite(10, 1, new Color(255, 0, 25, 150)),
-            new Stats(20, 10, true, 0, Alliance.PLAYER), 150, true, new Animation(boom)));
+            new Stats(20, 10, true, 3, Alliance.PLAYER), 150, true, new Animation(boom)));
 
-    public static final Weapon bomb =  new Weapon("Bomb", new AnimatedSprite(
+    public static final Item bomb =  new SpawnItem("Bomb", new AnimatedSprite(
             new Animation("weapons", 120, new Vector2D(8, 8), 0)),
         new Projectile("Bomb", new AnimatedSprite(new Animation("bomb", 75, new Vector2D(9, 16), 0)),
             new Stats(0, 10, true, 20, Alliance.PLAYER), 5, false, new Animation(boom)));
+
+
+    /************
+     * Utilities
+     ************/
+
+
+    public static final Item allyTest = new SpawnItem("Ally test", new Sprite(8, 8, new Color(50, 100, 255)),
+            new RangedAttackEntity("Ally", new Sprite(16, 16, new Color(50, 100, 255)),
+            new Stats(3, 100, false, 3, Alliance.PLAYER), 150, 3000,
+                    new Projectile("Bullet", new Sprite(2, 2, new Color(39, 41, 39, 150)),
+                    new Stats(6, 15, true, 20, Alliance.PLAYER), 150, true, new Animation(boom))));
+
 
 
     /**************

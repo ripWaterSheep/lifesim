@@ -78,10 +78,10 @@ public class Layout {
                 .add(new Entity("Cave", new Sprite(200, 75, Color.LIGHT_GRAY)), -800, -800)
 
                 .addSpawner(new Spawner(new AttackEntity("Emo", new AnimatedSprite(new Animation("emo", 120, new Vector2D(11, 16), 0)),
-                    new Stats(3.5, 25, false, 8, Alliance.ENEMY), 150), 2000))
+                    new Stats(3, 25, false, 8, Alliance.ENEMY), 150), 2000))
 
                 .addSpawner(new Spawner(new RangedAttackEntity("Nerd", new AnimatedSprite(new Animation("nerd", 300, new Vector2D(7, 16), 0)),
-                    new Stats(3.8, 20, false,5, Alliance.ENEMY), 200, 1000,
+                    new Stats(2.5, 20, false,5, Alliance.ENEMY), 200, 1000,
                         new Projectile("Ball", new Sprite(4, 4, Color.BLACK), new Stats(15, 10, true, 10, Alliance.ENEMY),
                                 125,false)), 3000))
         );
@@ -99,6 +99,7 @@ public class Layout {
 
 
         worlds.add(new World("City", 3000, 3000, new Color(180, 180, 180), new Color(100, 205, 131))
+
         );
 
     }

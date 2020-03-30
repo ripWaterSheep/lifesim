@@ -43,7 +43,6 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
             if (direction >= 135 && direction < 225) animation = left;
             if (direction > 225 && direction <= 315) animation = backward;
             if (direction > 315 || direction <= 45) animation = right;
-
         }
         super.render(g2d, pos, movement);
     }

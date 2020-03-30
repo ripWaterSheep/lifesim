@@ -37,7 +37,7 @@ public class World {
 
 
     public Vector2D getSize() {
-        return new Vector2D(size);
+        return size.copy();
     }
 
     public ArrayList<Entity> getEntities() {
@@ -45,7 +45,8 @@ public class World {
     }
 
 
-    /** Get the closest entity in a world to an entity within a certain range.*/
+    /** Get the closest entity in a world to an entity within a certain range.
+     * Default to the entity itself if no eligible entities are within range rather than null to prevent NPE's. */
     public Entity getClosestEntity(Entity entity, double range, Predicate<Entity> filter) {
         Entity currentClosest = entity;
         double currentClosestDistance = range;

@@ -35,7 +35,6 @@ public class AttackEntity extends Entity {
         attacking = isTouching(attackTarget);
     }
 
-
     @Override
     public void update(World world) {
         super.update(world);
@@ -44,12 +43,12 @@ public class AttackEntity extends Entity {
         attackTarget = world.getClosestEntity(this, detectionRange, this::canAttack);
 
         // Move towards player if this is pursuing another entity.
-
-        if (pursuing) // Follow entity's position with a little randomness, since it would otherwise overlap other entities.
-        movement.setMagDir(stats.getCurrentSpeed(), getAngleBetween(attackTarget.pos, pos)+getRand(-30, 30));
-        else if (attacking) // Decelerate smoothly if on top of another entity because this doesn't need to be centered, just touching
+        if (pursuing && !equals(attackTarget)) // Follow entity's position with a little randomness, since it would otherwise overlap other entities.
+            movement.setMagDir(stats.getCurrentSpeed(), getAngleBetween(attackTarget.pos, pos) + getRand(-25, 25));
+        else if (attacking && !equals(attackTarget)) // Decelerate smoothly if on top of another entity because this doesn't need to be centered, just touching
             movement.set(movement.scale(0.7));
-        else moveRandomly();
+        else if (getRand(0, 1) < 0.03)
+            movement.setMagDir(stats.getCurrentSpeed()/2, getRand(0, 360));
     }
 
 

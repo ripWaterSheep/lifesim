@@ -31,7 +31,7 @@ public class Entity {
     public Entity(String name, Sprite sprite, Stats stats) {
         this.name = name;
         this.sprite = sprite;
-        this.pos = new Vector2D(0, 0);
+        pos = new Vector2D(0, 0);
         movement = new Vector2D(0, 0);
         movement.setMagDir(stats.getCurrentSpeed(), 0);
         this.stats = stats;
@@ -62,12 +62,9 @@ public class Entity {
         return stats;
     }
 
+
     public boolean canAttack(Entity otherEntity) {
         return stats.alliance.canAttack(otherEntity.stats.alliance) && !equals(otherEntity) && !(otherEntity instanceof Projectile);
-    }
-
-    public boolean canBeAttackedBy(Entity otherEntity) {
-        return stats.alliance.canBeAttackedBy(otherEntity.stats.alliance) && !equals(otherEntity);
     }
 
 
@@ -92,10 +89,6 @@ public class Entity {
 
     }
 
-    protected void moveRandomly() {
-        if (getRand(0, 1) < 0.02)
-            movement.setMagDir(stats.getCurrentSpeed()/2, getRand(0, 360));
-    }
 
     protected void move() {
         pos.set(pos.translate(movement));
@@ -113,7 +106,7 @@ public class Entity {
         move();
         // Keep the entity within the world's boundaries.
         if (stats.getCurrentSpeed() > 0)
-            pos.clampIn(new Vector2D(0, 0), world.getSize().scale(0.5).translate(sprite.getSize().scale(-0.5)));
+            pos.clampInRect(new Vector2D(0, 0), world.getSize().scale(0.5).translate(sprite.getSize().scale(-0.5)));
     }
 
     public void render(Graphics2D g2d) {

@@ -44,7 +44,7 @@ public class Sprite {
     }
 
     public Vector2D getSize() {
-        return new Vector2D(size);
+        return size.copy();
     }
 
 

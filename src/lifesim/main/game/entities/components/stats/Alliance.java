@@ -11,10 +11,6 @@ public enum Alliance {
     PASSIVE, // Cannot attack but may be attacked.
     INANIMATE; // Cannot attack or be attacked.
 
-    public boolean canBeAttackedBy(Alliance otherAlliance) {
-        return (!equals(otherAlliance) || otherAlliance.equals(NEUTRAL)) && !otherAlliance.equals(PASSIVE) && !equals(INANIMATE) && !otherAlliance.equals(INANIMATE);
-    }
-
     public boolean canAttack(Alliance otherAlliance) {
         return (!equals(otherAlliance) || equals(NEUTRAL)) && !equals(PASSIVE) && !equals(INANIMATE) && !otherAlliance.equals(INANIMATE);
     }

@@ -42,7 +42,7 @@ public class ItemStack {
 
     public void drag(Vector2D dragPos, Vector2D inventoryBounds) {
         inventoryPos.set(dragPos);
-        inventoryPos.clampIn(new Vector2D(0, 0), inventoryBounds.translate(item.sprite.getSize().scale(-0.5)));
+        inventoryPos.clampInRect(new Vector2D(0, 0), inventoryBounds.translate(item.sprite.getSize().scale(-0.5)));
     }
 
 

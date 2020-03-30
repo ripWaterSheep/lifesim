@@ -21,7 +21,7 @@ public class InventoryGUI extends Overlay {
     private static final Sprite selectedBubble = new Sprite("selected_slot");
 
     // Define the edges of the inside of the inventory.
-    public static final Vector2D inventoryBounds = new Vector2D(bg.getSize().scale(0.48, 0.3).translate(0, 5));
+    public static final Vector2D inventoryBounds = bg.getSize().scale(0.48, 0.3).translate(0, 5);
 
 
     private final Inventory inventory;

@@ -20,8 +20,8 @@ public class Vector2D {
         this.y = y;
     }
 
-    public Vector2D(Vector2D vector2D) {
-        this(vector2D.x, vector2D.y);
+    public Vector2D copy() {
+        return new Vector2D(x, y);
     }
 
 
@@ -65,12 +65,13 @@ public class Vector2D {
     }
 
 
-    public void clampIn(Vector2D pos, Vector2D size) {
-        x = clamp(x, pos.x-size.x, pos.x+size.x);
-        y = clamp(y,pos.y-size.y, pos.y+size.y);
+    public void clampInRect(Vector2D rectCenter, Vector2D size) {
+        x = clamp(x, rectCenter.x-size.x, rectCenter.x+size.x);
+        y = clamp(y,rectCenter.y-size.y, rectCenter.y+size.y);
     }
 
-    public Vector2D getRandInAbsBounds() {
+
+    public Vector2D randomizeInAbsRectBounds() {
         return new Vector2D(getRand(-x, x), getRand(-y, y));
     }
 
@@ -91,9 +92,9 @@ public class Vector2D {
     }
 
 
-    public boolean inRect(Vector2D rectPos, Vector2D dimensions) {
-        Vector2D rectMin = rectPos.translate(dimensions.scale(-0.5));
-        Vector2D rectMax = rectPos.translate(dimensions.scale(0.5));
+    public boolean inRect(Vector2D rectCenter, Vector2D dimensions) {
+        Vector2D rectMin = rectCenter.translate(dimensions.scale(-0.5));
+        Vector2D rectMax = rectCenter.translate(dimensions.scale(0.5));
         return x > rectMin.x && y > rectMin.y && x < rectMax.x && y < rectMax.y;
     }
 

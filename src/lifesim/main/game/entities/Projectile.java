@@ -44,16 +44,10 @@ public class Projectile extends Entity {
         return movementRange;
     }
 
-    public void launchTowards(double direction) {
-        movement.setDirection(direction);
-    }
-
 
     @Override
     public void onRemoval(World world) {
-        if (damageAnimation != null)
-            world.add(new TempEntity("Damage Animation", new AnimatedSprite(damageAnimation)), pos);
-
+        world.add(new TempEntity("Damage Animation", new AnimatedSprite(damageAnimation)), pos);
         super.onRemoval(world);
     }
 

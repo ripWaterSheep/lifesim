@@ -34,7 +34,7 @@ public final class Player extends Entity {
                 new Animation("player", 100, new Vector2D(12, 16), 3),
                 new Animation("player", 100, new Vector2D(12, 16), 4)
                 ),
-            new PlayerStats(4, 10000, 1000, 0, 0, 0));
+            new PlayerStats(6, 10000, 1000, 0, 0, 0));
         this.game = game;
         movement.set(0, 0);
 
@@ -45,7 +45,8 @@ public final class Player extends Entity {
         inventory.addItem(mysteriousPill, 100);
         inventory.addItem(laserGun, 100);
         inventory.addItem(virtualCoin, 100);
-        inventory.addItem(jetPack, 1000);
+        inventory.addItem(jetPack, 100);
+        inventory.addItem(allyTest, 100);
     }
 
 
@@ -127,6 +128,7 @@ public final class Player extends Entity {
         // Move along x or y axis only if needed.
         if ((left || right) && abs(movement.x) < speed) movement.setXMagDir(speed, angle);
         if ((up || down) && abs(movement.y) < speed) movement.setYMagDir(speed, angle);
+        System.out.println(stats.getCurrentSpeed());
     }
 
 

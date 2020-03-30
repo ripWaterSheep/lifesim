@@ -30,7 +30,7 @@ public class RangedAttackEntity extends AttackEntity {
     private void attemptShot(World world) {
         if (System.currentTimeMillis() - lastShootTime >= shootInterval) {
             Projectile newProjectile = projectile.copyInitialState();
-            newProjectile.launchTowards(getAngleBetween(attackTarget.pos, pos));
+            newProjectile.movement.setDirection(getAngleBetween(attackTarget.pos, pos));
 
             world.add(newProjectile, pos);
             lastShootTime = System.currentTimeMillis();
@@ -41,14 +41,14 @@ public class RangedAttackEntity extends AttackEntity {
     @Override
     protected void evaluateAttackState() {
         double distance = getDistanceBetween(attackTarget.pos, pos);
-        pursuing = (distance <= detectionRange && distance >= projectile.getMovementRange()/2) && !equals(attackTarget);
-        attacking = distance <= projectile.getMovementRange() && !equals(attackTarget);
+        pursuing = (distance <= detectionRange && distance >= projectile.getMovementRange()/2);
+        attacking = distance <= projectile.getMovementRange();
     }
 
 
     @Override
     public void update(World world) {
         super.update(world);
-        if (attacking) attemptShot(world);
+        if (attacking && !equals(attackTarget)) attemptShot(world);
     }
 }
