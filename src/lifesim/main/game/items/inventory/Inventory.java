@@ -6,7 +6,7 @@ import lifesim.main.game.entities.DroppedItem;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.game.items.AllItems;
+import lifesim.main.game.items.ItemTypes;
 import lifesim.main.game.items.Item;
 import lifesim.main.game.handlers.World;
 import lifesim.main.game.overlay.InventoryGUI;
@@ -71,7 +71,7 @@ public class Inventory {
 
 
     public void selectNothing() {
-        selectedStack = new ItemStack(AllItems.empty, 0, new Vector2D(0, 0));
+        selectedStack = new ItemStack(ItemTypes.empty, 0, new Vector2D(0, 0));
     }
 
 
@@ -84,11 +84,10 @@ public class Inventory {
 
     public void control(World world, Player player, PlayerStats stats) {
         if (MouseInputManager.right.isClicked()) {
-            getSelectedItem().onClick(world, player, stats);
+            getSelectedItem().use(world, player, stats);
             selectedStack.changeAmountBy(-1);
             doGarbageCollection();
         }
-        getSelectedItem().whileHolding(world, player, stats);
 
         if (KeyInputManager.k_q.isClicked()) {
             // Drop the item behind player so it isn't picked back up when moving forward.

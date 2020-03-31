@@ -9,7 +9,7 @@ import lifesim.main.game.handlers.World;
 import java.awt.*;
 
 
-public class Item {
+public abstract class Item {
 
     public final String name;
     public final Sprite sprite;
@@ -21,9 +21,8 @@ public class Item {
     }
 
 
-    public void onClick(World world, Player player, PlayerStats stats) { }
+    public abstract void use(World world, Player player, PlayerStats stats);
 
-    public void whileHolding(World world, Player player, PlayerStats stats) { }
 
 
     public void render(Graphics2D g2d, Vector2D pos) {

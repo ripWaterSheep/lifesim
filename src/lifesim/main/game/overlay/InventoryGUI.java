@@ -5,7 +5,7 @@ import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.game.items.AllItems;
+import lifesim.main.game.items.ItemTypes;
 import lifesim.main.game.items.inventory.Inventory;
 import lifesim.main.game.items.inventory.ItemStack;
 import lifesim.main.game.entities.components.sprites.Sprite;
@@ -99,7 +99,7 @@ public class InventoryGUI extends Overlay {
 
         // Draw the stack selection bubble over the selected stack, and display item details under the inventory
         ItemStack selectedStack = inventory.getSelectedStack();
-        if (selectedStack.getItem() != AllItems.empty) {
+        if (selectedStack.getItem() != ItemTypes.empty) {
             selectedBubble.render(g2d, selectedStack.inventoryPos, new Vector2D(0, 0));
             selectedStack.renderDetailsAt(g2d, inventoryBounds.translate(-inventoryBounds.x-4, 5));
         }

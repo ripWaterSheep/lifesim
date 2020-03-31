@@ -1,26 +1,28 @@
 package lifesim.main.game.items;
 
 import lifesim.main.game.controls.MouseInputManager;
-import lifesim.main.game.entities.*;
-import lifesim.main.game.entities.components.stats.Alliance;
+import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
-import lifesim.main.game.entities.components.stats.HealthStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.game.entities.components.stats.BasicStats;
 import lifesim.main.game.handlers.World;
 
 import java.awt.*;
 
+import static lifesim.main.game.entities.types.AllyType.ALLY_TEST;
+import static lifesim.main.game.entities.types.ProjectileType.*;
 import static lifesim.main.util.math.MyMath.getRand;
 import static lifesim.main.util.math.MyMath.getRandInt;
 
 
-public class AllItems {
+public class ItemTypes {
 
-    public static final Item empty = new Item("", new Sprite(0, 0, Color.BLACK));
+    public static final Item empty = new Item("", new Sprite(0, 0, Color.BLACK)) {
+        @Override
+        public void use(World world, Player player, PlayerStats stats) { }
+    };
 
 
     /*************
@@ -29,7 +31,7 @@ public class AllItems {
 
     public static final Item jetPack = new Item("Jet Pack", new Sprite(8, 8, Color.GRAY)) {
         @Override
-        public void onClick(World world, Player player, PlayerStats stats) {
+        public void use(World world, Player player, PlayerStats stats) {
             player.movement.setMagDir(150, 180+MouseInputManager.right.getAngleFromCenter());
         }
     };
@@ -39,35 +41,22 @@ public class AllItems {
      * Weapons
      **********/
 
-    private static final Animation boom = new Animation("boom",40, new Vector2D(16, 16), 0);
+    public static final Item waterGun = new Weapon("Water Gun", new AnimatedSprite(new Animation(
+            "weapons", 200, new Vector2D(8, 8), 2)), WATER_DROP);
 
+    public static final Item laserGun = new Weapon("Laser Gun", new AnimatedSprite(new Animation(
+            "weapons", 300, new Vector2D(8, 8), 3)), LASER);
 
-    public static final Item waterGun = new SpawnItem("Water Gun",
-            new AnimatedSprite(new Animation("weapons", 200, new Vector2D(8, 8), 2)),
-        new Projectile("Water", new Sprite(2, 2, new Color(50, 80, 220, 150)),
-                new BasicStats(12, 1, Alliance.PLAYER), 120, false));
-
-    public static final Item laserGun = new SpawnItem("Laser Gun", new AnimatedSprite(
-            new Animation("weapons", 300, new Vector2D(8, 8), 3)),
-        new Projectile("Laser", new Sprite(10, 1, new Color(255, 0, 25, 150)),
-            new BasicStats(20, 3, Alliance.PLAYER), 150, true, new Animation(boom)));
-
-    public static final Item bomb =  new SpawnItem("Bomb", new AnimatedSprite(
-            new Animation("weapons", 120, new Vector2D(8, 8), 0)),
-        new Projectile("Bomb", new AnimatedSprite(new Animation("bomb", 75, new Vector2D(9, 16), 0)),
-            new BasicStats(0, 20, Alliance.PLAYER), 5, false, new Animation(boom)));
+    public static final Item bomb =  new Weapon("Bomb", new AnimatedSprite(new Animation(
+            "weapons", 120, new Vector2D(8, 8), 0)), BOMB);
 
 
     /************
      * Utilities
      ************/
 
-
-    public static final Item allyTest = new SpawnItem("Ally test", new Sprite(8, 8, new Color(50, 100, 255)),
-            new RangedAttackEntity("Ally", new Sprite(8, 8, new Color(50, 100, 255)),
-            new HealthStats(3, 3, Alliance.PLAYER, 30), 200, 3000,
-                    new Projectile("Bullet", new Sprite(2, 2, new Color(0, 0, 0, 150)),
-                    new BasicStats(6,  12, Alliance.PLAYER), 150, false, new Animation(boom))));
+    public static final Item allyTest = new SpawnItem("Ally test", new Sprite(8, 8,
+            new Color(50, 100, 255)), ALLY_TEST);
 
 
     /**************
@@ -78,7 +67,7 @@ public class AllItems {
     public static final Item bread = new Item("Bread", new AnimatedSprite(
             new Animation("consumables", 200, new Vector2D(8, 8), 0))) {
         @Override
-        public void onClick(World world, Player player, PlayerStats stats) {
+        public void use(World world, Player player, PlayerStats stats) {
             stats.energize(100);
         }
     };
@@ -87,7 +76,7 @@ public class AllItems {
     public static final Item banana = new Item("Banana", new AnimatedSprite(
             new Animation("consumables", 100, new Vector2D(8, 8), 1))) {
         @Override
-        public void onClick(World world, Player player, PlayerStats stats) {
+        public void use(World world, Player player, PlayerStats stats) {
             stats.energize(200);
         }
     };
@@ -96,7 +85,7 @@ public class AllItems {
     public static final Item mysteriousPill = new Item("Mysterious Pill",
             new AnimatedSprite(new Animation("consumables", 300, new Vector2D(8, 8), 2))) {
         @Override
-        public void onClick(World world, Player player, PlayerStats stats) {
+        public void use(World world, Player player, PlayerStats stats) {
             int randStat = getRandInt(1, 5);
             double amount = getRand(-500, 300);
 
@@ -112,7 +101,7 @@ public class AllItems {
     public static final Item virtualCoin = new Item("Virtual Coin",  new AnimatedSprite(
             new Animation("consumables", 120, new Vector2D(8, 8), 3))) {
         @Override
-        public void onClick(World world, Player player, PlayerStats stats) {
+        public void use(World world, Player player, PlayerStats stats) {
             stats.gainMoney(getRand(getRand(-100, -1000), getRand(100, 1000)));
         }
     };

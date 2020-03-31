@@ -3,14 +3,13 @@ package lifesim.main.game.handlers;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.game.entities.components.sprites.Sprite;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
-import static lifesim.main.util.math.Geometry.angleWrap;
 import static lifesim.main.util.math.Geometry.getDistanceBetween;
 
 

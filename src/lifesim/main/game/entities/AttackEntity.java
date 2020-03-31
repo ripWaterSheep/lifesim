@@ -1,11 +1,11 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.entities.components.sprites.Sprite;
-import lifesim.main.game.entities.components.stats.BasicStats;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.World;
 
-import static lifesim.main.util.math.Geometry.*;
+import static lifesim.main.util.math.Geometry.getAngleBetween;
+import static lifesim.main.util.math.Geometry.getDistanceBetween;
 import static lifesim.main.util.math.MyMath.getRand;
 
 
@@ -21,11 +21,6 @@ public class AttackEntity extends Entity {
     public AttackEntity(String name, Sprite sprite, Stats stats, double detectionRange) {
         super(name, sprite, stats);
         this.detectionRange = detectionRange;
-    }
-
-    @Override
-    public AttackEntity copyInitialState() {
-        return new AttackEntity(name, sprite, stats.copyInitialState(), detectionRange);
     }
 
 

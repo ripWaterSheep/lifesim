@@ -15,7 +15,7 @@ import lifesim.main.game.handlers.World;
 import java.awt.*;
 
 import static java.lang.Math.abs;
-import static lifesim.main.game.items.AllItems.*;
+import static lifesim.main.game.items.ItemTypes.*;
 
 
 public final class Player extends Entity {

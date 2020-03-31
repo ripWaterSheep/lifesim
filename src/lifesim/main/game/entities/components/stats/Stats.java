@@ -4,8 +4,6 @@ import lifesim.main.game.entities.Entity;
 
 public interface Stats {
 
-    Stats copyInitialState();
-
     double getCurrentSpeed();
 
     boolean isAlive();

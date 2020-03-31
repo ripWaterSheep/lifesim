@@ -5,11 +5,6 @@ import lifesim.main.game.entities.Entity;
 public class InanimateStats implements Stats {
 
     @Override
-    public Stats copyInitialState() {
-        return new InanimateStats();
-    }
-
-    @Override
     public double getCurrentSpeed() {
         return 0;
     }

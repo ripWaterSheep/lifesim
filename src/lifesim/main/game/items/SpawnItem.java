@@ -1,30 +1,25 @@
 package lifesim.main.game.items;
 
-import lifesim.main.game.controls.MouseInputManager;
-import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.Projectile;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
+import lifesim.main.game.entities.types.Spawnable;
 import lifesim.main.game.handlers.World;
 
 
 public class SpawnItem extends Item {
 
-    private final Entity spawnEntity;
+    private final Spawnable entityType;
 
-
-    public SpawnItem(String name, Sprite sprite, Entity spawnEntity) {
+    public SpawnItem(String name, Sprite sprite, Spawnable entityType) {
         super(name, sprite);
-        this.spawnEntity = spawnEntity;
+        this.entityType = entityType;
     }
 
 
     @Override
-    public void onClick(World world, Player player , PlayerStats stats) {
-        Entity spawn = spawnEntity.copyInitialState();
-        spawn.movement.setDirection(MouseInputManager.right.getAngleFromCenter());
-        world.add(spawn, player.pos);
+    public void use(World world, Player player , PlayerStats stats) {
+        world.add(entityType.spawnNew(), player.pos);
     }
     
 }

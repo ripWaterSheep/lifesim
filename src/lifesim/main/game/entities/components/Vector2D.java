@@ -1,12 +1,11 @@
 package lifesim.main.game.entities.components;
 
-import lifesim.main.util.math.MyMath;
-
 import java.awt.geom.Point2D;
 
 import static java.lang.Math.toDegrees;
 import static lifesim.main.util.math.Geometry.angleWrap;
-import static lifesim.main.util.math.MyMath.*;
+import static lifesim.main.util.math.MyMath.clamp;
+import static lifesim.main.util.math.MyMath.getRand;
 
 
 public class Vector2D {

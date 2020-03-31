@@ -17,11 +17,6 @@ public class DroppedItem extends Entity {
         this.amount = amount;
     }
 
-    @Override
-    public Entity copyInitialState() {
-        return new DroppedItem(name, sprite, item, amount);
-    }
-
 
     public void collect(Player player) {
         if (!collected) {

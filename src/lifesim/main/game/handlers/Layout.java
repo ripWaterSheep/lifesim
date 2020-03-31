@@ -1,17 +1,15 @@
 package lifesim.main.game.handlers;
 
-import lifesim.main.game.entities.*;
-import lifesim.main.game.entities.components.stats.Alliance;
-import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.game.entities.components.sprites.AnimatedSprite;
-import lifesim.main.game.entities.components.sprites.Animation;
+import lifesim.main.game.entities.Entity;
+import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.sprites.Sprite;
-import lifesim.main.game.entities.components.stats.HealthStats;
 import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.game.entities.components.stats.BasicStats;
 
 import java.awt.*;
 import java.util.ArrayList;
+
+import static lifesim.main.game.entities.types.EnemyType.MELEE_1;
+import static lifesim.main.game.entities.types.EnemyType.RANGED_1;
 
 
 public class Layout {
@@ -78,13 +76,9 @@ public class Layout {
                 .add(new Entity("Shop", new Sprite(250, 200, new Color(200, 110, 75))), -675, 250)
                 .add(new Entity("Cave", new Sprite(200, 75, Color.LIGHT_GRAY)), -800, -800)
 
-                .addSpawner(new Spawner(new AttackEntity("Emo", new AnimatedSprite(new Animation("emo", 120, new Vector2D(11, 16), 0)),
-                    new HealthStats(3, 8, Alliance.ENEMY, 25), 150), 1500))
+                .addSpawner(new Spawner(MELEE_1, 1500))
 
-                .addSpawner(new Spawner(new RangedAttackEntity("Nerd", new AnimatedSprite(new Animation("nerd", 300, new Vector2D(7, 16), 0)),
-                    new HealthStats(2.5, 5, Alliance.ENEMY, 20), 200, 1000,
-                        new Projectile("Ball", new Sprite(4, 4, Color.BLACK), new BasicStats(15, 10, Alliance.ENEMY),
-                                125,false)), 2500))
+                .addSpawner(new Spawner(RANGED_1, 2500))
         );
 
 

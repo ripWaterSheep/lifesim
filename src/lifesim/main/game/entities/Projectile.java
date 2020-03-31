@@ -16,7 +16,7 @@ public class Projectile extends Entity {
 
     private static final Animation BLANK = new Animation(0, "blank");
 
-    private final double movementRange;
+    private final double range;
     private double distanceTravelled;
 
     private final boolean matchSpriteAngle;
@@ -24,31 +24,26 @@ public class Projectile extends Entity {
     private final Animation damageAnimation;
 
 
-    public Projectile(String name, Sprite sprite, Stats stats, double movementRange, boolean matchSpriteAngle, Animation damageAnimation) {
+    public Projectile(String name, Sprite sprite, Stats stats, double range, double angle, boolean matchSpriteAngle, Animation damageAnimation) {
         super(name, sprite, stats);
-        this.movementRange = movementRange;
+        this.range = range;
+        movement.setDirection(angle);
         this.matchSpriteAngle = matchSpriteAngle;
         this.damageAnimation = damageAnimation;
     }
 
-    public Projectile(String name, Sprite sprite, BasicStats stats, double movementRange, boolean matchSpriteAngle) {
-        this(name, sprite, stats, movementRange, matchSpriteAngle, BLANK);
+    public Projectile(String name, Sprite sprite, BasicStats stats, double range, double angle, boolean matchSpriteAngle) {
+        this(name, sprite, stats, range, angle, matchSpriteAngle, BLANK);
     }
 
 
-    @Override
-    public Projectile copyInitialState() {
-        return new Projectile(name, sprite,  stats.copyInitialState(), movementRange, matchSpriteAngle, new Animation(damageAnimation));
+    public double getRange() {
+        return range;
     }
-
-    public double getMovementRange() {
-        return movementRange;
-    }
-
 
     @Override
     public void onRemoval(World world) {
-        world.add(new TempEntity("Damage Animation", new AnimatedSprite(damageAnimation)), pos);
+        world.add(new EffectEntity("Damage Animation", new AnimatedSprite(damageAnimation)), pos);
         super.onRemoval(world);
     }
 
@@ -58,7 +53,7 @@ public class Projectile extends Entity {
         super.update(world);
         distanceTravelled += abs(movement.x) + abs(movement.y);
 
-        if (distanceTravelled > movementRange) {
+        if (distanceTravelled > range) {
             removeFromWorld();
        }
     }

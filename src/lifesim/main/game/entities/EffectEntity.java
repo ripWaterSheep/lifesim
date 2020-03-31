@@ -6,17 +6,12 @@ import java.awt.*;
 
 
 /** A temporary entity only intended to run through a single sprite animation cycle; used for effects such as explosions */
-public class TempEntity extends Entity {
+public class EffectEntity extends Entity {
 
-    public TempEntity(String name, AnimatedSprite sprite) {
+    public EffectEntity(String name, AnimatedSprite sprite) {
         super(name, sprite);
     }
 
-
-    @Override
-    public TempEntity copyInitialState() {
-        return new TempEntity(name, (AnimatedSprite) sprite);
-    }
 
     @Override
     public void render(Graphics2D g2d) {

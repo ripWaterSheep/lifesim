@@ -22,12 +22,6 @@ public class BasicStats implements Stats {
 
 
     @Override
-    public BasicStats copyInitialState() {
-        return new BasicStats(defaultSpeed, damage, alliance);
-    }
-
-
-    @Override
     public double getCurrentSpeed() {
         return defaultSpeed*speedMultiplier;
     }

@@ -1,10 +1,7 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.Main;
-import lifesim.main.game.entities.components.stats.Alliance;
-import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.game.entities.components.stats.BasicStats;
-import lifesim.main.game.entities.components.stats.Stats;
+import lifesim.main.game.entities.components.stats.*;
 import lifesim.main.game.handlers.World;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.Vector2D;
@@ -13,6 +10,7 @@ import java.awt.*;
 
 import static java.lang.Math.*;
 import static lifesim.main.util.math.Geometry.testIntersection;
+import static lifesim.main.util.math.MyMath.getRand;
 
 
 public class Entity {
@@ -33,16 +31,12 @@ public class Entity {
         this.sprite = sprite;
         pos = new Vector2D(0, 0);
         movement = new Vector2D(0, 0);
-        movement.setMagDir(stats.getCurrentSpeed(), 0);
+        movement.setMagDir(stats.getCurrentSpeed(), getRand(0, 360));
         this.stats = stats;
     }
 
     public Entity(String name, Sprite sprite) {
-        this(name, sprite, new BasicStats(0, 0, Alliance.INANIMATE));
-}
-
-    public Entity copyInitialState() {
-        return new Entity(name, sprite, stats.copyInitialState());
+        this(name, sprite, new InanimateStats());
     }
 
 
