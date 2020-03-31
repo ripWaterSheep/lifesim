@@ -42,14 +42,14 @@ public class Layout {
                 },250, 250)
                 .add(new Entity("Office", new Sprite(200, 200, new Color(150, 150, 160))) {
                     @Override
-                    public void onClick(Player player, PlayerStats stats) {
+                    public void whileTouching(Player player, PlayerStats stats) {
                         stats.gainMoney(stats.getIntellect());
                         stats.tire(0.075);
                     }
                 }, -250, 250)
                 .add(new Entity("Gym", new Sprite("gym")) {
                     @Override
-                    public void onClick(Player player, PlayerStats stats) {
+                    public void whileTouching(Player player, PlayerStats stats) {
                         if (stats.canAfford(0.05)) {
                             stats.strengthen(0.5);
                             stats.tire(0.075);
@@ -59,7 +59,7 @@ public class Layout {
                 }, -600, -200)
                 .add(new Entity("Restaurant", new Sprite(200, 200, new Color(255, 215, 125))) {
                     @Override
-                    public void onClick(Player player, PlayerStats stats) {
+                    public void whileTouching(Player player, PlayerStats stats) {
                         if (stats.canAfford(0.05)) {
                             stats.energize(0.1);
                             stats.loseMoney(0.05);
@@ -68,7 +68,7 @@ public class Layout {
                 }, -250, -225)
                 .add(new Entity("Hospital", new Sprite(200, 200, new Color(210, 210, 210))) {
                     @Override
-                    public void onClick(Player player, PlayerStats stats) {
+                    public void whileTouching(Player player, PlayerStats stats) {
                         if (stats.canAfford(0.25)) {
                             if (stats.getHealth() < 1000) stats.heal(0.05);
                             stats.loseMoney(0.25);
