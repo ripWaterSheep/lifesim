@@ -21,7 +21,6 @@ public class EffectEntity extends Entity {
             removeFromWorld();
             animatedSprite.pauseFrame();
         }
-
         super.render(g2d);
     }
 

@@ -92,8 +92,8 @@ public class Inventory {
         if (KeyInputManager.k_q.isClicked()) {
             // Drop the item behind player so it isn't picked back up when moving forward.
             Vector2D dropPos = player.pos.copy();
-            if (player.movement.getMagnitude() < player.getStats().getCurrentSpeed()) dropPos.set(dropPos.translate(0, 25));
-            else dropPos.set(dropPos.translate(player.movement.scale(-5)));
+            if (player.getVelocity().getMagnitude() < player.getStats().getCurrentSpeed()) dropPos.set(dropPos.translate(0, 25));
+            else dropPos.set(dropPos.translate(player.getVelocity().scale(-5)));
             dropStackInWorld(player.getWorld(), dropPos);
         }
     }

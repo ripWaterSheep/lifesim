@@ -35,7 +35,7 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
 
     @Override
     public void render(Graphics2D g2d, Vector2D pos, Vector2D movement) {
-        if (movement.getMagnitude() == 0) animation = idle;
+        if (movement.getMagnitude() <= 0.05) animation = idle;
         else {
             // Get the animation corresponding to the entity's angle
             double direction = movement.getDirection();

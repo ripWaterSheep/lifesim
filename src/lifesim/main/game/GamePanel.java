@@ -5,15 +5,13 @@ import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.util.fileIO.FontLoader;
 
-
 import javax.swing.*;
 import java.awt.*;
 
 
-
 public class GamePanel extends JPanel {
 
-    public static final double GRAPHICS_SCALE = 4;
+    public static final double GRAPHICS_SCALE = 4.5;
 
 
     private Game game;
@@ -89,11 +87,11 @@ public class GamePanel extends JPanel {
         long now = System.nanoTime();
         delta += (now - lastTime) / ns;
         lastTime = now;
+        render(g);
         while(delta >= 1) {
             update();
             delta--;
         }
-        render(g);
         frames++;
 
         if(System.currentTimeMillis() - timer > 1000) {

@@ -19,7 +19,7 @@ public final class Game {
 
     private final GamePanel panel;
     private final Layout layout = new Layout();
-    private final Player player = new Player(this);
+    private Player player = new Player(this);
 
     private final ArrayList<Overlay> overlays = new ArrayList<>();
 
@@ -67,15 +67,17 @@ public final class Game {
      * Make player go to the next or previous world declared in the layout's list of worlds
      */
     private void cycleWorlds(int index) {
-        ArrayList<World> allWorlds = layout.getWorlds();
+        ArrayList<World> allWorlds = getWorlds();
         World newWorld = player.getWorld();
         int currentIndex = allWorlds.indexOf(newWorld);
 
         try { // Increment or decrement(if negative) current index and set player world to world at new index.
             newWorld = allWorlds.get(currentIndex + index);
         } catch (IndexOutOfBoundsException e) {
-            if (index > 0) newWorld  = allWorlds.get(index - 1); // Wraparound to the first world
-            else if (index < 0) newWorld = allWorlds.get(allWorlds.size() + index); // Wraparound to the last world
+            if (index > 0)
+                newWorld  = allWorlds.get(index - 1); // Wraparound to the first world
+            else if (index < 0)
+                newWorld = allWorlds.get(allWorlds.size() + index); // Wraparound to the last world
         }
 
         player.setWorld(newWorld);

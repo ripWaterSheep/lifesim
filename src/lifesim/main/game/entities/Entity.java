@@ -8,7 +8,6 @@ import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 
-import static java.lang.Math.*;
 import static lifesim.main.util.math.Geometry.testIntersection;
 import static lifesim.main.util.math.MyMath.getRand;
 
@@ -20,7 +19,7 @@ public class Entity {
     protected final Stats stats;
 
     public final Vector2D pos;
-    public final Vector2D movement;
+    protected final Vector2D velocity;
 
     // If true, the world containing the entity will remove it from the world.
     private boolean removeRequested = false;
@@ -30,8 +29,7 @@ public class Entity {
         this.name = name;
         this.sprite = sprite;
         pos = new Vector2D(0, 0);
-        movement = new Vector2D(0, 0);
-        movement.setMagDir(stats.getCurrentSpeed(), getRand(0, 360));
+        velocity = Vector2D.newMagDir(stats.getCurrentSpeed(), getRand(0, 360));
         this.stats = stats;
     }
 
@@ -52,13 +50,23 @@ public class Entity {
         return testIntersection(getHitBox(), entity.getHitBox());
     }
 
+    public Entity getOwner() {
+        return this;
+    }
+
+
+    public Vector2D getVelocity() {
+        return velocity.copy();
+    }
+
+
     public Stats getStats() {
         return stats;
     }
 
-
     public boolean canAttack(Entity otherEntity) {
-        return stats.getAlliance().canAttack(otherEntity.stats.getAlliance()) && !equals(otherEntity) && !(otherEntity instanceof Projectile);
+        return stats.getAlliance().canAttack(otherEntity.stats.getAlliance()) && !getOwner().equals(otherEntity)/* || otherEntity.getOwner().equals(this))*/
+                && !equals(otherEntity) && !(otherEntity instanceof Projectile);
     }
 
 
@@ -75,36 +83,41 @@ public class Entity {
     }
 
 
-    public void whileTouching(Player player, PlayerStats stats) {
+    /** While the player is touching this entity, this customizable function is called. */
+    public void eventWhileTouching(Player player, PlayerStats stats) {
 
     }
 
-    public void onClick(Player player, PlayerStats stats) {
+    /** If the mouse is clicked when the player is touching this entity, this customizable function is called. */
+    public void eventOnClick(Player player, PlayerStats stats) {
 
     }
 
 
-    protected void move() {
-        pos.set(pos.translate(movement));
-        double frictionThreshold = 0.05;
-        if (abs(movement.x) < frictionThreshold) movement.x = 0;
-        if (abs(movement.y) < frictionThreshold) movement.y = 0;
+    protected void stop() {
+        velocity.set(velocity.scale(0.85)); // Slow down due to friction, approaching zero.
     }
 
-    public void handleCollision(Entity entity) {
+
+    public void push(Vector2D movement) {
+        velocity.set(velocity.translate(movement));
+    }
+
+
+    public void handleCollision(Entity entity, World world) {
         stats.onCollision(this, entity);
     }
 
     public void update(World world) {
         stats.update(this);
-        move();
+        pos.set(pos.translate(velocity));
         // Keep the entity within the world's boundaries.
         if (stats.getCurrentSpeed() > 0)
             pos.clampInRect(new Vector2D(0, 0), world.getSize().scale(0.5).translate(sprite.getSize().scale(-0.5)));
     }
 
     public void render(Graphics2D g2d) {
-        sprite.render(g2d, getDisplayPos(), movement);
+        sprite.render(g2d, getDisplayPos(), velocity);
     }
 
 }

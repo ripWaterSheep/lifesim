@@ -82,12 +82,16 @@ public class World {
     }
 
 
-    public void doGarbageCollection(Entity entity) {
+    public void doGarbageCollection(Entity entity, Player player) {
+        // Remove enemies outside large range to prevent lag.
+        /*if (entity instanceof AIEntity && entity.canAttack(player) && getDistanceBetween(player.pos, entity.pos) > 1000)
+            entity.removeFromWorld();*/
         // Remove entity from world if requested, effectively destroying the entity.
         if (entity.isRemoveRequested()) {
             entity.onRemoval(this);
             entities.remove(entity);
         }
+
     }
 
 
@@ -102,11 +106,12 @@ public class World {
 
             for (Entity entity2: getEntities()) {
                 if (entity.isTouching(entity2) && entity != entity2)
-                    entity.handleCollision(entity2);
+                    entity.handleCollision(entity2, this);
             }
 
-            doGarbageCollection(entity);
+            doGarbageCollection(entity, player);
         }
+        //System.out.println(entities.size());
     }
 
 

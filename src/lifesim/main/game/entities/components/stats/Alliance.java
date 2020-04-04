@@ -12,7 +12,7 @@ public enum Alliance {
     INANIMATE; // Cannot attack or be attacked.
 
     public boolean canAttack(Alliance otherAlliance) {
-        return (!equals(otherAlliance) || equals(NEUTRAL)) && !equals(PASSIVE) && !equals(INANIMATE) && !otherAlliance.equals(INANIMATE);
+        return (!equals(otherAlliance) || equals(NEUTRAL)) && !(equals(PASSIVE) || otherAlliance.equals(PASSIVE) || equals(INANIMATE) || otherAlliance.equals(INANIMATE));
     }
 
 }

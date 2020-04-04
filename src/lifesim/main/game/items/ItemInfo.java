@@ -5,4 +5,5 @@ public @interface ItemInfo {
     String type();
     String lore();
     String abilities();
+
 }

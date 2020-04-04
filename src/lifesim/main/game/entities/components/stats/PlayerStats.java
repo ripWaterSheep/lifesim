@@ -78,10 +78,10 @@ public class PlayerStats extends HealthStats {
     public void onCollision(Entity player, Entity otherEntity) {
         super.onCollision(player, otherEntity);
 
-        otherEntity.whileTouching((Player) player, this);
+        otherEntity.eventWhileTouching((Player) player, this);
         
         if (MouseInputManager.left.isClicked())
-            otherEntity.onClick((Player) player, this);
+            otherEntity.eventOnClick((Player) player, this);
     }
 
 
@@ -96,7 +96,7 @@ public class PlayerStats extends HealthStats {
         if (KeyInputManager.k_space.isPressed() && energy > 0)
             speedMultiplier *= 1.45;
 
-        energy -= 0.1 + sqrt(player.movement.getMagnitude()/450);
+        energy -= 0.1 + sqrt(player.getVelocity().getMagnitude()/450);
     }
 
 

@@ -27,7 +27,7 @@ public class DroppedItem extends Entity {
     }
 
     @Override
-    public void whileTouching(Player player, PlayerStats stats) {
+    public void eventWhileTouching(Player player, PlayerStats stats) {
         collect(player);
     }
 

@@ -6,6 +6,7 @@ import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.components.*;
 import lifesim.main.game.entities.components.stats.PlayerStats;
+import lifesim.main.game.items.ItemTypes;
 import lifesim.main.game.items.inventory.Inventory;
 import lifesim.main.game.items.Item;
 import lifesim.main.game.entities.components.sprites.Animation;
@@ -15,7 +16,6 @@ import lifesim.main.game.handlers.World;
 import java.awt.*;
 
 import static java.lang.Math.abs;
-import static lifesim.main.game.items.ItemTypes.*;
 
 
 public final class Player extends Entity {
@@ -36,17 +36,19 @@ public final class Player extends Entity {
                 ),
             new PlayerStats(6, 1000, 1000, 0, 0, 0));
         this.game = game;
-        movement.set(0, 0);
+        velocity.set(0, 0);
 
-        inventory.addItem(bread, 100);
-        inventory.addItem(bomb, 100);
-        inventory.addItem(waterGun, 100);
-        inventory.addItem(banana, 100);
-        inventory.addItem(mysteriousPill, 100);
-        inventory.addItem(laserGun, 100);
-        inventory.addItem(virtualCoin, 100);
-        inventory.addItem(jetPack, 100);
-        inventory.addItem(allyTest, 100);
+        inventory.addItem(ItemTypes.bread, 100);
+        inventory.addItem(ItemTypes.bomb, 100);
+        inventory.addItem(ItemTypes.waterGun, 100);
+        inventory.addItem(ItemTypes.banana, 100);
+        inventory.addItem(ItemTypes.mysteriousPill, 100);
+        inventory.addItem(ItemTypes.laserGun, 100);
+        inventory.addItem(ItemTypes.virtualCoin, 100);
+        inventory.addItem(ItemTypes.jetPack, 100);
+        inventory.addItem(ItemTypes.allyTest, 100);
+        inventory.addItem(ItemTypes.healer, 100);
+        inventory.addItem(ItemTypes.pushTestWeapon, 100);
     }
 
 
@@ -54,9 +56,11 @@ public final class Player extends Entity {
         return new Vector2D(0, 0);
     }
 
+
     public PlayerStats getStats() {
         return (PlayerStats) stats;
     }
+
 
     public World getWorld() {
         return world;
@@ -92,7 +96,7 @@ public final class Player extends Entity {
 
 
     public void controlMovement() {
-        movement.set(movement.scale(0.8));// Slow down due to friction, approaching zero.
+        stop(); // unless
         double speed = stats.getCurrentSpeed();
         boolean up, down, left, right;
         final KeyInputListener upKey = KeyInputManager.k_w,
@@ -113,6 +117,7 @@ public final class Player extends Entity {
             up = upKey.getPressTime() < downKey.getPressTime();
             down = !up;
         }
+        if (!(up || down || left || right)) return;
         // Get the correct angle based on combination of up/down and left/right.
         double angle = 0;
         if (up) {
@@ -126,17 +131,17 @@ public final class Player extends Entity {
         } else if (left) angle = 0;
         else if (right) angle = 180;
         // Move along x or y axis only if needed.
-        if ((left || right) && abs(movement.x) < speed) movement.setXMagDir(speed, angle);
-        if ((up || down) && abs(movement.y) < speed) movement.setYMagDir(speed, angle);
+        if ((left || right) && abs(velocity.x) < speed) velocity.setXMagDir(speed, angle);
+        if ((up || down) && abs(velocity.y) < speed) velocity.setYMagDir(speed, angle);
     }
 
 
     @Override
-    public void handleCollision(Entity entity) {
-    super.handleCollision(entity);
-        entity.whileTouching(this, getStats());
+    public void handleCollision(Entity entity, World world) {
+    super.handleCollision(entity, world);
+        entity.eventWhileTouching(this, getStats());
         if (MouseInputManager.left.isClicked())
-            entity.onClick(this, getStats());
+            entity.eventOnClick(this, getStats());
     }
 
     @Override

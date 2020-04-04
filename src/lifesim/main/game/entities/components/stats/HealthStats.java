@@ -2,15 +2,18 @@ package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
 
+import static java.lang.Math.min;
+
 public class HealthStats extends BasicStats implements Stats {
 
-    private double health;
-
+    protected double health;
+    protected final double maxHealth;
     private double protectionMultiplier = 1;
 
     public HealthStats(double speed, double damage, Alliance alliance, double health) {
         super(speed, damage, alliance);
         this.health = health;
+        maxHealth = health;
     }
 
 
@@ -39,11 +42,15 @@ public class HealthStats extends BasicStats implements Stats {
         protectionMultiplier *= multiplier;
     }
 
+
     @Override
-    public void update(Entity owner) {
-        super.update(owner);
+    public void update(Entity entity) {
+        super.update(entity);
         if (health <= 0)
-            owner.removeFromWorld();
+            entity.removeFromWorld();
         protectionMultiplier = 1;
+
+        if (!(this instanceof PlayerStats)) health = min(maxHealth, health);
     }
+
 }

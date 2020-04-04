@@ -9,7 +9,7 @@ import static lifesim.main.util.math.Geometry.getAngleBetween;
 import static lifesim.main.util.math.Geometry.getDistanceBetween;
 
 
-public class RangedAttackEntity extends AttackEntity {
+public class RangedAIEntity extends AIEntity {
 
     public final Launchable projectileType;
 
@@ -17,7 +17,7 @@ public class RangedAttackEntity extends AttackEntity {
     private long lastShootTime = System.currentTimeMillis();
 
 
-    public RangedAttackEntity(String name, Sprite sprite, Stats stats, double detectionRange, long shootInterval, Launchable projectileType) {
+    public RangedAIEntity(String name, Sprite sprite, Stats stats, double detectionRange, long shootInterval, Launchable projectileType) {
         super(name, sprite, stats, detectionRange);
         this.shootInterval = shootInterval;
         this.projectileType = projectileType;
@@ -25,7 +25,7 @@ public class RangedAttackEntity extends AttackEntity {
 
 
     public Projectile getProjectile() {
-        return projectileType.launchNew(stats.getAlliance(), getAngleBetween(attackTarget.pos, pos));
+        return projectileType.launchNew(this, stats.getAlliance(), getAngleBetween(attackTarget.pos, pos));
     }
 
 
@@ -40,7 +40,9 @@ public class RangedAttackEntity extends AttackEntity {
     @Override
     protected void evaluateAttackState() {
         double distance = getDistanceBetween(attackTarget.pos, pos);
-        pursuing = (distance <= detectionRange && distance >= getProjectile().getRange()/2);
+        // Pursue attack target if target is in detection range but stay still if target is safely within attacking range.
+        pursuing = (distance <= detectionRange && distance >= getProjectile().getRange()*0.75);
+        // Only shoot if target is inside attack range.
         attacking = distance <= getProjectile().getRange();
     }
 

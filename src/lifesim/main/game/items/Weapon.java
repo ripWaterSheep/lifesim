@@ -13,15 +13,15 @@ public class Weapon extends Item {
 
     private final Launchable projectileType;
 
-    public Weapon(String name, Sprite sprite, Launchable entityType) {
+    public Weapon(String name, Sprite sprite, Launchable projectileType) {
         super(name, sprite);
-        this.projectileType = entityType;
+        this.projectileType = projectileType;
     }
 
 
     @Override
     public void use(World world, Player player , PlayerStats stats) {
-        world.add(projectileType.launchNew(Alliance.PLAYER,  MouseInputManager.right.getAngleFromCenter()), player.pos);
+        world.add(projectileType.launchNew(player, Alliance.PLAYER,  MouseInputManager.right.getAngleFromCenter()), player.pos);
     }
 
 }

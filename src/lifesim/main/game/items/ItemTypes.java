@@ -2,17 +2,18 @@ package lifesim.main.game.items;
 
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
+import lifesim.main.game.entities.Projectile;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
+import lifesim.main.game.entities.types.AllyType;
+import lifesim.main.game.entities.types.ProjectileType;
 import lifesim.main.game.handlers.World;
 
 import java.awt.*;
 
-import static lifesim.main.game.entities.types.AllyType.ALLY_TEST;
-import static lifesim.main.game.entities.types.ProjectileType.*;
 import static lifesim.main.util.math.MyMath.getRand;
 import static lifesim.main.util.math.MyMath.getRandInt;
 
@@ -32,7 +33,7 @@ public class ItemTypes {
     public static final Item jetPack = new Item("Jet Pack", new Sprite(8, 8, Color.GRAY)) {
         @Override
         public void use(World world, Player player, PlayerStats stats) {
-            player.movement.setMagDir(150, 180+MouseInputManager.right.getAngleFromCenter());
+            player.push(Vector2D.newMagDir(150, 180+MouseInputManager.right.getAngleFromCenter()));
         }
     };
 
@@ -42,13 +43,20 @@ public class ItemTypes {
      **********/
 
     public static final Item waterGun = new Weapon("Water Gun", new AnimatedSprite(new Animation(
-            "weapons", 200, new Vector2D(8, 8), 2)), WATER_DROP);
+            "weapons", 200, new Vector2D(8, 8), 2)), ProjectileType.WATER_DROP);
 
     public static final Item laserGun = new Weapon("Laser Gun", new AnimatedSprite(new Animation(
-            "weapons", 300, new Vector2D(8, 8), 3)), LASER);
+            "weapons", 300, new Vector2D(8, 8), 3)), ProjectileType.LASER);
 
     public static final Item bomb =  new Weapon("Bomb", new AnimatedSprite(new Animation(
-            "weapons", 120, new Vector2D(8, 8), 0)), BOMB);
+            "weapons", 120, new Vector2D(8, 8), 0)), ProjectileType.BOMB);
+
+    public static final Item healer = new Weapon("Healer", new Sprite(8, 8, Color.RED), ProjectileType.HEAL_ORB);
+
+    public static final Item pushTestWeapon = new Weapon("Push Test", new Sprite(8, 8,
+            new Color(100, 150, 200)), ProjectileType.PUSH_TEST);
+
+
 
 
     /************
@@ -56,21 +64,23 @@ public class ItemTypes {
      ************/
 
     public static final Item allyTest = new SpawnItem("Ally test", new Sprite(8, 8,
-            new Color(50, 100, 255)), ALLY_TEST);
+            new Color(50, 100, 255)), AllyType.ALLY_TEST);
 
 
     /**************
      * Consumables
      **************/
 
-    @ItemInfo(type = "Consumable", lore = "An innocuous loaf of bread.", abilities = "Heals 100 energy.")
+
+    @ItemInfo(type = "Consumable", lore = "An innocuous piece of bread.", abilities = "Heals 100 energy.")
     public static final Item bread = new Item("Bread", new AnimatedSprite(
             new Animation("consumables", 200, new Vector2D(8, 8), 0))) {
         @Override
         public void use(World world, Player player, PlayerStats stats) {
-            stats.energize(100);
+            stats.energize(200);
         }
     };
+
 
     @ItemInfo(type = "Consumable", lore = "A good source of potassium.", abilities = "Heals 200 energy.")
     public static final Item banana = new Item("Banana", new AnimatedSprite(
@@ -80,6 +90,7 @@ public class ItemTypes {
             stats.energize(200);
         }
     };
+
 
     @ItemInfo(type = "Test Item", lore = "Found in your friend's medicine cabinet probably.", abilities = "???")
     public static final Item mysteriousPill = new Item("Mysterious Pill",

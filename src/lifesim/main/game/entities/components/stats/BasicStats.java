@@ -68,14 +68,9 @@ public class BasicStats implements Stats {
 
 
     @Override
-    public void onCollision(Entity owner, Entity otherEntity) {
-        if (owner.canAttack(otherEntity)) {
+    public void onCollision(Entity entity, Entity otherEntity) {
+        if (entity.canAttack(otherEntity)){
             otherEntity.getStats().hit(damage * damageMultiplier);
-
-            if (owner instanceof Projectile) {
-                owner.removeFromWorld();
-                System.out.println(owner.name);
-            }
         }
     }
 

@@ -46,7 +46,7 @@ public class InanimateStats implements Stats {
     }
 
     @Override
-    public void onCollision(Entity owner, Entity otherEntity) {
+    public void onCollision(Entity entity, Entity otherEntity) {
     }
 
     @Override

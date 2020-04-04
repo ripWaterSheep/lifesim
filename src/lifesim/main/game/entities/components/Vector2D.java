@@ -1,11 +1,12 @@
 package lifesim.main.game.entities.components;
 
+import lifesim.main.util.math.MyMath;
+
 import java.awt.geom.Point2D;
 
 import static java.lang.Math.toDegrees;
 import static lifesim.main.util.math.Geometry.angleWrap;
-import static lifesim.main.util.math.MyMath.clamp;
-import static lifesim.main.util.math.MyMath.getRand;
+import static lifesim.main.util.math.MyMath.*;
 
 
 public class Vector2D {
@@ -14,10 +15,19 @@ public class Vector2D {
     public double y;
 
 
+
     public Vector2D(double x, double y) {
         this.x = x;
         this.y = y;
     }
+
+    /** Constructor to return new instance defined by magnitude and direction rather than x and y*/
+    public static Vector2D newMagDir(double magnitude, double direction) {
+        Vector2D vector = new Vector2D(0, 0);
+        vector.setMagDir(magnitude, direction);
+        return vector;
+    }
+
 
     public Vector2D copy() {
         return new Vector2D(x, y);
@@ -95,6 +105,11 @@ public class Vector2D {
         Vector2D rectMin = rectCenter.translate(dimensions.scale(-0.5));
         Vector2D rectMax = rectCenter.translate(dimensions.scale(0.5));
         return x > rectMin.x && y > rectMin.y && x < rectMax.x && y < rectMax.y;
+    }
+
+
+    public double getDistanceFrom(Vector2D otherVector) {
+        return Math.abs(betterRound(Point2D.distance(x, y, otherVector.x, otherVector.y)));
     }
 
 
