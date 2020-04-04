@@ -10,7 +10,7 @@ import lifesim.main.game.entities.components.stats.BasicStats;
 
 import java.awt.*;
 
-import static lifesim.main.game.entities.types.EffectTypes.BOOM;
+import static lifesim.main.game.entities.types.EffectType.BOOM;
 
 
 public enum ProjectileType implements Launchable {

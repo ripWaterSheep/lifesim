@@ -24,7 +24,6 @@ public abstract class Item {
     public abstract void use(World world, Player player, PlayerStats stats);
 
 
-
     public void render(Graphics2D g2d, Vector2D pos) {
         sprite.render(g2d, pos.translate(sprite.getSize().scale(-0.5)), new Vector2D(0, 0));
     }

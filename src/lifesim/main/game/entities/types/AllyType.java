@@ -16,7 +16,7 @@ public enum AllyType implements Spawnable{
         @Override
         public Entity spawnNew() {
             return new RangedAttackEntity("Ally", new Sprite(8, 8, new Color(50, 100, 255)),
-                            new HealthStats(3, 5, Alliance.PLAYER, 30), 200, 2500, SMALL_BULLET);
+                            new HealthStats(3, 5, Alliance.PLAYER, 40), 200, 2500, SMALL_BULLET);
     }}
 
 }
