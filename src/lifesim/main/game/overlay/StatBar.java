@@ -90,7 +90,7 @@ public class StatBar extends Overlay {
     private <T> void writeValue(String label, T data) {
         String formattedString = format(label, data+"");
 
-        DrawMethods.drawVerticallyCenteredString(g2d, formattedString, getX() + TEX_LEFT_PADDING,
+        DrawMethods.drawRectVerticallyCenteredString(g2d, formattedString, getX() + TEX_LEFT_PADDING,
                 new Rectangle(getX(), getY()+1, 0, BAR_HEIGHT), STAT_FONT, Color.WHITE);
         nextLine();
     }

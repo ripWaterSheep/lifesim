@@ -26,7 +26,7 @@ public class Spawner {
 
 
     public void attemptSpawn(World world, Player player) {
-        if (System.currentTimeMillis() - lastSpawnTime >= spawnInterval && world.getEntities().size() < MAX_ENTITIES) {
+        if (System.currentTimeMillis() - lastSpawnTime > spawnInterval && world.getEntities().size() < MAX_ENTITIES) {
             //Vector2D spawnPos = world.getSize();
             //spawnPos.set(world.getSize().scale(getRand(-0.5, 0.5), getRand(-0.5, 0.5)));
             Vector2D spawnPos = player.pos.copy();

@@ -1,5 +1,6 @@
 package lifesim.main.game.entities;
 
+import lifesim.main.game.Game;
 import lifesim.main.game.Main;
 import lifesim.main.game.entities.components.stats.*;
 import lifesim.main.game.handlers.World;
@@ -84,12 +85,12 @@ public class Entity {
 
 
     /** While the player is touching this entity, this customizable function is called. */
-    public void eventWhileTouching(Player player, PlayerStats stats) {
+    public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
 
     }
 
     /** If the mouse is clicked when the player is touching this entity, this customizable function is called. */
-    public void eventOnClick(Player player, PlayerStats stats) {
+    public void eventOnClick(Game game, Player player, PlayerStats stats) {
 
     }
 

@@ -5,10 +5,7 @@ import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.handlers.Layout;
 import lifesim.main.game.handlers.World;
-import lifesim.main.game.overlay.DeathScreen;
-import lifesim.main.game.overlay.InventoryGUI;
-import lifesim.main.game.overlay.Overlay;
-import lifesim.main.game.overlay.StatBar;
+import lifesim.main.game.overlay.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,18 +16,29 @@ public final class Game {
 
     private final GamePanel panel;
     private final Layout layout = new Layout();
-    private Player player = new Player(this);
+    private Player player;
 
     private final ArrayList<Overlay> overlays = new ArrayList<>();
+
+    private final GameMessageSystem messageSystem;
 
 
     public Game(GamePanel panel) {
         this.panel = panel;
+        player = new Player(this);
         player.setWorld(layout.getWorlds().get(0));
 
         overlays.add(new StatBar(panel, player));
         overlays.add(new DeathScreen(panel, player));
         overlays.add(new InventoryGUI(panel, player));
+
+        messageSystem = new GameMessageSystem(panel, player);
+        overlays.add(messageSystem);
+
+        sendMessage("Hi", 1000);
+        sendMessage("Hello", 2000);
+        sendMessage("Welcome", 500);
+        sendMessage("Testing", 4000);
     }
 
 
@@ -42,6 +50,9 @@ public final class Game {
         return layout.getWorlds();
     }
 
+    public void sendMessage(String message, long duration) {
+        messageSystem.sendMessage(new GameMessage(message, duration));
+    }
 
 
     public void update() {

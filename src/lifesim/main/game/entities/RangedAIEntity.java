@@ -30,7 +30,7 @@ public class RangedAIEntity extends AIEntity {
 
 
     private void attemptShot(World world) {
-        if (System.currentTimeMillis() - lastShootTime >= shootInterval) {
+        if (System.currentTimeMillis() - lastShootTime > shootInterval) {
             world.add(getProjectile(), pos);
             lastShootTime = System.currentTimeMillis();
         }

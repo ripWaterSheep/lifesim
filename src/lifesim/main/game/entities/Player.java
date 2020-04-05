@@ -12,8 +12,10 @@ import lifesim.main.game.items.Item;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.DirectionalAnimatedSprite;
 import lifesim.main.game.handlers.World;
+import lifesim.main.game.overlay.GameMessage;
 
 import java.awt.*;
+import java.security.MessageDigest;
 
 import static java.lang.Math.abs;
 
@@ -139,9 +141,9 @@ public final class Player extends Entity {
     @Override
     public void handleCollision(Entity entity, World world) {
     super.handleCollision(entity, world);
-        entity.eventWhileTouching(this, getStats());
+        entity.eventWhileTouching(game, this, getStats());
         if (MouseInputManager.left.isClicked())
-            entity.eventOnClick(this, getStats());
+            entity.eventOnClick(game, this, getStats());
     }
 
     @Override

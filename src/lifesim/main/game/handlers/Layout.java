@@ -1,5 +1,6 @@
 package lifesim.main.game.handlers;
 
+import lifesim.main.game.Game;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.sprites.Sprite;
@@ -27,27 +28,27 @@ public class Layout {
                 .add(new Entity("hRoad", new Sprite(2250, 75, Color.DARK_GRAY)), 0, 0)
                 .add(new Entity("House", new Sprite(200, 175, new Color(100, 80, 50))) {
                     @Override
-                    public void eventOnClick(Player player, PlayerStats stats) {
+                    public void eventOnClick(Game game, Player player, PlayerStats stats) {
                         player.goTo("Home Door");
                     }
                 }, 250, -200)
                 .add(new Entity("School", new Sprite(150, 200, new Color(179, 96, 71))) {
                     @Override
-                    public void eventWhileTouching(Player player, PlayerStats stats) {
+                    public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
                         stats.gainIntellect(0.25);
                         stats.tire(0.05);
                     }
                 },250, 250)
                 .add(new Entity("Office", new Sprite(200, 200, new Color(150, 150, 160))) {
                     @Override
-                    public void eventWhileTouching(Player player, PlayerStats stats) {
+                    public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
                         stats.gainMoney(stats.getIntellect());
                         stats.tire(0.075);
                     }
                 }, -250, 250)
                 .add(new Entity("Gym", new Sprite("gym")) {
                     @Override
-                    public void eventWhileTouching(Player player, PlayerStats stats) {
+                    public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
                         if (stats.canAfford(0.05)) {
                             stats.strengthen(0.5);
                             stats.tire(0.075);
@@ -57,7 +58,7 @@ public class Layout {
                 }, -600, -200)
                 .add(new Entity("Restaurant", new Sprite(200, 200, new Color(255, 215, 125))) {
                     @Override
-                    public void eventWhileTouching(Player player, PlayerStats stats) {
+                    public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
                         if (stats.canAfford(0.05)) {
                             stats.energize(0.1);
                             stats.loseMoney(0.05);
@@ -66,7 +67,7 @@ public class Layout {
                 }, -250, -225)
                 .add(new Entity("Hospital", new Sprite(200, 200, new Color(210, 210, 210))) {
                     @Override
-                    public void eventWhileTouching(Player player, PlayerStats stats) {
+                    public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
                         if (stats.canAfford(0.25)) {
                             if (stats.getHealth() < 1000) stats.heal(0.05);
                             stats.loseMoney(0.25);
@@ -85,7 +86,7 @@ public class Layout {
         worlds.add(new World("Home", 300, 225, new Color(230, 210, 140), new Color(100, 80, 50))
             .add(new Entity("Home Door", new Sprite(2, 30, new Color(167, 155, 81))) {
                 @Override
-                public void eventOnClick(Player player, PlayerStats stats) {
+                public void eventOnClick(Game game, Player player, PlayerStats stats) {
                     player.goTo("House");
                 }
             }, 150, 0)

@@ -53,6 +53,6 @@ public class AIEntity extends Entity {
     @Override
     public void render(Graphics2D g2d) {
         super.render(g2d);
-        DrawMethods.drawCenteredString(g2d, stats.getHealth()+"", getHitBox().getBounds(), FontLoader.getMainFont(8), Color.WHITE);
+        DrawMethods.drawRectCenteredString(g2d, stats.getHealth()+"", getHitBox().getBounds(), FontLoader.getMainFont(8), Color.WHITE);
     }
 }

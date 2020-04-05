@@ -9,6 +9,7 @@ import lifesim.main.game.items.ItemTypes;
 import lifesim.main.game.items.inventory.Inventory;
 import lifesim.main.game.items.inventory.ItemStack;
 import lifesim.main.game.entities.components.sprites.Sprite;
+import lifesim.main.util.fileIO.FontLoader;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class InventoryGUI extends Overlay {
     // Define the edges of the inside of the inventory.
     public static final Vector2D inventoryBounds = bg.getSize().scale(0.48, 0.3).translate(0, 5);
 
+    private static final Font detailFont = FontLoader.getMainFont(8);
 
     private final Inventory inventory;
 
@@ -92,7 +94,7 @@ public class InventoryGUI extends Overlay {
         g2d.setComposite(ac);
 
         if (!opened) {
-            g2d.translate(panel.getScaledWidth()/2.0 - inventoryBounds.x * 0.75, -panel.getScaledHeight()/2.0 + inventoryBounds.y * 0.85);
+            g2d.translate(panel.getScaledWidth()/2.0 - inventoryBounds.x*1.1, -panel.getScaledHeight()/2.0+ inventoryBounds.y*1.1);
             g2d.scale(0.6, 0.6);
         }
         bg.render(g2d, new Vector2D(0, 0), new Vector2D(0, 0));
@@ -101,7 +103,7 @@ public class InventoryGUI extends Overlay {
         ItemStack selectedStack = inventory.getSelectedStack();
         if (selectedStack.getItem() != ItemTypes.empty) {
             selectedBubble.render(g2d, selectedStack.inventoryPos, new Vector2D(0, 0));
-            selectedStack.renderDetailsAt(g2d, inventoryBounds.translate(-inventoryBounds.x-4, 5));
+            selectedStack.renderDetails(g2d, inventoryBounds.translate(-inventoryBounds.x, 10), detailFont);
         }
 
         for (ItemStack stack : inventory.getStacks())

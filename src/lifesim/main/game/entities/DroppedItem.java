@@ -1,5 +1,6 @@
 package lifesim.main.game.entities;
 
+import lifesim.main.game.Game;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.items.Item;
 import lifesim.main.game.entities.components.sprites.Sprite;
@@ -27,7 +28,7 @@ public class DroppedItem extends Entity {
     }
 
     @Override
-    public void eventWhileTouching(Player player, PlayerStats stats) {
+    public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
         collect(player);
     }
 

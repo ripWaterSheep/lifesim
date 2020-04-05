@@ -75,17 +75,6 @@ public class PlayerStats extends HealthStats {
 
 
     @Override
-    public void onCollision(Entity player, Entity otherEntity) {
-        super.onCollision(player, otherEntity);
-
-        otherEntity.eventWhileTouching((Player) player, this);
-        
-        if (MouseInputManager.left.isClicked())
-            otherEntity.eventOnClick((Player) player, this);
-    }
-
-
-    @Override
     public void update(Entity player) {
         super.update(player);
         energy = max(0, energy);

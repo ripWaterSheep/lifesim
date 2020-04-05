@@ -3,6 +3,7 @@ package lifesim.main.game.overlay;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
+import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.util.DrawMethods;
 import lifesim.main.util.fileIO.FontLoader;
 
@@ -49,13 +50,13 @@ public class DeathScreen extends Overlay {
         if (showing) {
             g2d.setColor(bgColor);
             Rectangle rect = new Rectangle(-panel.getScaledWidth()/2, -panel.getScaledHeight()/2, panel.getScaledWidth(), panel.getScaledHeight());
-            Rectangle subtitleRect = new Rectangle(0, 0, rect.width, rect.height*3/2);
+            //Rectangle subtitleRect = new Rectangle(0, 0, rect.width, rect.height*3/2);
 
             g2d.fill(rect);
 
             g2d.setFont(font);
-            DrawMethods.drawCenteredString(g2d, "OOF, YOU DIED!", rect, font, textColor);
-            DrawMethods.drawCenteredString(g2d, deathReason, subtitleRect, subtitleFont, textColor);
+            DrawMethods.drawCenteredString(g2d, "OOF, YOU DIED!", new Vector2D(0, 0), font, textColor);
+            DrawMethods.drawCenteredString(g2d, deathReason, new Vector2D(0, 25), subtitleFont, textColor);
 
         }
     }
