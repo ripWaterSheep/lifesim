@@ -20,7 +20,7 @@ public final class Game {
 
     private final ArrayList<Overlay> overlays = new ArrayList<>();
 
-    private final GameMessageSystem messageSystem;
+    private final MessageSystem messageSystem;
 
 
     public Game(GamePanel panel) {
@@ -32,13 +32,8 @@ public final class Game {
         overlays.add(new DeathScreen(panel, player));
         overlays.add(new InventoryGUI(panel, player));
 
-        messageSystem = new GameMessageSystem(panel, player);
+        messageSystem = new MessageSystem(panel, player);
         overlays.add(messageSystem);
-
-        sendMessage("Hi", 1000);
-        sendMessage("Hello", 2000);
-        sendMessage("Welcome", 500);
-        sendMessage("Testing", 4000);
     }
 
 
@@ -50,17 +45,17 @@ public final class Game {
         return layout.getWorlds();
     }
 
-    public void sendMessage(String message, long duration) {
-        messageSystem.sendMessage(new GameMessage(message, duration));
+    public void sendMessage(String message) {
+        messageSystem.sendMessage(message);
     }
 
 
     public void update() {
+        for (Overlay overlay: overlays)
+            overlay.update();
+
         player.getWorld().update(player);
 
-        for (Overlay overlay: overlays) {
-            overlay.update();
-        }
         cheatLogic();
     }
 
@@ -68,9 +63,8 @@ public final class Game {
     public void render(Graphics g) {
         player.getWorld().render(g, panel);
 
-        for (Overlay overlay: overlays) {
+        for (Overlay overlay: overlays)
             overlay.render((Graphics2D) g.create());
-        }
     }
 
 

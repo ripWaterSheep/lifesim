@@ -1,9 +1,8 @@
 package lifesim.main.game.entities.components.stats;
 
+import lifesim.main.game.Game;
 import lifesim.main.game.controls.KeyInputManager;
-import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Entity;
-import lifesim.main.game.entities.Player;
 
 import static java.lang.Math.max;
 import static java.lang.Math.sqrt;
@@ -11,17 +10,20 @@ import static java.lang.Math.sqrt;
 
 public class PlayerStats extends HealthStats {
 
+    private final Game game;
+
     private double energy;
     private double strength;
     private double money;
     private double intellect;
 
-    public PlayerStats(double speed, double health, double energy, double strength, double money, double intellect) {
+    public PlayerStats(double speed, double health, double energy, double strength, double money, double intellect, Game game) {
         super(speed, 0, Alliance.PLAYER, health);
         this.energy = energy;
         this.strength = strength;
         this.money = money;
         this.intellect = intellect;
+        this.game = game;
     }
 
 
@@ -59,8 +61,10 @@ public class PlayerStats extends HealthStats {
         money -= amount;
     }
 
-    public boolean canAfford(double amount) {
-        return (money >= amount);
+    public boolean attemptToPay(double amount) {
+        boolean can = money >= amount;
+        if (!can) game.sendMessage("You need more money!");
+        return can;
     }
 
 

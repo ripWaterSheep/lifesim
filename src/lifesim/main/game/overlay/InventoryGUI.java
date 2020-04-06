@@ -90,8 +90,6 @@ public class InventoryGUI extends Overlay {
 
     @Override
     public void render(Graphics2D g2d) {
-        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.85f);
-        g2d.setComposite(ac);
 
         if (!opened) {
             g2d.translate(panel.getScaledWidth()/2.0 - inventoryBounds.x*1.1, -panel.getScaledHeight()/2.0+ inventoryBounds.y*1.1);

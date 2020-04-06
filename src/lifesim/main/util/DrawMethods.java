@@ -1,10 +1,21 @@
 package lifesim.main.util;
 
 import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.math.MyMath;
 
 import java.awt.*;
 
+
+
 public class DrawMethods {
+
+    public static void setOpacity(Graphics2D g2d, double opacity) {
+        float inRangeOpacity = (float) MyMath.clamp(opacity, 0, 1);
+        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, inRangeOpacity);
+        g2d.setComposite(ac);
+    }
+
+
 
     public static void drawCenteredImage(Graphics g, Image image, double x, double y, double width, double height) {
         x -= width/2;

@@ -36,39 +36,39 @@ public class Layout {
                     @Override
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
                         stats.gainIntellect(0.25);
-                        stats.tire(0.05);
+                        stats.tire(0.1);
                     }
                 },250, 250)
                 .add(new Entity("Office", new Sprite(200, 200, new Color(150, 150, 160))) {
                     @Override
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
                         stats.gainMoney(stats.getIntellect());
-                        stats.tire(0.075);
+                        stats.tire(0.1);
                     }
                 }, -250, 250)
                 .add(new Entity("Gym", new Sprite("gym")) {
                     @Override
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
-                        if (stats.canAfford(0.05)) {
+                        if (stats.attemptToPay(0.25)) {
                             stats.strengthen(0.5);
-                            stats.tire(0.075);
-                            stats.loseMoney(0.05);
+                            stats.tire(0.1);
+                            stats.loseMoney(0.25);
                         }
                     }
                 }, -600, -200)
                 .add(new Entity("Restaurant", new Sprite(200, 200, new Color(255, 215, 125))) {
                     @Override
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
-                        if (stats.canAfford(0.05)) {
-                            stats.energize(0.1);
-                            stats.loseMoney(0.05);
+                        if (stats.attemptToPay(0.2)) {
+                            stats.energize(0.25);
+                            stats.loseMoney(0.2);
                         }
                     }
                 }, -250, -225)
                 .add(new Entity("Hospital", new Sprite(200, 200, new Color(210, 210, 210))) {
                     @Override
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
-                        if (stats.canAfford(0.25)) {
+                        if (stats.attemptToPay(0.25)) {
                             if (stats.getHealth() < 1000) stats.heal(0.05);
                             stats.loseMoney(0.25);
                         }

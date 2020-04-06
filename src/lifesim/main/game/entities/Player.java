@@ -12,10 +12,8 @@ import lifesim.main.game.items.Item;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.DirectionalAnimatedSprite;
 import lifesim.main.game.handlers.World;
-import lifesim.main.game.overlay.GameMessage;
 
 import java.awt.*;
-import java.security.MessageDigest;
 
 import static java.lang.Math.abs;
 
@@ -36,7 +34,7 @@ public final class Player extends Entity {
                 new Animation("player", 100, new Vector2D(12, 16), 3),
                 new Animation("player", 100, new Vector2D(12, 16), 4)
                 ),
-            new PlayerStats(6, 1000, 1000, 0, 0, 0));
+            new PlayerStats(6, 1000, 1000, 0, 0, 0, game));
         this.game = game;
         velocity.set(0, 0);
 
