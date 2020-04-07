@@ -29,12 +29,13 @@ public class Spawner {
         if (System.currentTimeMillis() - lastSpawnTime > spawnInterval && world.getEntities().size() < MAX_ENTITIES) {
             //Vector2D spawnPos = world.getSize();
             //spawnPos.set(world.getSize().scale(getRand(-0.5, 0.5), getRand(-0.5, 0.5)));
-            Vector2D spawnPos = player.pos.copy();
+            Vector2D spawnPos = player.getPos();
             Vector2D distFromPlayer = new Vector2D(0, 0);
             distFromPlayer.setMagDir(getRand(MIN_SPAWN_RADIUS, MAX_SPAWN_RADIUS), getRand(0, 360));
+            spawnPos.translate(distFromPlayer);
+            System.out.println(spawnPos.toStringComponents());
 
-
-            world.add(entityType.spawnNew(), spawnPos.translate(distFromPlayer));
+            world.add(entityType.spawnNew(), spawnPos);
             lastSpawnTime = System.currentTimeMillis();
         }
     }

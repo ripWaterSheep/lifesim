@@ -1,11 +1,16 @@
 package lifesim.main.game;
 
 import lifesim.main.game.controls.KeyInputManager;
+import lifesim.main.game.display.MessageDisplay;
+import lifesim.main.game.display.overlay.DeathScreen;
+import lifesim.main.game.display.overlay.InventoryGUI;
+import lifesim.main.game.display.overlay.StatBar;
 import lifesim.main.game.entities.Player;
+import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.handlers.Layout;
 import lifesim.main.game.handlers.World;
-import lifesim.main.game.overlay.*;
+import lifesim.main.game.display.RenderableDisplay;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,22 +23,24 @@ public final class Game {
     private final Layout layout = new Layout();
     private Player player;
 
-    private final ArrayList<Overlay> overlays = new ArrayList<>();
+    private final ArrayList<RenderableDisplay> displays = new ArrayList<>();
 
-    private final MessageSystem messageSystem;
-
+    private final MessageDisplay overheadDisplay;
+    private final MessageDisplay centralDisplay;
 
     public Game(GamePanel panel) {
         this.panel = panel;
         player = new Player(this);
         player.setWorld(layout.getWorlds().get(0));
 
-        overlays.add(new StatBar(panel, player));
-        overlays.add(new DeathScreen(panel, player));
-        overlays.add(new InventoryGUI(panel, player));
+        displays.add(new StatBar(panel, player));
+        displays.add(new DeathScreen(panel, player));
+        displays.add(new InventoryGUI(panel, player));
 
-        messageSystem = new MessageSystem(panel, player);
-        overlays.add(messageSystem);
+        overheadDisplay = new MessageDisplay(10, Color.WHITE, new Vector2D(0,  -panel.getScaledHeight()/2.0));
+        displays.add(overheadDisplay);
+        centralDisplay = new MessageDisplay(6, Color.WHITE, new Vector2D(0, -player.sprite.getSize().y));
+        displays.add(centralDisplay);
     }
 
 
@@ -45,14 +52,14 @@ public final class Game {
         return layout.getWorlds();
     }
 
-    public void sendMessage(String message) {
-        messageSystem.sendMessage(message);
+    public void displayCenter(String message) {
+        centralDisplay.displayMessage(message);
     }
 
 
     public void update() {
-        for (Overlay overlay: overlays)
-            overlay.update();
+        for (RenderableDisplay display: displays)
+            display.update();
 
         player.getWorld().update(player);
 
@@ -63,8 +70,8 @@ public final class Game {
     public void render(Graphics g) {
         player.getWorld().render(g, panel);
 
-        for (Overlay overlay: overlays)
-            overlay.render((Graphics2D) g.create());
+        for (RenderableDisplay display: displays)
+            display.render((Graphics2D) g.create());
     }
 
 

@@ -19,7 +19,7 @@ public class DroppedItem extends Entity {
     }
 
 
-    public void collect(Player player) {
+    protected void collect(Player player) {
         if (!collected) {
             player.acquireItem(item, amount);
             removeFromWorld();

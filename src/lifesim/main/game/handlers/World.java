@@ -10,7 +10,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-import static lifesim.main.util.math.Geometry.getDistanceBetween;
 
 
 public class World {
@@ -46,11 +45,11 @@ public class World {
 
     /** Get the closest entity in a world to an entity within a certain range.
      * Default to the entity itself if no eligible entities are within range rather than null to prevent NPE's. */
-    public Entity getClosestEntity(Entity entity, double range, Predicate<Entity> filter) {
-        Entity currentClosest = entity;
+    public Entity getClosestEntity(Entity entity1, double range, Predicate<Entity> filter) {
+        Entity currentClosest = entity1;
         double currentClosestDistance = range;
         for (Entity entity2: entities) {
-            double distance = getDistanceBetween(entity.pos, entity2.pos);
+            double distance = entity1.getPos().getDistanceFrom(entity2.getPos());
             if (distance < currentClosestDistance) {
                 if (filter.test(entity2)) { // Filter method must evaluate to true when entity passed as parameter.
                     currentClosest = entity2;
@@ -64,7 +63,7 @@ public class World {
 
     public World add(Entity entity, Vector2D pos) {
         entities.add(entity);
-        entity.pos.set(pos);
+        entity.setPos(pos);
         return this;
     }
 
@@ -88,7 +87,6 @@ public class World {
             entity.removeFromWorld();*/
         // Remove entity from world if requested, effectively destroying the entity.
         if (entity.isRemoveRequested()) {
-            entity.onRemoval(this);
             entities.remove(entity);
         }
 

@@ -1,4 +1,4 @@
-package lifesim.main.game.overlay;
+package lifesim.main.game.display.overlay;
 
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.controls.KeyInputManager;
@@ -51,7 +51,7 @@ public class InventoryGUI extends Overlay {
     private void dragItems() {
         Vector2D mousePos = MouseInputManager.left.getScaledPos();
 
-        if (MouseInputManager.left.isClicked()) {
+        if (MouseInputManager.left.isClicked())  {
             for (ItemStack stack: inventory.getStacks()) {
                 if (stack.getItem().sprite.containsPointAt(mousePos, stack.inventoryPos)) {
                     draggedStack = stack;
@@ -90,7 +90,6 @@ public class InventoryGUI extends Overlay {
 
     @Override
     public void render(Graphics2D g2d) {
-
         if (!opened) {
             g2d.translate(panel.getScaledWidth()/2.0 - inventoryBounds.x*1.1, -panel.getScaledHeight()/2.0+ inventoryBounds.y*1.1);
             g2d.scale(0.6, 0.6);
@@ -101,7 +100,7 @@ public class InventoryGUI extends Overlay {
         ItemStack selectedStack = inventory.getSelectedStack();
         if (selectedStack.getItem() != ItemTypes.empty) {
             selectedBubble.render(g2d, selectedStack.inventoryPos, new Vector2D(0, 0));
-            selectedStack.renderDetails(g2d, inventoryBounds.translate(-inventoryBounds.x, 10), detailFont);
+            selectedStack.renderDetails(g2d, inventoryBounds.copy().translate(-inventoryBounds.x, 10), detailFont);
         }
 
         for (ItemStack stack : inventory.getStacks())

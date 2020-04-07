@@ -1,4 +1,4 @@
-package lifesim.main.game.overlay;
+package lifesim.main.game.display.overlay;
 
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.entities.Player;
@@ -19,9 +19,8 @@ public class StatBar extends Overlay {
     private static final int BOTTOM_PADDING = 2;
     private static final int BAR_HEIGHT = 8;
 
-
     private static final Font STAT_FONT = FontLoader.getMainFont(6);
-    private static final int TEX_LEFT_PADDING = 2;
+    private static final int TEXT_LEFT_PADDING = 2;
 
 
     private static final int BAR_OPACITY = 145;
@@ -41,7 +40,6 @@ public class StatBar extends Overlay {
 
     @Override
     public void update() {
-
     }
 
     @Override
@@ -56,8 +54,8 @@ public class StatBar extends Overlay {
         drawBar("Health", stats.getHealth(), 0.05, 1000, StatsColors.healthColor);
 
         writeValue("World", player.getWorld().name);
-        writeRoundedVal("Y", player.pos.y);
-        writeRoundedVal("X", player.pos.x);
+        writeRoundedVal("Y", player.getPos().y);
+        writeRoundedVal("X", player.getPos().x);
 
         currentBarNum = 1;
     }
@@ -90,7 +88,7 @@ public class StatBar extends Overlay {
     private <T> void writeValue(String label, T data) {
         String formattedString = format(label, data+"");
 
-        DrawMethods.drawRectVerticallyCenteredString(g2d, formattedString, getX() + TEX_LEFT_PADDING,
+        DrawMethods.drawRectVerticallyCenteredString(g2d, formattedString, getX() + TEXT_LEFT_PADDING,
                 new Rectangle(getX(), getY()+1, 0, BAR_HEIGHT), STAT_FONT, Color.WHITE);
         nextLine();
     }

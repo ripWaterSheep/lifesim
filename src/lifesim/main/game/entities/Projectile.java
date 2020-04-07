@@ -38,7 +38,7 @@ public class Projectile extends Entity {
     }
 
     public Projectile(String name, Sprite sprite, Stats stats, Entity owner, double range, double angle, boolean destroyOnDamage, boolean matchSpriteAngle) {
-        this(name, sprite, stats, owner, range, angle, matchSpriteAngle, destroyOnDamage, BLANK);
+        this(name, sprite, stats, owner, range, angle, destroyOnDamage, matchSpriteAngle, BLANK);
     }
 
 

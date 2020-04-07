@@ -9,7 +9,6 @@ import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.Alliance;
 import lifesim.main.game.entities.components.stats.BasicStats;
 import lifesim.main.game.entities.components.stats.HealerStats;
-import lifesim.main.game.entities.components.stats.InanimateStats;
 
 import java.awt.*;
 
@@ -58,19 +57,19 @@ public enum ProjectileType implements Launchable {
     HEAL_ORB {
         @Override
         public Projectile launchNew(Entity owner, Alliance alliance, double angle) {
-            return new Projectile("Heal Orb", new Sprite(12, 12, new Color(255, 0, 0, 125)),
-                    new HealerStats(8, 0, alliance, 15),  owner, 100, angle, true, false);
+            return new Projectile("Heal Orb", new Sprite(64, 64, new Color(255, 0, 0, 125)),
+                    new HealerStats(6, 0, alliance, 6),  owner, 150, angle, false, false);
         }},
 
 
     PUSH_TEST {
         @Override
         public Projectile launchNew(Entity owner, Alliance alliance, double angle) {
-            return new Projectile("Push Test", new Sprite(14, 14, new Color(100, 150, 200)),
-                    new BasicStats(10, 0, alliance), owner, 350, angle, false, false) {
+            return new Projectile("Push Test", new Sprite(16, 16, new Color(100, 150, 200)),
+                    new BasicStats(12, 0, alliance), owner, 300, angle, false, false) {
                 @Override
                 public void eventOnHit(Entity entity) {
-                    entity.push(velocity.scale(2));
+                    entity.push(getVelocity().scale(2.5));
                 }
             };
         }

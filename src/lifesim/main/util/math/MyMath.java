@@ -12,9 +12,11 @@ public class MyMath {
     public static double clamp(double val, double bound1, double bound2) {
         double min, max;
         if (bound1 < bound2) {
-            min = bound1; max = bound2;
+            min = bound1;
+            max = bound2;
         } else {
-            min = bound2; max = bound1;
+            min = bound2;
+            max = bound1;
         }
         return Math.max(min, Math.min(max, val));
     }

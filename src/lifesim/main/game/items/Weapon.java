@@ -21,7 +21,7 @@ public class Weapon extends Item {
 
     @Override
     public void use(World world, Player player , PlayerStats stats) {
-        world.add(projectileType.launchNew(player, Alliance.PLAYER,  MouseInputManager.right.getAngleFromCenter()), player.pos);
+        world.add(projectileType.launchNew(player, Alliance.PLAYER,  MouseInputManager.right.getAngleFromCenter()), player.getPos());
     }
 
 }

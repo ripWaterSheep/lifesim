@@ -3,7 +3,6 @@ package lifesim.main.game.items.inventory;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.items.Item;
 import lifesim.main.util.DrawMethods;
-import lifesim.main.util.fileIO.FontLoader;
 
 import java.awt.*;
 
@@ -40,7 +39,7 @@ public class ItemStack {
 
     public void drag(Vector2D dragPos, Vector2D inventoryBounds) {
         inventoryPos.set(dragPos);
-        inventoryPos.clampInRect(new Vector2D(0, 0), inventoryBounds.translate(item.sprite.getSize().scale(-0.5)));
+        inventoryPos.clampInRect(new Vector2D(0, 0), inventoryBounds.copy().translate(item.sprite.getSize().scale(-0.5)));
     }
 
 

@@ -27,18 +27,11 @@ public class FontLoader {
 
     public static void init() {
         loadFont("Minecraft.otf");
-        loadFont("Blood Cyrillic.ttf");
     }
-
 
 
     public static Font getMainFont(int size) {
         return new Font("Minecraft", Font.PLAIN, size);
     }
-
-    public static Font getBloodFont(int size) {
-        return new Font("Blood Cyrillic", Font.PLAIN, size);
-    }
-
 
 }

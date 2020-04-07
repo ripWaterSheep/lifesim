@@ -19,7 +19,7 @@ public class Entity {
     public final Sprite sprite;
     protected final Stats stats;
 
-    public final Vector2D pos;
+    protected final Vector2D pos;
     protected final Vector2D velocity;
 
     // If true, the world containing the entity will remove it from the world.
@@ -39,8 +39,16 @@ public class Entity {
     }
 
 
+    public Vector2D getPos() {
+        return pos.copy();
+    }
+
+    public void setPos(Vector2D newPos) {
+        pos.set(newPos);
+    }
+
     public Vector2D getDisplayPos() {
-        return pos.translate(Main.getGame().getPlayer().pos.scale(-1));
+        return getPos().translate(Main.getGame().getPlayer().getPos().scale(-1));
     }
 
     public Shape getHitBox() {
@@ -51,15 +59,14 @@ public class Entity {
         return testIntersection(getHitBox(), entity.getHitBox());
     }
 
-    public Entity getOwner() {
-        return this;
-    }
-
-
     public Vector2D getVelocity() {
         return velocity.copy();
     }
 
+
+    public Entity getOwner() {
+        return this;
+    }
 
     public Stats getStats() {
         return stats;
@@ -79,42 +86,38 @@ public class Entity {
         removeRequested = true;
     }
 
-    public void onRemoval(World world) {
-
-    }
-
-
     /** While the player is touching this entity, this customizable function is called. */
     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
-
     }
 
     /** If the mouse is clicked when the player is touching this entity, this customizable function is called. */
     public void eventOnClick(Game game, Player player, PlayerStats stats) {
+    }
 
+    /** When this entity hits another entity that it can attack, this customizable function is called. */
+    public void eventOnHit(Entity entity) {
     }
 
 
     protected void stop() {
-        velocity.set(velocity.scale(0.85)); // Slow down due to friction, approaching zero.
+        velocity.scale(0.85); // Slow down due to friction, approaching zero.
     }
 
-
-    public void push(Vector2D movement) {
-        velocity.set(velocity.translate(movement));
+    public void push(Vector2D force) {
+        velocity.translate(force);
     }
 
 
     public void handleCollision(Entity entity, World world) {
         stats.onCollision(this, entity);
+        if (canAttack(entity)) eventOnHit(entity);
     }
 
     public void update(World world) {
         stats.update(this);
-        pos.set(pos.translate(velocity));
+        pos.translate(velocity);
         // Keep the entity within the world's boundaries.
-        if (stats.getCurrentSpeed() > 0)
-            pos.clampInRect(new Vector2D(0, 0), world.getSize().scale(0.5).translate(sprite.getSize().scale(-0.5)));
+        pos.clampInRect(new Vector2D(0, 0), world.getSize().scale(0.5).translate(sprite.getSize().scale(-0.5)));
     }
 
     public void render(Graphics2D g2d) {

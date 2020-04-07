@@ -1,7 +1,6 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.Game;
-import lifesim.main.game.controls.KeyInputListener;
 import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.components.*;
@@ -34,19 +33,20 @@ public final class Player extends Entity {
                 new Animation("player", 100, new Vector2D(12, 16), 3),
                 new Animation("player", 100, new Vector2D(12, 16), 4)
                 ),
-            new PlayerStats(6, 1000, 1000, 0, 0, 0, game));
+            new PlayerStats(8, 1000, 1000, 0, 0, 0, game));
         this.game = game;
         velocity.set(0, 0);
 
-        inventory.addItem(ItemTypes.bread, 100);
-        inventory.addItem(ItemTypes.bomb, 100);
+        /*inventory.addItem(ItemTypes.bread, 100);
         inventory.addItem(ItemTypes.waterGun, 100);
         inventory.addItem(ItemTypes.banana, 100);
         inventory.addItem(ItemTypes.mysteriousPill, 100);
+        inventory.addItem(ItemTypes.virtualCoin, 100);*/
         inventory.addItem(ItemTypes.laserGun, 100);
-        inventory.addItem(ItemTypes.virtualCoin, 100);
+        inventory.addItem(ItemTypes.bomb, 100);
         inventory.addItem(ItemTypes.jetPack, 100);
         inventory.addItem(ItemTypes.allyTest, 100);
+        inventory.addItem(ItemTypes.allyTest2, 100);
         inventory.addItem(ItemTypes.healer, 100);
         inventory.addItem(ItemTypes.pushTestWeapon, 100);
     }
@@ -96,43 +96,32 @@ public final class Player extends Entity {
 
 
     public void controlMovement() {
-        stop(); // unless
+        stop();
         double speed = stats.getCurrentSpeed();
-        boolean up, down, left, right;
-        final KeyInputListener upKey = KeyInputManager.k_w,
-                leftKey = KeyInputManager.k_a,
-                downKey = KeyInputManager.k_s,
-                rightKey = KeyInputManager.k_d;
-        // Determine intended direction based on key presses.
-        // If both keys in opposite directions are pressed, then keys pressed more recently have precedence over earlier pressed keys.
-        left = leftKey.isPressed();
-        right = rightKey.isPressed();
-        if (left && right) {
-            left = leftKey.getPressTime() < rightKey.getPressTime();
-            right = !left;
-        }
-        up = upKey.isPressed();
-        down = downKey.isPressed();
-        if (up && down) {
-            up = upKey.getPressTime() < downKey.getPressTime();
-            down = !up;
-        }
-        if (!(up || down || left || right)) return;
-        // Get the correct angle based on combination of up/down and left/right.
-        double angle = 0;
-        if (up) {
-            if (left) angle = 45;
-            else if (right) angle = 135;
-            else angle = 90;
-        } else if (down) {
-            if (left) angle = 315;
-            else if (right) angle = 225;
-            else angle = 270;
-        } else if (left) angle = 0;
-        else if (right) angle = 180;
-        // Move along x or y axis only if needed.
-        if ((left || right) && abs(velocity.x) < speed) velocity.setXMagDir(speed, angle);
-        if ((up || down) && abs(velocity.y) < speed) velocity.setYMagDir(speed, angle);
+
+
+        if (KeyInputManager.k_space.isPressed() && getStats().getEnergy() > 0)
+            speed *= 1.45;
+        if (KeyInputManager.k_shift.isPressed())
+            speed *= 0.3;
+
+
+        Vector2D tempVel = new Vector2D(0, 0);
+        // Move according to W-A-S-D key presses;
+
+        if (KeyInputManager.k_a.isPressed()) tempVel.translate(-speed, 0); //L
+        if (KeyInputManager.k_d.isPressed()) tempVel.translate(speed, 0);  //R
+        if (KeyInputManager.k_w.isPressed()) tempVel.translate(0, -speed); //U
+        if (KeyInputManager.k_s.isPressed()) tempVel.translate(0, speed);  //D
+
+        // Maintain momentum even if not currently walking in direction of momentum.
+        if (abs(velocity.x) > 0 && tempVel.x == 0) tempVel.x = velocity.x;
+        if (abs(velocity.y) > 0 && tempVel.y == 0) tempVel.y = velocity.y;
+
+
+        // Make sure that
+        tempVel.clampMagnitude(speed);
+        velocity.set(tempVel);
     }
 
 

@@ -1,12 +1,17 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
+import lifesim.main.game.entities.components.stats.Stats;
 
 import java.awt.*;
 
 
 /** A temporary entity only intended to run through a single sprite animation cycle; used for effects such as explosions */
 public class EffectEntity extends Entity {
+
+    public EffectEntity(String name, AnimatedSprite sprite, Stats stats) {
+        super(name, sprite, stats);
+    }
 
     public EffectEntity(String name, AnimatedSprite sprite) {
         super(name, sprite);

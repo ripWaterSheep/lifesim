@@ -49,19 +49,17 @@ public class Layout {
                 .add(new Entity("Gym", new Sprite("gym")) {
                     @Override
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
-                        if (stats.attemptToPay(0.25)) {
-                            stats.strengthen(0.5);
-                            stats.tire(0.1);
-                            stats.loseMoney(0.25);
+                        if (stats.attemptToPay(0.75)) {
+                            stats.strengthen(0.75);
+                            stats.tire(0.5);
                         }
                     }
                 }, -600, -200)
                 .add(new Entity("Restaurant", new Sprite(200, 200, new Color(255, 215, 125))) {
                     @Override
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
-                        if (stats.attemptToPay(0.2)) {
+                        if (stats.attemptToPay(0.5)) {
                             stats.energize(0.25);
-                            stats.loseMoney(0.2);
                         }
                     }
                 }, -250, -225)
@@ -70,7 +68,6 @@ public class Layout {
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
                         if (stats.attemptToPay(0.25)) {
                             if (stats.getHealth() < 1000) stats.heal(0.05);
-                            stats.loseMoney(0.25);
                         }
                     }
                 }, -250, -550)

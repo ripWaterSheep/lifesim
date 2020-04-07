@@ -21,4 +21,5 @@ public interface Stats {
 
     void onCollision(Entity entity, Entity otherEntity);
     void update(Entity entity);
+
 }

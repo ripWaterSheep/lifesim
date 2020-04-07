@@ -21,7 +21,7 @@ public class SpawnItem extends Item {
 
     @Override
     public void use(World world, Player player , PlayerStats stats) {
-        world.add(entityType.spawnNew(), MouseInputManager.right.getPosRelativeTo(player.pos));
+        world.add(entityType.spawnNew(), MouseInputManager.right.getPosRelativeTo(player.getPos()));
     }
 
 }

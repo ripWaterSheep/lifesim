@@ -7,7 +7,6 @@ import lifesim.main.game.entities.components.Vector2D;
 
 import java.awt.*;
 
-import static lifesim.main.util.math.Geometry.getAngleBetween;
 
 
 public class MouseInputListener extends InputListener {
@@ -26,7 +25,7 @@ public class MouseInputListener extends InputListener {
     }
 
     public Vector2D getScaledPos() {
-        return pos.scale(1.0/GamePanel.GRAPHICS_SCALE).translate(Main.getPanel().getScaledDimensions().scale(-0.5));
+        return pos.copy().scale(1.0/GamePanel.GRAPHICS_SCALE).translate(Main.getPanel().getScaledSize().scale(-0.5));
     }
 
     public Vector2D getPosRelativeTo(Vector2D pos) {
@@ -35,7 +34,7 @@ public class MouseInputListener extends InputListener {
 
 
     public double getAngleFromCenter() {
-        return getAngleBetween(getScaledPos(), new Vector2D(0, 0));
+        return getScaledPos().getAngleFrom(new Vector2D(0, 0));
     }
 
 

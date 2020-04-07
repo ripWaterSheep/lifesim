@@ -1,11 +1,12 @@
-package lifesim.main.game.overlay;
+package lifesim.main.game.display.overlay;
 
 import lifesim.main.game.GamePanel;
+import lifesim.main.game.display.RenderableDisplay;
 import lifesim.main.game.entities.Player;
 
 import java.awt.*;
 
-public abstract class Overlay {
+public abstract class Overlay implements RenderableDisplay {
 
     protected final GamePanel panel;
     protected final Player player;

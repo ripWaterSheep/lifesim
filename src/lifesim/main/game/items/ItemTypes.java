@@ -2,7 +2,6 @@ package lifesim.main.game.items;
 
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.Projectile;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
@@ -66,13 +65,15 @@ public class ItemTypes {
     public static final Item allyTest = new SpawnItem("Ally test", new Sprite(8, 8,
             new Color(50, 100, 255)), AllyType.ALLY_TEST);
 
+    public static final Item allyTest2 = new SpawnItem("Big Boi", new Sprite(8, 8,
+            new Color(113, 135, 103)), AllyType.BIG_BOI);
+
 
     /**************
      * Consumables
      **************/
 
 
-    @ItemInfo(type = "Consumable", lore = "An innocuous piece of bread.", abilities = "Heals 100 energy.")
     public static final Item bread = new Item("Bread", new AnimatedSprite(
             new Animation("consumables", 200, new Vector2D(8, 8), 0))) {
         @Override
@@ -82,7 +83,6 @@ public class ItemTypes {
     };
 
 
-    @ItemInfo(type = "Consumable", lore = "A good source of potassium.", abilities = "Heals 200 energy.")
     public static final Item banana = new Item("Banana", new AnimatedSprite(
             new Animation("consumables", 100, new Vector2D(8, 8), 1))) {
         @Override
@@ -92,7 +92,6 @@ public class ItemTypes {
     };
 
 
-    @ItemInfo(type = "Test Item", lore = "Found in your friend's medicine cabinet probably.", abilities = "???")
     public static final Item mysteriousPill = new Item("Mysterious Pill",
             new AnimatedSprite(new Animation("consumables", 300, new Vector2D(8, 8), 2))) {
         @Override
@@ -108,7 +107,6 @@ public class ItemTypes {
         }
     };
 
-    @ItemInfo(type = "Test Item", lore = "Very unstable economy these days.", abilities = "Gambles anywhere from 0-100$")
     public static final Item virtualCoin = new Item("Virtual Coin",  new AnimatedSprite(
             new Animation("consumables", 120, new Vector2D(8, 8), 3))) {
         @Override

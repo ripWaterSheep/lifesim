@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import static lifesim.main.util.math.MyMath.clamp;
 
+
 public final class MouseInputManager {
 
     static final ArrayList<MouseInputListener> buttons = new ArrayList<>();

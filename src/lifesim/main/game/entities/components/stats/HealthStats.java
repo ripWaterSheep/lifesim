@@ -2,6 +2,7 @@ package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
 
+import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class HealthStats extends BasicStats implements Stats {
@@ -50,6 +51,7 @@ public class HealthStats extends BasicStats implements Stats {
             entity.removeFromWorld();
         protectionMultiplier = 1;
 
+        health = max(health, 0);
         if (!(this instanceof PlayerStats)) health = min(maxHealth, health);
     }
 

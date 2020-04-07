@@ -1,6 +1,5 @@
 package lifesim.main.game.entities.components;
 
-import lifesim.main.util.math.MyMath;
 
 import java.awt.geom.Point2D;
 
@@ -13,7 +12,6 @@ public class Vector2D {
 
     public double x;
     public double y;
-
 
 
     public Vector2D(double x, double y) {
@@ -54,29 +52,30 @@ public class Vector2D {
         this.y = y;
     }
 
+
     public void setDirection(double deg) {
         setMagDir(getMagnitude(), deg);
     }
 
 
-    public void setXMagDir(double magnitude, double deg) {
+    public void setMagDir(double magnitude, double deg) {
         x = -magnitude * Math.cos(Math.toRadians(deg));
-    }
-
-    public void setYMagDir(double magnitude, double deg) {
         y = -magnitude * Math.sin(Math.toRadians(deg));
     }
 
-
-    public void setMagDir(double magnitude, double deg) {
-        setXMagDir(magnitude, deg);
-        setYMagDir(magnitude, deg);
+    public Vector2D normalize() {
+        if (getMagnitude() > 0) scale(1/getMagnitude());
+        return this;
     }
 
+    public void clampMagnitude(double magnitude) {
+        double tempMag = getMagnitude();
+        normalize().scale(clamp(tempMag, 0, magnitude));
+    }
 
     public void clampInRect(Vector2D rectCenter, Vector2D size) {
-        x = clamp(x, rectCenter.x-size.x, rectCenter.x+size.x);
-        y = clamp(y,rectCenter.y-size.y, rectCenter.y+size.y);
+        x = clamp(x, rectCenter.x - size.x, rectCenter.x + size.x);
+        y = clamp(y,rectCenter.y - size.y, rectCenter.y + size.y);
     }
 
 
@@ -84,26 +83,31 @@ public class Vector2D {
         return new Vector2D(getRand(-x, x), getRand(-y, y));
     }
 
-    public Vector2D translate(Vector2D vector) {
-        return new Vector2D(x + vector.x, y + vector.y);
+    public Vector2D translate(double x, double y) {
+        this.x += x;
+        this.y += y;
+        return this;
     }
 
-    public Vector2D translate(double x, double y) {
-        return translate(new Vector2D(x, y));
+    public Vector2D translate(Vector2D vector) {
+        return translate(vector.x, vector.y);
+    }
+
+
+    public Vector2D scale(double xScale, double yScale) {
+        x *= xScale;
+        y *= yScale;
+        return this;
     }
 
     public Vector2D scale(double scaleFactor) {
-        return new Vector2D(x*scaleFactor, y*scaleFactor);
+        scale(scaleFactor, scaleFactor);
+        return this;
     }
 
-    public Vector2D scale(double xScale, double yScale) {
-        return new Vector2D(x*xScale, y*yScale);
-    }
-
-
-    public boolean inRect(Vector2D rectCenter, Vector2D dimensions) {
-        Vector2D rectMin = rectCenter.translate(dimensions.scale(-0.5));
-        Vector2D rectMax = rectCenter.translate(dimensions.scale(0.5));
+    public boolean isInRect(Vector2D rectCenter, Vector2D size) {
+        Vector2D rectMin = rectCenter.copy().translate(size.copy().scale(-0.5));
+        Vector2D rectMax = rectCenter.copy().translate(size.copy().scale(0.5));
         return x > rectMin.x && y > rectMin.y && x < rectMax.x && y < rectMax.y;
     }
 
@@ -112,6 +116,10 @@ public class Vector2D {
         return Math.abs(betterRound(Point2D.distance(x, y, otherVector.x, otherVector.y)));
     }
 
+    public double getAngleFrom(Vector2D otherVector) {
+        double angle = betterRound(Math.toDegrees(Math.atan2(otherVector.y - y, otherVector.x - x)));
+        return angleWrap(angle);
+    }
 
     public String toStringComponents() {
         return "x: " + x + ", y: " + y;

@@ -114,6 +114,7 @@ public final class KeyInputManager {
         public void focusLost(FocusEvent e) {
             for (KeyInputListener key: keys) {
                 key.doRelease();
+                System.out.println(key.getPressTime());
             }
         }
     };

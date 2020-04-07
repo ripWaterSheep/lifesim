@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    public static final double GRAPHICS_SCALE = 4.5;
+    public static final double GRAPHICS_SCALE = 4;
 
 
     private Game game;
@@ -37,7 +37,7 @@ public class GamePanel extends JPanel {
         return (int) (getHeight()/GRAPHICS_SCALE);
     }
 
-    public Vector2D getScaledDimensions() {
+    public Vector2D getScaledSize() {
         return new Vector2D(getScaledWidth(), getScaledHeight());
     }
 
@@ -87,11 +87,12 @@ public class GamePanel extends JPanel {
         long now = System.nanoTime();
         delta += (now - lastTime) / ns;
         lastTime = now;
-        render(g);
-        while(delta >= 1) {
+
+        while (delta >= 1) {
             update();
             delta--;
         }
+        render(g);
         frames++;
 
         if (System.currentTimeMillis() - timer > 1000) {

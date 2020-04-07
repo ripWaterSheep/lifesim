@@ -43,7 +43,7 @@ public class DrawMethods {
      * Draw a String centered in the middle of a Rectangle.
      */
     public static void drawRectCenteredString(Graphics g, String text, Rectangle rect, Font font, Color color) {
-        FontMetrics metrics = g.getFontMetrics(font);
+        /*FontMetrics metrics = g.getFontMetrics(font);
         // Get x coordinate of text based on rectangle width and text width, shifting it to the middle .
         int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
         // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
@@ -51,7 +51,8 @@ public class DrawMethods {
 
         g.setFont(font);
         g.setColor(color);
-        g.drawString(text, x, y);
+        g.drawString(text, x, y);*/
+        drawCenteredString(g, text, new Vector2D(rect.getCenterX(), rect.getCenterY()), font, color);
     }
 
 

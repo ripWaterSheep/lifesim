@@ -63,7 +63,8 @@ public class PlayerStats extends HealthStats {
 
     public boolean attemptToPay(double amount) {
         boolean can = money >= amount;
-        if (!can) game.sendMessage("You need more money!");
+        if (can) loseMoney(amount);
+        else game.displayCenter("Out of money!");
         return can;
     }
 
@@ -86,10 +87,8 @@ public class PlayerStats extends HealthStats {
         intellect = max(0, intellect);
 
         speedMultiplier *= (energy/5000) + 0.8;
-        if (KeyInputManager.k_space.isPressed() && energy > 0)
-            speedMultiplier *= 1.45;
 
-        energy -= 0.1 + sqrt(player.getVelocity().getMagnitude()/450);
+        energy -= 0.05 + sqrt(player.getVelocity().getMagnitude()/500);
     }
 
 

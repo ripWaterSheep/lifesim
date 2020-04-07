@@ -4,12 +4,13 @@ import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.controls.MouseInputManager;
 import lifesim.main.game.entities.DroppedItem;
 import lifesim.main.game.entities.Player;
+import lifesim.main.game.entities.ShopItem;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.items.ItemTypes;
 import lifesim.main.game.items.Item;
 import lifesim.main.game.handlers.World;
-import lifesim.main.game.overlay.InventoryGUI;
+import lifesim.main.game.display.overlay.InventoryGUI;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public class Inventory {
             }
         }
         // Set the position to be randomly located inside inventory bounds
-        ItemStack newStack = new ItemStack(item, amount, InventoryGUI.inventoryBounds.translate(item.sprite.getSize().scale(-0.5)).randomizeInAbsRectBounds());
+        ItemStack newStack = new ItemStack(item, amount, InventoryGUI.inventoryBounds.copy().translate(item.sprite.getSize().scale(-0.5)).randomizeInAbsRectBounds());
         stacks.add(newStack);
         if (selectedStack == null) selectedStack = newStack;
     }
@@ -91,10 +92,11 @@ public class Inventory {
 
         if (KeyInputManager.k_q.isClicked()) {
             // Drop the item behind player so it isn't picked back up when moving forward.
-            Vector2D dropPos = player.pos.copy();
-            if (player.getVelocity().getMagnitude() < player.getStats().getCurrentSpeed()) dropPos.set(dropPos.translate(0, 25));
-            else dropPos.set(dropPos.translate(player.getVelocity().scale(-5)));
+            Vector2D dropPos = player.getPos();
+            if (player.getVelocity().getMagnitude() < player.getStats().getCurrentSpeed()) dropPos.translate(0, 25);
+            else dropPos.translate(player.getVelocity().scale(-5));
             dropStackInWorld(player.getWorld(), dropPos);
+            //dropStackInWorld(world, player.getPos().translate(10, 10));
         }
     }
 

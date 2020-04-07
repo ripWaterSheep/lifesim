@@ -1,7 +1,9 @@
 package lifesim.main.game.entities.components.sprites;
 
 import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.DrawMethods;
 import lifesim.main.util.fileIO.ImageLoader;
+import lifesim.main.util.math.Geometry;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -14,7 +16,6 @@ public class Sprite {
     protected Image image;
     private final Vector2D size;
     private final Color color;
-    private final boolean elliptical = false;
 
 
     /** Get the image to render, maintaining the image's actual size to keep pixel scaling consistent.  */
@@ -29,13 +30,6 @@ public class Sprite {
     }
 
 
-    /** Use a single frame from a spriteSheet as the sprite image. */
-    public Sprite(String spriteSheetName, Vector2D spriteSize, Vector2D pos) {
-        this(ImageLoader.loadImage(spriteSheetName).getSubimage(
-                (int) (pos.x * spriteSize.x), (int) (pos.y * spriteSize.y), (int) spriteSize.x, (int) spriteSize.y));
-    }
-
-
 
     public Sprite(double width, double height, Color color) {
         image = null;
@@ -43,23 +37,18 @@ public class Sprite {
         this.color = color;
     }
 
-    public Vector2D getSize() {
+    public final Vector2D getSize() {
         return size.copy();
     }
 
 
     public boolean containsPointAt(Vector2D point, Vector2D pos) {
-        return point.inRect(pos, size);
+        return point.isInRect(pos, size);
     }
 
 
-
     public Shape getShapeAt(Vector2D pos) {
-        int x = betterRound(pos.x - (size.x/2));
-        int y = betterRound(pos.y -(size.y/2));
-
-        if (elliptical) return new Ellipse2D.Double(x, y, size.x, size.y);
-        else return new Rectangle.Double(x, y, size.x, size.y);
+        return Geometry.getCenteredRect(pos, size);
     }
 
 

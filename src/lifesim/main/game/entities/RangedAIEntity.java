@@ -5,8 +5,6 @@ import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.entities.types.Launchable;
 import lifesim.main.game.handlers.World;
 
-import static lifesim.main.util.math.Geometry.getAngleBetween;
-import static lifesim.main.util.math.Geometry.getDistanceBetween;
 
 
 public class RangedAIEntity extends AIEntity {
@@ -25,7 +23,7 @@ public class RangedAIEntity extends AIEntity {
 
 
     public Projectile getProjectile() {
-        return projectileType.launchNew(this, stats.getAlliance(), getAngleBetween(attackTarget.pos, pos));
+        return projectileType.launchNew(this, stats.getAlliance(), attackTarget.pos.getAngleFrom(pos));
     }
 
 
@@ -39,9 +37,9 @@ public class RangedAIEntity extends AIEntity {
 
     @Override
     protected void evaluateAttackState() {
-        double distance = getDistanceBetween(attackTarget.pos, pos);
+        double distance = attackTarget.pos.getDistanceFrom(pos);
         // Pursue attack target if target is in detection range but stay still if target is safely within attacking range.
-        pursuing = (distance <= detectionRange && distance >= getProjectile().getRange()*0.75);
+        pursuing = distance <= detectionRange && distance >= getProjectile().getRange()*0.75;
         // Only shoot if target is inside attack range.
         attacking = distance <= getProjectile().getRange();
     }
@@ -51,5 +49,6 @@ public class RangedAIEntity extends AIEntity {
     public void update(World world) {
         super.update(world);
         if (attacking && !equals(attackTarget)) attemptShot(world);
+
     }
 }
