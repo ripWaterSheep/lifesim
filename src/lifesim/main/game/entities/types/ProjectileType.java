@@ -1,6 +1,7 @@
 package lifesim.main.game.entities.types;
 
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.Projectile;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
@@ -16,6 +17,18 @@ import static lifesim.main.game.entities.types.EffectType.BOOM;
 
 
 public enum ProjectileType implements Launchable {
+
+
+    FIST {
+        @Override
+        public Projectile launchNew(Entity owner, Alliance alliance, double angle) {
+            double strength = 3;
+            if (owner instanceof Player) strength = ((Player) owner).getStats().getStrength();
+            return new Projectile(owner.name + " fist", new Sprite("fist"), new BasicStats(
+                    7, 3+strength/100, Alliance.PLAYER), owner, 50, angle, false, true);
+        }
+    },
+
 
     SMALL_BULLET {
         @Override
@@ -73,6 +86,6 @@ public enum ProjectileType implements Launchable {
                 }
             };
         }
-    };
+    },
 
 }

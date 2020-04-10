@@ -9,18 +9,27 @@ import java.awt.*;
 import static lifesim.main.util.math.MyMath.roundToMultiple;
 
 
-public class ItemStack {
+public class OLDItemStack {
 
     private final Item item;
     private int amount;
-    public final Vector2D inventoryPos;
+    private final Vector2D inventoryPos;
 
 
-    public ItemStack(Item item, int amount, Vector2D inventoryPos) {
+    public OLDItemStack(Item item, int amount, Vector2D inventoryPos) {
         this.item = item;
         this.amount = amount;
         this.inventoryPos = inventoryPos;
     }
+
+    public Vector2D getPos() {
+        return inventoryPos.copy();
+    }
+
+    void setPos(Vector2D newPos) {
+        inventoryPos.set(newPos);
+    }
+
 
 
     public Item getItem() {

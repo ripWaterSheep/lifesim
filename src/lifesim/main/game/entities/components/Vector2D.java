@@ -1,6 +1,7 @@
 package lifesim.main.game.entities.components;
 
 
+import java.awt.*;
 import java.awt.geom.Point2D;
 
 import static java.lang.Math.toDegrees;
@@ -31,6 +32,9 @@ public class Vector2D {
         return new Vector2D(x, y);
     }
 
+    public boolean equals(Vector2D v) {
+        return x == v.x && y == v.y;
+    }
 
     public double getMagnitude() {
         return Point2D.distance(0, 0, x, y);
@@ -119,6 +123,11 @@ public class Vector2D {
     public double getAngleFrom(Vector2D otherVector) {
         double angle = betterRound(Math.toDegrees(Math.atan2(otherVector.y - y, otherVector.x - x)));
         return angleWrap(angle);
+    }
+
+
+    public Point toPoint() {
+        return new Point((int) x, (int) y);
     }
 
     public String toStringComponents() {

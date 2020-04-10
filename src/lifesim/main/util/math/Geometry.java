@@ -6,11 +6,13 @@ import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 
+import static lifesim.main.util.math.MyMath.betterRound;
+
 
 public class Geometry {
 
     public static Rectangle getCenteredRect(Vector2D pos, Vector2D size) {
-        return new Rectangle((int) (pos.x - (size.x/2)), (int) (pos.y - (size.y/2)), (int) size.x, (int) size.y);
+        return new Rectangle(betterRound(pos.x - (size.x/2)), betterRound(pos.y - (size.y/2)), betterRound(size.x), betterRound(size.y));
     }
 
 

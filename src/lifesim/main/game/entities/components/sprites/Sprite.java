@@ -42,11 +42,6 @@ public class Sprite {
     }
 
 
-    public boolean containsPointAt(Vector2D point, Vector2D pos) {
-        return point.isInRect(pos, size);
-    }
-
-
     public Shape getShapeAt(Vector2D pos) {
         return Geometry.getCenteredRect(pos, size);
     }

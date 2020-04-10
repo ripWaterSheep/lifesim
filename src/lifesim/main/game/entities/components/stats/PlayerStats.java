@@ -1,11 +1,10 @@
 package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.Game;
-import lifesim.main.game.controls.KeyInputManager;
 import lifesim.main.game.entities.Entity;
 
-import static java.lang.Math.max;
-import static java.lang.Math.sqrt;
+
+import static java.lang.Math.*;
 
 
 public class PlayerStats extends HealthStats {

@@ -1,110 +1,109 @@
 package lifesim.main.game.display.overlay;
 
 import lifesim.main.game.GamePanel;
-import lifesim.main.game.controls.KeyInputManager;
-import lifesim.main.game.controls.MouseInputManager;
+import lifesim.main.game.controls.KeyInput;
+import lifesim.main.game.controls.MouseInput;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.game.items.ItemTypes;
-import lifesim.main.game.items.inventory.Inventory;
-import lifesim.main.game.items.inventory.ItemStack;
 import lifesim.main.game.entities.components.sprites.Sprite;
-import lifesim.main.util.fileIO.FontLoader;
+import lifesim.main.game.items.inventory.Inventory;
+import lifesim.main.game.items.inventory.InventorySlot;
+import lifesim.main.util.math.Geometry;
 
 import java.awt.*;
 import java.util.ArrayList;
 
+
 public class InventoryGUI extends Overlay {
 
-    private static final int GRID_SIZE = 1;
+    private static final int GRID_SIZE = 10;
+    private static final int ROW_WIDTH = 10;
 
-    private static final Sprite bg = new Sprite("inventory");
-    private static final Sprite selectedBubble = new Sprite("selected_slot");
+    private static final Vector2D DISPLAY_POS = new Vector2D(0, 0);
+    private static final Vector2D ITEM_OFFSET = new Vector2D(0.5-ROW_WIDTH/2.0, -1);
 
-    // Define the edges of the inside of the inventory.
-    public static final Vector2D inventoryBounds = bg.getSize().scale(0.48, 0.3).translate(0, 5);
 
-    private static final Font detailFont = FontLoader.getMainFont(8);
+    private static final Sprite bg = new Sprite("InventoryTest");
+    private static final Sprite selectionBubble = new Sprite("selected_slot");
+
 
     private final Inventory inventory;
+    private final ArrayList<InventorySlot> slots;
 
     private boolean opened = false;
-    private ItemStack draggedStack;
+
+    private InventorySlot draggedSlot = Inventory.NULL_SLOT;
 
 
     public InventoryGUI(GamePanel panel, Player player) {
         super(panel, player);
-        this.inventory = player.inventory;
+        inventory = player.inventory;
+        slots = inventory.getSlots();
     }
 
 
-    @Override
-    public void update() {
-        if (KeyInputManager.k_e.isClicked()) opened = !opened;
-        if (KeyInputManager.k_esc.isClicked()) opened = false;
+    private Vector2D getDisplayPos(Vector2D pos) {
+        pos.translate(ITEM_OFFSET);
+        pos.scale(GRID_SIZE);
+        pos.translate(DISPLAY_POS);
 
-        if (opened) dragItems();
-        scrollThroughItems();
+        return pos;
+    }
+
+    private Vector2D getSlotDisplayPos(InventorySlot slot) {
+        int index = slots.indexOf(slot);
+        int y = index / ROW_WIDTH;
+        int x = index % ROW_WIDTH;
+        return getDisplayPos(new Vector2D(x, y));
+    }
+
+
+    private Rectangle getSlotHitBox(InventorySlot slot) {
+        Vector2D pos = getSlotDisplayPos(slot);
+        return Geometry.getCenteredRect(pos, new Vector2D(GRID_SIZE, GRID_SIZE));
+    }
+
+    public InventorySlot getMouseOverSlot() {
+        InventorySlot mouseOverSlot = Inventory.NULL_SLOT;
+        for (InventorySlot slot: inventory.getSlots()) {
+            if (getSlotHitBox(slot).contains(MouseInput.getPos().toPoint())) {
+                mouseOverSlot = slot;
+            }
+        }
+        return mouseOverSlot;
     }
 
 
     private void dragItems() {
-        Vector2D mousePos = MouseInputManager.left.getScaledPos();
-
-        if (MouseInputManager.left.isClicked())  {
-            for (ItemStack stack: inventory.getStacks()) {
-                if (stack.getItem().sprite.containsPointAt(mousePos, stack.inventoryPos)) {
-                    draggedStack = stack;
-                    inventory.bringStackToFront(stack);
-                    inventory.selectStack(stack);
-                }
-            }
-        }
-        if (draggedStack != null) {
-            draggedStack.drag(mousePos, inventoryBounds);
-
-            if (!MouseInputManager.left.isPressed() && draggedStack != null) {
-                draggedStack.snapToGrid(GRID_SIZE);
-                draggedStack = null;
-            }
-        }
-    }
-
-
-    private void scrollThroughItems() {
-        if (inventory.getStacks().size() > 0) {
-            ArrayList<ItemStack> stacks = inventory.getStacks();
-            int newIndex = stacks.indexOf(inventory.getSelectedStack());
-            newIndex += MouseInputManager.getMouseWheelSpeed();
-            if (newIndex > stacks.size() - 1)
-                newIndex = 0;
-            if (newIndex < 0)
-                newIndex = stacks.size() - 1;
-            inventory.selectStack(stacks.get(newIndex));
-        } else {
-            inventory.selectNothing();
-        }
+        if (MouseInput.left.isPressed())
+            inventory.selectSlot(getMouseOverSlot());
     }
 
 
 
     @Override
+    public void update() {
+        if (KeyInput.k_e.isClicked()) opened = !opened;
+        if (KeyInput.k_esc.isClicked()) opened = false;
+
+        if (opened) {
+            dragItems();
+        }
+    }
+
+
+    @Override
     public void render(Graphics2D g2d) {
-        if (!opened) {
-            g2d.translate(panel.getScaledWidth()/2.0 - inventoryBounds.x*1.1, -panel.getScaledHeight()/2.0+ inventoryBounds.y*1.1);
-            g2d.scale(0.6, 0.6);
-        }
-        bg.render(g2d, new Vector2D(0, 0), new Vector2D(0, 0));
+        if (opened) {
+            bg.render(g2d, DISPLAY_POS, new Vector2D(0, 0));
 
-        // Draw the stack selection bubble over the selected stack, and display item details under the inventory
-        ItemStack selectedStack = inventory.getSelectedStack();
-        if (selectedStack.getItem() != ItemTypes.empty) {
-            selectedBubble.render(g2d, selectedStack.inventoryPos, new Vector2D(0, 0));
-            selectedStack.renderDetails(g2d, inventoryBounds.copy().translate(-inventoryBounds.x, 10), detailFont);
-        }
+            if (!inventory.isSelectingNothing())
+                selectionBubble.render(g2d, getSlotDisplayPos(inventory.getSelectedSlot()), new Vector2D(0, 0));
 
-        for (ItemStack stack : inventory.getStacks())
-            stack.render(g2d);
+            for (InventorySlot slot : inventory.getSlots())
+                slot.getItem().render(g2d, getSlotDisplayPos(slot));
+
+        }
     }
 
 }

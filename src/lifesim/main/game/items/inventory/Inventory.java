@@ -1,104 +1,89 @@
 package lifesim.main.game.items.inventory;
 
-import lifesim.main.game.controls.KeyInputManager;
-import lifesim.main.game.controls.MouseInputManager;
-import lifesim.main.game.entities.DroppedItem;
+import lifesim.main.game.controls.MouseInput;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.ShopItem;
 import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.game.items.ItemTypes;
-import lifesim.main.game.items.Item;
 import lifesim.main.game.handlers.World;
-import lifesim.main.game.display.overlay.InventoryGUI;
+import lifesim.main.game.items.Item;
 
 import java.util.ArrayList;
 
 public class Inventory {
 
-    private final ArrayList<ItemStack> stacks = new ArrayList<>();
+    private static int SIZE = 30;
 
-    private ItemStack selectedStack;
+    // Null pointer exception prevention
+    public static InventorySlot NULL_SLOT = new InventorySlot();
 
 
-    public ArrayList<ItemStack> getStacks() {
-        return new ArrayList<>(stacks);
-    }
+    private final Player player;
 
-    public Inventory() {
-        doGarbageCollection();
+    private InventorySlot selectedSlot;
+    private final ArrayList<InventorySlot> slots = new ArrayList<>();
+
+
+    public Inventory(Player player) {
+        this.player = player;
+
+        for (int i = 0; i < SIZE; i++)
+            slots.add(new InventorySlot());
+
+        selectedSlot = slots.get(0);
     }
 
 
     public void addItem(Item item, int amount) {
-        for (ItemStack stack: stacks) {
-            if (stack.getItem() == item) {
-                stack.changeAmountBy(amount);
-                return;
+        getFirstEmptySlot().setItem(item, amount);
+    }
+
+    public ArrayList<InventorySlot> getSlots() {
+        return new ArrayList<InventorySlot>(slots);
+    }
+
+    public InventorySlot getSelectedSlot() {
+        return selectedSlot;
+    }
+
+    public void selectSlot(InventorySlot slot) {
+        selectedSlot = slot;
+    }
+
+    public void unselectSlot() {
+        selectedSlot = NULL_SLOT;
+    }
+
+    public boolean isSelectingNothing() {
+        return selectedSlot.equals(NULL_SLOT);
+    }
+
+
+    public boolean isEmpty() {
+        return getFirstEmptySlot() == NULL_SLOT;
+    }
+
+    private InventorySlot getFirstEmptySlot() {
+        InventorySlot lastVacantSlot = NULL_SLOT;
+        for (InventorySlot slot: slots) {
+            if (slot.isEmpty()) {
+                // Since the slots are all in order, the first empty slot found will be the correct one.
+                lastVacantSlot = slot;
+                break;
             }
         }
-        // Set the position to be randomly located inside inventory bounds
-        ItemStack newStack = new ItemStack(item, amount, InventoryGUI.inventoryBounds.copy().translate(item.sprite.getSize().scale(-0.5)).randomizeInAbsRectBounds());
-        stacks.add(newStack);
-        if (selectedStack == null) selectedStack = newStack;
-    }
-
-    public void bringStackToFront(ItemStack theStack) {
-        stacks.removeIf(stack -> stack.equals(theStack));
-        stacks.add(theStack);
+        return lastVacantSlot;
     }
 
 
-    public void selectStack(ItemStack stack) {
-        selectedStack = stack;
-    }
-
-    public ItemStack getSelectedStack() {
-        return selectedStack;
+    public void droSelectedSlot(World world, Vector2D pos) {
+        selectedSlot.dropItem(world, pos);
+        selectedSlot = getFirstEmptySlot();
     }
 
 
-    public Item getSelectedItem() {
-        return selectedStack.getItem();
-    }
-
-
-    public void doGarbageCollection() {
-        stacks.removeIf(stack -> stack.getAmount() <= 0);
-
-        if (selectedStack == null || !stacks.contains(selectedStack))
-            selectNothing();
-    }
-
-
-    public void selectNothing() {
-        selectedStack = new ItemStack(ItemTypes.empty, 0, new Vector2D(0, 0));
-    }
-
-
-    public void dropStackInWorld(World world, Vector2D pos) {
-        stacks.remove(selectedStack);
-        world.add(new DroppedItem("Dropped " + selectedStack.getItem().name, selectedStack.getItem().sprite, selectedStack.getItem(), selectedStack.getAmount()), pos);
-        doGarbageCollection();
-    }
-
-
-    public void control(World world, Player player, PlayerStats stats) {
-        if (MouseInputManager.right.isClicked()) {
-            getSelectedItem().use(world, player, stats);
-            selectedStack.changeAmountBy(-1);
-            doGarbageCollection();
-        }
-
-        if (KeyInputManager.k_q.isClicked()) {
-            // Drop the item behind player so it isn't picked back up when moving forward.
-            Vector2D dropPos = player.getPos();
-            if (player.getVelocity().getMagnitude() < player.getStats().getCurrentSpeed()) dropPos.translate(0, 25);
-            else dropPos.translate(player.getVelocity().scale(-5));
-            dropStackInWorld(player.getWorld(), dropPos);
-            //dropStackInWorld(world, player.getPos().translate(10, 10));
+    public void control() {
+        if (MouseInput.right.isClicked()) {
+            selectedSlot.useItem(player);
         }
     }
-
 
 }

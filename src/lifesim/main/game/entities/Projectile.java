@@ -81,7 +81,7 @@ public class Projectile extends Entity {
     @Override
     public void render(Graphics2D g2d) {
         if (matchSpriteAngle)
-            g2d.rotate(toRadians(velocity.getDirection()), getDisplayPos().x, getDisplayPos().y);
+            g2d.rotate(toRadians(180+velocity.getDirection()), getDisplayPos().x, getDisplayPos().y);
         super.render(g2d);
     }
 }

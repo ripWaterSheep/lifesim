@@ -1,7 +1,7 @@
 package lifesim.main.game;
 
-import lifesim.main.game.controls.KeyInputManager;
-import lifesim.main.game.controls.MouseInputManager;
+import lifesim.main.game.controls.KeyInput;
+import lifesim.main.game.controls.MouseInput;
 import lifesim.main.game.entities.components.Vector2D;
 import lifesim.main.util.fileIO.FontLoader;
 
@@ -24,8 +24,14 @@ public class GamePanel extends JPanel {
         newGame();
 
         FontLoader.init();
-        KeyInputManager.init(this);
-        MouseInputManager.init(this);
+        KeyInput.init(this);
+        MouseInput.init(this);
+    }
+
+
+    public Vector2D scalePos(Vector2D pos) {
+        return pos.scale(1.0/ GRAPHICS_SCALE)
+                .translate(getScaledSize().scale(-0.5));
     }
 
 
@@ -61,8 +67,8 @@ public class GamePanel extends JPanel {
 
     private void update() {
         game.update();
-        MouseInputManager.update();
-        KeyInputManager.update();
+        MouseInput.update();
+        KeyInput.update();
     }
 
 

@@ -1,6 +1,6 @@
 package lifesim.main.game.controls;
 
-public abstract class InputListener {
+public class InputListener {
 
     protected final int intCode;
     private boolean pressed = false;

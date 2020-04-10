@@ -1,16 +1,16 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.Game;
-import lifesim.main.game.controls.KeyInputManager;
-import lifesim.main.game.controls.MouseInputManager;
+import lifesim.main.game.controls.KeyInput;
+import lifesim.main.game.controls.MouseInput;
 import lifesim.main.game.entities.components.*;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.items.ItemTypes;
-import lifesim.main.game.items.inventory.Inventory;
 import lifesim.main.game.items.Item;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.DirectionalAnimatedSprite;
 import lifesim.main.game.handlers.World;
+import lifesim.main.game.items.inventory.Inventory;
 
 import java.awt.*;
 
@@ -22,7 +22,7 @@ public final class Player extends Entity {
     private final Game game;
     private World world;
 
-    public final Inventory inventory = new Inventory();
+    public final Inventory inventory;
 
 
     public Player(Game game) {
@@ -34,14 +34,16 @@ public final class Player extends Entity {
                 new Animation("player", 100, new Vector2D(12, 16), 4)
                 ),
             new PlayerStats(8, 1000, 1000, 0, 0, 0, game));
-        this.game = game;
         velocity.set(0, 0);
 
-        /*inventory.addItem(ItemTypes.bread, 100);
+        this.game = game;
+        inventory = new Inventory(this);
+
+        inventory.addItem(ItemTypes.bread, 100);
         inventory.addItem(ItemTypes.waterGun, 100);
         inventory.addItem(ItemTypes.banana, 100);
         inventory.addItem(ItemTypes.mysteriousPill, 100);
-        inventory.addItem(ItemTypes.virtualCoin, 100);*/
+        inventory.addItem(ItemTypes.virtualCoin, 100);
         inventory.addItem(ItemTypes.laserGun, 100);
         inventory.addItem(ItemTypes.bomb, 100);
         inventory.addItem(ItemTypes.jetPack, 100);
@@ -100,19 +102,19 @@ public final class Player extends Entity {
         double speed = stats.getCurrentSpeed();
 
 
-        if (KeyInputManager.k_space.isPressed() && getStats().getEnergy() > 0)
+        if (KeyInput.k_space.isPressed() && getStats().getEnergy() > 0)
             speed *= 1.45;
-        if (KeyInputManager.k_shift.isPressed())
+        if (KeyInput.k_shift.isPressed())
             speed *= 0.3;
 
 
         Vector2D tempVel = new Vector2D(0, 0);
         // Move according to W-A-S-D key presses;
 
-        if (KeyInputManager.k_a.isPressed()) tempVel.translate(-speed, 0); //L
-        if (KeyInputManager.k_d.isPressed()) tempVel.translate(speed, 0);  //R
-        if (KeyInputManager.k_w.isPressed()) tempVel.translate(0, -speed); //U
-        if (KeyInputManager.k_s.isPressed()) tempVel.translate(0, speed);  //D
+        if (KeyInput.k_a.isPressed()) tempVel.translate(-speed, 0); //L
+        if (KeyInput.k_d.isPressed()) tempVel.translate(speed, 0);  //R
+        if (KeyInput.k_w.isPressed()) tempVel.translate(0, -speed); //U
+        if (KeyInput.k_s.isPressed()) tempVel.translate(0, speed);  //D
 
         // Maintain momentum even if not currently walking in direction of momentum.
         if (abs(velocity.x) > 0 && tempVel.x == 0) tempVel.x = velocity.x;
@@ -125,11 +127,12 @@ public final class Player extends Entity {
     }
 
 
+
     @Override
     public void handleCollision(Entity entity, World world) {
     super.handleCollision(entity, world);
         entity.eventWhileTouching(game, this, getStats());
-        if (MouseInputManager.left.isClicked())
+        if (MouseInput.left.isClicked())
             entity.eventOnClick(game, this, getStats());
     }
 
@@ -137,8 +140,7 @@ public final class Player extends Entity {
     public void update(World world) {
         super.update(world);
         controlMovement();
-        inventory.doGarbageCollection();
-        inventory.control(world, this, getStats());
+        inventory.control();
     }
 
 

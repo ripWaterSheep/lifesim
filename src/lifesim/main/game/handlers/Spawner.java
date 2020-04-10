@@ -33,7 +33,6 @@ public class Spawner {
             Vector2D distFromPlayer = new Vector2D(0, 0);
             distFromPlayer.setMagDir(getRand(MIN_SPAWN_RADIUS, MAX_SPAWN_RADIUS), getRand(0, 360));
             spawnPos.translate(distFromPlayer);
-            System.out.println(spawnPos.toStringComponents());
 
             world.add(entityType.spawnNew(), spawnPos);
             lastSpawnTime = System.currentTimeMillis();
