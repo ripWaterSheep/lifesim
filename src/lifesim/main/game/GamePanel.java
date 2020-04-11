@@ -20,7 +20,7 @@ public class GamePanel extends JPanel {
         setFocusable(true);
         setVisible(true);
         requestFocusInWindow();
-        setSize(1600, 950);
+        setSize(1920, 1040);
         newGame();
 
         FontLoader.init();

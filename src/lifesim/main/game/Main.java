@@ -3,6 +3,7 @@ package lifesim.main.game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
 
 public class Main {
@@ -25,11 +26,10 @@ public class Main {
 
     private static void initFrame(JFrame frame, GamePanel panel) {
         frame.setSize(panel.getSize());
-        frame.setContentPane(panel);
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setMinimumSize(new Dimension(500, 500));
-        frame.setLocationRelativeTo(null);
+        frame.setContentPane(panel);
         frame.setVisible(true);
     }
 

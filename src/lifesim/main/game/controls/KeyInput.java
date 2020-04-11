@@ -62,11 +62,12 @@ public final class KeyInput {
 
 
     public static boolean isAnyKeyClicked() {
+        boolean anyClicked = false;
         for (InputListener key: keys) {
             if (key.isClicked())
-                return true;
+                anyClicked = true;
         }
-        return false;
+        return anyClicked;
     }
 
 
@@ -121,7 +122,7 @@ public final class KeyInput {
 
    public static void update() {
         for (InputListener key: keys) {
-            key.run();
+            key.update();
         }
     }
 

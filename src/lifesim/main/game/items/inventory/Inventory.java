@@ -8,9 +8,11 @@ import lifesim.main.game.items.Item;
 
 import java.util.ArrayList;
 
+
 public class Inventory {
 
-    private static int SIZE = 30;
+    private static int SIZE = 27;
+
 
     // Null pointer exception prevention
     public static InventorySlot NULL_SLOT = new InventorySlot();
@@ -33,11 +35,20 @@ public class Inventory {
 
 
     public void addItem(Item item, int amount) {
-        getFirstEmptySlot().setItem(item, amount);
+        for (InventorySlot slot: slots) {
+            if (slot.getItem().equals(item)) {
+                slot.changeAmount(amount);
+                return;
+            }
+        }
+        InventorySlot slot = getFirstEmptySlot();
+        slot.setItem(item, amount);
+        if (isEmpty()) selectSlot(slot);
     }
 
+
     public ArrayList<InventorySlot> getSlots() {
-        return new ArrayList<InventorySlot>(slots);
+        return new ArrayList<>(slots);
     }
 
     public InventorySlot getSelectedSlot() {
@@ -48,20 +59,19 @@ public class Inventory {
         selectedSlot = slot;
     }
 
-    public void unselectSlot() {
-        selectedSlot = NULL_SLOT;
-    }
-
-    public boolean isSelectingNothing() {
-        return selectedSlot.equals(NULL_SLOT);
-    }
-
 
     public boolean isEmpty() {
-        return getFirstEmptySlot() == NULL_SLOT;
+        boolean empty = true;
+        for (InventorySlot slot: slots) {
+            if (!slot.isEmpty()) empty = false;
+            break;
+        }
+        return empty;
     }
 
+
     private InventorySlot getFirstEmptySlot() {
+        // If this method returns null slot, then there are no slots to fill and the inventory is full
         InventorySlot lastVacantSlot = NULL_SLOT;
         for (InventorySlot slot: slots) {
             if (slot.isEmpty()) {
@@ -71,12 +81,6 @@ public class Inventory {
             }
         }
         return lastVacantSlot;
-    }
-
-
-    public void droSelectedSlot(World world, Vector2D pos) {
-        selectedSlot.dropItem(world, pos);
-        selectedSlot = getFirstEmptySlot();
     }
 
 

@@ -47,7 +47,7 @@ public final class MouseInput {
 
     public static void update() {
         for (InputListener button: buttons) {
-            button.run();
+            button.update();
         }
         mouseWheelSpeed = 0;
     }
@@ -67,6 +67,13 @@ public final class MouseInput {
 
         @Override
         public void mouseMoved(MouseEvent e) {
+            currentPos.set(e.getX(), e.getY());
+            Main.getPanel().scalePos(currentPos);
+        }
+
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
             currentPos.set(e.getX(), e.getY());
             Main.getPanel().scalePos(currentPos);
         }

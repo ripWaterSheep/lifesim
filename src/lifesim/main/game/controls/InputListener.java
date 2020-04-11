@@ -5,6 +5,7 @@ public class InputListener {
     protected final int intCode;
     private boolean pressed = false;
     private int pressTime = 0;
+    private boolean released = false;
 
 
     public InputListener(int intCode) {
@@ -28,22 +29,25 @@ public class InputListener {
         return pressTime > 0;
     }
 
+    public boolean isReleased() {
+        return released;
+    }
+
 
     void doPress() {
         pressed = true;
     }
 
     void doRelease() {
-        pressed = false;
         pressTime = 0;
+        pressed = false;
+        released = true;
     }
 
 
-    void run() {
-        if (pressed) {
-            pressTime += 1;
-        }
+    void update() {
+        if (pressed) pressTime += 1;
+        released = false;
     }
-
 
 }

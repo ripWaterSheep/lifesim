@@ -68,7 +68,13 @@ public class InventorySlot {
             item.use(player.getWorld(), player, player.getStats());
             amount -= 1;
         }
-        if (isEmpty()) amount = 0;
+        if (amount <= 0)
+            becomeEmpty();
+    }
+
+    public String getInfo() {
+        if (amount <= 0) return "";
+        else return item.name +" (" + amount + ")";
     }
 
 }
