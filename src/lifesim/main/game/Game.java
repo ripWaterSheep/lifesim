@@ -6,7 +6,7 @@ import lifesim.main.game.display.overlay.DeathScreen;
 import lifesim.main.game.display.overlay.InventoryGUI;
 import lifesim.main.game.display.overlay.StatBar;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.math.Vector2D;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.handlers.Layout;
 import lifesim.main.game.handlers.World;
@@ -21,11 +21,10 @@ public final class Game {
 
     private final GamePanel panel;
     private final Layout layout = new Layout();
-    private Player player;
+    private final Player player;
 
     private final ArrayList<RenderableDisplay> displays = new ArrayList<>();
 
-    private final MessageDisplay overheadDisplay;
     private final MessageDisplay centralDisplay;
 
     public Game(GamePanel panel) {
@@ -37,8 +36,6 @@ public final class Game {
         displays.add(new DeathScreen(panel, player));
         displays.add(new InventoryGUI(panel, player));
 
-        overheadDisplay = new MessageDisplay(10, Color.WHITE, new Vector2D(0,  -panel.getScaledHeight()/2.0));
-        displays.add(overheadDisplay);
         centralDisplay = new MessageDisplay(6, Color.WHITE, new Vector2D(0, -player.sprite.getSize().y));
         displays.add(centralDisplay);
     }

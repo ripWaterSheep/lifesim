@@ -2,8 +2,6 @@ package lifesim.main.game.items.inventory;
 
 import lifesim.main.game.controls.MouseInput;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.game.handlers.World;
 import lifesim.main.game.items.Item;
 
 import java.util.ArrayList;
@@ -11,11 +9,11 @@ import java.util.ArrayList;
 
 public class Inventory {
 
-    private static int SIZE = 27;
+    private static final int SIZE = 27;
 
 
     // Null pointer exception prevention
-    public static InventorySlot NULL_SLOT = new InventorySlot();
+    public static final InventorySlot NULL_SLOT = new InventorySlot();
 
 
     private final Player player;

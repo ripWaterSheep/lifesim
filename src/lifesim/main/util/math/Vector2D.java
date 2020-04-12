@@ -1,4 +1,4 @@
-package lifesim.main.game.entities.components;
+package lifesim.main.util.math;
 
 
 import java.awt.*;

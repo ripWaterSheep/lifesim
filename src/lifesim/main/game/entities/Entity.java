@@ -5,7 +5,7 @@ import lifesim.main.game.Main;
 import lifesim.main.game.entities.components.stats.*;
 import lifesim.main.game.handlers.World;
 import lifesim.main.game.entities.components.sprites.Sprite;
-import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
 

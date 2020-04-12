@@ -1,6 +1,6 @@
 package lifesim.main.game.entities.types;
 
-import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.math.Vector2D;
 import lifesim.main.game.entities.components.sprites.Animation;
 
 public class EffectType {

@@ -3,7 +3,7 @@ package lifesim.main.game.handlers;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.math.Vector2D;
 import lifesim.main.game.entities.components.sprites.Sprite;
 
 import java.awt.*;
@@ -81,7 +81,7 @@ public class World {
     }
 
 
-    public void doGarbageCollection(Entity entity, Player player) {
+    public void doGarbageCollection(Entity entity) {
         // Remove enemies outside large range to prevent lag.
         /*if (entity instanceof AIEntity && entity.canAttack(player) && getDistanceBetween(player.pos, entity.pos) > 1000)
             entity.removeFromWorld();*/
@@ -89,6 +89,7 @@ public class World {
         if (entity.isRemoveRequested()) {
             entities.remove(entity);
         }
+        //System.out.println(entities.size());
 
     }
 
@@ -107,9 +108,8 @@ public class World {
                     entity.handleCollision(entity2, this);
             }
 
-            doGarbageCollection(entity, player);
+            doGarbageCollection(entity);
         }
-        //System.out.println(entities.size());
     }
 
 

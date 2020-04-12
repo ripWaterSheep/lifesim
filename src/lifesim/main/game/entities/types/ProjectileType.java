@@ -3,7 +3,7 @@ package lifesim.main.game.entities.types;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.Projectile;
-import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.math.Vector2D;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
@@ -40,15 +40,15 @@ public enum ProjectileType implements Launchable {
     WATER_DROP {
         @Override
         public Projectile launchNew(Entity owner, Alliance alliance, double angle) {
-            return new Projectile("Water", new Sprite(2, 2, new Color(50, 80, 220, 150)),
-                    new BasicStats(10, 1, alliance), owner, 125, angle, true, false);
+            return new Projectile("Water", new Sprite(3, 3, new Color(50, 80, 220, 150)),
+                    new BasicStats(8, 1.5, alliance), owner, 125, angle, true, false);
     }},
 
     LASER {
         @Override
         public Projectile launchNew(Entity owner, Alliance alliance, double angle) {
-            return new Projectile("Laser", new Sprite(10, 1, new Color(255, 0, 25, 150)),
-                    new BasicStats(15, 12, alliance), owner, 150, angle, false, true, new Animation(BOOM));
+            return new Projectile("Laser", new Sprite(10, 1, new Color(255, 50, 25, 150)),
+                    new BasicStats(15, 8, alliance), owner, 150, angle, false, true, new Animation(BOOM));
     }},
 
 

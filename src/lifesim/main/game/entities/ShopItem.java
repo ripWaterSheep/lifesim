@@ -1,10 +1,7 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.Game;
-import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
-import lifesim.main.game.handlers.World;
 import lifesim.main.game.items.Item;
 
 
@@ -14,8 +11,8 @@ public class ShopItem extends DroppedItem {
 
     private final double price;
 
-    public ShopItem(String name, Sprite sprite, Item item, int amount, double price) {
-        super(name, sprite, item, amount);
+    public ShopItem(Item item, int amount, double price) {
+        super(item, amount);
         this.price = price;
     }
 

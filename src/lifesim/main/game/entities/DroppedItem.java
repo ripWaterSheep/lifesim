@@ -12,8 +12,8 @@ public class DroppedItem extends Entity {
 
     private boolean collected = false;
 
-    public DroppedItem(String name, Sprite sprite, Item item, int amount) {
-        super(name, sprite);
+    public DroppedItem(Item item, int amount) {
+        super("Dropped " + item.name, item.sprite);
         this.item = item;
         this.amount = amount;
     }

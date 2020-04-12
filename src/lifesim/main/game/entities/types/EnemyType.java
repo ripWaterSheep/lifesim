@@ -3,7 +3,7 @@ package lifesim.main.game.entities.types;
 import lifesim.main.game.entities.AIEntity;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.RangedAIEntity;
-import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.math.Vector2D;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;
 import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.stats.Alliance;

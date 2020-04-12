@@ -26,6 +26,7 @@ public class Main {
 
     private static void initFrame(JFrame frame, GamePanel panel) {
         frame.setSize(panel.getSize());
+        frame.setMinimumSize(new Dimension(1000, 800));
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

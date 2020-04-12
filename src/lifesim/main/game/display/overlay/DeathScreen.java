@@ -4,7 +4,7 @@ import lifesim.main.game.GamePanel;
 import lifesim.main.game.controls.KeyInput;
 import lifesim.main.game.controls.MouseInput;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.math.Vector2D;
 import lifesim.main.util.DrawMethods;
 import lifesim.main.util.fileIO.FontLoader;
 import lifesim.main.util.math.Geometry;

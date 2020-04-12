@@ -1,7 +1,7 @@
 package lifesim.main.game.controls;
 
 import lifesim.main.game.Main;
-import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.math.Vector2D;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;

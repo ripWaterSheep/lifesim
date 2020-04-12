@@ -3,7 +3,6 @@ package lifesim.main.game.entities;
 import lifesim.main.game.Game;
 import lifesim.main.game.controls.KeyInput;
 import lifesim.main.game.controls.MouseInput;
-import lifesim.main.game.entities.components.*;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.items.ItemTypes;
 import lifesim.main.game.items.Item;
@@ -11,6 +10,7 @@ import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.DirectionalAnimatedSprite;
 import lifesim.main.game.handlers.World;
 import lifesim.main.game.items.inventory.Inventory;
+import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
 
@@ -33,7 +33,7 @@ public final class Player extends Entity {
                 new Animation("player", 100, new Vector2D(12, 16), 3),
                 new Animation("player", 100, new Vector2D(12, 16), 4)
                 ),
-            new PlayerStats(8, 1000, 1000, 0, 0, 0, game));
+            new PlayerStats(6, 1000, 1000, 0, 0, 0, game));
         velocity.set(0, 0);
 
         this.game = game;

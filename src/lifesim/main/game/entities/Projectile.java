@@ -63,11 +63,6 @@ public class Projectile extends Entity {
         }
     }
 
-    /** When this projectile hits another entity that it can attack, this customizable function is called. */
-    public void eventOnHit(Entity entity) {
-    }
-
-
     @Override
     public void update(World world) {
         super.update(world);

@@ -1,14 +1,10 @@
 package lifesim.main.game.entities.components.sprites;
 
-import lifesim.main.game.entities.components.Vector2D;
-import lifesim.main.util.DrawMethods;
+import lifesim.main.util.math.Vector2D;
 import lifesim.main.util.fileIO.ImageLoader;
 import lifesim.main.util.math.Geometry;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-
-import static lifesim.main.util.math.MyMath.betterRound;
 
 
 public class Sprite {

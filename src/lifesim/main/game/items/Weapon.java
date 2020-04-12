@@ -2,7 +2,7 @@ package lifesim.main.game.items;
 
 import lifesim.main.game.controls.MouseInput;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.math.Vector2D;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.Alliance;
 import lifesim.main.game.entities.components.stats.PlayerStats;

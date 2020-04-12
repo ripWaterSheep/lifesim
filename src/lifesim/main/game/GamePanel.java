@@ -2,7 +2,7 @@ package lifesim.main.game;
 
 import lifesim.main.game.controls.KeyInput;
 import lifesim.main.game.controls.MouseInput;
-import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.math.Vector2D;
 import lifesim.main.util.fileIO.FontLoader;
 
 import javax.swing.*;
@@ -29,8 +29,8 @@ public class GamePanel extends JPanel {
     }
 
 
-    public Vector2D scalePos(Vector2D pos) {
-        return pos.scale(1.0/ GRAPHICS_SCALE)
+    public void scalePos(Vector2D pos) {
+        pos.scale(1.0/ GRAPHICS_SCALE)
                 .translate(getScaledSize().scale(-0.5));
     }
 

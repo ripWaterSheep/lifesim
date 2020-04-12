@@ -4,7 +4,7 @@ import lifesim.main.game.GamePanel;
 import lifesim.main.game.controls.KeyInput;
 import lifesim.main.game.controls.MouseInput;
 import lifesim.main.game.entities.Player;
-import lifesim.main.game.entities.components.Vector2D;
+import lifesim.main.util.math.Vector2D;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.items.inventory.Inventory;
 import lifesim.main.game.items.inventory.InventorySlot;
@@ -73,7 +73,6 @@ public class InventoryGUI extends Overlay {
             if (getSlotHitBox(slot).contains(MouseInput.getPos().toPoint())) {
                 mouseOverSlot = slot;
 
-                System.out.println(slot.getItem().name);
                 break;
             }
         }
@@ -98,7 +97,7 @@ public class InventoryGUI extends Overlay {
         } else if (MouseInput.left.isReleased()) {
             inventory.selectSlot(draggedSlot);
             draggedSlot = NULL_SLOT;
-            inventory.getSelectedSlot().dropItem(player.getWorld(), player.getPos().translate(15, 51));
+            inventory.getSelectedSlot().dropItem(player.getWorld(), player.getPos().translate(MouseInput.getPos()));
         }
 
 
@@ -134,10 +133,10 @@ public class InventoryGUI extends Overlay {
     public void render(Graphics2D g2d) {
         if (!opened) {
             Vector2D miniPos = panel.getScaledSize().scale(0.5).translate(bg.getSize().scale(-0.5));
+            miniPos.translate(DISPLAY_POS.copy().scale(-1));
             g2d.translate(miniPos.x, miniPos.y);
-            g2d.scale(0.7, 0.7);
+            g2d.scale(0.72, 0.72);
         }
-
         bg.render(g2d, DISPLAY_POS, new Vector2D(0, 0));
         selectionBubble.render(g2d, getSlotDisplayPos(inventory.getSelectedSlot()), new Vector2D(0, 0));
 
@@ -147,7 +146,9 @@ public class InventoryGUI extends Overlay {
         if (!draggedSlot.isEmpty())
             draggedSlot.getItem().render(g2d, MouseInput.getPos());
 
-        DrawMethods.drawCenteredString(g2d, inventory.getSelectedSlot().getInfo(), DISPLAY_POS.copy().translate(0, 5), INFO_FONT, Color.WHITE);
+        DrawMethods.drawCenteredString(g2d, inventory.getSelectedSlot().getInfo(), DISPLAY_POS.copy().translate(0, 25), INFO_FONT, Color.WHITE);
+
+
     }
 
 }

@@ -1,10 +1,7 @@
 package lifesim.main.util.math;
 
-import lifesim.main.game.entities.components.Vector2D;
-
 import java.awt.*;
 import java.awt.geom.Area;
-import java.awt.geom.Point2D;
 
 import static lifesim.main.util.math.MyMath.betterRound;
 
