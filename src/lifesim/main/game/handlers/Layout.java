@@ -3,6 +3,7 @@ package lifesim.main.game.handlers;
 import lifesim.main.game.Game;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.Player;
+import lifesim.main.game.entities.SolidEntity;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 
@@ -63,7 +64,7 @@ public class Layout {
                         }
                     }
                 }, -250, -225)
-                .add(new Entity("Hospital", new Sprite(200, 200, new Color(210, 210, 210))) {
+                .add(new SolidEntity("Hospital", new Sprite(200, 200, new Color(210, 210, 210))) {
                     @Override
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
                         if (stats.attemptToPay(0.25)) {

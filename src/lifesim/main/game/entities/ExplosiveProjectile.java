@@ -1,0 +1,25 @@
+package lifesim.main.game.entities;
+
+import lifesim.main.game.entities.components.sprites.Sprite;
+import lifesim.main.game.entities.components.stats.Stats;
+import lifesim.main.game.entities.types.Spawnable;
+import lifesim.main.game.handlers.World;
+
+
+public class ExplosiveProjectile extends Projectile {
+
+    private Spawnable explosion;
+
+    public ExplosiveProjectile(String name, Sprite sprite, Stats stats, Entity owner, double range, double angle, boolean matchSpriteAngle, Spawnable explosion) {
+        super(name, sprite, stats, owner, range, angle, true, matchSpriteAngle);
+        this.explosion = explosion;
+    }
+
+    @Override
+    public void handleCollision(Entity entity, World world) {
+        super.handleCollision(entity, world);
+        if (canAttack(entity)) {
+            world.add(explosion.spawnEntity(), pos);
+        }
+    }
+}

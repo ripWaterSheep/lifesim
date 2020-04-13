@@ -34,7 +34,7 @@ public class Spawner {
             distFromPlayer.setMagDir(getRand(MIN_SPAWN_RADIUS, MAX_SPAWN_RADIUS), getRand(0, 360));
             spawnPos.translate(distFromPlayer);
 
-            world.add(entityType.spawnNew(), spawnPos);
+            world.add(entityType.spawnEntity(), spawnPos);
             lastSpawnTime = System.currentTimeMillis();
         }
     }

@@ -4,6 +4,7 @@ import lifesim.main.game.entities.Entity;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import static lifesim.main.util.math.MyMath.betterRound;
 
 public class HealthStats extends BasicStats implements Stats {
 
@@ -11,11 +12,13 @@ public class HealthStats extends BasicStats implements Stats {
     protected final double maxHealth;
     private double protectionMultiplier = 1;
 
+
     public HealthStats(double speed, double damage, Alliance alliance, double health) {
         super(speed, damage, alliance);
         this.health = health;
         maxHealth = health;
     }
+
 
 
     @Override
@@ -34,8 +37,13 @@ public class HealthStats extends BasicStats implements Stats {
     }
 
     @Override
-    public void hit(double damage) {
+    public void takeDamage(double damage) {
         health -= damage * protectionMultiplier;
+    }
+
+    @Override
+    public String getInfo() {
+        return betterRound(health) + "";
     }
 
     @Override

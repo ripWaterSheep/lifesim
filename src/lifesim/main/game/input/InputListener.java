@@ -1,4 +1,4 @@
-package lifesim.main.game.controls;
+package lifesim.main.game.input;
 
 public class InputListener {
 

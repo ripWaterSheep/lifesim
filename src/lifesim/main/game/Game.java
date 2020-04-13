@@ -1,6 +1,6 @@
 package lifesim.main.game;
 
-import lifesim.main.game.controls.KeyInput;
+import lifesim.main.game.input.KeyInput;
 import lifesim.main.game.display.MessageDisplay;
 import lifesim.main.game.display.overlay.DeathScreen;
 import lifesim.main.game.display.overlay.InventoryGUI;
@@ -104,7 +104,7 @@ public final class Game {
             if (KeyInput.k_3.isPressed()) stats.strengthen(10);
             if (KeyInput.k_4.isPressed()) stats.gainMoney(10);
             if (KeyInput.k_5.isPressed()) stats.gainIntellect(10);
-            if (KeyInput.k_k.isClicked()) stats.hit(10000);
+            if (KeyInput.k_k.isClicked()) stats.takeDamage(10000);
             if (KeyInput.k_r.isClicked()) panel.newGame();
         }
     }

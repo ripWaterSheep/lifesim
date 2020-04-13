@@ -6,6 +6,6 @@ import lifesim.main.game.entities.components.stats.Alliance;
 
 public interface Launchable {
 
-    Projectile launchNew(Entity owner, Alliance alliance, double angle);
+    Projectile launchEntity(Entity owner, Alliance alliance, double angle);
 
 }

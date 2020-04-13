@@ -1,7 +1,7 @@
 package lifesim.main.game;
 
-import lifesim.main.game.controls.KeyInput;
-import lifesim.main.game.controls.MouseInput;
+import lifesim.main.game.input.KeyInput;
+import lifesim.main.game.input.MouseInput;
 import lifesim.main.util.math.Vector2D;
 import lifesim.main.util.fileIO.FontLoader;
 

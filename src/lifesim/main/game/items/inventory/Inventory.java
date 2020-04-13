@@ -1,6 +1,6 @@
 package lifesim.main.game.items.inventory;
 
-import lifesim.main.game.controls.MouseInput;
+import lifesim.main.game.input.MouseInput;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.items.Item;
 

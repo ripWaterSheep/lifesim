@@ -1,7 +1,6 @@
 package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
-import lifesim.main.game.entities.Projectile;
 
 
 public class BasicStats implements Stats {
@@ -12,7 +11,6 @@ public class BasicStats implements Stats {
     private double damageMultiplier = 1;
 
     protected final Alliance alliance;
-
 
     public BasicStats(double speed, double damage, Alliance alliance) {
         this.defaultSpeed = speed;
@@ -41,14 +39,18 @@ public class BasicStats implements Stats {
     }
 
     @Override
-    public void hit(double damage) {
-
+    public void takeDamage(double damage) {
     }
 
 
     @Override
     public Alliance getAlliance() {
         return alliance;
+    }
+
+    @Override
+    public String getInfo() {
+        return "";
     }
 
 
@@ -69,8 +71,8 @@ public class BasicStats implements Stats {
 
     @Override
     public void onCollision(Entity entity, Entity otherEntity) {
-        if (entity.canAttack(otherEntity)){
-            otherEntity.getStats().hit(damage * damageMultiplier);
+        if (entity.canAttack(otherEntity)) {
+            otherEntity.getStats().takeDamage(damage * damageMultiplier);
         }
     }
 

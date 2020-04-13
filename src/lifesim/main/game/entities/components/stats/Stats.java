@@ -10,9 +10,11 @@ public interface Stats {
     double getHealth();
 
     void heal(double amount);
-    void hit(double amount);
+    void takeDamage(double amount);
 
     Alliance getAlliance();
+
+    String getInfo();
 
     void buffSpeed(double multiplier);
     void buffProtection(double multiplier);
@@ -21,5 +23,4 @@ public interface Stats {
 
     void onCollision(Entity entity, Entity otherEntity);
     void update(Entity entity);
-
 }

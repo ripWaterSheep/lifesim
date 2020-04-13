@@ -1,6 +1,6 @@
 package lifesim.main.game.items;
 
-import lifesim.main.game.controls.MouseInput;
+import lifesim.main.game.input.MouseInput;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
@@ -20,7 +20,7 @@ public class SpawnItem extends Item {
 
     @Override
     public void use(World world, Player player , PlayerStats stats) {
-        world.add(entityType.spawnNew(), MouseInput.getPos().translate(player.getPos()));
+        world.add(entityType.spawnEntity(), MouseInput.getPos().translate(player.getPos()));
     }
 
 }

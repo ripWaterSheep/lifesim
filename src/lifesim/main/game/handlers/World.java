@@ -8,6 +8,7 @@ import lifesim.main.game.entities.components.sprites.Sprite;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.function.Predicate;
 
 
@@ -28,7 +29,6 @@ public class World {
     public World(String name, double width, double height, Color color, Color outerColor) {
         this.name = name;
         this.size = new Vector2D(width, height);
-
         add(new Entity("Floor", new Sprite(width, height, color)), 0, 0);
         this.outerColor = outerColor;
     }
@@ -87,6 +87,7 @@ public class World {
             entity.removeFromWorld();*/
         // Remove entity from world if requested, effectively destroying the entity.
         if (entity.isRemoveRequested()) {
+            entity.eventOnRemoval(this);
             entities.remove(entity);
         }
         //System.out.println(entities.size());
@@ -100,10 +101,13 @@ public class World {
                 spawner.attemptSpawn(this, player);
         }
 
-        for (Entity entity: getEntities()) {
+        ArrayList<Entity> entities = new ArrayList<>(this.entities);
+        Collections.reverse(entities);
+
+        for (Entity entity: entities) {
             entity.update(this);
 
-            for (Entity entity2: getEntities()) {
+            for (Entity entity2: entities) {
                 if (entity.isTouching(entity2) && entity != entity2)
                     entity.handleCollision(entity2, this);
             }

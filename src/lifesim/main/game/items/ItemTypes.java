@@ -1,6 +1,6 @@
 package lifesim.main.game.items;
 
-import lifesim.main.game.controls.MouseInput;
+import lifesim.main.game.input.MouseInput;
 import lifesim.main.game.entities.Player;
 import lifesim.main.util.math.Vector2D;
 import lifesim.main.game.entities.components.sprites.AnimatedSprite;

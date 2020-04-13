@@ -1,8 +1,8 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.Game;
-import lifesim.main.game.controls.KeyInput;
-import lifesim.main.game.controls.MouseInput;
+import lifesim.main.game.input.KeyInput;
+import lifesim.main.game.input.MouseInput;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.items.ItemTypes;
 import lifesim.main.game.items.Item;
@@ -102,10 +102,11 @@ public final class Player extends Entity {
         double speed = stats.getCurrentSpeed();
 
 
-        if (KeyInput.k_space.isPressed() && getStats().getEnergy() > 0)
-            speed *= 1.45;
-        if (KeyInput.k_shift.isPressed())
+        if (KeyInput.k_shift.isPressed()) {
             speed *= 0.3;
+        } else if (KeyInput.k_space.isPressed() && getStats().getEnergy() > 0) {
+            speed *= 1.45;
+        }
 
 
         Vector2D tempVel = new Vector2D(0, 0);

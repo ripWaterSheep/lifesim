@@ -24,13 +24,18 @@ public class InanimateStats implements Stats {
     }
 
     @Override
-    public void hit(double amount) {
+    public void takeDamage(double amount) {
     }
 
 
     @Override
     public Alliance getAlliance() {
         return Alliance.INANIMATE;
+    }
+
+    @Override
+    public String getInfo() {
+        return "";
     }
 
     @Override

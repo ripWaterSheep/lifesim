@@ -4,6 +4,6 @@ import lifesim.main.game.entities.Entity;
 
 public interface Spawnable {
 
-    Entity spawnNew();
+    Entity spawnEntity();
 
 }

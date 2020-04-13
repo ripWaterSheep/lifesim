@@ -3,8 +3,9 @@ package lifesim.main.util.math;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.Vector;
 
-import static java.lang.Math.toDegrees;
+import static java.lang.Math.*;
 import static lifesim.main.util.math.Geometry.angleWrap;
 import static lifesim.main.util.math.MyMath.*;
 
@@ -32,16 +33,29 @@ public class Vector2D {
         return new Vector2D(x, y);
     }
 
-    public boolean equals(Vector2D v) {
-        return x == v.x && y == v.y;
-    }
-
     public double getMagnitude() {
         return Point2D.distance(0, 0, x, y);
     }
 
     public double getDirection() {
         return angleWrap(toDegrees(Math.atan2(y, x)));
+    }
+
+
+    public boolean isInRect(Vector2D rectCenter, Vector2D size) {
+        Vector2D rectMin = rectCenter.copy().translate(size.copy().scale(-0.5));
+        Vector2D rectMax = rectCenter.copy().translate(size.copy().scale(0.5));
+        return x > rectMin.x && y > rectMin.y && x < rectMax.x && y < rectMax.y;
+    }
+
+
+    public double getDistanceFrom(Vector2D otherVector) {
+        return Math.abs(betterRound(Point2D.distance(x, y, otherVector.x, otherVector.y)));
+    }
+
+    public double getAngleFrom(Vector2D otherVector) {
+        double angle = betterRound(Math.toDegrees(Math.atan2(otherVector.y - y, otherVector.x - x)));
+        return angleWrap(angle);
     }
 
 
@@ -83,7 +97,36 @@ public class Vector2D {
     }
 
 
-    public Vector2D randomizeInAbsRectBounds() {
+    public void keepRectOutOfRect(Vector2D size1, Vector2D pos2, Vector2D size2) {
+        final double midWidth1 = size1.x/2;
+        final double midHeight1 = size1.y/2;
+        final double midWidth2 = size2.x/2;
+        final double midHeight2 = size2.y/2;
+
+        final double sumMidWidths = midWidth1 + midWidth2;
+        final double sumMidHeights = midHeight2 + midHeight1;
+
+        if (x - midWidth1 > pos2.x - size2.x/2 && x +midWidth1 < pos2.x + size2.x/2) {
+            if (y > pos2.y) {
+                y = max(y, pos2.y + sumMidHeights);
+            } else {
+                y = min(y, pos2.y - sumMidHeights);
+            }
+
+        } if (y - midHeight1 > pos2.y - midHeight2 && y + midHeight1 < pos2.y + midHeight2) {
+            if (x > pos2.x) {
+                x = max(x, pos2.x + sumMidWidths);
+            } else {
+                x = min(x, pos2.x - sumMidWidths);
+            }
+        }
+    }
+
+
+
+
+
+    public Vector2D getRandomPointInAbsRect() {
         return new Vector2D(getRand(-x, x), getRand(-y, y));
     }
 
@@ -107,22 +150,6 @@ public class Vector2D {
     public Vector2D scale(double scaleFactor) {
         scale(scaleFactor, scaleFactor);
         return this;
-    }
-
-    public boolean isInRect(Vector2D rectCenter, Vector2D size) {
-        Vector2D rectMin = rectCenter.copy().translate(size.copy().scale(-0.5));
-        Vector2D rectMax = rectCenter.copy().translate(size.copy().scale(0.5));
-        return x > rectMin.x && y > rectMin.y && x < rectMax.x && y < rectMax.y;
-    }
-
-
-    public double getDistanceFrom(Vector2D otherVector) {
-        return Math.abs(betterRound(Point2D.distance(x, y, otherVector.x, otherVector.y)));
-    }
-
-    public double getAngleFrom(Vector2D otherVector) {
-        double angle = betterRound(Math.toDegrees(Math.atan2(otherVector.y - y, otherVector.x - x)));
-        return angleWrap(angle);
     }
 
 

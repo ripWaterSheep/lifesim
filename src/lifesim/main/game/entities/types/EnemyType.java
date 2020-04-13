@@ -14,7 +14,7 @@ public enum EnemyType implements Spawnable {
 
     MELEE_1() {
         @Override
-        public Entity spawnNew() {
+        public Entity spawnEntity() {
             return new AIEntity("Emo", new AnimatedSprite(new Animation("emo", 120, new Vector2D(11, 16), 0)),
                     new HealthStats(3.5, 3, Alliance.ENEMY, 25), 175);
     }},
@@ -22,7 +22,7 @@ public enum EnemyType implements Spawnable {
 
     RANGED_1() {
         @Override
-        public Entity spawnNew() {
+        public Entity spawnEntity() {
             return new RangedAIEntity("Nerd", new AnimatedSprite(new Animation("nerd", 300, new Vector2D(7, 16), 0)),
                     new HealthStats(3, 0, Alliance.ENEMY, 20), 225, 1000, ProjectileType.BALL);
     }}

@@ -1,4 +1,4 @@
-package lifesim.main.game.controls;
+package lifesim.main.game.input;
 
 import lifesim.main.game.Main;
 import lifesim.main.util.math.Vector2D;

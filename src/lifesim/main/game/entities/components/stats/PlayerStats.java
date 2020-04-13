@@ -25,6 +25,10 @@ public class PlayerStats extends HealthStats {
         this.game = game;
     }
 
+    @Override
+    public String getInfo() {
+        return "";
+    }
 
     public double getEnergy() {
         return energy;
@@ -89,7 +93,5 @@ public class PlayerStats extends HealthStats {
 
         energy -= 0.05 + sqrt(player.getVelocity().getMagnitude()/500);
     }
-
-
 
 }
