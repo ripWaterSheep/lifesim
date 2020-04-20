@@ -13,10 +13,8 @@ import lifesim.main.game.items.inventory.Inventory;
 import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
-import java.security.Key;
 
 import static java.lang.Math.abs;
-import static lifesim.main.game.input.InputListener.*;
 
 
 public final class Player extends Entity {
@@ -131,9 +129,9 @@ public final class Player extends Entity {
     @Override
     public void handleCollision(Entity entity, World world) {
     super.handleCollision(entity, world);
-        entity.eventWhileTouching(game, this, getStats());
+        entity.playerCollision(game, this, getStats());
         if (MouseInput.left.isClicked())
-            entity.eventOnClick(game, this, getStats());
+            entity.interact(game, this, getStats());
     }
 
     @Override

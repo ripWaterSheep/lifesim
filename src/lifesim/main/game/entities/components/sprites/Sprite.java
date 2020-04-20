@@ -1,7 +1,6 @@
 package lifesim.main.game.entities.components.sprites;
 
 import lifesim.main.util.math.Vector2D;
-import lifesim.main.util.fileIO.ImageLoader;
 import lifesim.main.util.math.Geometry;
 
 import java.awt.*;

@@ -1,11 +1,12 @@
 package lifesim.main.game.handlers;
 
 import lifesim.main.game.GamePanel;
+import lifesim.main.game.entities.AIEntity;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.sprites.ShapeSprite;
+import lifesim.main.game.entities.components.stats.Alliance;
 import lifesim.main.util.math.Vector2D;
-import lifesim.main.game.entities.components.sprites.Sprite;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -44,24 +45,6 @@ public class World {
     }
 
 
-    /** Get the closest entity in a world to an entity within a certain range.
-     * Default to the entity itself if no eligible entities are within range rather than null to prevent NPE's. */
-    public Entity getClosestEntityInRange(Entity entity1, double range, Predicate<Entity> filter) {
-        Entity currentClosest = entity1;
-        double currentClosestDistance = range;
-        for (Entity entity2: entities) {
-            double distance = entity1.getPos().getDistanceFrom(entity2.getPos());
-            if (distance < currentClosestDistance) {
-                if (filter.test(entity2)) { // Filter method must evaluate to true when entity passed as parameter.
-                    currentClosest = entity2;
-                    currentClosestDistance = distance;
-                }
-            }
-        }
-        return currentClosest;
-    }
-
-
     public World add(Entity entity, Vector2D pos) {
         entities.add(entity);
         entity.setPos(pos);
@@ -82,16 +65,15 @@ public class World {
     }
 
 
-    public void doGarbageCollection(Entity entity) {
+    public void doGarbageCollection(Entity entity, Player player) {
         // Remove enemies outside large range to prevent lag.
-        /*if (entity instanceof OLDAIEntity && entity.canAttack(player) && getDistanceBetween(player.pos, entity.pos) > 1000)
-            entity.removeFromWorld();*/
+        if (entity.isEnemy() && player.getPos().getDistanceFrom(entity.getPos()) > 1000 && entities.size() > MAX_ENTITIES/2) {
+            entity.removeFromWorld();
+        }
         // Remove entity from world if requested, effectively destroying the entity.
         if (entity.isRemoveRequested()) {
             entities.remove(entity);
         }
-        //System.out.println(entities.size());
-
     }
 
 
@@ -112,7 +94,7 @@ public class World {
                     entity.handleCollision(entity2, this);
             }
 
-            doGarbageCollection(entity);
+            doGarbageCollection(entity, player);
         }
     }
 

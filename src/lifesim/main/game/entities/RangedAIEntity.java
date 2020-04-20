@@ -23,8 +23,14 @@ public class RangedAIEntity extends AIEntity {
     }
 
 
+    public RangedAIEntity(String name, Sprite sprite, Stats stats, double detectionRange, long shootInterval, Launchable projectileType) {
+        this(name, sprite, stats, stats.getAlliance(), detectionRange, shootInterval, projectileType);
+    }
+
+
+
     public Projectile getProjectile() {
-        return projectileType.launchEntity(this, stats.getAlliance(), targetEntity.pos.getAngleFrom(pos));
+        return projectileType.launchEntity(this, stats.getAlliance(), targetPos.getAngleFrom(pos));
     }
 
 
@@ -35,28 +41,23 @@ public class RangedAIEntity extends AIEntity {
         }
     }
 
-
+    // Only attack if target position is within projectile range
     @Override
-    protected void evaluateAIState() {
-        super.evaluateAIState();
-        double distance = targetEntity.pos.getDistanceFrom(pos);
-        if (distance < getProjectile().getRange() * 0.75) // Pursue target entity unless safely in range
-            pursuing = false;;
-
-        // Only launch projectile if target is inside attack range.
-        attacking = distance <= getProjectile().getRange();
+    protected boolean shouldAttack(Entity entity) {
+        return pos.getDistanceFrom(entity.pos) < getProjectile().getRange();
     }
 
+    @Override
+    protected void attack(World world) {
+        attemptShot(world);
+    }
 
     @Override
     protected void doAI(World world) {
         super.doAI(world);
-        if (attacking) attemptShot(world);
-    }
-
-    @Override
-    public void update(World world) {
-        super.update(world);
-
+        // Stop if target position is safely in range.
+        if (pos.getDistanceFrom(targetPos) < getProjectile().getRange()*0.66 && !targetPos.equals(pos)) {
+            stop();
+        }
     }
 }

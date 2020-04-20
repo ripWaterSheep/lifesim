@@ -3,7 +3,6 @@ package lifesim.main.util.math;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.util.Vector;
 
 import static java.lang.Math.*;
 import static lifesim.main.util.math.Geometry.angleWrap;

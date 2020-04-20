@@ -9,8 +9,6 @@ import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
 
-import static java.lang.Math.*;
-
 public class HealthStats extends BasicStats implements Stats {
 
     boolean alive = true;
@@ -18,7 +16,7 @@ public class HealthStats extends BasicStats implements Stats {
     protected final double initialHealth;
 
 
-    Drops drops = new Drops();
+    private final Drops drops = new Drops();
 
 
     public HealthStats(double speed, double damage, Alliance alliance, double health) {
@@ -85,7 +83,7 @@ public class HealthStats extends BasicStats implements Stats {
     @Override
     public void renderInfo(Graphics2D g2d, Vector2D pos) {
         super.renderInfo(g2d, pos);
-        renderStatBar(g2d, pos, health, initialHealth, StatsColors.healthColor);
+        renderStatBar(g2d, pos, health, initialHealth, alliance.teamColor);
     }
 
 }

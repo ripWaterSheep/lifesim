@@ -2,8 +2,6 @@ package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.handlers.World;
-import lifesim.main.util.DrawMethods;
-import lifesim.main.util.fileIO.FontLoader;
 import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
@@ -17,7 +15,7 @@ public class BasicStats implements Stats {
     protected final Alliance alliance;
 
     public BasicStats(double speed, double damage, Alliance alliance) {
-        this.speed = speed*0.85;
+        this.speed = speed;
         this.damage = damage;
         this.alliance = alliance;
     }
@@ -37,7 +35,6 @@ public class BasicStats implements Stats {
     @Override
     public boolean hasHealth() {
         return false;
-
     }
 
 

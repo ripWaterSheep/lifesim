@@ -4,7 +4,6 @@ import lifesim.main.game.entities.AIEntity;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.RangedAIEntity;
 import lifesim.main.game.entities.components.sprites.ShapeSprite;
-import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.Alliance;
 import lifesim.main.game.entities.components.stats.HealthStats;
 

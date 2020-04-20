@@ -8,7 +8,7 @@ import lifesim.main.game.handlers.World;
 
 public class ExplosiveProjectile extends Projectile {
 
-    private Spawnable explosion;
+    private final Spawnable explosion;
 
     public ExplosiveProjectile(String name, Sprite sprite, Stats stats, Entity owner, double range, double angle, boolean matchSpriteAngle, Spawnable explosion) {
         super(name, sprite, stats, owner, range, angle, true, matchSpriteAngle);

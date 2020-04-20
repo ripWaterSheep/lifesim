@@ -20,13 +20,13 @@ public class ShopItem extends DroppedItem {
 
 
     @Override
-    public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
+    public void playerCollision(Game game, Player player, PlayerStats stats) {
         game.displayCenter("Buy " + name + " for $" + roundToMultiple(price, 0.1) + "0?");
     }
 
 
     @Override
-    public void eventOnClick(Game game, Player player, PlayerStats stats) {
+    public void interact(Game game, Player player, PlayerStats stats) {
         if (stats.attemptToPay(price)) {
             game.displayCenter(name + "++!");
         }

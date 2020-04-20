@@ -5,8 +5,6 @@ import lifesim.main.game.Main;
 import lifesim.main.game.entities.components.stats.*;
 import lifesim.main.game.handlers.World;
 import lifesim.main.game.entities.components.sprites.Sprite;
-import lifesim.main.util.DrawMethods;
-import lifesim.main.util.fileIO.FontLoader;
 import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
@@ -74,6 +72,11 @@ public class Entity {
         return stats;
     }
 
+
+    public boolean isEnemy() {
+        return stats.getAlliance().equals(Alliance.ENEMY);
+    }
+
     public boolean canDamage(Entity e) {
         if (equals(e)) return false;
         return stats.getAlliance().opposes(e.stats.getAlliance());
@@ -89,16 +92,16 @@ public class Entity {
     }
 
     /** While the player is touching this entity, this customizable function is called. */
-    public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
+    public void playerCollision(Game game, Player player, PlayerStats stats) {
     }
 
     /** If the mouse is clicked when the player is touching this entity, this customizable function is called. */
-    public void eventOnClick(Game game, Player player, PlayerStats stats) {
+    public void interact(Game game, Player player, PlayerStats stats) {
     }
 
 
     protected void stop() {
-        velocity.scale(0.85); // Slow down due to friction, approaching zero.
+        velocity.scale(0.8); // Slow down due to friction, approaching zero.
     }
 
     public void push(Vector2D force) {
@@ -119,7 +122,7 @@ public class Entity {
 
     public void render(Graphics2D g2d) {
         sprite.render(g2d, getDisplayPos(), velocity);
-        stats.renderInfo(g2d, getDisplayPos().translate(0, -sprite.getSize().y*0.5 - 1));
+        stats.renderInfo(g2d, getDisplayPos().translate(0, -(sprite.getSize().y*0.5) - 3));
     }
 
 }
