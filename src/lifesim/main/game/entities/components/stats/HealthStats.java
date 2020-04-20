@@ -2,18 +2,20 @@ package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.components.Drops;
-import lifesim.main.game.entities.types.Spawnable;
 import lifesim.main.game.handlers.World;
+import lifesim.main.util.math.Geometry;
+import lifesim.main.util.math.MyMath;
+import lifesim.main.util.math.Vector2D;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-import static lifesim.main.util.math.MyMath.betterRound;
+import java.awt.*;
+
+import static java.lang.Math.*;
 
 public class HealthStats extends BasicStats implements Stats {
 
     boolean alive = true;
     protected double health;
-    protected final double maxHealth;
+    protected final double initialHealth;
 
 
     Drops drops = new Drops();
@@ -22,7 +24,7 @@ public class HealthStats extends BasicStats implements Stats {
     public HealthStats(double speed, double damage, Alliance alliance, double health) {
         super(speed, damage, alliance);
         this.health = health;
-        maxHealth = health;
+        initialHealth = health;
     }
 
 
@@ -54,11 +56,6 @@ public class HealthStats extends BasicStats implements Stats {
     }
 
     @Override
-    public String getInfo() {
-        return betterRound(health) + "";
-    }
-
-    @Override
     public void update(Entity entity, World world) {
         super.update(entity, world);
 
@@ -68,11 +65,27 @@ public class HealthStats extends BasicStats implements Stats {
             entity.removeFromWorld();
         }
 
-        health = max(health, 0);
+        health = MyMath.clamp(health, 0, initialHealth);
+    }
 
-        if (!(this instanceof PlayerStats)) {
-            health = min(maxHealth, health);
-        }
+
+    protected void renderStatBar(Graphics2D g2d, Vector2D pos, double currentVal, double maxVal, Color c1) {
+        final double widthScale = 0.3;
+        final int height = 1;
+
+        Rectangle rect = Geometry.getCenteredRect(pos, new Vector2D(maxVal*widthScale, height));
+        g2d.setColor(Color.BLACK);
+        g2d.fill(rect);
+
+        rect = new Rectangle(rect.x, rect.y, (int) (currentVal*widthScale), height);
+        g2d.setColor(c1);
+        g2d.fill(rect);
+    }
+
+    @Override
+    public void renderInfo(Graphics2D g2d, Vector2D pos) {
+        super.renderInfo(g2d, pos);
+        renderStatBar(g2d, pos, health, initialHealth, StatsColors.healthColor);
     }
 
 }

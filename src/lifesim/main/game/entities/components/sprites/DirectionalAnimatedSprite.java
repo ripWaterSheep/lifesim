@@ -34,17 +34,17 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
 
 
     @Override
-    public void render(Graphics2D g2d, Vector2D pos, Vector2D movement) {
-        if (movement.getMagnitude() <= 0.075) animation = idle;
+    public void render(Graphics2D g2d, Vector2D pos, Vector2D velocity) {
+        if (velocity.getMagnitude() <= 0.075) animation = idle;
         else {
             // Get the animation corresponding to the entity's angle
-            double direction = movement.getDirection();
+            double direction = velocity.getDirection();
             if (direction > 45 && direction < 135) animation = forward;
             if (direction >= 135 && direction < 225) animation = left;
             if (direction > 225 && direction <= 315) animation = backward;
             if (direction > 315 || direction <= 45) animation = right;
         }
-        super.render(g2d, pos, movement);
+        super.render(g2d, pos, velocity);
     }
 
 }

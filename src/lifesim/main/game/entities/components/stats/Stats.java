@@ -2,6 +2,9 @@ package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.handlers.World;
+import lifesim.main.util.math.Vector2D;
+
+import java.awt.*;
 
 public interface Stats {
 
@@ -16,8 +19,8 @@ public interface Stats {
 
     Alliance getAlliance();
 
-    String getInfo();
-
     void onCollision(Entity entity, Entity otherEntity);
     void update(Entity entity, World world);
+    void renderInfo(Graphics2D g2d, Vector2D pos);
+
 }

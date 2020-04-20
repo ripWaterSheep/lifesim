@@ -3,6 +3,7 @@ package lifesim.main.game.handlers;
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.Player;
+import lifesim.main.game.entities.components.sprites.ShapeSprite;
 import lifesim.main.util.math.Vector2D;
 import lifesim.main.game.entities.components.sprites.Sprite;
 
@@ -29,7 +30,7 @@ public class World {
     public World(String name, double width, double height, Color color, Color outerColor) {
         this.name = name;
         this.size = new Vector2D(width, height);
-        add(new Entity("Floor", new Sprite(width, height, color)), 0, 0);
+        add(new Entity("Floor", new ShapeSprite(width, height, color)), 0, 0);
         this.outerColor = outerColor;
     }
 

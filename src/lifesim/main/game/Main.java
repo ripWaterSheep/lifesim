@@ -21,10 +21,10 @@ public class Main {
 
     public static void main(String[] args) {
         gamePanel = new GamePanel();
-        initFrame(new JFrame(""), gamePanel);
+        init(new JFrame(""), gamePanel);
     }
 
-    private static void initFrame(JFrame frame, GamePanel panel) {
+    private static void init(JFrame frame, GamePanel panel) {
         frame.setSize(panel.getSize());
         frame.setMinimumSize(new Dimension(1000, 800));
         frame.setLocationRelativeTo(null);

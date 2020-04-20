@@ -2,6 +2,11 @@ package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.handlers.World;
+import lifesim.main.util.DrawMethods;
+import lifesim.main.util.fileIO.FontLoader;
+import lifesim.main.util.math.Vector2D;
+
+import java.awt.*;
 
 
 public class BasicStats implements Stats {
@@ -57,11 +62,6 @@ public class BasicStats implements Stats {
         return alliance;
     }
 
-    @Override
-    public String getInfo() {
-        return "";
-    }
-
 
     @Override
     public void onCollision(Entity entity, Entity otherEntity) {
@@ -75,4 +75,6 @@ public class BasicStats implements Stats {
     public void update(Entity entity, World world) {
     }
 
+    @Override
+    public void renderInfo(Graphics2D g2d, Vector2D pos) { }
 }

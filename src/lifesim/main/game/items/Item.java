@@ -13,18 +13,25 @@ import java.awt.*;
 public abstract class Item {
 
     public final String name;
-    public final Sprite sprite;
+    public final Sprite icon;
 
-
-    public Item(String name, Sprite sprite) {
+    public Item(String name, Sprite icon) {
         this.name = name;
-        this.sprite = sprite;
+        this.icon = icon;
     }
+
+
+    public abstract boolean shouldBeUsed();
+
+    public abstract boolean shouldBeDepleted();
+
 
     public abstract void use(World world, Player player, PlayerStats stats);
 
-    public void render(Graphics2D g2d, Vector2D pos) {
-        sprite.render(g2d, pos, new Vector2D(0, 0));
+    public abstract void renderWhileHolding(Graphics2D g2d, Player player);
+
+    public void renderIcon(Graphics2D g2d, Vector2D pos) {
+        icon.render(g2d, pos, new Vector2D(0, 0));
     }
 
     public DroppedItem getDroppedEntity(int amount) {

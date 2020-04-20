@@ -1,11 +1,11 @@
 package lifesim.main.game;
 
-import lifesim.main.game.input.KeyInput;
 import lifesim.main.game.display.MessageDisplay;
 import lifesim.main.game.display.overlay.DeathScreen;
 import lifesim.main.game.display.overlay.InventoryGUI;
 import lifesim.main.game.display.overlay.StatBar;
 import lifesim.main.game.entities.Player;
+import lifesim.main.game.input.KeyInput;
 import lifesim.main.util.math.Vector2D;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.handlers.Layout;
@@ -108,7 +108,5 @@ public final class Game {
             if (KeyInput.k_r.isClicked()) panel.newGame();
         }
     }
-
-
 
 }

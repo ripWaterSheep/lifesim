@@ -15,7 +15,9 @@ public class HealerStats extends BasicStats {
     @Override
     public void onCollision(Entity entity, Entity otherEntity) {
         super.onCollision(entity.getOwner(), otherEntity.getOwner());
-        if (alliance.equals(otherEntity.getStats().getAlliance()) && !(entity.getOwner().equals(otherEntity) || otherEntity.getOwner().equals(entity)))
+
+        if (!alliance.opposes(otherEntity.getStats().getAlliance()) && !entity.getOwner().equals(otherEntity)) {
             otherEntity.getStats().heal(healAmount);
+        }
     }
 }

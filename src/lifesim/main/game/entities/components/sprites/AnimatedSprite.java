@@ -4,7 +4,7 @@ import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
 
-public class AnimatedSprite extends Sprite {
+public class AnimatedSprite extends ImageSprite {
 
     protected Animation animation;
     private boolean paused = false;
@@ -31,13 +31,13 @@ public class AnimatedSprite extends Sprite {
 
 
     @Override
-    public void render(Graphics2D g2d, Vector2D pos, Vector2D movement) {
+    public void render(Graphics2D g2d, Vector2D pos, Vector2D velocity) {
         if (paused) {
             paused = false;
         } else {
             animate();
         }
-        super.render(g2d, pos, movement);
+        super.render(g2d, pos, velocity);
     }
 
 }

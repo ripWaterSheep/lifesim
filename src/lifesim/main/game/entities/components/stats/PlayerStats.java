@@ -3,7 +3,10 @@ package lifesim.main.game.entities.components.stats;
 import lifesim.main.game.Game;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.handlers.World;
+import lifesim.main.util.math.Vector2D;
 
+
+import java.awt.*;
 
 import static java.lang.Math.*;
 
@@ -12,10 +15,13 @@ public class PlayerStats extends HealthStats {
 
     private final Game game;
 
+    private double protectionFactor = 1;
+
     private double energy;
     private double strength;
     private double money;
     private double intellect;
+
 
     public PlayerStats(double speed, double health, double energy, double strength, double money, double intellect, Game game) {
         super(speed, 0, Alliance.PLAYER, health);
@@ -27,16 +33,22 @@ public class PlayerStats extends HealthStats {
     }
 
     @Override
-    public String getInfo() {
-        return "";
-    }
-
-    @Override
     public double getCurrentSpeed() {
         double currentSpeed = super.getCurrentSpeed();
         currentSpeed *= (energy/5000) + 0.8;
         return currentSpeed;
     }
+
+
+    public void protect(double factor) {
+        protectionFactor *= factor;
+    }
+
+    @Override
+    public void takeDamage(double damage) {
+        super.takeDamage(damage * protectionFactor);
+    }
+
 
     public double getEnergy() {
         return energy;
@@ -96,8 +108,14 @@ public class PlayerStats extends HealthStats {
         energy = max(0, energy);
         strength = max(0, strength);
         intellect = max(0, intellect);
+        protectionFactor = 1;
 
         energy -= 0.05 + sqrt(player.getVelocity().getMagnitude()/500);
+    }
+
+    @Override
+    public void renderInfo(Graphics2D g2d, Vector2D pos) {
+
     }
 
 }

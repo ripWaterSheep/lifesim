@@ -1,9 +1,9 @@
 package lifesim.main.game.entities;
 
 import lifesim.main.game.Game;
+import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.input.KeyInput;
 import lifesim.main.game.input.MouseInput;
-import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.items.ItemTypes;
 import lifesim.main.game.items.Item;
 import lifesim.main.game.entities.components.sprites.Animation;
@@ -13,8 +13,10 @@ import lifesim.main.game.items.inventory.Inventory;
 import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
+import java.security.Key;
 
 import static java.lang.Math.abs;
+import static lifesim.main.game.input.InputListener.*;
 
 
 public final class Player extends Entity {
@@ -33,24 +35,25 @@ public final class Player extends Entity {
                 new Animation("player", 100, new Vector2D(12, 16), 3),
                 new Animation("player", 100, new Vector2D(12, 16), 4)
                 ),
-            new PlayerStats(5.5, 1000, 1000, 0, 0, 0, game));
+            new PlayerStats(5, 1000, 1000, 0, 0, 0, game));
         velocity.set(0, 0);
 
         this.game = game;
         inventory = new Inventory(this);
 
-        inventory.addItem(ItemTypes.laserGun, 100);
+        acquireItem(ItemTypes.laserGun, 100);
         //inventory.addItem(ItemTypes.bread, 100);
-        inventory.addItem(ItemTypes.waterGun, 100);
-        //inventory.addItem(ItemTypes.banana, 100);
+        acquireItem(ItemTypes.waterGun, 100);
+        acquireItem(ItemTypes.banana, 100);
         //inventory.addItem(ItemTypes.mysteriousPill, 100);
         //inventory.addItem(ItemTypes.virtualCoin, 100);
-        inventory.addItem(ItemTypes.bomb, 100);
-        inventory.addItem(ItemTypes.jetPack, 100);
-        inventory.addItem(ItemTypes.allyTest, 100);
-        inventory.addItem(ItemTypes.allyTest2, 100);
-        inventory.addItem(ItemTypes.healer, 100);
-        inventory.addItem(ItemTypes.pushTestWeapon, 100);
+        acquireItem(ItemTypes.bomb, 100);
+        acquireItem(ItemTypes.teleporter, 100);
+        acquireItem(ItemTypes.allyTest, 100);
+        acquireItem(ItemTypes.allyTest2, 100);
+        acquireItem(ItemTypes.healer, 100);
+        acquireItem(ItemTypes.pushTestWeapon, 100);
+        acquireItem(ItemTypes.shield, 100);
     }
 
 
@@ -109,16 +112,14 @@ public final class Player extends Entity {
 
         Vector2D tempVel = new Vector2D(0, 0);
         // Move according to W-A-S-D key presses;
-
-        if (KeyInput.k_a.isPressed()) tempVel.translate(-speed, 0); //L
-        if (KeyInput.k_d.isPressed()) tempVel.translate(speed, 0);  //R
         if (KeyInput.k_w.isPressed()) tempVel.translate(0, -speed); //U
+        if (KeyInput.k_a.isPressed()) tempVel.translate(-speed, 0); //L
         if (KeyInput.k_s.isPressed()) tempVel.translate(0, speed);  //D
+        if (KeyInput.k_d.isPressed()) tempVel.translate(speed, 0);  //R
 
         // Maintain momentum even if not currently walking in direction of momentum.
         if (abs(velocity.x) > 0 && tempVel.x == 0) tempVel.x = velocity.x;
         if (abs(velocity.y) > 0 && tempVel.y == 0) tempVel.y = velocity.y;
-
 
         // Make sure that
         tempVel.clampMagnitude(speed);
@@ -146,7 +147,6 @@ public final class Player extends Entity {
     @Override
     public void render(Graphics2D g2d) {
         super.render(g2d);
-        //g2d.translate(inventory.getSelectedItem().sprite.getSize().x, inventory.getSelectedItem().sprite.getSize().y);
-        //inventory.getSelectedItem().render(g2d, getDisplayPos());
+        inventory.renderHoldingItem(g2d);
     }
 }

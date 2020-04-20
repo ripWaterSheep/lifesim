@@ -4,6 +4,8 @@ import lifesim.main.game.Game;
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.SolidEntity;
+import lifesim.main.game.entities.components.sprites.ImageSprite;
+import lifesim.main.game.entities.components.sprites.ShapeSprite;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 
@@ -25,29 +27,29 @@ public class Layout {
     public Layout() {
         worlds.add(
             new World("Town", 2250, 2250, new Color(60, 160, 75), new Color(200, 190, 125))
-                .add(new Entity("vRoad", new Sprite(75, 2250, Color.DARK_GRAY)), 0, 0)
-                .add(new Entity("hRoad", new Sprite(2250, 75, Color.DARK_GRAY)), 0, 0)
-                .add(new Entity("House", new Sprite(200, 175, new Color(100, 80, 50))) {
+                .add(new Entity("vRoad", new ShapeSprite(75, 2250, Color.DARK_GRAY)), 0, 0)
+                .add(new Entity("hRoad", new ShapeSprite(2250, 75, Color.DARK_GRAY)), 0, 0)
+                .add(new Entity("House", new ShapeSprite(200, 175, new Color(100, 80, 50))) {
                     @Override
                     public void eventOnClick(Game game, Player player, PlayerStats stats) {
                         player.goTo("Home Door");
                     }
                 }, 250, -200)
-                .add(new Entity("School", new Sprite(150, 200, new Color(179, 96, 71))) {
+                .add(new Entity("School", new ShapeSprite(150, 200, new Color(179, 96, 71))) {
                     @Override
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
                         stats.gainIntellect(0.25);
                         stats.tire(0.1);
                     }
                 },250, 250)
-                .add(new Entity("Office", new Sprite(200, 200, new Color(150, 150, 160))) {
+                .add(new Entity("Office", new ShapeSprite(200, 200, new Color(150, 150, 160))) {
                     @Override
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
-                        stats.gainMoney(stats.getIntellect());
+                        stats.gainMoney(stats.getIntellect()/250);
                         stats.tire(0.1);
                     }
                 }, -250, 250)
-                .add(new Entity("Gym", new Sprite("gym")) {
+                .add(new Entity("Gym", new ImageSprite("gym")) {
                     @Override
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
                         if (stats.attemptToPay(0.75)) {
@@ -56,7 +58,7 @@ public class Layout {
                         }
                     }
                 }, -600, -200)
-                .add(new Entity("Restaurant", new Sprite(200, 200, new Color(255, 215, 125))) {
+                .add(new Entity("Restaurant", new ShapeSprite(200, 200, new Color(255, 215, 125))) {
                     @Override
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
                         if (stats.attemptToPay(0.5)) {
@@ -64,16 +66,16 @@ public class Layout {
                         }
                     }
                 }, -250, -225)
-                .add(new SolidEntity("Hospital", new Sprite(200, 200, new Color(210, 210, 210))) {
+                .add(new SolidEntity("Hospital", new ShapeSprite(200, 200, new Color(210, 210, 210))) {
                     @Override
                     public void eventWhileTouching(Game game, Player player, PlayerStats stats) {
                         if (stats.attemptToPay(0.25)) {
-                            if (stats.getHealth() < 1000) stats.heal(0.05);
+                            if (stats.getHealth() < 1000) stats.heal(0.5);
                         }
                     }
                 }, -250, -550)
-                .add(new Entity("Shop", new Sprite(250, 200, new Color(200, 110, 75))), -675, 250)
-                .add(new Entity("Cave", new Sprite(200, 75, Color.LIGHT_GRAY)), -800, -800)
+                .add(new Entity("Shop", new ShapeSprite(250, 200, new Color(200, 110, 75))), -675, 250)
+                .add(new Entity("Cave", new ShapeSprite(200, 75, Color.LIGHT_GRAY)), -800, -800)
 
                 .addSpawner(new SpawningSystem(MELEE_1, 4000))
 
@@ -82,7 +84,7 @@ public class Layout {
 
 
         worlds.add(new World("Home", 300, 225, new Color(230, 210, 140), new Color(100, 80, 50))
-            .add(new Entity("Home Door", new Sprite(2, 30, new Color(167, 155, 81))) {
+            .add(new Entity("Home Door", new ShapeSprite(2, 30, new Color(167, 155, 81))) {
                 @Override
                 public void eventOnClick(Game game, Player player, PlayerStats stats) {
                     player.goTo("House");

@@ -18,6 +18,7 @@ public class Animation {
     private int currentCycles = 0;
 
 
+    /** Use a list of image names for the frames of the animation. */
     public Animation(int frameInterval, String... imageNames) {
         this.frameInterval = frameInterval;
 
@@ -27,7 +28,7 @@ public class Animation {
         }
     }
 
-    /** Use a row on a sprite sheet for the frames of the animation*/
+    /** Use a row on a sprite sheet for the frames of the animation. */
     public Animation(String spriteSheetName, int frameInterval, Vector2D spriteSize, int row) {
         this.frameInterval = frameInterval;
         BufferedImage spriteSheet = ImageLoader.loadImage(spriteSheetName);

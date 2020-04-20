@@ -60,15 +60,15 @@ public class GamePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        runSession(g);
+        run(g);
         repaint();
     }
 
 
     private void update() {
         game.update();
-        MouseInput.update();
         KeyInput.update();
+        MouseInput.update();
     }
 
 
@@ -81,13 +81,12 @@ public class GamePanel extends JPanel {
     }
 
 
-
     private long lastTime = System.nanoTime();
     private double delta = 0;
     private long timer = System.currentTimeMillis();
     private int frames = 0;
 
-    void runSession(Graphics g) {
+    void run(Graphics g) {
         final double amountOfTicks = 60.0;
         final double ns = 1000000000 / amountOfTicks;
         long now = System.nanoTime();

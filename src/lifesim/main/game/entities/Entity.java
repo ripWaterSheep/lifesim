@@ -119,9 +119,7 @@ public class Entity {
 
     public void render(Graphics2D g2d) {
         sprite.render(g2d, getDisplayPos(), velocity);
-
-        DrawMethods.drawCenteredString(g2d, stats.getInfo(), getDisplayPos().translate(0, -sprite.getSize().y),
-                FontLoader.getMainFont(8), Color.WHITE);
+        stats.renderInfo(g2d, getDisplayPos().translate(0, -sprite.getSize().y*0.5 - 1));
     }
 
 }

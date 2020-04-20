@@ -1,9 +1,9 @@
 package lifesim.main.game.display.overlay;
 
 import lifesim.main.game.GamePanel;
+import lifesim.main.game.entities.Player;
 import lifesim.main.game.input.KeyInput;
 import lifesim.main.game.input.MouseInput;
-import lifesim.main.game.entities.Player;
 import lifesim.main.util.math.Vector2D;
 import lifesim.main.util.DrawMethods;
 import lifesim.main.util.fileIO.FontLoader;

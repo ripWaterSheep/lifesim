@@ -2,6 +2,7 @@ package lifesim.main.game.display.overlay;
 
 import lifesim.main.game.GamePanel;
 import lifesim.main.game.entities.Player;
+import lifesim.main.game.entities.components.sprites.ImageSprite;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.input.KeyInput;
 import lifesim.main.game.input.MouseInput;
@@ -12,9 +13,10 @@ import lifesim.main.util.math.Vector2D;
 import java.awt.*;
 import java.util.ArrayList;
 
+
 public class HotbarGUI extends Overlay {
 
-    private static final Sprite SELECTED_SLOT = new Sprite("selected_slot");
+    private static final Sprite SLOT_SELECTION = new ImageSprite("slot_selection");
 
 
     private final Inventory inventory;
@@ -64,14 +66,11 @@ public class HotbarGUI extends Overlay {
             InventorySlot slot = slots.get(i);
 
             if (inventory.getSelectedSlot().equals(slot)) {
-                SELECTED_SLOT.render(g2d, itemPos, new Vector2D(0, 0));
+                SLOT_SELECTION.render(g2d, itemPos, new Vector2D(0, 0));
             }
 
-            slot.getItem().render(g2d, itemPos);
-
+            slot.render(g2d, itemPos, inventory.getSelectedSlot().equals(slot));
         }
-
-
     }
 
 }

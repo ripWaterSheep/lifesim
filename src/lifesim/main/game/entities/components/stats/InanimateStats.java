@@ -2,6 +2,9 @@ package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
 import lifesim.main.game.handlers.World;
+import lifesim.main.util.math.Vector2D;
+
+import java.awt.*;
 
 
 public class InanimateStats implements Stats {
@@ -25,7 +28,6 @@ public class InanimateStats implements Stats {
     @Override
     public boolean hasHealth() {
         return false;
-
     }
 
 
@@ -40,12 +42,7 @@ public class InanimateStats implements Stats {
 
     @Override
     public Alliance getAlliance() {
-        return Alliance.INANIMATE;
-    }
-
-    @Override
-    public String getInfo() {
-        return "";
+        return Alliance.NEUTRAL;
     }
 
     @Override
@@ -54,6 +51,11 @@ public class InanimateStats implements Stats {
 
     @Override
     public void update(Entity entity, World world) {
+    }
+
+    @Override
+    public void renderInfo(Graphics2D g2d, Vector2D pos) {
+
     }
 
 }

@@ -5,7 +5,6 @@ import lifesim.main.game.entities.Entity;
 import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.items.Item;
-import lifesim.main.game.entities.components.sprites.Sprite;
 
 public class DroppedItem extends Entity {
 
@@ -15,7 +14,7 @@ public class DroppedItem extends Entity {
     private boolean collected = false;
 
     public DroppedItem(Item item, int amount) {
-        super("Dropped " + item.name, item.sprite);
+        super("Dropped " + item.name, item.icon);
         this.item = item;
         this.amount = amount;
     }
