@@ -1,6 +1,8 @@
 package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.handlers.World;
+
 
 public class InanimateStats implements Stats {
 
@@ -14,10 +16,18 @@ public class InanimateStats implements Stats {
         return true;
     }
 
+
     @Override
     public double getHealth() {
         return 1;
     }
+
+    @Override
+    public boolean hasHealth() {
+        return false;
+
+    }
+
 
     @Override
     public void heal(double amount) {
@@ -39,23 +49,11 @@ public class InanimateStats implements Stats {
     }
 
     @Override
-    public void buffSpeed(double multiplier) {
-    }
-
-    @Override
-    public void buffProtection(double multiplier) {
-    }
-
-    @Override
-    public void buffDamage(double multiplier) {
-    }
-
-    @Override
     public void onCollision(Entity entity, Entity otherEntity) {
     }
 
     @Override
-    public void update(Entity owner) {
+    public void update(Entity entity, World world) {
     }
 
 }

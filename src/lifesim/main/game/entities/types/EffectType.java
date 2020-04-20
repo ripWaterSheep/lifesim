@@ -14,9 +14,15 @@ public enum  EffectType implements Spawnable {
     SMALL_BOOM() {
         @Override
         public Entity spawnEntity() {
-            return new EffectEntity("boom", new AnimatedSprite(new Animation("boom",
-                    40, new Vector2D(16, 16), 0)), new BasicStats(0, 0.8, Alliance.NEUTRAL));
-        }
+            return new EffectEntity("Small Boom", new AnimatedSprite(new Animation("boom",
+                    40, new Vector2D(16, 16), 0)), new BasicStats(0, 0.2, Alliance.NEUTRAL));
+    }},
 
-    }
+    BIG_BOOM() {
+        @Override
+        public Entity spawnEntity() {
+            return new EffectEntity("Big Boom", new AnimatedSprite(new Animation("big_boom",
+                    40, new Vector2D(32, 32), 0)), new BasicStats(0, 7, Alliance.NEUTRAL));
+        }},
+
 }

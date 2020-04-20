@@ -33,18 +33,18 @@ public final class Player extends Entity {
                 new Animation("player", 100, new Vector2D(12, 16), 3),
                 new Animation("player", 100, new Vector2D(12, 16), 4)
                 ),
-            new PlayerStats(6, 1000, 1000, 0, 0, 0, game));
+            new PlayerStats(5.5, 1000, 1000, 0, 0, 0, game));
         velocity.set(0, 0);
 
         this.game = game;
         inventory = new Inventory(this);
 
-        inventory.addItem(ItemTypes.bread, 100);
-        inventory.addItem(ItemTypes.waterGun, 100);
-        inventory.addItem(ItemTypes.banana, 100);
-        inventory.addItem(ItemTypes.mysteriousPill, 100);
-        inventory.addItem(ItemTypes.virtualCoin, 100);
         inventory.addItem(ItemTypes.laserGun, 100);
+        //inventory.addItem(ItemTypes.bread, 100);
+        inventory.addItem(ItemTypes.waterGun, 100);
+        //inventory.addItem(ItemTypes.banana, 100);
+        //inventory.addItem(ItemTypes.mysteriousPill, 100);
+        //inventory.addItem(ItemTypes.virtualCoin, 100);
         inventory.addItem(ItemTypes.bomb, 100);
         inventory.addItem(ItemTypes.jetPack, 100);
         inventory.addItem(ItemTypes.allyTest, 100);
@@ -101,13 +101,11 @@ public final class Player extends Entity {
         stop();
         double speed = stats.getCurrentSpeed();
 
-
         if (KeyInput.k_shift.isPressed()) {
             speed *= 0.3;
         } else if (KeyInput.k_space.isPressed() && getStats().getEnergy() > 0) {
             speed *= 1.45;
         }
-
 
         Vector2D tempVel = new Vector2D(0, 0);
         // Move according to W-A-S-D key presses;

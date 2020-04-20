@@ -20,8 +20,15 @@ public enum ProjectileType implements Launchable {
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             double strength = 3;
             if (owner instanceof Player) strength = ((Player) owner).getStats().getStrength();
-            return new Projectile(owner.name + " fist", new Sprite("fist"), new BasicStats(
-                    7, 3+strength/100, Alliance.PLAYER), owner, 50, angle, false, true);
+
+            return new Projectile(owner.name + "'s Fist", new Sprite("fist"), new BasicStats(
+                    6, 1 + (strength/100), Alliance.PLAYER), owner, 35, angle, false, true) {
+                @Override
+                public void eventOnHit(Entity entity) {
+                    super.eventOnHit(entity);
+                    entity.push(getVelocity().scale(0.5));
+                }
+            };
         }
     },
 
@@ -30,7 +37,7 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new ExplosiveProjectile("Bullet", new Sprite(2, 2, new Color(0, 0, 0, 150)),
-                    new BasicStats(12,  6, alliance), owner, 175, angle, false, EffectType.SMALL_BOOM);
+                    new BasicStats(15,  6, alliance), owner, 175, angle, false, EffectType.SMALL_BOOM);
     }},
 
     WATER_DROP {
@@ -53,14 +60,14 @@ public enum ProjectileType implements Launchable {
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new ExplosiveProjectile("Bomb", new AnimatedSprite(new Animation("bomb",
                     75, new Vector2D(9, 16), 0)), new BasicStats(0, 0, alliance),
-                    owner, 5, angle, false, EffectType.SMALL_BOOM);
+                    owner, 5, angle, false, EffectType.BIG_BOOM);
     }},
 
     BALL {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Ball", new Sprite(4, 4, Color.BLACK), new BasicStats(
-                    15, 10, alliance), owner, 125, angle, true, false);
+                    18, 15, alliance), owner, 125, angle, true, false);
     }},
 
 

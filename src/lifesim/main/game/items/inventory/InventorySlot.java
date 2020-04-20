@@ -1,6 +1,6 @@
 package lifesim.main.game.items.inventory;
 
-import lifesim.main.game.entities.DroppedItem;
+import lifesim.main.game.entities.itemEntites.DroppedItem;
 import lifesim.main.game.entities.Player;
 import lifesim.main.util.math.Vector2D;
 import lifesim.main.game.handlers.World;
@@ -50,7 +50,7 @@ public class InventorySlot {
 
 
     public void dropItem(World world, Vector2D pos) {
-        world.add(new DroppedItem(item, amount), pos);
+        world.add(item.getDroppedEntity(amount), pos);
         becomeEmpty();
     }
 

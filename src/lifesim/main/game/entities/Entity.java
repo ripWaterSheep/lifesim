@@ -2,9 +2,7 @@ package lifesim.main.game.entities;
 
 import lifesim.main.game.Game;
 import lifesim.main.game.Main;
-import lifesim.main.game.entities.components.Drops;
 import lifesim.main.game.entities.components.stats.*;
-import lifesim.main.game.entities.types.Spawnable;
 import lifesim.main.game.handlers.World;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.util.DrawMethods;
@@ -13,7 +11,6 @@ import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
 
-import static java.lang.Math.max;
 import static lifesim.main.util.math.Geometry.testIntersection;
 import static lifesim.main.util.math.MyMath.getRand;
 
@@ -26,8 +23,6 @@ public class Entity {
 
     protected final Vector2D pos;
     protected final Vector2D velocity;
-
-    private final Drops drops = new Drops();
 
 
     // If true, the world containing the entity will remove it from the world.
@@ -79,14 +74,9 @@ public class Entity {
         return stats;
     }
 
-    public boolean canAttack(Entity otherEntity) {
-        return stats.getAlliance().canAttack(otherEntity.stats.getAlliance()) && !getOwner().equals(otherEntity)/* || otherEntity.getOwner().equals(this))*/
-                && !equals(otherEntity) && !(otherEntity instanceof Projectile);
-    }
-
-    public Entity addToDrops(Spawnable spawnable) {
-        drops.add(spawnable);
-        return this;
+    public boolean canDamage(Entity e) {
+        if (equals(e)) return false;
+        return stats.getAlliance().opposes(e.stats.getAlliance());
     }
 
 
@@ -96,10 +86,6 @@ public class Entity {
 
     public void removeFromWorld() {
         removeRequested = true;
-    }
-
-    public void eventOnRemoval(World world) {
-        drops.dropAt(pos, world);
     }
 
     /** While the player is touching this entity, this customizable function is called. */
@@ -125,7 +111,7 @@ public class Entity {
     }
 
     public void update(World world) {
-        stats.update(this);
+        stats.update(this, world);
         pos.translate(velocity);
         // Keep the entity within the world's boundaries.
         pos.clampInRect(new Vector2D(0, 0), world.getSize().scale(0.5).translate(sprite.getSize().scale(-0.5)));

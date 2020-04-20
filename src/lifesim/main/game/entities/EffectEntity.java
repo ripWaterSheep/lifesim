@@ -22,7 +22,7 @@ public class EffectEntity extends Entity {
     public void render(Graphics2D g2d) {
         AnimatedSprite animatedSprite = (AnimatedSprite) sprite;
 
-        if (animatedSprite.getAnimation().isAtEndOfCycle()) {
+        if (animatedSprite.animationDone()) {
             removeFromWorld();
             animatedSprite.pauseFrame();
         }

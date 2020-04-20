@@ -1,12 +1,7 @@
 package lifesim.main.game.entities;
 
-import lifesim.main.game.entities.Entity;
-import lifesim.main.game.entities.components.sprites.AnimatedSprite;
-import lifesim.main.game.entities.components.sprites.Animation;
 import lifesim.main.game.entities.components.sprites.Sprite;
-import lifesim.main.game.entities.components.stats.BasicStats;
 import lifesim.main.game.entities.components.stats.Stats;
-import lifesim.main.game.entities.types.Spawnable;
 import lifesim.main.game.handlers.World;
 
 import java.awt.*;
@@ -55,7 +50,7 @@ public class Projectile extends Entity {
     public void handleCollision(Entity entity, World world) {
         super.handleCollision(entity, world);
 
-        if (canAttack(entity)) {
+        if (canDamage(entity)) {
             eventOnHit(entity);
             if (destroyOnDamage) removeFromWorld();
         }

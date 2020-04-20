@@ -29,7 +29,7 @@ public class ItemTypes {
     public static final Item jetPack = new Item("Jet Pack", new Sprite(8, 8, Color.GRAY)) {
         @Override
         public void use(World world, Player player, PlayerStats stats) {
-            player.push(Vector2D.newMagDir(150, 180 + MouseInput.getPos().getAngleFrom(new Vector2D(0, 0))));
+            player.push(Vector2D.newMagDir(500, 180 + MouseInput.getPos().getAngleFrom(new Vector2D(0, 0))));
         }
     };
 

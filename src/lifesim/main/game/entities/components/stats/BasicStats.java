@@ -1,19 +1,18 @@
 package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.handlers.World;
 
 
 public class BasicStats implements Stats {
 
-    protected final double defaultSpeed;
-    protected double speedMultiplier = 1;
+    protected final double speed;
     protected final double damage;
-    private double damageMultiplier = 1;
 
     protected final Alliance alliance;
 
     public BasicStats(double speed, double damage, Alliance alliance) {
-        this.defaultSpeed = speed;
+        this.speed = speed*0.85;
         this.damage = damage;
         this.alliance = alliance;
     }
@@ -21,13 +20,21 @@ public class BasicStats implements Stats {
 
     @Override
     public double getCurrentSpeed() {
-        return defaultSpeed*speedMultiplier;
+        return speed;
     }
 
     @Override
     public boolean isAlive() {
         return true;
     }
+
+
+    @Override
+    public boolean hasHealth() {
+        return false;
+
+    }
+
 
     @Override
     public double getHealth() {
@@ -37,6 +44,8 @@ public class BasicStats implements Stats {
     @Override
     public void heal(double amount) {
     }
+
+
 
     @Override
     public void takeDamage(double damage) {
@@ -55,32 +64,15 @@ public class BasicStats implements Stats {
 
 
     @Override
-    public void buffSpeed(double multiplier) {
-        speedMultiplier *= multiplier;
-    }
-
-    @Override
-    public void buffProtection(double multiplier) {
-    }
-
-    @Override
-    public void buffDamage(double multiplier) {
-        damageMultiplier *= multiplier;
-    }
-
-
-    @Override
     public void onCollision(Entity entity, Entity otherEntity) {
-        if (entity.canAttack(otherEntity)) {
-            otherEntity.getStats().takeDamage(damage * damageMultiplier);
+        if (entity.canDamage(otherEntity)) {
+            otherEntity.getStats().takeDamage(damage);
         }
     }
 
 
     @Override
-    public void update(Entity owner) {
-        speedMultiplier = 1;
-        damageMultiplier = 1;
+    public void update(Entity entity, World world) {
     }
 
 }

@@ -23,7 +23,7 @@ public class World {
 
     private final ArrayList<Entity> entities = new ArrayList<>();
 
-    private final ArrayList<Spawner> spawners = new ArrayList<>();
+    private final ArrayList<SpawningSystem> spawningSystems = new ArrayList<>();
 
 
     public World(String name, double width, double height, Color color, Color outerColor) {
@@ -45,7 +45,7 @@ public class World {
 
     /** Get the closest entity in a world to an entity within a certain range.
      * Default to the entity itself if no eligible entities are within range rather than null to prevent NPE's. */
-    public Entity getClosestEntity(Entity entity1, double range, Predicate<Entity> filter) {
+    public Entity getClosestEntityInRange(Entity entity1, double range, Predicate<Entity> filter) {
         Entity currentClosest = entity1;
         double currentClosestDistance = range;
         for (Entity entity2: entities) {
@@ -75,19 +75,18 @@ public class World {
         entities.remove(entity);
     }
 
-    public World addSpawner(Spawner spawner) {
-        spawners.add(spawner);
+    public World addSpawner(SpawningSystem spawningSystem) {
+        spawningSystems.add(spawningSystem);
         return this;
     }
 
 
     public void doGarbageCollection(Entity entity) {
         // Remove enemies outside large range to prevent lag.
-        /*if (entity instanceof AIEntity && entity.canAttack(player) && getDistanceBetween(player.pos, entity.pos) > 1000)
+        /*if (entity instanceof OLDAIEntity && entity.canAttack(player) && getDistanceBetween(player.pos, entity.pos) > 1000)
             entity.removeFromWorld();*/
         // Remove entity from world if requested, effectively destroying the entity.
         if (entity.isRemoveRequested()) {
-            entity.eventOnRemoval(this);
             entities.remove(entity);
         }
         //System.out.println(entities.size());
@@ -97,8 +96,8 @@ public class World {
 
     public void update(Player player) {
         if (entities.size() < MAX_ENTITIES) {
-            for (Spawner spawner : spawners)
-                spawner.attemptSpawn(this, player);
+            for (SpawningSystem spawningSystem : spawningSystems)
+                spawningSystem.update(this, player);
         }
 
         ArrayList<Entity> entities = new ArrayList<>(this.entities);

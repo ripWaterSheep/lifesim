@@ -2,6 +2,7 @@ package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.Game;
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.handlers.World;
 
 
 import static java.lang.Math.*;
@@ -28,6 +29,13 @@ public class PlayerStats extends HealthStats {
     @Override
     public String getInfo() {
         return "";
+    }
+
+    @Override
+    public double getCurrentSpeed() {
+        double currentSpeed = super.getCurrentSpeed();
+        currentSpeed *= (energy/5000) + 0.8;
+        return currentSpeed;
     }
 
     public double getEnergy() {
@@ -83,13 +91,11 @@ public class PlayerStats extends HealthStats {
 
 
     @Override
-    public void update(Entity player) {
-        super.update(player);
+    public void update(Entity player, World world) {
+        super.update(player, world);
         energy = max(0, energy);
         strength = max(0, strength);
         intellect = max(0, intellect);
-
-        speedMultiplier *= (energy/5000) + 0.8;
 
         energy -= 0.05 + sqrt(player.getVelocity().getMagnitude()/500);
     }

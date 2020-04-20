@@ -39,15 +39,8 @@ public class Animation {
     }
 
 
-    public Animation(Animation animation) {
-        frameInterval = animation.frameInterval;
-        frames.addAll(animation.frames);
-    }
-
-
-
-    public boolean isAtEndOfCycle() {
-        return currentCycles >= 1;
+    public int getCurrentCycles() {
+        return currentCycles;
     }
 
 
@@ -67,7 +60,6 @@ public class Animation {
 
             lastFrameTime = System.currentTimeMillis();
         }
-
 
         return currentFrame;
     }

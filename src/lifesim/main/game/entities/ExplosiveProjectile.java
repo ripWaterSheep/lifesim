@@ -18,7 +18,7 @@ public class ExplosiveProjectile extends Projectile {
     @Override
     public void handleCollision(Entity entity, World world) {
         super.handleCollision(entity, world);
-        if (canAttack(entity)) {
+        if (canDamage(entity)) {
             world.add(explosion.spawnEntity(), pos);
         }
     }

@@ -1,6 +1,9 @@
 package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.entities.components.Drops;
+import lifesim.main.game.entities.types.Spawnable;
+import lifesim.main.game.handlers.World;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -8,9 +11,12 @@ import static lifesim.main.util.math.MyMath.betterRound;
 
 public class HealthStats extends BasicStats implements Stats {
 
+    boolean alive = true;
     protected double health;
     protected final double maxHealth;
-    private double protectionMultiplier = 1;
+
+
+    Drops drops = new Drops();
 
 
     public HealthStats(double speed, double damage, Alliance alliance, double health) {
@@ -20,11 +26,17 @@ public class HealthStats extends BasicStats implements Stats {
     }
 
 
-
     @Override
     public boolean isAlive() {
         return health > 0;
     }
+
+
+    @Override
+    public boolean hasHealth() {
+        return true;
+    }
+
 
     @Override
     public double getHealth() {
@@ -38,7 +50,7 @@ public class HealthStats extends BasicStats implements Stats {
 
     @Override
     public void takeDamage(double damage) {
-        health -= damage * protectionMultiplier;
+        health -= damage;
     }
 
     @Override
@@ -47,20 +59,20 @@ public class HealthStats extends BasicStats implements Stats {
     }
 
     @Override
-    public void buffProtection(double multiplier) {
-        protectionMultiplier *= multiplier;
-    }
+    public void update(Entity entity, World world) {
+        super.update(entity, world);
 
-
-    @Override
-    public void update(Entity entity) {
-        super.update(entity);
-        if (health <= 0)
+        if (health <= 0 && alive) {
+            alive = false;
+            drops.dropAt(entity.getPos(), world);
             entity.removeFromWorld();
-        protectionMultiplier = 1;
+        }
 
         health = max(health, 0);
-        if (!(this instanceof PlayerStats)) health = min(maxHealth, health);
+
+        if (!(this instanceof PlayerStats)) {
+            health = min(maxHealth, health);
+        }
     }
 
 }

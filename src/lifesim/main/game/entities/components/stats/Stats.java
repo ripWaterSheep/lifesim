@@ -1,6 +1,7 @@
 package lifesim.main.game.entities.components.stats;
 
 import lifesim.main.game.entities.Entity;
+import lifesim.main.game.handlers.World;
 
 public interface Stats {
 
@@ -9,6 +10,7 @@ public interface Stats {
     boolean isAlive();
     double getHealth();
 
+    boolean hasHealth();
     void heal(double amount);
     void takeDamage(double amount);
 
@@ -16,11 +18,6 @@ public interface Stats {
 
     String getInfo();
 
-    void buffSpeed(double multiplier);
-    void buffProtection(double multiplier);
-    void buffDamage(double multiplier);
-
-
     void onCollision(Entity entity, Entity otherEntity);
-    void update(Entity entity);
+    void update(Entity entity, World world);
 }

@@ -75,9 +75,9 @@ public class Layout {
                 .add(new Entity("Shop", new Sprite(250, 200, new Color(200, 110, 75))), -675, 250)
                 .add(new Entity("Cave", new Sprite(200, 75, Color.LIGHT_GRAY)), -800, -800)
 
-                .addSpawner(new Spawner(MELEE_1, 2000))
+                .addSpawner(new SpawningSystem(MELEE_1, 4000))
 
-                .addSpawner(new Spawner(RANGED_1, 3000))
+                .addSpawner(new SpawningSystem(RANGED_1, 5000))
         );
 
 

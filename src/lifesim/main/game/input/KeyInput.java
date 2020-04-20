@@ -115,6 +115,7 @@ public final class KeyInput {
         keys.add(k_down);
         keys.add(k_left);
         keys.add(k_right);
+        keys.add(k_space);
         keys.add(k_shift);
         keys.add(k_esc);
     }

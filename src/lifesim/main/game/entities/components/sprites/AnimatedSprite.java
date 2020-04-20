@@ -16,8 +16,8 @@ public class AnimatedSprite extends Sprite {
     }
 
 
-    public Animation getAnimation() {
-        return animation;
+    public boolean animationDone() {
+        return animation.getCurrentCycles() >= 1;
     }
 
     public void pauseFrame() {
@@ -25,13 +25,19 @@ public class AnimatedSprite extends Sprite {
     }
 
 
-    @Override
-    public void render(Graphics2D g2d, Vector2D pos, Vector2D movement) {
-        if (!paused) {
-            image = animation.getNextFrame();
-        } else paused = false;
-        super.render(g2d, pos, movement);
+    public void animate() {
+        image = animation.getNextFrame();
     }
 
+
+    @Override
+    public void render(Graphics2D g2d, Vector2D pos, Vector2D movement) {
+        if (paused) {
+            paused = false;
+        } else {
+            animate();
+        }
+        super.render(g2d, pos, movement);
+    }
 
 }

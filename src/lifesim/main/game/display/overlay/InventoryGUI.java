@@ -21,28 +21,29 @@ import static lifesim.main.game.items.inventory.Inventory.NULL_SLOT;
 public class InventoryGUI extends Overlay {
 
     private static final int GRID_SIZE = 12;
-    private static final int ROW_WIDTH = 9;
+    private static final int ROW_WIDTH = 5;
     private static final Vector2D DISPLAY_POS = new Vector2D(0, 30);
     private static final Vector2D ITEM_OFFSET = new Vector2D(0.5-ROW_WIDTH/2.0, -1);
 
-    private static final Sprite bg = new Sprite("inventory_test");
-    private static final Sprite selectionBubble = new Sprite("selected_slot");
+    private static final Sprite BG = new Sprite("inventory_test");
 
     private static final Font INFO_FONT = FontLoader.getMainFont(6);
 
 
     private final Inventory inventory;
+    private final HotbarGUI hotbarGUI;
     private final ArrayList<InventorySlot> slots;
 
-    private boolean opened = false;
-
     private InventorySlot draggedSlot = NULL_SLOT;
+
+    private boolean opened = false;
 
 
     public InventoryGUI(GamePanel panel, Player player) {
         super(panel, player);
         inventory = player.inventory;
         slots = inventory.getSlots();
+        hotbarGUI = new HotbarGUI(panel, player, inventory, GRID_SIZE, ROW_WIDTH);
     }
 
 
@@ -56,8 +57,8 @@ public class InventoryGUI extends Overlay {
 
     private Vector2D getSlotDisplayPos(InventorySlot slot) {
         int index = slots.indexOf(slot);
-        int y = index / ROW_WIDTH;
         int x = index % ROW_WIDTH;
+        int y = index / ROW_WIDTH;
         return getDisplayPos(new Vector2D(x, y));
     }
 
@@ -72,7 +73,6 @@ public class InventoryGUI extends Overlay {
         for (InventorySlot slot: inventory.getSlots()) {
             if (getSlotHitBox(slot).contains(MouseInput.getPos().toPoint())) {
                 mouseOverSlot = slot;
-
                 break;
             }
         }
@@ -86,35 +86,19 @@ public class InventoryGUI extends Overlay {
 
             if (MouseInput.left.isClicked() && !mouseOverSlot.isEmpty()) {
                 draggedSlot = mouseOverSlot;
-                inventory.selectSlot(mouseOverSlot);
+                //inventory.selectSlot(mouseOverSlot);
             }
 
             if (MouseInput.left.isReleased()) {
                 getMouseOverSlot().swapItem(draggedSlot);
-                inventory.selectSlot(mouseOverSlot);
+                //inventory.selectSlot(mouseOverSlot);
                 draggedSlot = NULL_SLOT;
             }
         } else if (MouseInput.left.isReleased()) {
-            inventory.selectSlot(draggedSlot);
+            //inventory.selectSlot(draggedSlot);
             draggedSlot = NULL_SLOT;
             inventory.getSelectedSlot().dropItem(player.getWorld(), player.getPos().translate(MouseInput.getPos()));
         }
-
-
-    }
-
-    private void navigate() {
-        int newIndex = slots.indexOf(inventory.getSelectedSlot());
-
-        if (KeyInput.k_left.isClicked()) newIndex -= 1;
-        if (KeyInput.k_right.isClicked()) newIndex += 1;
-
-        newIndex += MouseInput.getMouseWheelSpeed();
-        if (newIndex > slots.size() - 1)
-            newIndex = 0;
-        if (newIndex < 0)
-            newIndex = slots.size() - 1;
-        inventory.selectSlot(slots.get(newIndex));
     }
 
 
@@ -125,30 +109,27 @@ public class InventoryGUI extends Overlay {
         if (KeyInput.k_esc.isClicked()) opened = false;
 
         if (opened) dragItems();
-        navigate();
+        hotbarGUI.update();
     }
 
 
     @Override
     public void render(Graphics2D g2d) {
-        if (!opened) {
-            Vector2D miniPos = panel.getScaledSize().scale(0.5).translate(bg.getSize().scale(-0.5));
-            miniPos.translate(DISPLAY_POS.copy().scale(-1));
-            g2d.translate(miniPos.x, miniPos.y);
-            g2d.scale(0.72, 0.72);
+        if (opened) {
+            BG.render(g2d, DISPLAY_POS, new Vector2D(0, 0));
+
+            for (InventorySlot slot : inventory.getSlots()) {
+                slot.getItem().render(g2d, getSlotDisplayPos(slot));
+            }
+            if (!draggedSlot.isEmpty()) {
+                draggedSlot.getItem().render(g2d, MouseInput.getPos());
+            }
+
+            DrawMethods.drawCenteredString(g2d, inventory.getSelectedSlot().getInfo(),
+                    DISPLAY_POS.copy().translate(0, 25), INFO_FONT, Color.WHITE);
         }
-        bg.render(g2d, DISPLAY_POS, new Vector2D(0, 0));
-        selectionBubble.render(g2d, getSlotDisplayPos(inventory.getSelectedSlot()), new Vector2D(0, 0));
 
-        for (InventorySlot slot : inventory.getSlots())
-            slot.getItem().render(g2d, getSlotDisplayPos(slot));
-
-        if (!draggedSlot.isEmpty())
-            draggedSlot.getItem().render(g2d, MouseInput.getPos());
-
-        DrawMethods.drawCenteredString(g2d, inventory.getSelectedSlot().getInfo(), DISPLAY_POS.copy().translate(0, 25), INFO_FONT, Color.WHITE);
-
-
+        hotbarGUI.render(g2d);
     }
 
 }

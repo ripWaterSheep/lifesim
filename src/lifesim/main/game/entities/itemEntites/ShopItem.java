@@ -1,7 +1,9 @@
-package lifesim.main.game.entities;
+package lifesim.main.game.entities.itemEntites;
 
 import lifesim.main.game.Game;
+import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.stats.PlayerStats;
+import lifesim.main.game.entities.itemEntites.DroppedItem;
 import lifesim.main.game.items.Item;
 
 
