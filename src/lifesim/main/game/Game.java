@@ -12,6 +12,7 @@ import lifesim.main.game.handlers.Layout;
 import lifesim.main.game.handlers.World;
 import lifesim.main.game.display.RenderableDisplay;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -24,16 +25,19 @@ public final class Game {
     private final Player player;
 
     private final ArrayList<RenderableDisplay> displays = new ArrayList<>();
+    private final DeathScreen deathScreen;
 
     private final MessageDisplay centralDisplay;
+
+    private GameState gameState = GameState.PLAYING;
 
     public Game(GamePanel panel) {
         this.panel = panel;
         player = new Player(this);
         player.setWorld(layout.getWorlds().get(0));
 
+        deathScreen = new DeathScreen(panel, player);
         displays.add(new StatBar(panel, player));
-        displays.add(new DeathScreen(panel, player));
         displays.add(new InventoryGUI(panel, player));
 
         centralDisplay = new MessageDisplay(6, Color.WHITE, new Vector2D(0, -player.sprite.getSize().y));
@@ -54,21 +58,49 @@ public final class Game {
     }
 
 
+    public void manageState() {
+        if (player.getStats().isAlive()) {
+            gameState = GameState.PLAYING;
+        } else {
+            gameState = GameState.DEATH_SCREEN;
+        }
+    }
+
+
     public void update() {
-        for (RenderableDisplay display: displays)
-            display.update();
+        manageState();
 
-        player.getWorld().update(player);
+        switch (gameState) {
+            case PLAYING:
+                for (RenderableDisplay display : displays)
+                    display.update();
 
-        cheatLogic();
+                player.getWorld().update(player);
+                cheatLogic();
+
+                break;
+            case DEATH_SCREEN:
+                deathScreen.update();
+                break;
+
+        }
     }
 
 
     public void render(Graphics g) {
-        player.getWorld().render(g, panel);
+        switch (gameState) {
+            case PLAYING:
+                player.getWorld().render(g, panel);
 
-        for (RenderableDisplay display: displays)
-            display.render((Graphics2D) g.create());
+                for (RenderableDisplay display : displays)
+                    display.render((Graphics2D) g.create());
+                break;
+            case DEATH_SCREEN:
+                player.getWorld().render(g, panel);
+                deathScreen.render((Graphics2D) g.create());
+                break;
+        }
+
     }
 
 

@@ -26,22 +26,16 @@ public class DeathScreen extends Overlay {
         deathReason = reason;
     }
 
-
-    private boolean showing = false;
-
-
-
     public DeathScreen(GamePanel panel, Player player) {
         super(panel, player);
     }
 
+
     @Override
     public void update() {
         if (!player.getStats().isAlive()) {
-            showing = true;
             if (MouseInput.left.isClicked() || KeyInput.isAnyKeyClicked()) {
                 panel.newGame();
-                showing = false;
             }
         }
     }
@@ -49,14 +43,11 @@ public class DeathScreen extends Overlay {
 
     @Override
     public void render(Graphics2D g2d) {
-        if (showing) {
-            g2d.setColor(bgColor);
-            DrawMethods.fillPanel(g2d, panel, bgColor);
+        g2d.setColor(bgColor);
+        DrawMethods.fillPanel(g2d, panel, bgColor);
 
-            DrawMethods.drawCenteredString(g2d, "OOF, YOU DIED!", new Vector2D(0, 0), font, textColor);
-            DrawMethods.drawCenteredString(g2d, deathReason, new Vector2D(0, 25), subtitleFont, textColor);
-
-        }
+        DrawMethods.drawCenteredString(g2d, "OOF, YOU DIED!", new Vector2D(0, 0), font, textColor);
+        DrawMethods.drawCenteredString(g2d, deathReason, new Vector2D(0, 25), subtitleFont, textColor);
     }
 
 
