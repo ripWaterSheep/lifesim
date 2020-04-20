@@ -1,10 +1,13 @@
 package lifesim.main.util;
 
+import javafx.scene.layout.Pane;
+import lifesim.main.game.GamePanel;
+import lifesim.main.util.math.Geometry;
 import lifesim.main.util.math.MyMath;
 import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
-
+import java.awt.image.renderable.ParameterBlock;
 
 
 public class DrawMethods {
@@ -36,6 +39,13 @@ public class DrawMethods {
         g.setFont(font);
         g.setColor(color);
         g.drawString(text, x, y);
+    }
+
+
+    public static void fillPanel(Graphics2D g2d, GamePanel panel, Color color) {
+        g2d.setColor(color);
+        Rectangle rect = Geometry.getCenteredRect(new Vector2D(0, 0), panel.getScaledSize());
+        g2d.fill(rect);
     }
 
 

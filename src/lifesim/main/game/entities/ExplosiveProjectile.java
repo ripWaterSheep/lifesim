@@ -10,8 +10,8 @@ public class ExplosiveProjectile extends Projectile {
 
     private final Spawnable explosion;
 
-    public ExplosiveProjectile(String name, Sprite sprite, Stats stats, Entity owner, double range, double angle, boolean matchSpriteAngle, Spawnable explosion) {
-        super(name, sprite, stats, owner, range, angle, true, matchSpriteAngle);
+    public ExplosiveProjectile(String name, Sprite sprite, Stats stats, Entity owner, double speed, double angle, double range, boolean matchSpriteAngle, Spawnable explosion) {
+        super(name, sprite, stats, owner, speed, angle, range, true, matchSpriteAngle);
         this.explosion = explosion;
     }
 

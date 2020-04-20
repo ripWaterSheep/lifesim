@@ -6,8 +6,8 @@ public class HealerStats extends BasicStats {
 
     private final double healAmount;
 
-    public HealerStats(double speed, double damage, Alliance alliance, double healAmount) {
-        super(speed, damage, alliance);
+    public HealerStats(double damage, Alliance alliance, double healAmount) {
+        super(damage, alliance);
         this.healAmount = healAmount;
     }
 

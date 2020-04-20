@@ -4,19 +4,20 @@ import lifesim.main.game.entities.Player;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.PlayerStats;
 import lifesim.main.game.handlers.World;
+import lifesim.main.game.input.MouseInput;
 import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
 
 
-public abstract class HoldableItem extends Item {
+public abstract class PressableItem extends Item {
 
     private final Sprite effectSprite;
 
     private final long depletionInterval;
     private long lastDepletionTime = System.currentTimeMillis();
 
-    public HoldableItem(String name, Sprite sprite, Sprite effectSprite, long depletionInterval) {
+    public PressableItem(String name, Sprite sprite, Sprite effectSprite, long depletionInterval) {
         super(name, sprite);
         this.effectSprite = effectSprite;
         this.depletionInterval = depletionInterval;
@@ -33,7 +34,7 @@ public abstract class HoldableItem extends Item {
 
     @Override
     public boolean shouldBeUsed() {
-        return true;
+        return MouseInput.right.isPressed();
     }
 
 
@@ -49,6 +50,7 @@ public abstract class HoldableItem extends Item {
 
     @Override
     public void renderWhileHolding(Graphics2D g2d, Player player) {
+        if (shouldBeUsed())
         effectSprite.render(g2d, player.getDisplayPos(), player.getVelocity());
     }
 }

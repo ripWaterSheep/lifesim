@@ -19,8 +19,8 @@ public class HealthStats extends BasicStats implements Stats {
     private final Drops drops = new Drops();
 
 
-    public HealthStats(double speed, double damage, Alliance alliance, double health) {
-        super(speed, damage, alliance);
+    public HealthStats(double damage, Alliance alliance, double health) {
+        super(damage, alliance);
         this.health = health;
         initialHealth = health;
     }

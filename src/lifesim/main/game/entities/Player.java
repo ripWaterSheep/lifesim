@@ -17,7 +17,7 @@ import java.awt.*;
 import static java.lang.Math.abs;
 
 
-public final class Player extends Entity {
+public final class Player extends MovementEntity {
 
     private final Game game;
     private World world;
@@ -33,8 +33,7 @@ public final class Player extends Entity {
                 new Animation("player", 100, new Vector2D(12, 16), 3),
                 new Animation("player", 100, new Vector2D(12, 16), 4)
                 ),
-            new PlayerStats(5, 1000, 1000, 0, 0, 0, game));
-        velocity.set(0, 0);
+            new PlayerStats(1000, 1000, 0, 0, 0, game), 5, 0);
 
         this.game = game;
         inventory = new Inventory(this);
@@ -46,7 +45,7 @@ public final class Player extends Entity {
         //inventory.addItem(ItemTypes.mysteriousPill, 100);
         //inventory.addItem(ItemTypes.virtualCoin, 100);
         acquireItem(ItemTypes.bomb, 100);
-        acquireItem(ItemTypes.teleporter, 100);
+        acquireItem(ItemTypes.jetPack, 100);
         acquireItem(ItemTypes.allyTest, 100);
         acquireItem(ItemTypes.allyTest2, 100);
         acquireItem(ItemTypes.healer, 100);
@@ -98,9 +97,16 @@ public final class Player extends Entity {
     }
 
 
+    public double getCurrentSpeed() {
+        double currentSpeed = initialSpeed;
+        currentSpeed *= (getStats().getEnergy()/5000) + 0.8;
+        return currentSpeed;
+    }
+
+
     public void controlMovement() {
         stop();
-        double speed = stats.getCurrentSpeed();
+        double speed = getCurrentSpeed();
 
         if (KeyInput.k_shift.isPressed()) {
             speed *= 0.3;

@@ -3,13 +3,15 @@ package lifesim.main.game.entities;
 import lifesim.main.game.entities.components.sprites.Sprite;
 import lifesim.main.game.entities.components.stats.Stats;
 import lifesim.main.game.handlers.World;
+import lifesim.main.util.math.Vector2D;
 
 import java.awt.*;
 
 import static java.lang.Math.*;
+import static lifesim.main.util.math.MyMath.getRand;
 
 
-public class Projectile extends Entity {
+public class Projectile extends MovementEntity {
 
     private final Entity owner;
 
@@ -20,11 +22,10 @@ public class Projectile extends Entity {
     private final boolean destroyOnDamage;
 
 
-    public Projectile(String name, Sprite sprite, Stats stats, Entity owner, double range, double angle, boolean destroyOnDamage, boolean matchSpriteAngle) {
-        super(name, sprite, stats);
+    public Projectile(String name, Sprite sprite, Stats stats, Entity owner, double speed, double angle,  double range, boolean destroyOnDamage, boolean matchSpriteAngle) {
+        super(name, sprite, stats, speed, angle);
         this.owner = owner;
         this.range = range;
-        velocity.setDirection(angle);
         this.matchSpriteAngle = matchSpriteAngle;
         this.destroyOnDamage = destroyOnDamage;
     }
@@ -60,16 +61,17 @@ public class Projectile extends Entity {
     public void update(World world) {
         super.update(world);
         distanceTravelled += abs(velocity.x) + abs(velocity.y);
-
         if (distanceTravelled > range) {
             removeFromWorld();
-       }
+        }
     }
 
     @Override
     public void render(Graphics2D g2d) {
-        if (matchSpriteAngle)
+        if (matchSpriteAngle){
             g2d.rotate(toRadians(180+velocity.getDirection()), getDisplayPos().x, getDisplayPos().y);
+        }
         super.render(g2d);
     }
+
 }

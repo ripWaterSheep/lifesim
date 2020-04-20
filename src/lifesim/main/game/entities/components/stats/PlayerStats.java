@@ -23,20 +23,13 @@ public class PlayerStats extends HealthStats {
     private double intellect;
 
 
-    public PlayerStats(double speed, double health, double energy, double strength, double money, double intellect, Game game) {
-        super(speed, 0, Alliance.PLAYER, health);
+    public PlayerStats(double health, double energy, double strength, double money, double intellect, Game game) {
+        super(0, Alliance.PLAYER, health);
         this.energy = energy;
         this.strength = strength;
         this.money = money;
         this.intellect = intellect;
         this.game = game;
-    }
-
-    @Override
-    public double getCurrentSpeed() {
-        double currentSpeed = super.getCurrentSpeed();
-        currentSpeed *= (energy/5000) + 0.8;
-        return currentSpeed;
     }
 
 

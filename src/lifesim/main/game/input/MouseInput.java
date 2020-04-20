@@ -1,6 +1,7 @@
 package lifesim.main.game.input;
 
 import lifesim.main.game.Main;
+import lifesim.main.game.entities.Player;
 import lifesim.main.util.math.Vector2D;
 
 import javax.swing.*;
@@ -28,6 +29,11 @@ public final class MouseInput {
     public static Vector2D getPos() {
         return currentPos.copy();
     }
+
+    public static double getAngleFromPos(Vector2D pos) {
+       return pos.getAngleFrom(MouseInput.getPos());
+    }
+
 
     public static int getMouseWheelSpeed() {
         return mouseWheelSpeed;

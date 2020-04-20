@@ -8,8 +8,6 @@ import java.awt.*;
 
 public interface Stats {
 
-    double getCurrentSpeed();
-
     boolean isAlive();
     double getHealth();
 

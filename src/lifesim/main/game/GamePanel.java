@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    public static final double GRAPHICS_SCALE = 3;
+    public static final double GRAPHICS_SCALE = 3.5;
 
 
     private Game game;

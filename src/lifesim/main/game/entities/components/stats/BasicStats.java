@@ -9,21 +9,13 @@ import java.awt.*;
 
 public class BasicStats implements Stats {
 
-    protected final double speed;
     protected final double damage;
 
     protected final Alliance alliance;
 
-    public BasicStats(double speed, double damage, Alliance alliance) {
-        this.speed = speed;
+    public BasicStats(double damage, Alliance alliance) {
         this.damage = damage;
         this.alliance = alliance;
-    }
-
-
-    @Override
-    public double getCurrentSpeed() {
-        return speed;
     }
 
     @Override
@@ -47,8 +39,6 @@ public class BasicStats implements Stats {
     public void heal(double amount) {
     }
 
-
-
     @Override
     public void takeDamage(double damage) {
     }
@@ -66,7 +56,6 @@ public class BasicStats implements Stats {
             otherEntity.getStats().takeDamage(damage);
         }
     }
-
 
     @Override
     public void update(Entity entity, World world) {

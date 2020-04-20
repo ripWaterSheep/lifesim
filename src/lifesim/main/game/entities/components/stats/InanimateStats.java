@@ -10,11 +10,6 @@ import java.awt.*;
 public class InanimateStats implements Stats {
 
     @Override
-    public double getCurrentSpeed() {
-        return 0;
-    }
-
-    @Override
     public boolean isAlive() {
         return true;
     }

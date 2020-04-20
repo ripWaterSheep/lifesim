@@ -26,15 +26,15 @@ public class ItemTypes {
      * Misc Items
      *************/
 
-    public static final Item teleporter = new ClickableItem("Teleporter", new ShapeSprite(8, 8, Color.GRAY)) {
+    public static final Item jetPack = new ClickableItem("Teleporter", new ShapeSprite(8, 8, Color.GRAY)) {
         @Override
         public void use(World world, Player player, PlayerStats stats) {
-            player.push(Vector2D.newMagDir(500, player.getDisplayPos().getAngleFrom(MouseInput.getPos())));
+            player.push(Vector2D.newMagDir(750, MouseInput.getAngleFromPos(player.getDisplayPos())));
         }
     };
 
 
-    public static final Item shield = new HoldableItem("Shield", new ShapeSprite(8, 8, Color.YELLOW),
+    public static final Item shield = new PressableItem("Shield", new ShapeSprite(8, 8, Color.YELLOW),
             new ShapeSprite(18, 18, new Color(255, 255, 0, 100)), 500) {
         @Override
         public void use(World world, Player player, PlayerStats stats) {
@@ -59,7 +59,7 @@ public class ItemTypes {
     public static final Item healer = new Weapon("Healer", new ShapeSprite(8, 8, Color.RED), ProjectileType.HEAL_ORB);
 
     public static final Item pushTestWeapon = new Weapon("Push Test", new ShapeSprite(8, 8,
-            new Color(100, 150, 200)), ProjectileType.PUSH_TEST);
+            new Color(100, 150, 200)), ProjectileType.THROWABLE_WALL);
 
 
     /************

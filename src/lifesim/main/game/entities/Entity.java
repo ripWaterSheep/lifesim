@@ -20,7 +20,6 @@ public class Entity {
     protected final Stats stats;
 
     protected final Vector2D pos;
-    protected final Vector2D velocity;
 
 
     // If true, the world containing the entity will remove it from the world.
@@ -30,7 +29,6 @@ public class Entity {
         this.name = name;
         this.sprite = sprite;
         pos = new Vector2D(0, 0);
-        velocity = Vector2D.newMagDir(stats.getCurrentSpeed(), getRand(0, 360));
         this.stats = stats;
     }
 
@@ -60,7 +58,7 @@ public class Entity {
     }
 
     public Vector2D getVelocity() {
-        return velocity.copy();
+        return new Vector2D(0, 0);
     }
 
 
@@ -91,6 +89,7 @@ public class Entity {
         removeRequested = true;
     }
 
+
     /** While the player is touching this entity, this customizable function is called. */
     public void playerCollision(Game game, Player player, PlayerStats stats) {
     }
@@ -101,11 +100,14 @@ public class Entity {
 
 
     protected void stop() {
-        velocity.scale(0.8); // Slow down due to friction, approaching zero.
     }
 
-    public void push(Vector2D force) {
-        velocity.translate(force);
+    public void push(Vector2D vector2D) {
+        pos.translate(vector2D);
+    }
+
+    public void push(Entity entity, double forceScale) {
+        push(entity.getVelocity().scale(forceScale));
     }
 
 
@@ -115,13 +117,12 @@ public class Entity {
 
     public void update(World world) {
         stats.update(this, world);
-        pos.translate(velocity);
         // Keep the entity within the world's boundaries.
         pos.clampInRect(new Vector2D(0, 0), world.getSize().scale(0.5).translate(sprite.getSize().scale(-0.5)));
     }
 
     public void render(Graphics2D g2d) {
-        sprite.render(g2d, getDisplayPos(), velocity);
+        sprite.render(g2d, getDisplayPos(), getVelocity());
         stats.renderInfo(g2d, getDisplayPos().translate(0, -(sprite.getSize().y*0.5) - 3));
     }
 

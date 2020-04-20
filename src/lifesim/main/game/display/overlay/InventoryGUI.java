@@ -118,6 +118,8 @@ public class InventoryGUI extends Overlay {
     @Override
     public void render(Graphics2D g2d) {
         if (opened) {
+            DrawMethods.fillPanel(g2d, panel, new Color(0, 0, 0, 100));
+
             BG.render(g2d, DISPLAY_POS, new Vector2D(0, 0));
 
             for (InventorySlot slot : inventory.getSlots()) {

@@ -11,26 +11,26 @@ import java.awt.*;
 import static lifesim.main.util.math.MyMath.getRand;
 
 
-public class AIEntity extends Entity {
+public class AIEntity extends MovementEntity {
 
     private final Alliance AITargetAlliance;
     protected final double detectionRange;
 
     protected Vector2D targetPos;
-    protected boolean pursuing;
     protected boolean attacking = false;
 
 
-    public AIEntity(String name, Sprite sprite, Stats stats, Alliance AITargetAlliance, double detectionRange) {
-        super(name, sprite, stats);
+    public AIEntity(String name, Sprite sprite, Stats stats, double speed, Alliance AITargetAlliance, double detectionRange) {
+        super(name, sprite, stats, speed, getRand(0, 360));
         this.AITargetAlliance = AITargetAlliance;
         this.detectionRange = detectionRange;
     }
 
 
-    public AIEntity(String name, Sprite sprite, Stats stats, double detectionRange) {
-        this(name, sprite, stats, stats.getAlliance(), detectionRange);
+    public AIEntity(String name, Sprite sprite, Stats stats, double speed, double detectionRange) {
+        this(name, sprite, stats, speed, stats.getAlliance(), detectionRange);
     }
+
 
     private void calculateTargetPos(World world) {
         targetPos = pos;
@@ -65,17 +65,15 @@ public class AIEntity extends Entity {
         // If target position is entity's own position (default), then do random ai
         if (targetPos.equals(pos)) {
             if (getRand(0, 1) < 0.03) {
-                velocity.setMagDir(stats.getCurrentSpeed() / 3, getRand(0, 360));
+                velocity.setMagDir(initialSpeed/3, getRand(0, 360));
             }
         } else if (attacking) {
             attack(world);
         } else {
             // Approach target position with a bit of randomness, since it would otherwise overlap other entities targeting the same position.
-            velocity.setMagDir(stats.getCurrentSpeed(),
-                    targetPos.getAngleFrom(pos) + getRand(-25, 25));
+            velocity.setMagDir(initialSpeed, targetPos.getAngleFrom(pos) + getRand(-25, 25));
         }
     }
-
 
     @Override
     public void update(World world) {

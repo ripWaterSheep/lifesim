@@ -19,11 +19,11 @@ public enum ProjectileType implements Launchable {
             double strength = (owner instanceof Player)? ((Player) owner).getStats().getStrength() : 1;
 
             return new Projectile(owner.name + "'s Fist", new ImageSprite("fist"), new BasicStats(
-                    6, 1 + (strength/100), Alliance.PLAYER), owner, 35, angle, false, true) {
+                    1 + (strength/100), Alliance.PLAYER), owner,  6, angle, 35,false, true) {
                 @Override
                 public void eventOnHit(Entity entity) {
                     super.eventOnHit(entity);
-                    entity.push(getVelocity().scale(0.5));
+                    push(entity, 0.5);
                 }
             };
         }
@@ -34,21 +34,21 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new ExplosiveProjectile("Bullet", new ShapeSprite(2, 2, new Color(0, 0, 0, 150)),
-                    new BasicStats(15,  6, alliance), owner, 175, angle, false, EffectType.SMALL_BOOM);
+                    new BasicStats(6, alliance), owner, 15, angle, 175, false, EffectType.SMALL_BOOM);
     }},
 
     WATER_DROP {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Water", new ShapeSprite(3, 3, new Color(50, 80, 220, 150)),
-                    new BasicStats(8, 1.5, alliance), owner, 125, angle, true, false);
+                    new BasicStats(1.5, alliance), owner, 8, angle, 125, true, false);
     }},
 
     LASER {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new ExplosiveProjectile("Laser", new ShapeSprite(10, 1, new Color(255, 50, 25, 150)),
-                    new BasicStats(13, 6, alliance), owner, 150, angle, true, EffectType.SMALL_BOOM);
+                    new BasicStats(6, alliance), owner, 13, angle, 150, true, EffectType.SMALL_BOOM);
     }},
 
 
@@ -56,15 +56,15 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new ExplosiveProjectile("Bomb", new AnimatedSprite(new Animation("bomb",
-                    75, new Vector2D(9, 16), 0)), new BasicStats(0, 0, alliance),
-                    owner, 5, angle, false, EffectType.BIG_BOOM);
+                    75, new Vector2D(9, 16), 0)), new BasicStats(0, alliance),
+                    owner, 0, angle, 1, false, EffectType.BIG_BOOM);
     }},
 
     BALL {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Ball", new ShapeSprite(4, 4, Color.BLACK), new BasicStats(
-                    18, 30, alliance), owner, 125, angle, true, false);
+                    30, alliance), owner, 18, angle, 125, true, false);
     }},
 
 
@@ -72,18 +72,18 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Heal Orb", new ShapeSprite(32, 32, new Color(255, 0, 0, 100)),
-                    new HealerStats(8, 0, alliance, 10),  owner, 175, angle, false, false);
+                    new HealerStats(0, alliance, 10),  owner, 8, angle, 175, false, false);
         }},
 
 
-    PUSH_TEST {
+    THROWABLE_WALL {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
-            return new Projectile("Push Test", new ShapeSprite(16, 16, new Color(100, 150, 200)),
-                    new BasicStats(12, 0, alliance), owner, 300, angle, false, false) {
+            return new Projectile("Push Test", new ShapeSprite(8, 64, new Color(100, 150, 200)),
+                    new BasicStats(0, alliance), owner, 15, angle, 300, false, true) {
                 @Override
                 public void eventOnHit(Entity entity) {
-                    entity.push(getVelocity().scale(2.5));
+                    entity.push(this, 2.5);
                 }
             };
         }

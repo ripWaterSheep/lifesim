@@ -21,7 +21,6 @@ public class Drops {
 
     public void dropAt(Vector2D pos, World world) {
         for (DroppedItem drop: drops) {
-
             double angle = 360.0/(drops.size()) * drops.indexOf(drop);
             world.add(drop, pos.copy());
             drop.push(Vector2D.newMagDir(10, angle));
