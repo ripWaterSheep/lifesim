@@ -1,5 +1,6 @@
 package lifesim.game.entities.types;
 
+import lifesim.engine.Main;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.ExplosiveProjectile;
 import lifesim.game.entities.Player;
@@ -22,10 +23,11 @@ public enum ProjectileType implements Launchable {
     FIST {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
-            double strength = (owner instanceof Player)? ((Player) owner).getStats().getStrength() : 1;
+            double strength = Main.getGame().getPlayer().getStats().getStrength();
 
-            return new Projectile(owner.name + "'s Fist", new ImageSprite("fist"), new BasicStats(
-                    1 + (strength/100), Alliance.PLAYER), owner,  6, angle, 35,false, true) {
+
+            return new Projectile(owner.name + "'s Fist", new ImageSprite("fist_small"), new BasicStats(
+                    1 + (strength/100), Alliance.PLAYER), owner,  8, angle, 25,false, true) {
                 @Override
                 public void eventOnHit(Entity entity) {
                     super.eventOnHit(entity);
@@ -47,14 +49,14 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Water", new ShapeSprite(3, 3, new Color(50, 80, 220, 150)),
-                    new BasicStats(1.5, alliance), owner, 8, angle, 125, true, false);
+                    new BasicStats(1.5, alliance), owner, 8, angle, 135, true, false);
     }},
 
     LASER {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new ExplosiveProjectile("Laser", new ShapeSprite(10, 1, new Color(255, 50, 25, 150)),
-                    new BasicStats(6, alliance), owner, 13, angle, 150, true, EffectType.SMALL_BOOM);
+                    new BasicStats(6, alliance), owner, 13, angle, 175, true, EffectType.SMALL_BOOM);
     }},
 
 
@@ -78,7 +80,7 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Heal Orb", new ShapeSprite(42, 42, new Color(255, 0, 0, 100)),
-                    new HealerStats(0, alliance, 12),  owner, 8, angle, 175, false, false);
+                    new HealerStats(0, alliance, 15),  owner, 9, angle, 175, false, false);
         }},
 
 

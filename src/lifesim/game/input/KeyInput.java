@@ -118,7 +118,6 @@ public final class KeyInput {
         keys.add(k_space);
         keys.add(k_shift);
         keys.add(k_esc);
-        System.out.println("key input initialized");
     }
 
 

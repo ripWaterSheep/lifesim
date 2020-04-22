@@ -1,6 +1,6 @@
 package lifesim.game.entities.itemEntites;
 
-import lifesim.game.state.Game;
+import lifesim.state.Game;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.components.stats.PlayerStats;
 import lifesim.game.items.Item;

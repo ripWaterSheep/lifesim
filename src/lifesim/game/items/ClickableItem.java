@@ -31,7 +31,7 @@ public abstract class ClickableItem extends Item {
 
     @Override
     public void renderWhileHolding(Graphics2D g2d, Player player) {
-        //icon.render(g2d, player.getDisplayPos(), player.getVelocity());
+        icon.render(g2d, player.getDisplayPos(), player.getVelocity());
     }
 
 }

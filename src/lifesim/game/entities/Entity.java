@@ -6,8 +6,8 @@ import lifesim.game.entities.components.stats.InanimateStats;
 import lifesim.game.entities.components.stats.PlayerStats;
 import lifesim.game.entities.components.stats.Stats;
 import lifesim.game.handlers.World;
-import lifesim.game.state.Game;
-import lifesim.game.Main;
+import lifesim.state.Game;
+import lifesim.engine.Main;
 import lifesim.util.math.Vector2D;
 import lifesim.util.math.Geometry;
 

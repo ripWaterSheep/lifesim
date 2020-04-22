@@ -1,4 +1,4 @@
-package lifesim.game.state.displays;
+package lifesim.game.display;
 
 import lifesim.game.entities.Player;
 import lifesim.game.entities.components.sprites.ImageSprite;
@@ -7,7 +7,7 @@ import lifesim.game.input.MouseInput;
 import lifesim.util.math.Vector2D;
 import lifesim.game.items.inventory.Inventory;
 import lifesim.game.items.inventory.InventorySlot;
-import lifesim.util.DrawMethods;
+import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.math.Geometry;
 
@@ -18,7 +18,7 @@ import static lifesim.game.items.inventory.Inventory.NULL_SLOT;
 import static lifesim.game.items.inventory.Inventory.WIDTH;
 
 
-public class InventoryGUI implements RenderableDisplay {
+public class InventoryGUI extends ToggleableDisplay {
 
     public static final int GRID_SIZE = 12;
 
@@ -68,7 +68,7 @@ public class InventoryGUI implements RenderableDisplay {
     public InventorySlot getMouseOverSlot() {
         InventorySlot mouseOverSlot = NULL_SLOT;
         for (InventorySlot slot: inventory.getSlots()) {
-            if (getSlotHitBox(slot).contains(MouseInput.getPos().toPoint())) {
+            if (getSlotHitBox(slot).contains(MouseInput.getCursorPos().toPoint())) {
                 mouseOverSlot = slot;
                 break;
             }
@@ -92,7 +92,7 @@ public class InventoryGUI implements RenderableDisplay {
         } else if (MouseInput.left.isReleased()) {
             inventory.selectSlot(draggedSlot);
             draggedSlot = NULL_SLOT;
-            inventory.getSelectedSlot().dropItem(player.getWorld(), player.getPos().translate(MouseInput.getPos()));
+            inventory.getSelectedSlot().dropItem(player.getWorld(), player.getPos().translate(MouseInput.getCursorPos()));
         }
     }
 
@@ -106,17 +106,17 @@ public class InventoryGUI implements RenderableDisplay {
 
     @Override
     public void render(Graphics2D g2d) {
-        DrawMethods.fillPanel(g2d, new Color(0, 0, 0, 100));
+        GraphicsMethods.fillPanel(g2d, new Color(0, 0, 0, 75));
         BG.render(g2d, DISPLAY_POS, new Vector2D(0, 0));
 
         for (InventorySlot slot : inventory.getSlots()) {
             slot.render(g2d, getSlotDisplayPos(slot), true);
         }
         if (!draggedSlot.isEmpty()) {
-            draggedSlot.getItem().renderIcon(g2d, MouseInput.getPos());
+            draggedSlot.getItem().renderIcon(g2d, MouseInput.getCursorPos());
         }
 
-        DrawMethods.drawCenteredString(g2d, inventory.getSelectedSlot().getInfo(),
+        GraphicsMethods.centeredString(g2d, inventory.getSelectedSlot().getInfo(),
                 DISPLAY_POS.copy().translate(0, 25), INFO_FONT, Color.WHITE);
     }
 

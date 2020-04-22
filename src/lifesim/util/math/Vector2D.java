@@ -41,13 +41,6 @@ public class Vector2D {
     }
 
 
-    public boolean isInRect(Vector2D rectCenter, Vector2D size) {
-        Vector2D rectMin = rectCenter.copy().translate(size.copy().scale(-0.5));
-        Vector2D rectMax = rectCenter.copy().translate(size.copy().scale(0.5));
-        return x > rectMin.x && y > rectMin.y && x < rectMax.x && y < rectMax.y;
-    }
-
-
     public double getDistanceFrom(Vector2D otherVector) {
         return Math.abs(betterRound(Point2D.distance(x, y, otherVector.x, otherVector.y)));
     }
@@ -63,17 +56,10 @@ public class Vector2D {
         y = vector2D.y;
     }
 
-
     public void set(double x, double y) {
         this.x = x;
         this.y = y;
     }
-
-
-    public void setDirection(double deg) {
-        setMagDir(getMagnitude(), deg);
-    }
-
 
     public void setMagDir(double magnitude, double deg) {
         x = -magnitude * Math.cos(Math.toRadians(deg));
@@ -121,22 +107,14 @@ public class Vector2D {
         }
     }
 
-
-
-
-
-    public Vector2D getRandomPointInAbsRect() {
-        return new Vector2D(getRand(-x, x), getRand(-y, y));
-    }
-
     public Vector2D translate(double x, double y) {
         this.x += x;
         this.y += y;
         return this;
     }
 
-    public Vector2D translate(Vector2D vector) {
-        return translate(vector.x, vector.y);
+    public Vector2D translate(Vector2D v) {
+        return translate(v.x, v.y);
     }
 
 

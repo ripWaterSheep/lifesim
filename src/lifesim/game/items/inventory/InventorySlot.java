@@ -2,8 +2,8 @@ package lifesim.game.items.inventory;
 
 import lifesim.game.entities.Player;
 import lifesim.game.handlers.World;
-import lifesim.game.state.displays.InventoryGUI;
-import lifesim.util.DrawMethods;
+import lifesim.game.display.InventoryGUI;
+import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.math.Vector2D;
 import lifesim.game.items.Item;
@@ -94,7 +94,7 @@ public class InventorySlot {
             item.renderIcon(g2d, pos);
 
             if (doRenderText) {
-                DrawMethods.drawCenteredString(g2d, amount+"", pos.translate(InventoryGUI.GRID_SIZE/2.0, InventoryGUI.GRID_SIZE/2.0), AMOUNT_FONT, Color.WHITE);
+                GraphicsMethods.centeredString(g2d, amount+"", pos.translate(InventoryGUI.GRID_SIZE/2.0, InventoryGUI.GRID_SIZE/2.0), AMOUNT_FONT, Color.WHITE);
             }
         }
     }

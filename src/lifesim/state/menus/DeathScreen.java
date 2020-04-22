@@ -1,16 +1,17 @@
-package lifesim.game.state.displays;
+package lifesim.state.menus;
 
-import lifesim.game.Main;
+import lifesim.engine.Main;
 import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
+import lifesim.state.GameState;
 import lifesim.util.math.Vector2D;
-import lifesim.util.DrawMethods;
+import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 
 import java.awt.*;
 
 
-public class DeathScreen implements RenderableDisplay {
+public class DeathScreen implements GameState {
 
     private static final Color bgColor = new Color(215, 26, 26, 200);
     private static final Color textColor = new Color(125, 20, 26);
@@ -36,10 +37,10 @@ public class DeathScreen implements RenderableDisplay {
     @Override
     public void render(Graphics2D g2d) {
         g2d.setColor(bgColor);
-        DrawMethods.fillPanel(g2d, bgColor);
+        GraphicsMethods.fillPanel(g2d, bgColor);
 
-        DrawMethods.drawCenteredString(g2d, "OOF, YOU DIED!", new Vector2D(0, 0), font, textColor);
-        DrawMethods.drawCenteredString(g2d, deathReason, new Vector2D(0, 25), subtitleFont, textColor);
+        GraphicsMethods.centeredString(g2d, "OOF, YOU DIED!", new Vector2D(0, 0), font, textColor);
+        GraphicsMethods.centeredString(g2d, deathReason, new Vector2D(0, 25), subtitleFont, textColor);
     }
 
 

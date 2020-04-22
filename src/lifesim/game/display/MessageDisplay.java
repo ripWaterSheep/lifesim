@@ -1,13 +1,13 @@
-package lifesim.game.state.displays;
+package lifesim.game.display;
 
 import lifesim.util.math.Vector2D;
-import lifesim.util.DrawMethods;
+import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 
 import java.awt.*;
 
 
-public class MessageDisplay implements RenderableDisplay  {
+public class MessageDisplay extends GameDisplay {
 
     private final Font font;
     private final Color textColor;
@@ -34,7 +34,7 @@ public class MessageDisplay implements RenderableDisplay  {
     }
 
     public void render(Graphics2D g2d) {
-        DrawMethods.setOpacity(g2d, currentOpacity);
-        DrawMethods.drawCenteredString(g2d, currentMessage, pos, font, textColor);
+        GraphicsMethods.setOpacity(g2d, currentOpacity);
+        GraphicsMethods.centeredString(g2d, currentMessage, pos, font, textColor);
     }
 }

@@ -1,6 +1,6 @@
 package lifesim.game.input;
 
-import lifesim.game.Main;
+import lifesim.engine.Main;
 import lifesim.util.math.Vector2D;
 import lifesim.util.math.MyMath;
 
@@ -20,18 +20,19 @@ public final class MouseInput {
     public static final InputListener middle = new InputListener(MouseEvent.BUTTON2);
     public static final InputListener right = new InputListener(MouseEvent.BUTTON3);
 
-    private static Vector2D currentPos = new Vector2D(0, 0);
+    private static final Vector2D cursorPos = new Vector2D(0, 0);
+    private static final Vector2D lastCursorPos = new Vector2D(0, 0);
+
     private static int mouseWheelSpeed = 0;
 
 
-    public static Vector2D getPos() {
-        return currentPos.copy();
+    public static Vector2D getCursorPos() {
+        return cursorPos.copy();
     }
 
-    public static double getAngleFromPos(Vector2D pos) {
-       return pos.getAngleFrom(MouseInput.getPos());
+    public static Vector2D getCursorVelocity() {
+       return getCursorPos().translate(lastCursorPos.copy().scale(-1));
     }
-
 
     public static int getMouseWheelSpeed() {
         return mouseWheelSpeed;
@@ -68,20 +69,17 @@ public final class MouseInput {
             }
         }
 
-
         @Override
         public void mouseMoved(MouseEvent e) {
-            currentPos.set(e.getX(), e.getY());
-            Main.getPanel().scalePos(currentPos);
+            lastCursorPos.set(cursorPos);
+            cursorPos.set(e.getX(), e.getY());
+            Main.getPanel().scalePos(cursorPos);
         }
-
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            currentPos.set(e.getX(), e.getY());
-            Main.getPanel().scalePos(currentPos);
+            mouseMoved(e);
         }
-
 
         @Override
         public void mouseReleased(MouseEvent e) {
@@ -92,12 +90,10 @@ public final class MouseInput {
             }
         }
 
-
         @Override
         public void mouseWheelMoved(MouseWheelEvent e) {
             mouseWheelSpeed = (int) MyMath.clamp(e.getPreciseWheelRotation(), -1, 1);
         }
-
     };
 
 

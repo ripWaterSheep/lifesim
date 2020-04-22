@@ -5,6 +5,7 @@ import lifesim.game.items.Item;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Inventory {
@@ -72,10 +73,12 @@ public class Inventory {
     private InventorySlot getFirstEmptySlot() {
         // If this method returns null slot, then there are no slots to fill and the inventory is full
         InventorySlot lastVacantSlot = NULL_SLOT;
+
         for (InventorySlot slot: slots) {
             if (slot.isEmpty()) {
                 // Since the slots are all in order, the first empty slot found will be the correct one.
                 lastVacantSlot = slot;
+            } else {
                 break;
             }
         }

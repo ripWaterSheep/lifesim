@@ -2,7 +2,7 @@ package lifesim.game.entities.components.stats;
 
 import lifesim.game.entities.Entity;
 import lifesim.game.handlers.World;
-import lifesim.game.state.Game;
+import lifesim.state.Game;
 import lifesim.util.math.Vector2D;
 
 

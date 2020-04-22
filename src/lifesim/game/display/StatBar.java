@@ -1,12 +1,10 @@
-package lifesim.game.state.displays;
+package lifesim.game.display;
 
-import lifesim.game.Main;
+import lifesim.engine.Main;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.components.stats.PlayerStats;
 import lifesim.game.entities.components.stats.StatsColors;
-import lifesim.game.GamePanel;
-import lifesim.game.state.Game;
-import lifesim.util.DrawMethods;
+import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.math.MyMath;
 
@@ -15,7 +13,7 @@ import java.awt.*;
 import static java.lang.Math.min;
 
 
-public class StatBar implements RenderableDisplay {
+public class StatBar extends GameDisplay {
 
     private static final int LEFT_PADDING = 2;
     private static final int BOTTOM_PADDING = 2;
@@ -84,7 +82,7 @@ public class StatBar implements RenderableDisplay {
     private <T> void writeValue(String label, T data) {
         String formattedString = format(label, data+"");
 
-        DrawMethods.drawRectVerticallyCenteredString(g2d, formattedString, getX() + TEXT_LEFT_PADDING,
+        GraphicsMethods.rectVerticallyCenteredString(g2d, formattedString, getX() + TEXT_LEFT_PADDING,
                 new Rectangle(getX(), getY()+1, 0, BAR_HEIGHT), STAT_FONT, Color.WHITE);
         nextLine();
     }

@@ -1,6 +1,6 @@
 package lifesim.game.handlers;
 
-import lifesim.game.Main;
+import lifesim.engine.Main;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.components.sprites.ShapeSprite;

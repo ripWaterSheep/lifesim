@@ -3,7 +3,7 @@ package lifesim.game.entities;
 import lifesim.game.entities.components.sprites.Animation;
 import lifesim.game.entities.components.sprites.DirectionalAnimatedSprite;
 import lifesim.game.handlers.World;
-import lifesim.game.state.Game;
+import lifesim.state.Game;
 import lifesim.game.entities.components.stats.PlayerStats;
 import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;

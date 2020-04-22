@@ -1,6 +1,6 @@
-package lifesim.game.state.displays;
+package lifesim.game.display;
 
-import lifesim.game.Main;
+import lifesim.engine.Main;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.components.sprites.ImageSprite;
 import lifesim.game.entities.components.sprites.Sprite;
@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 
-public class Hotbar implements RenderableDisplay {
+public class Hotbar extends GameDisplay {
 
     private static final Sprite SLOT_SELECTION = new ImageSprite("slot_selection");
 
@@ -22,10 +22,16 @@ public class Hotbar implements RenderableDisplay {
     private final Inventory inventory;
     private final ArrayList<InventorySlot> slots;
 
+    private final int minIndex;
+    private final int maxIndex;
+
 
     public Hotbar(Player player) {
         this.inventory = player.inventory;
         slots = inventory.getSlots();
+
+        minIndex = Inventory.SIZE-Inventory.WIDTH;
+        maxIndex = minIndex + Inventory.WIDTH - 1;
     }
 
 
@@ -35,13 +41,11 @@ public class Hotbar implements RenderableDisplay {
         if (KeyInput.k_left.isClicked()) newIndex -= 1;
         if (KeyInput.k_right.isClicked()) newIndex += 1;
 
-        int min = 0;
-        int max = Inventory.WIDTH - 1;
         newIndex += MouseInput.getMouseWheelSpeed();
-        if (newIndex > max)
-            newIndex = min;
-        if (newIndex < min)
-            newIndex = max;
+        if (newIndex > maxIndex)
+            newIndex = minIndex;
+        if (newIndex < minIndex)
+            newIndex = maxIndex;
         inventory.selectSlot(slots.get(newIndex));
     }
 
@@ -56,7 +60,7 @@ public class Hotbar implements RenderableDisplay {
         Vector2D displayPos = new Vector2D(0, Main.getPanel().getScaledHeight()/2.0 - 10);
 
 
-        for (int i = 0; i < Inventory.WIDTH; i++) {
+        for (int i = minIndex; i < maxIndex; i++) {
             Vector2D itemPos = displayPos.copy().translate(((i % Inventory.WIDTH) - Inventory.WIDTH*0.5 + 0.5) * InventoryGUI.GRID_SIZE, 0);
             InventorySlot slot = slots.get(i);
 

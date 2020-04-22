@@ -17,7 +17,7 @@ import java.awt.*;
 
 public class ItemTypes {
 
-    public static final Item hand = new Weapon("Hand", new ShapeSprite(0, 0, Color.BLACK), ProjectileType.FIST);
+    public static final Item hand = new Weapon("Hand", new ShapeSprite(0, 0, Color.BLACK), ProjectileType.FIST, false);
 
 
     /*************
@@ -27,16 +27,16 @@ public class ItemTypes {
     public static final Item jetPack = new ClickableItem("Teleporter", new ShapeSprite(8, 8, Color.GRAY)) {
         @Override
         public void use(World world, Player player, PlayerStats stats) {
-            player.push(Vector2D.newMagDir(750, MouseInput.getAngleFromPos(player.getDisplayPos())));
+            player.push(Vector2D.newMagDir(750, MouseInput.getCursorPos().getAngleFrom(player.getDisplayPos())));
         }
     };
 
 
     public static final Item shield = new PressableItem("Shield", new ShapeSprite(8, 8, Color.YELLOW),
-            new ShapeSprite(18, 18, new Color(255, 255, 0, 100)), 500) {
+            new ShapeSprite(18, 18, new Color(255, 255, 0, 100)), 250) {
         @Override
         public void use(World world, Player player, PlayerStats stats) {
-            stats.protect(0.25);
+            stats.protect(0.2);
         }
     };
 
@@ -46,28 +46,28 @@ public class ItemTypes {
      **********/
 
     public static final Item waterGun = new Weapon("Water Gun", new AnimatedSprite(new Animation(
-            "weapons", 200, new Vector2D(8, 8), 2)), ProjectileType.WATER_DROP);
+            "weapons", 200, new Vector2D(8, 8), 2)), ProjectileType.WATER_DROP, true);
 
     public static final Item laserGun = new Weapon("Laser Gun", new AnimatedSprite(new Animation(
-            "weapons", 300, new Vector2D(8, 8), 3)), ProjectileType.LASER);
+            "weapons", 300, new Vector2D(8, 8), 3)), ProjectileType.LASER, true);
 
     public static final Item bomb =  new Weapon("Bomb", new AnimatedSprite(new Animation(
-            "weapons", 120, new Vector2D(8, 8), 0)), ProjectileType.BOMB);
+            "weapons", 120, new Vector2D(8, 8), 0)), ProjectileType.BOMB, false);
 
-    public static final Item healer = new Weapon("Healer", new ShapeSprite(8, 8, Color.RED), ProjectileType.HEAL_ORB);
+    public static final Item healer = new Weapon("Healer", new ShapeSprite(8, 8, Color.RED), ProjectileType.HEAL_ORB, true);
 
     public static final Item pushTestWeapon = new Weapon("Push Test", new ShapeSprite(8, 8,
-            new Color(100, 150, 200)), ProjectileType.THROWABLE_WALL);
+            new Color(100, 150, 200)), ProjectileType.THROWABLE_WALL, true);
 
 
     /************
      * Utilities
      ************/
 
-    public static final Item allyTest = new SpawnItem("Ally test", new ShapeSprite(8, 8,
+    public static final Item allyTest = new SpawnableItem("Ally test", new ShapeSprite(8, 8,
             new Color(50, 100, 255)), AllyType.ALLY_TEST);
 
-    public static final Item allyTest2 = new SpawnItem("Big Boi", new ShapeSprite(8, 8,
+    public static final Item allyTest2 = new SpawnableItem("Big Boi", new ShapeSprite(8, 8,
             new Color(113, 135, 103)), AllyType.BIG_BOI);
 
 

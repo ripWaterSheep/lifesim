@@ -31,8 +31,7 @@ public abstract class Item {
     public abstract void renderWhileHolding(Graphics2D g2d, Player player);
 
     public void renderIcon(Graphics2D g2d, Vector2D pos) {
-        Graphics2D g2d2 = (Graphics2D) g2d.create();
-        icon.render(g2d2, pos, new Vector2D(0, 0));
+        icon.render(g2d, pos, new Vector2D(0, 0));
     }
 
     public DroppedItem getDroppedEntity(int amount) {

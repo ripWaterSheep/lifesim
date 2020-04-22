@@ -1,7 +1,6 @@
 package lifesim.util;
 
-import lifesim.game.GamePanel;
-import lifesim.game.Main;
+import lifesim.engine.Main;
 import lifesim.util.math.Geometry;
 import lifesim.util.math.MyMath;
 import lifesim.util.math.Vector2D;
@@ -9,7 +8,12 @@ import lifesim.util.math.Vector2D;
 import java.awt.*;
 
 
-public class DrawMethods {
+public class GraphicsMethods {
+
+    public static Graphics2D createGraphics(Graphics g) {
+        return (Graphics2D) g.create();
+    }
+
 
     public static void setOpacity(Graphics2D g2d, double opacity) {
         float inRangeOpacity = (float) MyMath.clamp(opacity, 0, 1);
@@ -18,7 +22,7 @@ public class DrawMethods {
     }
 
 
-    public static void drawCenteredString(Graphics g, String text, Vector2D pos, Font font, Color color) {
+    public static void centeredString(Graphics g, String text, Vector2D pos, Font font, Color color) {
         FontMetrics metrics = g.getFontMetrics(font);
         // Get x coordinate of text based on rectangle width and text width, shifting it to the middle .
         int x = (int) pos.x - metrics.stringWidth(text)/2;
@@ -31,7 +35,7 @@ public class DrawMethods {
     }
 
 
-    public static void drawRectVerticallyCenteredString(Graphics g, String text, int x, Rectangle rect, Font font, Color color) {
+    public static void rectVerticallyCenteredString(Graphics g, String text, int x, Rectangle rect, Font font, Color color) {
         FontMetrics metrics = g.getFontMetrics(font);
         // Determine the Y coordinate for the text (we add the ascent, as in java 2d 0 is top of the screen)
         int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
@@ -43,9 +47,7 @@ public class DrawMethods {
 
     public static void fillPanel(Graphics2D g2d, Color color) {
         g2d.setColor(color);
-        Rectangle rect = Geometry.getCenteredRect(new Vector2D(0, 0), Main.getPanel().getScaledSize());
-        g2d.fill(rect);
+        g2d.fill(Geometry.getCenteredRect(new Vector2D(0, 0), Main.getPanel().getScaledSize()));
     }
-
 
 }

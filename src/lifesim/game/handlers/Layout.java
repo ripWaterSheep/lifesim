@@ -5,7 +5,7 @@ import lifesim.game.entities.Player;
 import lifesim.game.entities.SolidEntity;
 import lifesim.game.entities.components.stats.PlayerStats;
 import lifesim.game.entities.types.EnemyType;
-import lifesim.game.state.Game;
+import lifesim.state.Game;
 import lifesim.game.entities.components.sprites.ImageSprite;
 import lifesim.game.entities.components.sprites.ShapeSprite;
 
@@ -23,7 +23,7 @@ public class Layout {
 
     public Layout() {
         worlds.add(
-            new World("Town", 2250, 2250, new Color(60, 160, 75), new Color(200, 190, 125))
+            new World("Town", 2250, 2250, new Color(60, 175, 90), new Color(200, 190, 125))
                 .add(new Entity("vRoad", new ShapeSprite(75, 2250, Color.DARK_GRAY)), 0, 0)
                 .add(new Entity("hRoad", new ShapeSprite(2250, 75, Color.DARK_GRAY)), 0, 0)
                 .add(new Entity("House", new ShapeSprite(200, 175, new Color(100, 80, 50))) {
