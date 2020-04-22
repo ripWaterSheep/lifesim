@@ -76,9 +76,9 @@ public class Entity {
         return stats.getAlliance().equals(Alliance.ENEMY);
     }
 
-    public boolean canDamage(Entity e) {
-        if (equals(e)) return false;
-        return stats.getAlliance().opposes(e.stats.getAlliance());
+    public boolean canDamage(Entity entity) {
+        if (equals(entity)) return false;
+        return stats.getAlliance().opposes(entity.stats.getAlliance());
     }
 
 
@@ -104,11 +104,8 @@ public class Entity {
     }
 
     public void push(Vector2D vector2D) {
-        pos.translate(vector2D);
     }
-
     public void push(Entity entity, double forceScale) {
-        push(entity.getVelocity().scale(forceScale));
     }
 
 
@@ -116,10 +113,14 @@ public class Entity {
         stats.onCollision(this, entity);
     }
 
+    public final void restrictPosition(Vector2D rectDims) {
+        // Keep the entity within the world's boundaries.
+        pos.clampInRect(new Vector2D(0, 0), rectDims.scale(0.5).translate(sprite.getSize().scale(-0.5)));
+    }
+
+
     public void update(World world) {
         stats.update(this, world);
-        // Keep the entity within the world's boundaries.
-        pos.clampInRect(new Vector2D(0, 0), world.getSize().scale(0.5).translate(sprite.getSize().scale(-0.5)));
     }
 
     public void render(Graphics2D g2d) {

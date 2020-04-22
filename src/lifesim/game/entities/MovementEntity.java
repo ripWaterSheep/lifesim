@@ -33,7 +33,21 @@ public abstract class MovementEntity extends Entity {
 
     @Override
     public void push(Entity entity, double forceScale) {
-        push(entity.getVelocity().scale(forceScale));
+        Vector2D force = entity.getVelocity().scale(forceScale);
+        // Make sure velocity doesn't accelerate rapidly due to both entities pushing on each other perpetually.
+        force.clampMagnitude(initialSpeed);
+        System.out.println(force.getMagnitude());
+        push(force);
+    }
+
+
+    @Override
+    public void handleCollision(Entity entity, World world) {
+        super.handleCollision(entity, world);
+        // Transfer momentum between entities.
+        if (canDamage(entity)) {
+            entity.push(this, 0.2);
+        }
     }
 
     @Override

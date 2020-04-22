@@ -14,20 +14,31 @@ import static lifesim.util.GraphicsMethods.createGraphics;
 
 public class GamePanel extends JPanel {
 
-    public static final double GRAPHICS_SCALE = 4;
+    public static final double GRAPHICS_SCALE = 3.5;
 
-    GameState gameState;
+    private GameState gameState;
 
     public GamePanel(GameState gameState) {
-        setFocusable(true);
-        setVisible(true);
-        requestFocusInWindow();
-        setSize(1920, 1040);
         this.gameState = gameState;
+        setSize(1920, 1040);
 
         FontLoader.init();
         KeyInput.init(this);
         MouseInput.init(this);
+    }
+
+
+    public void initFrame(JFrame frame) {
+        frame.setSize(getSize());
+        frame.setMinimumSize(new Dimension(1000, 800));
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setContentPane(this);
+        frame.setVisible(true);
+        setFocusable(true);
+        setVisible(true);
+        requestFocusInWindow();
     }
 
 

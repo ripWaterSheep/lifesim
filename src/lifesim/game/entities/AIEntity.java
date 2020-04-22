@@ -54,7 +54,7 @@ public class AIEntity extends MovementEntity {
 
     protected void attack(World world) {
         // Stop on top of target position since this entity attacks on contact.
-        //stop();
+        stop();
     }
 
 

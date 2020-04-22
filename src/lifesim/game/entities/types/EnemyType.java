@@ -16,7 +16,7 @@ public enum EnemyType implements Spawnable {
         @Override
         public Entity spawnEntity() {
             return new AIEntity("Emo", new AnimatedSprite(new Animation("emo", 120, new Vector2D(11, 16), 0)),
-                    new HealthStats(4, Alliance.ENEMY, 35), 4, 175);
+                    new HealthStats(4, Alliance.ENEMY, 35), 3, 175);
     }},
 
 

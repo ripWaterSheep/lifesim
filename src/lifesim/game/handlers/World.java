@@ -10,6 +10,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static lifesim.util.GraphicsMethods.createGraphics;
+
 
 public class World {
 
@@ -92,6 +94,10 @@ public class World {
 
             doGarbageCollection(entity, player);
         }
+
+        for (Entity entity: entities) {
+            entity.restrictPosition(getSize());
+        }
     }
 
 
@@ -99,8 +105,7 @@ public class World {
         Main.getPanel().setBackground(outerColor);
 
         for (Entity entity: entities) {
-            Graphics2D g2d = (Graphics2D) g.create();
-            entity.render(g2d);
+            entity.render(createGraphics(g));
         }
     }
 
