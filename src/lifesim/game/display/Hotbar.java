@@ -60,7 +60,7 @@ public class Hotbar extends GameDisplay {
         Vector2D displayPos = new Vector2D(0, Main.getPanel().getScaledHeight()/2.0 - 10);
 
 
-        for (int i = minIndex; i < maxIndex; i++) {
+        for (int i = minIndex; i < maxIndex + 1; i++) {
             Vector2D itemPos = displayPos.copy().translate(((i % Inventory.WIDTH) - Inventory.WIDTH*0.5 + 0.5) * InventoryGUI.GRID_SIZE, 0);
             InventorySlot slot = slots.get(i);
 

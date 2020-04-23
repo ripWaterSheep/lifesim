@@ -7,13 +7,13 @@ import lifesim.util.math.Vector2D;
 
 public abstract class MovementEntity extends Entity {
 
-    protected final double initialSpeed;
+    protected final double defaultSpeed;
     protected final Vector2D velocity;
 
     public MovementEntity(String name, Sprite sprite, Stats stats, double speed, double angle) {
         super(name, sprite, stats);
         this.velocity = Vector2D.newMagDir(speed, angle);
-        this.initialSpeed = speed;
+        this.defaultSpeed = speed;
     }
 
     @Override
@@ -35,7 +35,7 @@ public abstract class MovementEntity extends Entity {
     public void push(Entity entity, double forceScale) {
         Vector2D force = entity.getVelocity().scale(forceScale);
         // Make sure velocity doesn't accelerate rapidly due to both entities pushing on each other perpetually.
-        force.clampMagnitude(initialSpeed);
+        force.clampMagnitude(defaultSpeed);
         System.out.println(force.getMagnitude());
         push(force);
     }

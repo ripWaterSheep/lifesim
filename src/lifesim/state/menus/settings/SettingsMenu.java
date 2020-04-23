@@ -1,11 +1,10 @@
-package lifesim.state.menus;
+package lifesim.state.menus.settings;
 
 import lifesim.state.GameState;
 
 import java.awt.*;
 
-public class Settings implements GameState {
-
+public class SettingsMenu implements GameState {
 
     @Override
     public void update() {

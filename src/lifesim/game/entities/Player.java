@@ -47,8 +47,8 @@ public final class Player extends MovementEntity {
         //inventory.addItem(ItemTypes.virtualCoin, 100);
         acquireItem(ItemTypes.bomb, 100);
         acquireItem(ItemTypes.jetPack, 100);
-        acquireItem(ItemTypes.allyTest, 100);
-        acquireItem(ItemTypes.allyTest2, 100);
+        acquireItem(ItemTypes.allyTest, 50);
+        acquireItem(ItemTypes.allyTest2, 50);
         acquireItem(ItemTypes.healer, 100);
         acquireItem(ItemTypes.pushTestWeapon, 100);
         acquireItem(ItemTypes.shield, 100);
@@ -98,14 +98,20 @@ public final class Player extends MovementEntity {
     }
 
 
-    public double getCurrentSpeed() {
-        double currentSpeed = initialSpeed;
+    @Override
+    public void removeFromWorld() {
+        super.removeFromWorld();
+        // Summon some type of death effect
+    }
+
+    private double getCurrentSpeed() {
+        double currentSpeed = defaultSpeed;
         currentSpeed *= (getStats().getEnergy()/5000) + 0.8;
         return currentSpeed;
     }
 
 
-    public void controlMovement() {
+    private void controlMovement() {
         stop();
         double speed = getCurrentSpeed();
 
@@ -145,7 +151,7 @@ public final class Player extends MovementEntity {
     public void update(World world) {
         super.update(world);
         controlMovement();
-        inventory.useSelectedItem();
+        inventory.control();
     }
 
 

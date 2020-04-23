@@ -34,11 +34,11 @@ public class InputListener {
     }
 
 
-    void doPress() {
+    void press() {
         pressed = true;
     }
 
-    void doRelease() {
+    void release() {
         pressTime = 0;
         pressed = false;
         released = true;

@@ -3,6 +3,7 @@ package lifesim.game.display;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.components.sprites.ImageSprite;
 import lifesim.game.entities.components.sprites.Sprite;
+import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
 import lifesim.util.math.Vector2D;
 import lifesim.game.items.inventory.Inventory;
@@ -97,10 +98,18 @@ public class InventoryGUI extends ToggleableDisplay {
     }
 
 
+    @Override
+    public void whenFirstShown() {
+
+    }
+
 
     @Override
     public void update() {
         dragItems();
+        if (KeyInput.k_esc.isClicked()) {
+            hide();
+        }
     }
 
 

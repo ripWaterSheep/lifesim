@@ -58,13 +58,26 @@ public final class MouseInput {
     }
 
 
+    public static InputListener checkForOverride(InputListener button) {
+        InputListener checkedButton;
+        // Use right click functionality is left click is pressed alongside control.
+        if (button.equals(left) && KeyInput.k_ctrl.isClicked()) {
+            checkedButton = right;
+            System.out.println("dab");
+        } else {
+            checkedButton = button;
+        }
+        return checkedButton;
+    }
+
+
     private static final MouseAdapter mouseAdapter = new MouseInputAdapter() {
 
         @Override
         public void mousePressed(MouseEvent e) {
             for (InputListener button: buttons) {
                 if (button.getIntCode() == e.getButton()) {
-                    button.doPress();
+                    checkForOverride(button).press();
                 }
             }
         }
@@ -85,7 +98,8 @@ public final class MouseInput {
         public void mouseReleased(MouseEvent e) {
             for (InputListener button: buttons) {
                 if (button.getIntCode() == e.getButton()) {
-                    button.doRelease();
+                    button.release();
+                    checkForOverride(button).release();
                 }
             }
         }

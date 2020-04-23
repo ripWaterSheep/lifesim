@@ -23,6 +23,9 @@ public final class Game implements GameState {
     private final ArrayList<GameDisplay> displays = new ArrayList<>();
     private final MessageDisplay messageDisplay;
     private final ToggleableDisplay inventoryGUI;
+    private final ToggleableDisplay deathScreen = new DeathScreen();
+
+    private boolean pausable;
 
 
     public Game() {
@@ -35,8 +38,13 @@ public final class Game implements GameState {
 
         inventoryGUI = new InventoryGUI(player);
         displays.add(inventoryGUI);
-
         displays.add(new Hotbar(player));
+
+        displays.add(deathScreen);
+    }
+
+    public boolean isPausable () {
+        return pausable;
     }
 
 
@@ -58,7 +66,12 @@ public final class Game implements GameState {
             if (KeyInput.k_e.isClicked()) {
                 inventoryGUI.toggle();
             }
+            pausable = true;
+        } else {
+            deathScreen.show();
+            pausable = false;
         }
+
         PlayerStats stats = player.getStats();
         if (KeyInput.k_shift.isPressed()) {
             if (KeyInput.k_n.isClicked()) cycleWorlds(1);
@@ -101,7 +114,7 @@ public final class Game implements GameState {
 
 
         for (GameDisplay display : displays) {
-            if (display.isOpen()) {
+            if (display.isShowing()) {
                 display.update();
             }
         }
@@ -112,7 +125,7 @@ public final class Game implements GameState {
         player.getWorld().render(createGraphics(g2d));
 
         for (GameDisplay display : displays) {
-            if (display.isOpen()) {
+            if (display.isShowing()) {
                 display.render(createGraphics(g2d));
             }
         }

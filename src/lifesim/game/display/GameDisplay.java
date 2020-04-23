@@ -8,7 +8,7 @@ public abstract class GameDisplay {
      public abstract void update();
      public abstract void render(Graphics2D g2d);
 
-     public boolean isOpen() {
+     public boolean isShowing() {
           return true;
      }
 

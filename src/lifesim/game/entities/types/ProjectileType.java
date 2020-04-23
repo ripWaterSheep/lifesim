@@ -22,7 +22,7 @@ public enum ProjectileType implements Launchable {
     FIST {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
-            double strength = Main.getGame().getPlayer().getStats().getStrength();
+            double strength = Main.getCurrentGame().getPlayer().getStats().getStrength();
 
             return new Projectile(owner.name + "'s Fist", new ImageSprite("fist_small"), new BasicStats(
                     1 + (strength/100), Alliance.PLAYER), owner,  8, angle, 30, true, true) {
@@ -47,7 +47,7 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Water", new ShapeSprite(3, 3, new Color(50, 80, 220, 150)),
-                    new BasicStats(1.5, alliance), owner, 5, angle, 135, false, false);
+                    new BasicStats(1.5, alliance), owner, 5, angle, 135, false, true);
     }},
 
     LASER {
@@ -77,7 +77,7 @@ public enum ProjectileType implements Launchable {
     HEAL_ORB {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
-            return new Projectile("Heal Orb", new ShapeSprite(42, 42, new Color(255, 0, 0, 100)),
+            return new Projectile("Heal Orb", new ShapeSprite(42, 42, new Color(255, 0, 0, 150)),
                     new HealerStats(0, alliance, 15),  owner, 9, angle, 175, true, false);
         }},
 

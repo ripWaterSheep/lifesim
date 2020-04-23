@@ -62,13 +62,13 @@ public class AIEntity extends MovementEntity {
         // If target position is entity's own position (default), then do random ai
         if (targetPos.equals(pos)) {
             if (MyMath.getRand(0, 1) < 0.03) {
-                velocity.setMagDir(initialSpeed/3, MyMath.getRand(0, 360));
+                velocity.setMagDir(defaultSpeed /3, MyMath.getRand(0, 360));
             }
         } else if (attacking) {
             attack(world);
         } else {
             // Approach target position with a bit of randomness, since it would otherwise overlap other entities targeting the same position.
-            velocity.setMagDir(initialSpeed, targetPos.getAngleFrom(pos) + MyMath.getRand(-25, 25));
+            velocity.setMagDir(defaultSpeed, targetPos.getAngleFrom(pos) + MyMath.getRand(-25, 25));
         }
     }
 

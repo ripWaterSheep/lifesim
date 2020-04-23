@@ -1,9 +1,7 @@
 package lifesim.engine;
 
 
-import lifesim.game.input.MouseInput;
 import lifesim.state.GameState;
-import lifesim.state.menus.DeathScreen;
 import lifesim.game.input.KeyInput;
 import lifesim.state.Game;
 import lifesim.state.menus.PauseMenu;
@@ -16,23 +14,20 @@ public class Main {
     private static GamePanel gamePanel;
 
 
-    private static Game game = new Game();
-    private static final PauseMenu pauseMenu = new PauseMenu();
-    private static final DeathScreen deathScreen = new DeathScreen();
-
+    private static Game currentGame = new Game();
 
     public static GamePanel getPanel() {
         return gamePanel;
     }
 
-    public static Game getGame() {
-        return game;
+    public static Game getCurrentGame() {
+        return currentGame;
     }
 
 
     public static void newGame() {
-        game = new Game();
-        gamePanel.setGameState(game);
+        currentGame = new Game();
+        gamePanel.setGameState(currentGame);
     }
 
 
@@ -46,23 +41,14 @@ public class Main {
 
 
     public static void manageState() {
-        if (KeyInput.k_esc.isClicked()) {
-            toggleState(game, pauseMenu);
-        }
-
-        if (gamePanel.getGameState().equals(game)) {
-            if (!game.getPlayer().getStats().isAlive()) {
-                gamePanel.setGameState(deathScreen);
-                if (KeyInput.isAnyKeyClicked() || MouseInput.left.isClicked()) {
-                    newGame();
-                }
-            }
+        if (KeyInput.k_esc.isClicked() && currentGame.isPausable()) {
+            toggleState(currentGame, new PauseMenu(currentGame));
         }
     }
 
 
     public static void main(String[] args) {
-        gamePanel = new GamePanel(game);
+        gamePanel = new GamePanel(currentGame);
         gamePanel.initFrame(new JFrame(""));
     }
 

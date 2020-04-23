@@ -36,6 +36,8 @@ public class Weapon extends ClickableItem {
     @Override
     public void renderWhileHolding(Graphics2D g2d, Player player) {
         super.renderWhileHolding(g2d, player);
-        reticle.render(g2d, MouseInput.getCursorPos(), MouseInput.getCursorVelocity());
+        if (showReticle) {
+            reticle.render(g2d, MouseInput.getCursorPos(), MouseInput.getCursorVelocity());
+        }
     }
 }

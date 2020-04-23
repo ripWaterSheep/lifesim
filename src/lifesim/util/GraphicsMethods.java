@@ -47,7 +47,7 @@ public class GraphicsMethods {
 
     public static void fillPanel(Graphics2D g2d, Color color) {
         g2d.setColor(color);
-        g2d.fill(Geometry.getCenteredRect(new Vector2D(0, 0), Main.getPanel().getScaledSize()));
+        g2d.fill(Geometry.getCenteredRect(new Vector2D(0, 0), Main.getPanel().getScaledSize().scale(1.1)));
     }
 
 }

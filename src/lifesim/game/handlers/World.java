@@ -15,7 +15,7 @@ import static lifesim.util.GraphicsMethods.createGraphics;
 
 public class World {
 
-    private static final int MAX_ENTITIES = 50;
+    private static final int MAX_ENTITIES = 80;
 
     public final String name;
     private final Vector2D size;
@@ -44,8 +44,10 @@ public class World {
 
 
     public World add(Entity entity, Vector2D pos) {
-        entities.add(entity);
-        entity.setPos(pos);
+        if (entities.size() < MAX_ENTITIES) {
+            entities.add(entity);
+            entity.setPos(pos);
+        }
         return this;
     }
 
@@ -76,7 +78,7 @@ public class World {
 
 
     public void update(Player player) {
-        if (entities.size() < MAX_ENTITIES) {
+        if (entities.size() < MAX_ENTITIES*0.6) {
             for (SpawningSystem spawningSystem : spawningSystems)
                 spawningSystem.update(this, player);
         }

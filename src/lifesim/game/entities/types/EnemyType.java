@@ -15,7 +15,7 @@ public enum EnemyType implements Spawnable {
     MELEE_1() {
         @Override
         public Entity spawnEntity() {
-            return new AIEntity("Emo", new AnimatedSprite(new Animation("emo", 120, new Vector2D(11, 16), 0)),
+            return new AIEntity("Melee Basic", new AnimatedSprite(new Animation("emo", 120, new Vector2D(11, 16), 0)),
                     new HealthStats(4, Alliance.ENEMY, 35), 3, 175);
     }},
 

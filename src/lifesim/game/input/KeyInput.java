@@ -59,6 +59,7 @@ public final class KeyInput {
     public static final InputListener k_space = new InputListener(VK_SPACE);
     public static final InputListener k_shift = new InputListener(VK_SHIFT);
     public static final InputListener k_esc = new InputListener(VK_ESCAPE);
+    public static final InputListener k_ctrl = new InputListener(VK_CONTROL);
 
 
     public static boolean isAnyKeyClicked() {
@@ -118,6 +119,7 @@ public final class KeyInput {
         keys.add(k_space);
         keys.add(k_shift);
         keys.add(k_esc);
+        keys.add(k_ctrl);
     }
 
 
@@ -135,7 +137,7 @@ public final class KeyInput {
             int keyCode = e.getKeyCode();
             for (InputListener key: keys) {
                 if (key.getIntCode() == keyCode) {
-                    key.doPress();
+                    key.press();
                 }
             }
         }
@@ -144,7 +146,7 @@ public final class KeyInput {
         public void keyReleased(KeyEvent e) {
             for (InputListener key: keys) {
                 if (key.getIntCode() == e.getKeyCode()) {
-                    key.doRelease();
+                    key.release();
                 }
             }
         }
@@ -157,7 +159,7 @@ public final class KeyInput {
         @Override
         public void focusLost(FocusEvent e) {
             for (InputListener key: keys) {
-                key.doRelease();
+                key.release();
             }
         }
     };

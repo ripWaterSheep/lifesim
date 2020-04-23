@@ -13,7 +13,7 @@ public class HealthStats extends BasicStats implements Stats {
 
     boolean alive = true;
     protected double health;
-    protected final double initialHealth;
+    protected double maxHealth;
 
 
     private final Drops drops = new Drops();
@@ -22,7 +22,7 @@ public class HealthStats extends BasicStats implements Stats {
     public HealthStats(double damage, Alliance alliance, double health) {
         super(damage, alliance);
         this.health = health;
-        initialHealth = health;
+        maxHealth = health;
     }
 
 
@@ -63,7 +63,7 @@ public class HealthStats extends BasicStats implements Stats {
             entity.removeFromWorld();
         }
 
-        health = MyMath.clamp(health, 0, initialHealth);
+        health = MyMath.clamp(health, 0, maxHealth);
     }
 
 
@@ -83,7 +83,7 @@ public class HealthStats extends BasicStats implements Stats {
     @Override
     public void renderInfo(Graphics2D g2d, Vector2D pos) {
         super.renderInfo(g2d, pos);
-        renderStatBar(g2d, pos, health, initialHealth, alliance.teamColor);
+        renderStatBar(g2d, pos, health, maxHealth, alliance.teamColor);
     }
 
 }

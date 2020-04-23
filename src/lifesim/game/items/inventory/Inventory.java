@@ -1,6 +1,8 @@
 package lifesim.game.items.inventory;
 
 import lifesim.game.entities.Player;
+import lifesim.game.input.KeyInput;
+import lifesim.game.input.MouseInput;
 import lifesim.game.items.Item;
 
 import java.awt.*;
@@ -27,9 +29,9 @@ public class Inventory {
     public Inventory(Player player) {
         this.player = player;
 
-        for (int i = 0; i < SIZE; i++)
+        for (int i = 0; i < SIZE; i++) {
             slots.add(new InventorySlot());
-
+        }
         selectedSlot = slots.get(0);
     }
 
@@ -86,8 +88,11 @@ public class Inventory {
     }
 
 
-    public void useSelectedItem() {
+    public void control() {
         selectedSlot.useItem(player);
+        if (KeyInput.k_q.isPressed()) {
+            selectedSlot.dropItem(player.getWorld(), player.getPos().translate(MouseInput.getCursorPos()));
+        }
     }
 
     public void renderHoldingItem(Graphics2D g2d) {

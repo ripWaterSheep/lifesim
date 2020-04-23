@@ -2,23 +2,26 @@ package lifesim.game.display;
 
 public abstract class ToggleableDisplay extends GameDisplay {
 
-    private boolean open = false;
+    private boolean showing = false;
 
-    public void open() {
-        open = true;
+    public void show() {
+        if (!showing) whenFirstShown();
+        showing = true;
     }
 
-    public void close() {
-        open = false;
+    public void hide() {
+        showing = false;
     }
 
     public void toggle() {
-        open = !open;
+        showing = !showing;
+        if (showing) whenFirstShown();
     }
 
     @Override
-    public boolean isOpen() {
-        return open;
+    public boolean isShowing() {
+        return showing;
     }
 
+    public abstract void whenFirstShown();
 }
