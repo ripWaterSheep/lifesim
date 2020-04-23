@@ -1,13 +1,13 @@
 package lifesim.state;
 
-import lifesim.engine.Main;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.components.stats.PlayerStats;
 import lifesim.game.handlers.Layout;
 import lifesim.game.handlers.World;
 import lifesim.game.input.KeyInput;
 import lifesim.game.display.*;
-import lifesim.util.math.Vector2D;
+import lifesim.state.engine.Main;
+import lifesim.util.math.geom.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -29,8 +29,7 @@ public final class Game implements GameState {
 
 
     public Game() {
-        player = new Player(this);
-        player.setWorld(layout.getWorlds().get(0));
+        player = new Player(this, layout.getWorlds().get(0));
 
         displays.add(new StatBar(player));
         messageDisplay = new MessageDisplay(6, Color.WHITE, new Vector2D(0, -player.sprite.getSize().y));

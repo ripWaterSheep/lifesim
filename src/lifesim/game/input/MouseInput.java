@@ -1,7 +1,7 @@
 package lifesim.game.input;
 
-import lifesim.engine.Main;
-import lifesim.util.math.Vector2D;
+import lifesim.state.engine.Main;
+import lifesim.util.math.geom.Vector2D;
 import lifesim.util.math.MyMath;
 
 import javax.swing.*;
@@ -31,7 +31,7 @@ public final class MouseInput {
     }
 
     public static Vector2D getCursorVelocity() {
-       return getCursorPos().translate(lastCursorPos.copy().scale(-1));
+       return getCursorPos().translate(lastCursorPos.copy().negate());
     }
 
     public static int getMouseWheelSpeed() {
@@ -98,7 +98,6 @@ public final class MouseInput {
         public void mouseReleased(MouseEvent e) {
             for (InputListener button: buttons) {
                 if (button.getIntCode() == e.getButton()) {
-                    button.release();
                     checkForOverride(button).release();
                 }
             }

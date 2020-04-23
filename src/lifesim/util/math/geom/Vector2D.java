@@ -1,11 +1,11 @@
-package lifesim.util.math;
+package lifesim.util.math.geom;
 
 
 import java.awt.*;
 import java.awt.geom.Point2D;
 
 import static java.lang.Math.*;
-import static lifesim.util.math.Geometry.angleWrap;
+import static lifesim.util.math.geom.Geometry.angleWrap;
 import static lifesim.util.math.MyMath.*;
 
 
@@ -31,6 +31,16 @@ public class Vector2D {
     public Vector2D copy() {
         return new Vector2D(x, y);
     }
+
+
+    public int intX() {
+        return betterRound(x);
+    }
+
+    public int intY() {
+        return betterRound(y);
+    }
+
 
     public double getMagnitude() {
         return Point2D.distance(0, 0, x, y);
@@ -76,36 +86,12 @@ public class Vector2D {
         normalize().scale(clamp(tempMag, 0, magnitude));
     }
 
-    public void clampInRect(Vector2D rectCenter, Vector2D size) {
-        x = clamp(x, rectCenter.x - size.x, rectCenter.x + size.x);
-        y = clamp(y,rectCenter.y - size.y, rectCenter.y + size.y);
+    public void clampInRect(Rect rect) {
+        Vector2D dims = rect.getDims();
+        x = clamp(x, rect.x, rect.x + dims.x);
+        y = clamp(y, rect.y, rect.y + dims.y);
     }
 
-
-    public void keepRectOutOfRect(Vector2D size1, Vector2D pos2, Vector2D size2) {
-        final double midWidth1 = size1.x/2;
-        final double midHeight1 = size1.y/2;
-        final double midWidth2 = size2.x/2;
-        final double midHeight2 = size2.y/2;
-
-        final double sumMidWidths = midWidth1 + midWidth2;
-        final double sumMidHeights = midHeight2 + midHeight1;
-
-        if (x - midWidth1 > pos2.x - size2.x/2 && x +midWidth1 < pos2.x + size2.x/2) {
-            if (y > pos2.y) {
-                y = max(y, pos2.y + sumMidHeights);
-            } else {
-                y = min(y, pos2.y - sumMidHeights);
-            }
-
-        } if (y - midHeight1 > pos2.y - midHeight2 && y + midHeight1 < pos2.y + midHeight2) {
-            if (x > pos2.x) {
-                x = max(x, pos2.x + sumMidWidths);
-            } else {
-                x = min(x, pos2.x - sumMidWidths);
-            }
-        }
-    }
 
     public Vector2D translate(double x, double y) {
         this.x += x;
@@ -129,9 +115,13 @@ public class Vector2D {
         return this;
     }
 
+    public Vector2D negate() {
+        return scale(-1);
+    }
+
 
     public Point toPoint() {
-        return new Point((int) x, (int) y);
+        return new Point(intX(), intY());
     }
 
     public String toStringComponents() {

@@ -1,10 +1,11 @@
-package lifesim.engine;
+package lifesim.state.engine;
 
 
+import lifesim.state.Game;
 import lifesim.state.GameState;
 import lifesim.game.input.KeyInput;
-import lifesim.state.Game;
 import lifesim.state.menus.PauseMenu;
+import lifesim.state.menus.TitleMenu;
 
 import javax.swing.*;
 
@@ -13,8 +14,9 @@ public class Main {
 
     private static GamePanel gamePanel;
 
-
+    private static final TitleMenu titleMenu = new TitleMenu();
     private static Game currentGame = new Game();
+
 
     public static GamePanel getPanel() {
         return gamePanel;
@@ -27,15 +29,21 @@ public class Main {
 
     public static void newGame() {
         currentGame = new Game();
-        gamePanel.setGameState(currentGame);
+        resumeGame();
     }
 
 
+    public static void resumeGame() {
+        gamePanel.setCurrentState(currentGame);
+    }
+
+
+
     private static void toggleState(GameState gs1, GameState gs2) {
-        if (gamePanel.getGameState().getClass().equals(gs1.getClass())) {
-            gamePanel.setGameState(gs2);
-        } else if (gamePanel.getGameState().getClass().equals(gs2.getClass())) {
-            gamePanel.setGameState(gs1);
+        if (gamePanel.getCurrentState().getClass().equals(gs1.getClass())) {
+            gamePanel.setCurrentState(gs2);
+        } else if (gamePanel.getCurrentState().getClass().equals(gs2.getClass())) {
+            gamePanel.setCurrentState(gs1);
         }
     }
 

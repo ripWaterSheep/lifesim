@@ -1,7 +1,7 @@
 package lifesim.game.entities.components.sprites;
 
-import lifesim.util.math.Vector2D;
-import lifesim.util.math.Geometry;
+import lifesim.util.math.geom.Rect;
+import lifesim.util.math.geom.Vector2D;
 
 import java.awt.*;
 
@@ -18,8 +18,8 @@ public abstract class Sprite {
         return size.copy();
     }
 
-    public Shape getShapeAt(Vector2D pos) {
-        return Geometry.getCenteredRect(pos, size);
+    public Rect getBoundsAt(Vector2D pos) {
+        return new Rect(pos, size);
     }
 
 

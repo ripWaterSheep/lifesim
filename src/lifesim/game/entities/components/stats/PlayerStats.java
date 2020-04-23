@@ -3,7 +3,7 @@ package lifesim.game.entities.components.stats;
 import lifesim.game.entities.Entity;
 import lifesim.game.handlers.World;
 import lifesim.state.Game;
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Vector2D;
 
 
 import java.awt.*;

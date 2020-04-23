@@ -1,5 +1,6 @@
 package lifesim.game.input;
 
+
 public class InputListener {
 
     protected final int intCode;

@@ -5,7 +5,7 @@ import lifesim.game.handlers.World;
 import lifesim.game.display.InventoryGUI;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Vector2D;
 import lifesim.game.items.Item;
 import lifesim.game.items.ItemTypes;
 
@@ -49,7 +49,7 @@ public class InventorySlot {
 
     public String getInfo() {
         if (amount <= 0) return "";
-        else return item.name;
+        else return item.name + " * " + amount;
     }
 
 

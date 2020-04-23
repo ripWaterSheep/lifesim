@@ -1,6 +1,6 @@
 package lifesim.game.entities.components.sprites;
 
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Vector2D;
 import lifesim.util.fileIO.ImageLoader;
 
 import java.awt.*;
@@ -33,9 +33,9 @@ public class Animation {
         this.frameInterval = frameInterval;
         BufferedImage spriteSheet = ImageLoader.loadImage(spriteSheetName);
 
-        int numFrames = spriteSheet.getWidth() / (int) spriteSize.x;
+        int numFrames = spriteSheet.getWidth() / spriteSize.intX();
         for (int i = 0; i < numFrames; i++) {
-            frames.add(spriteSheet.getSubimage((int) (i * spriteSize.x), (int) (row*spriteSize.y), (int) spriteSize.x, (int) spriteSize.y));
+            frames.add(spriteSheet.getSubimage(i * spriteSize.intX(), row*spriteSize.intY(), spriteSize.intX(), spriteSize.intY()));
         }
     }
 

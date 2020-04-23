@@ -2,7 +2,7 @@ package lifesim.game.handlers;
 
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Vector2D;
 import lifesim.game.entities.types.Spawnable;
 import lifesim.util.math.MyMath;
 

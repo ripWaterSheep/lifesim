@@ -27,7 +27,6 @@ public class RangedAIEntity extends AIEntity {
     }
 
 
-
     public Projectile getProjectile() {
         return projectileType.launchEntity(this, stats.getAlliance(), targetPos.getAngleFrom(pos));
     }

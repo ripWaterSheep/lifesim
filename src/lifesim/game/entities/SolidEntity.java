@@ -3,8 +3,7 @@ package lifesim.game.entities;
 import lifesim.game.entities.components.sprites.Sprite;
 import lifesim.game.handlers.World;
 import lifesim.game.entities.components.stats.Stats;
-
-import java.awt.*;
+import lifesim.util.math.geom.Rect;
 
 public class SolidEntity extends Entity {
 
@@ -17,15 +16,17 @@ public class SolidEntity extends Entity {
     }
 
     @Override
-    public Shape getHitBox() {
-        Shape hitBox = super.getHitBox();
-        hitBox.getBounds().grow(1, 1);
+    public Rect getHitBox() {
+        Rect hitBox = super.getHitBox();
+        hitBox = new Rect(hitBox.getCenterPos(), hitBox.getDims().translate(1, 1));
         return hitBox;
     }
 
     @Override
     public void handleCollision(Entity entity, World world) {
         super.handleCollision(entity, world);
-        entity.pos.keepRectOutOfRect(entity.sprite.getSize(), pos, sprite.getSize());
+        // Keep entity's position outside of this hitBox;
+        Rect entityRect = entity.getHitBox();
+        entity.setPos(entityRect.getPosClampedOutside(getHitBox()));
     }
 }

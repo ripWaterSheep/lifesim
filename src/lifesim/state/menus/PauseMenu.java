@@ -1,13 +1,11 @@
 package lifesim.state.menus;
 
-import lifesim.engine.Main;
 import lifesim.state.Game;
 import lifesim.state.GameState;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Vector2D;
 
-import javax.swing.*;
 import java.awt.*;
 
 

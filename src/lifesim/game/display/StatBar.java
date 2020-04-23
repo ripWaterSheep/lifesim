@@ -1,16 +1,19 @@
 package lifesim.game.display;
 
-import lifesim.engine.Main;
+import lifesim.state.engine.Main;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.components.stats.PlayerStats;
 import lifesim.game.entities.components.stats.StatsColors;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.math.MyMath;
+import lifesim.util.math.geom.Rect;
+import lifesim.util.math.geom.Vector2D;
 
 import java.awt.*;
 
 import static java.lang.Math.min;
+import static lifesim.util.math.MyMath.betterRound;
 
 
 public class StatBar extends GameDisplay {
@@ -55,19 +58,13 @@ public class StatBar extends GameDisplay {
     }
 
 
-    private int getX() {
-        return -Main.getPanel().getScaledWidth()/2 + LEFT_PADDING;
+    private Vector2D getPos() {
+        Vector2D panelSize = Main.getPanel().getScaledSize();
+        Vector2D pos = panelSize.scale(-0.5, 0.5);
+        pos.translate(LEFT_PADDING, -(getCurrentBarNum()*BAR_HEIGHT) - BOTTOM_PADDING);
+        return pos;
     }
 
-    private int getY() {
-        return Main.getPanel().getScaledHeight()/2 - ((getCurrentBarNum()) * BAR_HEIGHT) - BOTTOM_PADDING;
-    }
-
-
-
-    private void nextLine() {
-        currentBarNum += 1;
-    }
 
     private int getCurrentBarNum() {
         return currentBarNum;
@@ -82,28 +79,26 @@ public class StatBar extends GameDisplay {
     private <T> void writeValue(String label, T data) {
         String formattedString = format(label, data+"");
 
-        GraphicsMethods.rectVerticallyCenteredString(g2d, formattedString, getX() + TEXT_LEFT_PADDING,
-                new Rectangle(getX(), getY()+1, 0, BAR_HEIGHT), STAT_FONT, Color.WHITE);
-        nextLine();
+        GraphicsMethods.verticallyCenteredString(g2d, formattedString, getPos().intX() + TEXT_LEFT_PADDING,
+                getPos().y + BAR_HEIGHT/2.0 + 1, STAT_FONT, Color.WHITE);
+        currentBarNum += 1;
     }
 
 
     private void writeRoundedVal(String label, double data) {
-        writeValue(label, MyMath.betterRound(data));
+        writeValue(label, betterRound(data));
     }
 
 
     private void drawBar(String label, double data, double scale, double maxDataVal, Color color) {
-        int dataWidth = MyMath.betterRound(min(data, maxDataVal) * scale);
-
+        int dataWidth = betterRound(min(data, maxDataVal) * scale);
         // Draw data display bar.
         g2d.setColor(color);
-        g2d.fillRect(getX(), getY(), dataWidth, BAR_HEIGHT);
+        g2d.fill(Rect.fromCorner(getPos(), new Vector2D(dataWidth, BAR_HEIGHT)));
 
         // Draw outline for bar
         g2d.setColor(Color.BLACK);
-        g2d.drawRect(getX(), getY(), MyMath.betterRound(maxDataVal * scale), BAR_HEIGHT);
-
+        g2d.draw(Rect.fromCorner(getPos(), new Vector2D(betterRound(maxDataVal * scale), BAR_HEIGHT)));
 
         writeRoundedVal(label, data);
     }

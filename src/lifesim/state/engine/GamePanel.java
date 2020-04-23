@@ -1,9 +1,9 @@
-package lifesim.engine;
+package lifesim.state.engine;
 
 import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
 import lifesim.state.GameState;
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Vector2D;
 import lifesim.util.fileIO.FontLoader;
 
 import javax.swing.*;
@@ -14,12 +14,13 @@ import static lifesim.util.GraphicsMethods.createGraphics;
 
 public class GamePanel extends JPanel {
 
-    private static final double GRAPHICS_SCALE = 3.5;
+    private static final double GRAPHICS_SCALE = 3.75;
 
-    private GameState gameState;
+    private GameState currentState;
+
 
     public GamePanel(GameState gameState) {
-        this.gameState = gameState;
+        this.currentState = gameState;
         setSize(1920, 1040);
         setFocusable(true);
         requestFocusInWindow();
@@ -60,12 +61,14 @@ public class GamePanel extends JPanel {
     }
 
 
-    void setGameState(GameState gameState) {
-        this.gameState = gameState;
+    void setCurrentState(GameState gameState) {
+        if (currentState.getClass().equals(gameState.getClass())) {
+            this.currentState = gameState;
+        }
     }
 
-    GameState getGameState() {
-        return gameState;
+    GameState getCurrentState() {
+        return currentState;
     }
 
 
@@ -79,7 +82,7 @@ public class GamePanel extends JPanel {
 
 
     private void update() {
-        gameState.update();
+        currentState.update();
         Main.manageState();
         KeyInput.update();
         MouseInput.update();
@@ -91,7 +94,7 @@ public class GamePanel extends JPanel {
         g2d.translate(getWidth()/2, getHeight()/2);
         g2d.scale(GRAPHICS_SCALE, GRAPHICS_SCALE);
 
-        gameState.render(createGraphics(g));
+        currentState.render(createGraphics(g));
     }
 
 

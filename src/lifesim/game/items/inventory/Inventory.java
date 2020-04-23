@@ -1,18 +1,18 @@
 package lifesim.game.items.inventory;
 
 import lifesim.game.entities.Player;
+import lifesim.game.handlers.World;
 import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
 import lifesim.game.items.Item;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class Inventory {
 
-    public static final int WIDTH = 9;
+    public static final int WIDTH = 3;
     public static final int HEIGHT = 3;
     public static final int SIZE = WIDTH * HEIGHT;
 
@@ -44,6 +44,12 @@ public class Inventory {
             }
         }
         InventorySlot slot = getFirstEmptySlot();
+        if (slot.equals(NULL_SLOT)) {
+            // If no empty slot exists, throw the item out.
+            dropItemInWorld(slot);
+            return;
+        }
+        
         slot.setItem(item, amount);
         if (isEmpty()) selectSlot(slot);
     }
@@ -72,7 +78,7 @@ public class Inventory {
     }
 
 
-    private InventorySlot getFirstEmptySlot() {
+    public InventorySlot getFirstEmptySlot() {
         // If this method returns null slot, then there are no slots to fill and the inventory is full
         InventorySlot lastVacantSlot = NULL_SLOT;
 
@@ -80,7 +86,6 @@ public class Inventory {
             if (slot.isEmpty()) {
                 // Since the slots are all in order, the first empty slot found will be the correct one.
                 lastVacantSlot = slot;
-            } else {
                 break;
             }
         }
@@ -88,10 +93,15 @@ public class Inventory {
     }
 
 
+    public void dropItemInWorld(InventorySlot slot) {
+        selectedSlot.dropItem(player.getWorld(), player.getPos().translate(MouseInput.getCursorPos()));
+    }
+
+
     public void control() {
         selectedSlot.useItem(player);
         if (KeyInput.k_q.isPressed()) {
-            selectedSlot.dropItem(player.getWorld(), player.getPos().translate(MouseInput.getCursorPos()));
+            dropItemInWorld(selectedSlot);
         }
     }
 

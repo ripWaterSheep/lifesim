@@ -3,12 +3,15 @@ package lifesim.game.entities;
 import lifesim.game.entities.components.sprites.Sprite;
 import lifesim.game.handlers.World;
 import lifesim.game.entities.components.stats.Stats;
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Vector2D;
+
+import static java.lang.Math.pow;
 
 public abstract class MovementEntity extends Entity {
 
     protected final double defaultSpeed;
     protected final Vector2D velocity;
+
 
     public MovementEntity(String name, Sprite sprite, Stats stats, double speed, double angle) {
         super(name, sprite, stats);
@@ -35,8 +38,7 @@ public abstract class MovementEntity extends Entity {
     public void push(Entity entity, double forceScale) {
         Vector2D force = entity.getVelocity().scale(forceScale);
         // Make sure velocity doesn't accelerate rapidly due to both entities pushing on each other perpetually.
-        force.clampMagnitude(defaultSpeed);
-        System.out.println(force.getMagnitude());
+        //force.clampMagnitude(defaultSpeed);
         push(force);
     }
 

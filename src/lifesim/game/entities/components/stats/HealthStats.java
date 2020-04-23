@@ -3,9 +3,9 @@ package lifesim.game.entities.components.stats;
 import lifesim.game.entities.Entity;
 import lifesim.game.handlers.World;
 import lifesim.game.entities.components.Drops;
-import lifesim.util.math.Geometry;
 import lifesim.util.math.MyMath;
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Rect;
+import lifesim.util.math.geom.Vector2D;
 
 import java.awt.*;
 
@@ -71,11 +71,11 @@ public class HealthStats extends BasicStats implements Stats {
         final double widthScale = 0.3;
         final int height = 1;
 
-        Rectangle rect = Geometry.getCenteredRect(pos, new Vector2D(maxVal*widthScale, height));
+        Rect rect = new Rect(pos, new Vector2D(maxVal*widthScale, height));
         g2d.setColor(Color.BLACK);
         g2d.fill(rect);
 
-        rect = new Rectangle(rect.x, rect.y, (int) (currentVal*widthScale), height);
+        rect.width = (int) (currentVal*widthScale);//Rect.fromCorner(rect.getCornerPos(), currentVal*widthScale, height);
         g2d.setColor(c1);
         g2d.fill(rect);
     }

@@ -3,7 +3,7 @@ package lifesim.game.entities.components;
 import lifesim.game.entities.itemEntites.DroppedItem;
 import lifesim.game.handlers.World;
 import lifesim.game.items.Item;
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Vector2D;
 
 import java.util.ArrayList;
 

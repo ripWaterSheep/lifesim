@@ -4,7 +4,7 @@ import lifesim.game.entities.components.sprites.Sprite;
 import lifesim.game.handlers.World;
 import lifesim.game.entities.components.stats.Alliance;
 import lifesim.game.entities.components.stats.Stats;
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Vector2D;
 import lifesim.util.math.MyMath;
 
 
@@ -31,7 +31,7 @@ public class AIEntity extends MovementEntity {
 
     private void calculateTargetPos(World world) {
         targetPos = pos;
-        attacking = false;;
+        attacking = false;
 
         for (Entity entity: world.getEntities()) {
             double distance = pos.getDistanceFrom(entity.pos);

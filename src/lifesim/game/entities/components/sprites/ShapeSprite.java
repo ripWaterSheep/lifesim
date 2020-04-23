@@ -1,6 +1,6 @@
 package lifesim.game.entities.components.sprites;
 
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Vector2D;
 
 import java.awt.*;
 
@@ -18,7 +18,7 @@ public class ShapeSprite extends Sprite {
     public void render(Graphics2D g2d, Vector2D pos, Vector2D velocity) {
         if (color != null) {
             g2d.setColor(color);
-            g2d.fill(getShapeAt(pos));
+            g2d.fill(getBoundsAt(pos));
         }
     }
 

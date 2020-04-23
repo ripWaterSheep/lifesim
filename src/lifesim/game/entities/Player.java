@@ -10,7 +10,7 @@ import lifesim.game.input.MouseInput;
 import lifesim.game.items.ItemTypes;
 import lifesim.game.items.Item;
 import lifesim.game.items.inventory.Inventory;
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Vector2D;
 
 import java.awt.*;
 
@@ -25,7 +25,7 @@ public final class Player extends MovementEntity {
     public final Inventory inventory;
 
 
-    public Player(Game game) {
+    public Player(Game game, World startingWorld) {
         super("Player", new DirectionalAnimatedSprite(
                 new Animation("player", 200, new Vector2D(12, 16), 0),
                 new Animation("player", 100, new Vector2D(12, 16), 1),
@@ -35,22 +35,22 @@ public final class Player extends MovementEntity {
                 ),
             new PlayerStats(1000, 1000, 0, 0, 0, game), 5, 0);
         velocity.set(0, 0);
-
         this.game = game;
+        setWorld(startingWorld);
         inventory = new Inventory(this);
 
         acquireItem(ItemTypes.laserGun, 100);
-        //inventory.addItem(ItemTypes.bread, 100);
+        acquireItem(ItemTypes.bread, 100);
         acquireItem(ItemTypes.waterGun, 100);
         acquireItem(ItemTypes.banana, 100);
-        //inventory.addItem(ItemTypes.mysteriousPill, 100);
-        //inventory.addItem(ItemTypes.virtualCoin, 100);
+        acquireItem(ItemTypes.mysteriousPill, 100);
+        acquireItem(ItemTypes.virtualCoin, 100);
         acquireItem(ItemTypes.bomb, 100);
         acquireItem(ItemTypes.jetPack, 100);
         acquireItem(ItemTypes.allyTest, 50);
         acquireItem(ItemTypes.allyTest2, 50);
         acquireItem(ItemTypes.healer, 100);
-        acquireItem(ItemTypes.pushTestWeapon, 100);
+        acquireItem(ItemTypes.physicsTest, 100);
         acquireItem(ItemTypes.shield, 100);
     }
 

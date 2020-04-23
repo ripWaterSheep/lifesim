@@ -1,6 +1,6 @@
 package lifesim.game.display;
 
-import lifesim.engine.Main;
+import lifesim.state.engine.Main;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.components.sprites.ImageSprite;
 import lifesim.game.entities.components.sprites.Sprite;
@@ -8,7 +8,7 @@ import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
 import lifesim.game.items.inventory.Inventory;
 import lifesim.game.items.inventory.InventorySlot;
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class Hotbar extends GameDisplay {
         this.inventory = player.inventory;
         slots = inventory.getSlots();
 
-        minIndex = Inventory.SIZE-Inventory.WIDTH;
+        minIndex = 0;
         maxIndex = minIndex + Inventory.WIDTH - 1;
     }
 

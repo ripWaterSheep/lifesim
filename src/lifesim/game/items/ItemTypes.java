@@ -9,7 +9,7 @@ import lifesim.game.entities.types.AllyType;
 import lifesim.game.entities.types.ProjectileType;
 import lifesim.game.handlers.World;
 import lifesim.game.input.MouseInput;
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Vector2D;
 import lifesim.util.math.MyMath;
 
 import java.awt.*;
@@ -17,7 +17,7 @@ import java.awt.*;
 
 public class ItemTypes {
 
-    public static final Item hand = new Weapon("Hand", new ShapeSprite(0, 0, Color.BLACK), ProjectileType.FIST, false);
+    public static final Item hand = new Weapon("Hand", new ShapeSprite(0, 0, Color.BLACK), ProjectileType.FIST, -2, false);
 
 
     /*************
@@ -45,19 +45,20 @@ public class ItemTypes {
      * Weapons
      **********/
 
-    public static final Item waterGun = new Weapon("Water Gun", new AnimatedSprite(new Animation(
-            "weapons", 200, new Vector2D(8, 8), 2)), ProjectileType.WATER_DROP, true);
+    public static final Item waterGun = new Weapon("Water Gun", new AnimatedSprite(new Animation("weapons",
+            200, new Vector2D(8, 8), 2)), ProjectileType.WATER_STREAM, 1, true);
 
-    public static final Item laserGun = new Weapon("Laser Gun", new AnimatedSprite(new Animation(
-            "weapons", 300, new Vector2D(8, 8), 3)), ProjectileType.LASER, true);
+    public static final Item laserGun = new Weapon("Laser Gun", new AnimatedSprite(new Animation("weapons",
+            300, new Vector2D(8, 8), 3)), ProjectileType.LASER, 2, true);
 
-    public static final Item bomb =  new Weapon("Bomb", new AnimatedSprite(new Animation(
-            "weapons", 120, new Vector2D(8, 8), 0)), ProjectileType.BOMB, false);
+    public static final Item bomb =  new Weapon("Bomb", new AnimatedSprite(new Animation("weapons",
+            120, new Vector2D(8, 8), 0)), ProjectileType.BOMB, 0, false);
 
-    public static final Item healer = new Weapon("Healer", new ShapeSprite(8, 8, Color.RED), ProjectileType.HEAL_ORB, true);
+    public static final Item healer = new Weapon("Healer", new ShapeSprite(8, 8, Color.RED),
+            ProjectileType.HEAL_SPELL, 0, true);
 
-    public static final Item pushTestWeapon = new Weapon("Push Test", new ShapeSprite(8, 8,
-            new Color(100, 150, 200)), ProjectileType.THROWABLE_WALL, true);
+    public static final Item physicsTest = new Weapon("Throwable Wall", new ShapeSprite(8, 8,
+            new Color(100, 150, 200)), ProjectileType.THROWABLE_WALL, 10, true);
 
 
     /************

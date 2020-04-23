@@ -1,10 +1,11 @@
 package lifesim.game.handlers;
 
-import lifesim.engine.Main;
+import lifesim.state.engine.Main;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.components.sprites.ShapeSprite;
-import lifesim.util.math.Vector2D;
+import lifesim.util.math.geom.Rect;
+import lifesim.util.math.geom.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,10 +16,10 @@ import static lifesim.util.GraphicsMethods.createGraphics;
 
 public class World {
 
-    private static final int MAX_ENTITIES = 80;
+    private static final int MAX_ENTITIES = 150;
 
     public final String name;
-    private final Vector2D size;
+    private final Rect rect;
     private final Color outerColor;
 
     private final ArrayList<Entity> entities = new ArrayList<>();
@@ -28,14 +29,15 @@ public class World {
 
     public World(String name, double width, double height, Color color, Color outerColor) {
         this.name = name;
-        this.size = new Vector2D(width, height);
+        rect = new Rect(new Vector2D(0, 0), new Vector2D(width, height));
+
         add(new Entity("Floor", new ShapeSprite(width, height, color)), 0, 0);
         this.outerColor = outerColor;
     }
 
 
-    public Vector2D getSize() {
-        return size.copy();
+    public Rect getRect() {
+        return rect.copy();
     }
 
     public ArrayList<Entity> getEntities() {
@@ -93,12 +95,11 @@ public class World {
                 if (entity.isTouching(entity2) && entity != entity2)
                     entity.handleCollision(entity2, this);
             }
-
             doGarbageCollection(entity, player);
         }
 
         for (Entity entity: entities) {
-            entity.restrictPosition(getSize());
+            entity.keepInWorld(rect);
         }
     }
 

@@ -1,17 +1,22 @@
 package lifesim.game.entities;
 
+import lifesim.game.entities.components.Drops;
 import lifesim.game.entities.components.sprites.Sprite;
 import lifesim.game.entities.components.stats.Alliance;
 import lifesim.game.entities.components.stats.InanimateStats;
 import lifesim.game.entities.components.stats.PlayerStats;
 import lifesim.game.entities.components.stats.Stats;
+import lifesim.game.entities.types.Spawnable;
+import lifesim.game.handlers.SpawningSystem;
 import lifesim.game.handlers.World;
 import lifesim.state.Game;
-import lifesim.engine.Main;
-import lifesim.util.math.Vector2D;
-import lifesim.util.math.Geometry;
+import lifesim.state.engine.Main;
+import lifesim.util.math.geom.Rect;
+import lifesim.util.math.geom.Vector2D;
+import lifesim.util.math.geom.Geometry;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 
 public class Entity {
@@ -47,11 +52,11 @@ public class Entity {
     }
 
     public Vector2D getDisplayPos() {
-        return getPos().translate(Main.getCurrentGame().getPlayer().getPos().scale(-1));
+        return getPos().translate(Main.getCurrentGame().getPlayer().getPos().negate());
     }
 
-    public Shape getHitBox() {
-        return sprite.getShapeAt(getDisplayPos());
+    public Rect getHitBox() {
+        return sprite.getBoundsAt(getPos());
     }
 
     public boolean isTouching(Entity entity) {
@@ -71,7 +76,6 @@ public class Entity {
         return stats;
     }
 
-
     public boolean isEnemy() {
         return stats.getAlliance().equals(Alliance.ENEMY);
     }
@@ -80,7 +84,6 @@ public class Entity {
         if (equals(entity)) return false;
         return stats.getAlliance().opposes(entity.stats.getAlliance());
     }
-
 
     public boolean isRemoveRequested() {
         return removeRequested;
@@ -105,6 +108,7 @@ public class Entity {
 
     public void push(Vector2D vector2D) {
     }
+
     public void push(Entity entity, double forceScale) {
     }
 
@@ -113,9 +117,9 @@ public class Entity {
         stats.onCollision(this, entity);
     }
 
-    public final void restrictPosition(Vector2D rectDims) {
-        // Keep the entity within the world's boundaries.
-        pos.clampInRect(new Vector2D(0, 0), rectDims.scale(0.5).translate(sprite.getSize().scale(-0.5)));
+    public final void keepInWorld(Rect worldRect) {
+        Rect rect = new Rect(worldRect.getCenterPos(), worldRect.getDims().translate(sprite.getSize().negate()));
+        pos.clampInRect(rect);
     }
 
 
