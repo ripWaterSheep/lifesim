@@ -1,21 +1,23 @@
 package lifesim.state.menus;
 
-import lifesim.state.GameState;
 
-import java.awt.*;
+import lifesim.game.entities.components.sprites.ImageSprite;
+import lifesim.state.engine.Main;
+import lifesim.state.menus.ui.Button;
+import lifesim.state.menus.ui.ButtonSize;
+import lifesim.util.math.geom.Vector2D;
 
-public class TitleMenu implements GameState {
+public class TitleMenu extends Menu {
 
 
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void render(Graphics2D g2d) {
-
+    public TitleMenu() {
+        super(new ImageSprite("menu_test"));
+        buttons.add(new Button("Play", new Vector2D(0, 50), ButtonSize.WIDE) {
+            @Override
+            public void onClick() {
+                Main.resumeGame();
+            }
+        });
     }
 
 }

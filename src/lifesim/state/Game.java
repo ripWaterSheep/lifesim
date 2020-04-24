@@ -25,7 +25,7 @@ public final class Game implements GameState {
     private final ToggleableDisplay inventoryGUI;
     private final ToggleableDisplay deathScreen = new DeathScreen();
 
-    private boolean pausable;
+    private boolean canBePaused;
 
 
     public Game() {
@@ -42,8 +42,8 @@ public final class Game implements GameState {
         displays.add(deathScreen);
     }
 
-    public boolean isPausable () {
-        return pausable;
+    public boolean canBePaused() {
+        return canBePaused;
     }
 
 
@@ -65,10 +65,10 @@ public final class Game implements GameState {
             if (KeyInput.k_e.isClicked()) {
                 inventoryGUI.toggle();
             }
-            pausable = true;
-        } else {
+            canBePaused = true;
+        } else {;
             deathScreen.show();
-            pausable = false;
+            canBePaused = false;
         }
 
         PlayerStats stats = player.getStats();

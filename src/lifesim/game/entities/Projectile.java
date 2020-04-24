@@ -29,9 +29,8 @@ public class Projectile extends MovementEntity {
 
         this.owner = owner;
 
-        if (speed > 0) { //Transfer owners momentum to this projectile.
-            push(owner.getVelocity().translate(0, 0));
-        }
+         //Transfer owner's momentum to this projectile.
+        push(owner.getVelocity().translate(0, 0));
 
         this.displayAngle = velocity.getAngleFrom(owner.getVelocity());
         this.range = range;
@@ -62,7 +61,7 @@ public class Projectile extends MovementEntity {
 
     @Override
     public void push(Vector2D force) {
-        if (velocity.getMagnitude() == 0) {
+        if (velocity.getMagnitude() > 0) {
             super.push(force);
         }
     }

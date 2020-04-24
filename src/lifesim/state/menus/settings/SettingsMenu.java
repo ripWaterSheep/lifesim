@@ -1,18 +1,13 @@
 package lifesim.state.menus.settings;
 
-import lifesim.state.GameState;
 
-import java.awt.*;
+import lifesim.game.entities.components.sprites.Sprite;
+import lifesim.state.menus.Menu;
 
-public class SettingsMenu implements GameState {
+public class SettingsMenu extends Menu {
 
-    @Override
-    public void update() {
-
+    protected SettingsMenu(Sprite bg) {
+        super(bg);
     }
 
-    @Override
-    public void render(Graphics2D g2d) {
-
-    }
 }

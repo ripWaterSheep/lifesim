@@ -79,8 +79,8 @@ public class StatBar extends GameDisplay {
     private <T> void writeValue(String label, T data) {
         String formattedString = format(label, data+"");
 
-        GraphicsMethods.verticallyCenteredString(g2d, formattedString, getPos().intX() + TEXT_LEFT_PADDING,
-                getPos().y + BAR_HEIGHT/2.0 + 1, STAT_FONT, Color.WHITE);
+        GraphicsMethods.verticallyCenteredString(g2d, formattedString, getPos().x + TEXT_LEFT_PADDING,
+                getPos().y + BAR_HEIGHT/2.0, STAT_FONT, Color.WHITE);
         currentBarNum += 1;
     }
 

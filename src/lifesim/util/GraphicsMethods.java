@@ -37,7 +37,7 @@ public class GraphicsMethods {
 
     public static void verticallyCenteredString(Graphics g, String text, double x, double centerY, Font font, Color color) {
         FontMetrics metrics = g.getFontMetrics(font);
-        double centerX =  x + metrics.stringWidth(text)/2.0;
+        double centerX = x + metrics.stringWidth(text)/2;
         centeredString(g, text, new Vector2D(centerX, centerY), font, color);
     }
 

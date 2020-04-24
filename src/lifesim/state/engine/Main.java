@@ -7,8 +7,6 @@ import lifesim.game.input.KeyInput;
 import lifesim.state.menus.PauseMenu;
 import lifesim.state.menus.TitleMenu;
 
-import javax.swing.*;
-
 
 public class Main {
 
@@ -38,8 +36,12 @@ public class Main {
     }
 
 
+    public static void goToTitle() {
+        gamePanel.setCurrentState(titleMenu);
+    }
 
-    private static void toggleState(GameState gs1, GameState gs2) {
+
+    private static void toggleStateType(GameState gs1, GameState gs2) {
         if (gamePanel.getCurrentState().getClass().equals(gs1.getClass())) {
             gamePanel.setCurrentState(gs2);
         } else if (gamePanel.getCurrentState().getClass().equals(gs2.getClass())) {
@@ -49,15 +51,15 @@ public class Main {
 
 
     public static void manageState() {
-        if (KeyInput.k_esc.isClicked() && currentGame.isPausable()) {
-            toggleState(currentGame, new PauseMenu(currentGame));
+        if (KeyInput.k_esc.isClicked() && currentGame.canBePaused()) {
+            toggleStateType(currentGame, new PauseMenu(currentGame));
         }
     }
 
 
     public static void main(String[] args) {
-        gamePanel = new GamePanel(currentGame);
-        gamePanel.initFrame(new JFrame(""));
+        gamePanel = new GamePanel(titleMenu);
+        gamePanel.init();
     }
 
 }

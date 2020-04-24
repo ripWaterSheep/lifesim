@@ -57,7 +57,7 @@ public class InventorySlot {
         return item.equals(EMPTY_ITEM);
     }
 
-    private void becomeEmpty() {
+    void becomeEmpty() {
         item = EMPTY_ITEM;
         amount = 0;
     }

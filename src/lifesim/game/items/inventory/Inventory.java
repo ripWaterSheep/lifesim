@@ -44,13 +44,13 @@ public class Inventory {
             }
         }
         InventorySlot slot = getFirstEmptySlot();
+        
+        slot.setItem(item, amount);
         if (slot.equals(NULL_SLOT)) {
             // If no empty slot exists, throw the item out.
             dropItemInWorld(slot);
             return;
         }
-        
-        slot.setItem(item, amount);
         if (isEmpty()) selectSlot(slot);
     }
 
@@ -94,7 +94,7 @@ public class Inventory {
 
 
     public void dropItemInWorld(InventorySlot slot) {
-        selectedSlot.dropItem(player.getWorld(), player.getPos().translate(MouseInput.getCursorPos()));
+        slot.dropItem(player.getWorld(), player.getPos().translate(MouseInput.getCursorPos()));
     }
 
 

@@ -36,9 +36,9 @@ public class DeathScreen extends ToggleableDisplay {
     @Override
     public void update() {
         if ((MouseInput.left.isClicked() || KeyInput.isAnyKeyClicked()) && opacity >= 1) {
+            hide();
             Main.newGame();
         }
-
 
         opacity = (double) (System.currentTimeMillis()-fadeStartTime) / fadeDuration;
     }

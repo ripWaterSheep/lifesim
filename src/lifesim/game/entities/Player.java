@@ -49,9 +49,9 @@ public final class Player extends MovementEntity {
         acquireItem(ItemTypes.jetPack, 100);
         acquireItem(ItemTypes.allyTest, 50);
         acquireItem(ItemTypes.allyTest2, 50);
-        acquireItem(ItemTypes.healer, 100);
-        acquireItem(ItemTypes.physicsTest, 100);
-        acquireItem(ItemTypes.shield, 100);
+        //acquireItem(ItemTypes.healer, 100);
+        //acquireItem(ItemTypes.physicsTest, 100);
+        //acquireItem(ItemTypes.shield, 100);
     }
 
 

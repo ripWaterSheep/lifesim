@@ -26,7 +26,7 @@ public abstract class MovementEntity extends Entity {
 
     @Override
     protected void stop() {
-        velocity.scale(0.8); // Slow down due to friction, approaching zero.
+        velocity.scale(0.7); // Slow down due to friction, approaching zero.
     }
 
     @Override

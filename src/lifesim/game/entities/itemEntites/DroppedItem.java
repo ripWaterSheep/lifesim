@@ -1,5 +1,6 @@
 package lifesim.game.entities.itemEntites;
 
+import lifesim.game.handlers.World;
 import lifesim.state.Game;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;

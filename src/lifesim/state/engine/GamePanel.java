@@ -21,7 +21,6 @@ public class GamePanel extends JPanel {
 
     public GamePanel(GameState gameState) {
         this.currentState = gameState;
-        setSize(1920, 1040);
         setFocusable(true);
         requestFocusInWindow();
         KeyInput.init(this);
@@ -30,12 +29,18 @@ public class GamePanel extends JPanel {
     }
 
 
-    public void initFrame(JFrame frame) {
-        frame.setSize(getSize());
-        frame.setMinimumSize(new Dimension(1000, 800));
+    public void init() {
+        JFrame frame = new JFrame("");
+        //frame.setUndecorated(true);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setSize(screenSize);
+        frame.setMinimumSize(screenSize);
+        frame.setMaximumSize(screenSize);
+        frame.setPreferredSize(screenSize);
         frame.setContentPane(this);
         frame.setVisible(true);
         requestFocusInWindow();
@@ -43,8 +48,7 @@ public class GamePanel extends JPanel {
 
 
     public void scalePos(Vector2D pos) {
-        pos.scale(1.0/ GRAPHICS_SCALE)
-                .translate(getScaledSize().scale(-0.5));
+        pos.scale(1.0/ GRAPHICS_SCALE).translate(getScaledSize().scale(-0.5));
     }
 
 
@@ -62,9 +66,7 @@ public class GamePanel extends JPanel {
 
 
     void setCurrentState(GameState gameState) {
-        if (currentState.getClass().equals(gameState.getClass())) {
-            this.currentState = gameState;
-        }
+        this.currentState = gameState;
     }
 
     GameState getCurrentState() {
@@ -95,6 +97,7 @@ public class GamePanel extends JPanel {
         g2d.scale(GRAPHICS_SCALE, GRAPHICS_SCALE);
 
         currentState.render(createGraphics(g));
+        System.out.println(getScaledSize().toStringComponents());
     }
 
 
