@@ -1,22 +1,18 @@
 package lifesim.game.entities;
 
-import lifesim.game.entities.components.Drops;
 import lifesim.game.entities.components.sprites.Sprite;
 import lifesim.game.entities.components.stats.Alliance;
 import lifesim.game.entities.components.stats.InanimateStats;
 import lifesim.game.entities.components.stats.PlayerStats;
 import lifesim.game.entities.components.stats.Stats;
-import lifesim.game.entities.types.Spawnable;
-import lifesim.game.handlers.SpawningSystem;
 import lifesim.game.handlers.World;
 import lifesim.state.Game;
 import lifesim.state.engine.Main;
-import lifesim.util.math.geom.Rect;
-import lifesim.util.math.geom.Vector2D;
-import lifesim.util.math.geom.Geometry;
+import lifesim.util.geom.Rect;
+import lifesim.util.geom.Vector2D;
+import lifesim.util.geom.Geometry;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 
 public class Entity {

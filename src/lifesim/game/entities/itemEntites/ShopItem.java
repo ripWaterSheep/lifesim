@@ -4,7 +4,7 @@ import lifesim.state.Game;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.components.stats.PlayerStats;
 import lifesim.game.items.Item;
-import lifesim.util.math.MyMath;
+import lifesim.util.MyMath;
 
 public class ShopItem extends DroppedItem {
 
@@ -18,14 +18,14 @@ public class ShopItem extends DroppedItem {
 
     @Override
     public void playerCollision(Game game, Player player, PlayerStats stats) {
-        game.displayCenter("Buy " + name + " for $" + MyMath.roundToMultiple(price, 0.1) + "0?");
+        game.displayMessage("Buy " + name + " for $" + MyMath.roundToMultiple(price, 0.1) + "0?");
     }
 
 
     @Override
     public void interact(Game game, Player player, PlayerStats stats) {
         if (stats.attemptToPay(price)) {
-            game.displayCenter(name + "++!");
+            game.displayMessage(name + "++!");
         }
         collect(player);
     }

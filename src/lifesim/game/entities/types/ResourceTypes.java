@@ -4,7 +4,7 @@ package lifesim.game.entities.types;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.components.sprites.AnimatedSprite;
 import lifesim.game.entities.components.sprites.Animation;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 
 
 public enum ResourceTypes implements Spawnable {

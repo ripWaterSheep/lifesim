@@ -5,7 +5,7 @@ import lifesim.game.entities.components.sprites.Animation;
 import lifesim.game.entities.AIEntity;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.RangedAIEntity;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 import lifesim.game.entities.components.stats.Alliance;
 import lifesim.game.entities.components.stats.HealthStats;
 

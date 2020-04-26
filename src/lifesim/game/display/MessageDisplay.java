@@ -1,6 +1,6 @@
 package lifesim.game.display;
 
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 

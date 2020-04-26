@@ -3,9 +3,7 @@ package lifesim.game.entities;
 import lifesim.game.entities.components.sprites.Sprite;
 import lifesim.game.handlers.World;
 import lifesim.game.entities.components.stats.Stats;
-import lifesim.util.math.geom.Vector2D;
-
-import static java.lang.Math.pow;
+import lifesim.util.geom.Vector2D;
 
 public abstract class MovementEntity extends Entity {
 

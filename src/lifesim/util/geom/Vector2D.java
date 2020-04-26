@@ -1,12 +1,12 @@
-package lifesim.util.math.geom;
+package lifesim.util.geom;
 
 
 import java.awt.*;
 import java.awt.geom.Point2D;
 
 import static java.lang.Math.*;
-import static lifesim.util.math.geom.Geometry.angleWrap;
-import static lifesim.util.math.MyMath.*;
+import static lifesim.util.geom.Geometry.angleWrap;
+import static lifesim.util.MyMath.*;
 
 
 public class Vector2D {

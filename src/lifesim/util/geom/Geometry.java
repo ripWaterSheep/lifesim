@@ -1,4 +1,4 @@
-package lifesim.util.math.geom;
+package lifesim.util.geom;
 
 import java.awt.*;
 import java.awt.geom.Area;

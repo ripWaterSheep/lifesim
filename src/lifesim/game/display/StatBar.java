@@ -6,14 +6,13 @@ import lifesim.game.entities.components.stats.PlayerStats;
 import lifesim.game.entities.components.stats.StatsColors;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
-import lifesim.util.math.MyMath;
-import lifesim.util.math.geom.Rect;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Rect;
+import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
 import static java.lang.Math.min;
-import static lifesim.util.math.MyMath.betterRound;
+import static lifesim.util.MyMath.betterRound;
 
 
 public class StatBar extends GameDisplay {

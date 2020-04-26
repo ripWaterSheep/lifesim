@@ -3,7 +3,7 @@ package lifesim.game.entities.components.stats;
 import lifesim.game.entities.Entity;
 import lifesim.game.handlers.World;
 import lifesim.state.Game;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 
 
 import java.awt.*;
@@ -80,7 +80,7 @@ public class PlayerStats extends HealthStats {
     public boolean attemptToPay(double amount) {
         boolean can = money >= amount;
         if (can) loseMoney(amount);
-        else game.displayCenter("Out of money!");
+        else game.displayMessage("Out of money!");
         return can;
     }
 

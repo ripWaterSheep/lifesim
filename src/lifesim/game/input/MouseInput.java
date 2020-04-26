@@ -1,8 +1,8 @@
 package lifesim.game.input;
 
 import lifesim.state.engine.Main;
-import lifesim.util.math.geom.Vector2D;
-import lifesim.util.math.MyMath;
+import lifesim.util.geom.Vector2D;
+import lifesim.util.MyMath;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;

@@ -3,7 +3,7 @@ package lifesim.state.engine;
 import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
 import lifesim.state.GameState;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 import lifesim.util.fileIO.FontLoader;
 
 import javax.swing.*;
@@ -97,7 +97,6 @@ public class GamePanel extends JPanel {
         g2d.scale(GRAPHICS_SCALE, GRAPHICS_SCALE);
 
         currentState.render(createGraphics(g));
-        System.out.println(getScaledSize().toStringComponents());
     }
 
 

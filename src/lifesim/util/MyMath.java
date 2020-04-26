@@ -1,4 +1,4 @@
-package lifesim.util.math;
+package lifesim.util;
 
 import java.util.Random;
 

@@ -1,9 +1,8 @@
 package lifesim.util;
 
 import lifesim.state.engine.Main;
-import lifesim.util.math.MyMath;
-import lifesim.util.math.geom.Rect;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Rect;
+import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 

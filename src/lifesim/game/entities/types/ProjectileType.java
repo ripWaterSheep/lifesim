@@ -9,7 +9,7 @@ import lifesim.game.entities.components.sprites.Animation;
 import lifesim.game.entities.components.sprites.ImageSprite;
 import lifesim.game.entities.components.sprites.ShapeSprite;
 import lifesim.game.entities.components.stats.HealerStats;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 import lifesim.game.entities.components.stats.Alliance;
 import lifesim.game.entities.components.stats.BasicStats;
 
@@ -24,8 +24,8 @@ public enum ProjectileType implements Launchable {
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             double strength = Main.getCurrentGame().getPlayer().getStats().getStrength();
 
-            return new Projectile(owner.name + "'s Fist", new ImageSprite("fist_small"), new BasicStats(
-                    1 + (strength/100), Alliance.PLAYER), owner, 8, angle, 30, true, true) {
+            return new Projectile(owner.name + "'s Fist", new ImageSprite("fist"), new BasicStats(
+                    1 + (strength/100), Alliance.PLAYER), owner, 6, angle, 30, true, true) {
                 @Override
                 public void eventOnHit(Entity entity) {
                     super.eventOnHit(entity);

@@ -3,7 +3,7 @@ package lifesim.game.display;
 import lifesim.state.engine.Main;
 import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 

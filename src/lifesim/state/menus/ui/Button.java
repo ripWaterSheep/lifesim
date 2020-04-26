@@ -4,7 +4,7 @@ import lifesim.game.entities.components.sprites.Sprite;
 import lifesim.game.input.MouseInput;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
@@ -12,9 +12,9 @@ import java.awt.*;
 public class Button {
 
     private static final Color labelColor = new Color(120, 180, 200);
-    private static final Font labelFont = FontLoader.getMainFont(10);
+    private static final Font labelFont = FontLoader.getMainFont(11);
 
-    private final String label;
+    private String label;
     private final Sprite sprite;
     private final Vector2D pos;
     private final ButtonSize sizeType;
@@ -27,10 +27,14 @@ public class Button {
         this.sprite = sizeType.sprite;
     }
 
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+
     private boolean mouseHovering() {
         return sprite.getBoundsAt(pos).contains(MouseInput.getCursorPos().toPoint());
     }
-
 
     public void listen() {
         if (mouseHovering()) {
@@ -44,10 +48,10 @@ public class Button {
     }
 
 
-    public void onClick() {
+    protected void onClick() {
     }
 
-    public void onPress() {
+    protected void onPress() {
     }
 
 

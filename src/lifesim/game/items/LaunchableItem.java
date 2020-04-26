@@ -9,12 +9,12 @@ import lifesim.game.entities.components.stats.PlayerStats;
 import lifesim.game.entities.types.Launchable;
 import lifesim.game.handlers.World;
 import lifesim.game.input.MouseInput;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
 
-public class Weapon extends ClickableItem {
+public class LaunchableItem extends ClickableItem {
 
     private static final Sprite reticle = new ImageSprite("reticle");
 
@@ -23,7 +23,7 @@ public class Weapon extends ClickableItem {
     private final double recoilMagnitude;
     private final boolean showReticle;
 
-    public Weapon(String name, Sprite sprite, Launchable launchable, double recoilMagnitude, boolean showReticle) {
+    public LaunchableItem(String name, Sprite sprite, Launchable launchable, double recoilMagnitude, boolean showReticle) {
         super(name, sprite);
         this.launchable = launchable;
         this.recoilMagnitude = recoilMagnitude;

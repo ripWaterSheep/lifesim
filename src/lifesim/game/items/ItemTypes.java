@@ -9,15 +9,15 @@ import lifesim.game.entities.types.AllyType;
 import lifesim.game.entities.types.ProjectileType;
 import lifesim.game.handlers.World;
 import lifesim.game.input.MouseInput;
-import lifesim.util.math.geom.Vector2D;
-import lifesim.util.math.MyMath;
+import lifesim.util.geom.Vector2D;
+import lifesim.util.MyMath;
 
 import java.awt.*;
 
 
 public class ItemTypes {
 
-    public static final Item hand = new Weapon("Hand", new ShapeSprite(0, 0, Color.BLACK), ProjectileType.FIST, -2, false);
+    public static final Item hand = new LaunchableItem("Hand", new ShapeSprite(0, 0, Color.BLACK), ProjectileType.FIST, -2, false);
 
 
     /*************
@@ -45,19 +45,19 @@ public class ItemTypes {
      * Weapons
      **********/
 
-    public static final Item waterGun = new Weapon("Water Gun", new AnimatedSprite(new Animation("weapons",
+    public static final Item waterGun = new LaunchableItem("Water Gun", new AnimatedSprite(new Animation("weapons",
             200, new Vector2D(8, 8), 2)), ProjectileType.WATER_STREAM, 1, true);
 
-    public static final Item laserGun = new Weapon("Laser Gun", new AnimatedSprite(new Animation("weapons",
+    public static final Item laserGun = new LaunchableItem("Laser Gun", new AnimatedSprite(new Animation("weapons",
             300, new Vector2D(8, 8), 3)), ProjectileType.LASER, 2, true);
 
-    public static final Item bomb =  new Weapon("Bomb", new AnimatedSprite(new Animation("weapons",
+    public static final Item bomb =  new LaunchableItem("Bomb", new AnimatedSprite(new Animation("weapons",
             120, new Vector2D(8, 8), 0)), ProjectileType.BOMB, 0, false);
 
-    public static final Item healer = new Weapon("Healer", new ShapeSprite(8, 8, Color.RED),
+    public static final Item healer = new LaunchableItem("Healer", new ShapeSprite(8, 8, Color.RED),
             ProjectileType.HEAL_SPELL, 0, true);
 
-    public static final Item physicsTest = new Weapon("Throwable Wall", new ShapeSprite(8, 8,
+    public static final Item physicsTest = new LaunchableItem("Throwable Wall", new ShapeSprite(8, 8,
             new Color(100, 150, 200)), ProjectileType.THROWABLE_WALL, 10, true);
 
 

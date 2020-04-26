@@ -10,7 +10,7 @@ import lifesim.game.input.MouseInput;
 import lifesim.game.items.ItemTypes;
 import lifesim.game.items.Item;
 import lifesim.game.items.inventory.Inventory;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
@@ -49,9 +49,9 @@ public final class Player extends MovementEntity {
         acquireItem(ItemTypes.jetPack, 100);
         acquireItem(ItemTypes.allyTest, 50);
         acquireItem(ItemTypes.allyTest2, 50);
-        //acquireItem(ItemTypes.healer, 100);
-        //acquireItem(ItemTypes.physicsTest, 100);
-        //acquireItem(ItemTypes.shield, 100);
+        acquireItem(ItemTypes.healer, 100);
+        acquireItem(ItemTypes.physicsTest, 100);
+        acquireItem(ItemTypes.shield, 100);
     }
 
 

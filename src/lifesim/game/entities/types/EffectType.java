@@ -6,7 +6,7 @@ import lifesim.game.entities.EffectEntity;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.components.stats.Alliance;
 import lifesim.game.entities.components.stats.BasicStats;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 
 
 public enum  EffectType implements Spawnable {

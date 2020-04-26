@@ -7,7 +7,7 @@ import lifesim.game.entities.types.Spawnable;
 import lifesim.game.handlers.World;
 import lifesim.game.input.MouseInput;
 import lifesim.util.GraphicsMethods;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 

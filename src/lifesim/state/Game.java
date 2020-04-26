@@ -7,7 +7,8 @@ import lifesim.game.handlers.World;
 import lifesim.game.input.KeyInput;
 import lifesim.game.display.*;
 import lifesim.state.engine.Main;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.state.menus.settings.Difficulty;
+import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -25,7 +26,9 @@ public final class Game implements GameState {
     private final ToggleableDisplay inventoryGUI;
     private final ToggleableDisplay deathScreen = new DeathScreen();
 
-    private boolean canBePaused;
+    private boolean canBePaused = true;
+
+    private Difficulty currentDifficulty = Difficulty.MEDIUM;
 
 
     public Game() {
@@ -46,6 +49,10 @@ public final class Game implements GameState {
         return canBePaused;
     }
 
+    public void displayMessage(String message) {
+        messageDisplay.displayMessage(message);
+    }
+
 
     public Player getPlayer() {
         return player;
@@ -55,8 +62,13 @@ public final class Game implements GameState {
         return layout.getWorlds();
     }
 
-    public void displayCenter(String message) {
-        messageDisplay.displayMessage(message);
+
+    public Difficulty getDifficulty() {
+        return currentDifficulty;
+    }
+
+    public void setDifficulty(Difficulty dif) {
+        currentDifficulty = dif;
     }
 
 
@@ -65,8 +77,8 @@ public final class Game implements GameState {
             if (KeyInput.k_e.isClicked()) {
                 inventoryGUI.toggle();
             }
-            canBePaused = true;
-        } else {;
+            canBePaused = !inventoryGUI.isShowing();
+        } else {
             deathScreen.show();
             canBePaused = false;
         }

@@ -1,5 +1,6 @@
-package lifesim.util.math.geom;
+package lifesim.util.geom;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 import static java.lang.Math.*;
@@ -13,6 +14,10 @@ public class Rect extends Rectangle2D.Double {
 
     public Rect(Vector2D centerPos, Vector2D dims) {
         super(centerPos.x - dims.x/2, centerPos.y - dims.y/2, dims.x, dims.y);
+    }
+
+    public Rect(Rectangle r) {
+        this(new Vector2D(r.x, r.y), new Vector2D(r.width, r.height));
     }
 
 

@@ -1,13 +1,13 @@
 package lifesim.game.entities.components.sprites;
 
 import lifesim.util.fileIO.ImageLoader;
-import lifesim.util.math.geom.Rect;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Rect;
+import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static lifesim.util.math.MyMath.betterRound;
+import static lifesim.util.MyMath.betterRound;
 
 public class ImageSprite extends Sprite {
 

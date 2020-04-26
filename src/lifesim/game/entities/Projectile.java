@@ -3,7 +3,8 @@ package lifesim.game.entities;
 import lifesim.game.entities.components.sprites.Sprite;
 import lifesim.game.handlers.World;
 import lifesim.game.entities.components.stats.Stats;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Rect;
+import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
@@ -28,11 +29,9 @@ public class Projectile extends MovementEntity {
         super(name, sprite, stats, speed, angle);
 
         this.owner = owner;
+        push(owner.getVelocity().translate(0, 0)); //Transfer owner's momentum to this projectile.
 
-         //Transfer owner's momentum to this projectile.
-        push(owner.getVelocity().translate(0, 0));
-
-        this.displayAngle = velocity.getAngleFrom(owner.getVelocity());
+        this.displayAngle = angle;
         this.range = range;
         this.matchSpriteAngle = matchSpriteAngle;
         this.penetrate = penetrate;
@@ -43,10 +42,15 @@ public class Projectile extends MovementEntity {
         return owner;
     }
 
+    @Override
+    public Rect getHitBox() {
+        return super.getHitBox();
+    }
+
+
     public double getRange() {
         return range;
     }
-
 
     public boolean canDamage(Entity entity) {
     return super.canDamage(entity) && !getOwner().equals(entity);

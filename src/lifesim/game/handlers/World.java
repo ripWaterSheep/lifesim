@@ -4,8 +4,8 @@ import lifesim.state.engine.Main;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.components.sprites.ShapeSprite;
-import lifesim.util.math.geom.Rect;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Rect;
+import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;

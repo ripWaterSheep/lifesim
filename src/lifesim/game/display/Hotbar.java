@@ -8,7 +8,7 @@ import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
 import lifesim.game.items.inventory.Inventory;
 import lifesim.game.items.inventory.InventorySlot;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;

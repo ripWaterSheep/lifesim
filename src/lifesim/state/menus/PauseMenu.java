@@ -7,7 +7,7 @@ import lifesim.state.menus.ui.Button;
 import lifesim.state.menus.ui.ButtonSize;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
-import lifesim.util.math.geom.Vector2D;
+import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
@@ -19,7 +19,7 @@ public class PauseMenu extends Menu {
 
 
     public PauseMenu(Game game) {
-        super(new ShapeSprite(100, 100, new Color(0, 0, 0, 0)));
+        super(new ShapeSprite(100, 100, new Color(0, 0, 0, 0)), game);
         this.game = game;
 
         buttons.add(new Button("Resume", new Vector2D(0, 30), ButtonSize.WIDE) {
@@ -28,10 +28,16 @@ public class PauseMenu extends Menu {
                 Main.resumeGame();
             }
         });
-        buttons.add(new Button("Exit", new Vector2D(0, 50), ButtonSize.MID) {
+        buttons.add(new Button("Exit", new Vector2D(0, 75), ButtonSize.MID) {
             @Override
             public void onClick() {
                 Main.goToTitle();
+            }
+        });
+        buttons.add(new Button("Settings",  new Vector2D(0, 50), ButtonSize.MID) {
+            @Override
+            protected void onClick() {
+                Main.goToSettings();
             }
         });
     }
