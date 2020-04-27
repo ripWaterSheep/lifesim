@@ -18,7 +18,7 @@ public class FontLoader {
 
         } catch (FontFormatException e) {
             //Handle exception
-            System.out.println("Cannot find file : " + path);
+            System.err.println("Cannot find file : " + path);
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();

@@ -22,22 +22,22 @@ public class PauseMenu extends Menu {
         super(new ShapeSprite(100, 100, new Color(0, 0, 0, 0)), game);
         this.game = game;
 
-        buttons.add(new Button("Resume", new Vector2D(0, 30), ButtonSize.WIDE) {
+        buttons.add(new Button("Resume", new Vector2D(0, 25), ButtonSize.WIDE) {
             @Override
             public void onClick() {
                 Main.resumeGame();
             }
         });
-        buttons.add(new Button("Exit", new Vector2D(0, 60), ButtonSize.MID) {
-            @Override
-            public void onClick() {
-                Main.goToTitle();
-            }
-        });
-        buttons.add(new Button("Settings",  new Vector2D(0, 90), ButtonSize.MID) {
+        buttons.add(new Button("Settings",  new Vector2D(0, 50), ButtonSize.MID) {
             @Override
             protected void onClick() {
                 Main.goToSettings();
+            }
+        });
+        buttons.add(new Button("Exit", new Vector2D(0, 75), ButtonSize.MID) {
+            @Override
+            public void onClick() {
+                Main.goToTitle();
             }
         });
     }

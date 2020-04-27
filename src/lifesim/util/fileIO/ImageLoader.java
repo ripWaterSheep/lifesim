@@ -19,7 +19,7 @@ public class ImageLoader {
         try {
             image = ImageIO.read(new File(path)); // Retrieve image from file folder
         } catch (FileNotFoundException e) {
-            System.out.println("Cannot find file : " + path);
+            System.err.println("Cannot find file : " + path);
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();

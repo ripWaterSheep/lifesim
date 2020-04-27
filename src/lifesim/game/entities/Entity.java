@@ -1,5 +1,6 @@
 package lifesim.game.entities;
 
+import lifesim.state.menus.ui.CursorType;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.InanimateStats;

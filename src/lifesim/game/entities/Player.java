@@ -1,5 +1,8 @@
 package lifesim.game.entities;
 
+import lifesim.state.engine.GamePanel;
+import lifesim.state.engine.Main;
+import lifesim.state.menus.ui.CursorType;
 import lifesim.util.sprites.Animation;
 import lifesim.util.sprites.DirectionalAnimatedSprite;
 import lifesim.game.handlers.World;
@@ -145,6 +148,7 @@ public final class Player extends MovementEntity {
     @Override
     public void handleCollision(Entity entity, World world) {
     super.handleCollision(entity, world);
+        // Do special events for touching or clicking while touching the entity.
         entity.playerCollision(game, this, getStats());
         if (MouseInput.left.isClicked())
             entity.interact(game, this, getStats());

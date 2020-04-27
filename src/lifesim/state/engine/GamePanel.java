@@ -3,6 +3,8 @@ package lifesim.state.engine;
 import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
 import lifesim.state.GameState;
+import lifesim.state.menus.ui.CursorType;
+import lifesim.util.fileIO.ImageLoader;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.fileIO.FontLoader;
 
@@ -14,8 +16,10 @@ import static lifesim.util.GraphicsMethods.createGraphics;
 
 public class GamePanel extends JPanel {
 
+    private static final Toolkit tk = Toolkit.getDefaultToolkit();
+
     // Fit screen size to screen resolution.
-    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static final Dimension screenSize = tk.getScreenSize();
 
     // Define dimensions of game pixels (not 1:1 pixels) on screen.
     public static final int WIDTH = 512;
@@ -23,7 +27,6 @@ public class GamePanel extends JPanel {
 
     // Set graphics scale to fit window's width so it shows the same content even if screen is a different size;
     private static final double GRAPHICS_SCALE = (double) (screenSize.width)/WIDTH;
-
 
     public static void scalePos(Vector2D pos) {
         pos.scale(1.0/ GRAPHICS_SCALE).translate(getScaledSize().scale(-0.5));
@@ -35,6 +38,7 @@ public class GamePanel extends JPanel {
 
 
     private GameState currentState;
+    private CursorType currentCursor = CursorType.DEFAULT;
 
 
     public GamePanel(GameState gameState) {
@@ -63,6 +67,19 @@ public class GamePanel extends JPanel {
     }
 
 
+    public void changeCursor(CursorType cursorType) {
+        currentCursor = cursorType;
+    }
+
+    private void manageCursor() {
+        // Set the current cursor to whichever cursor type was last set for this panel.
+        if (!getCursor().equals(currentCursor.cursor)) {
+            setCursor(currentCursor.cursor);
+        }
+        currentCursor = CursorType.DEFAULT; // Default to normal cursor after cursor is set.
+    }
+
+
     void setCurrentState(GameState gameState) {
         this.currentState = gameState;
     }
@@ -70,7 +87,6 @@ public class GamePanel extends JPanel {
     GameState getCurrentState() {
         return currentState;
     }
-
 
 
     @Override
@@ -81,12 +97,12 @@ public class GamePanel extends JPanel {
     }
 
 
-
     private void update() {
         currentState.update();
         Main.manageState();
         KeyInput.update();
         MouseInput.update();
+        manageCursor();
     }
 
 
@@ -116,7 +132,6 @@ public class GamePanel extends JPanel {
             delta--;
         }
         render(g);
-        System.out.println(getScaledSize().toStringComponents());
         frames++;
 
         if (System.currentTimeMillis() - timer > 1000) {

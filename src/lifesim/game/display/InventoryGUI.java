@@ -1,6 +1,8 @@
 package lifesim.game.display;
 
 import lifesim.game.entities.Player;
+import lifesim.state.engine.Main;
+import lifesim.state.menus.ui.CursorType;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.input.KeyInput;
@@ -46,20 +48,17 @@ public class InventoryGUI extends ToggleableOverlay {
         slots = inventory.getSlots();
     }
 
-
-    private Vector2D getDisplayPos(Vector2D pos) {
-        pos.translate(ITEM_OFFSET);
-        pos.scale(GRID_SIZE);
-        pos.translate(DISPLAY_POS);
-
-        return pos;
-    }
-
+    // Get the position a slot should be displayed at based on it's index in the inventory's slots.
     private Vector2D getSlotDisplayPos(InventorySlot slot) {
         int index = slots.indexOf(slot);
         int x = index % WIDTH;
         int y = index / WIDTH;
-        return getDisplayPos(new Vector2D(x, y));
+
+        Vector2D pos = new Vector2D(x, y);
+        pos.translate(ITEM_OFFSET);
+        pos.scale(GRID_SIZE);
+        pos.translate(DISPLAY_POS);
+        return pos;
     }
 
 
@@ -69,7 +68,8 @@ public class InventoryGUI extends ToggleableOverlay {
 
     }
 
-    public InventorySlot getMouseOverSlot() {
+    // Get the slot that contains the mouse cursor in its hit box.
+    public InventorySlot getMouseHoveringSlot() {
         InventorySlot mouseOverSlot = NULL_SLOT;
         for (InventorySlot slot: inventory.getSlots()) {
             if (getSlotHitBox(slot).contains(MouseInput.getCursorPos().toPoint())) {
@@ -82,18 +82,22 @@ public class InventoryGUI extends ToggleableOverlay {
 
 
     private void moveItems() {
-        InventorySlot mouseOverSlot = getMouseOverSlot();
-        if (!mouseOverSlot.equals(NULL_SLOT)) {
+        InventorySlot hoveringSlot = getMouseHoveringSlot();
+        if (!hoveringSlot.equals(NULL_SLOT)) {
 
-            if (MouseInput.left.isClicked() && !mouseOverSlot.isEmpty()) {
-                lastDraggedSlot = mouseOverSlot;
+            if (!hoveringSlot.isEmpty()) { // Show interaction mouse cursor only if the slot contains an item to move.
+                Main.getPanel().changeCursor(CursorType.POINTER);
+            }
+
+            if (MouseInput.left.isClicked() && !hoveringSlot.isEmpty()) {
+                lastDraggedSlot = hoveringSlot;
                 if (KeyInput.k_shift.isPressed()) {
                     lastDraggedSlot.swapItem(inventory.getFirstEmptySlot());
                 }
             }
 
             if (MouseInput.left.isReleased()) {
-                getMouseOverSlot().swapItem(lastDraggedSlot);
+                getMouseHoveringSlot().swapItem(lastDraggedSlot);
                 lastDraggedSlot = NULL_SLOT;
             }
         } else if (MouseInput.left.isReleased()) {

@@ -1,5 +1,6 @@
 package lifesim.state.menus.ui;
 
+import lifesim.state.engine.Main;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.input.MouseInput;
 import lifesim.util.GraphicsMethods;
@@ -38,6 +39,7 @@ public class Button {
 
     public void listen() {
         if (mouseHovering()) {
+            Main.getPanel().changeCursor(CursorType.POINTER);
             if (MouseInput.left.isClicked()) {
                 onClick();
             }
