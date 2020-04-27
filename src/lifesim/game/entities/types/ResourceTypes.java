@@ -2,8 +2,8 @@ package lifesim.game.entities.types;
 
 
 import lifesim.game.entities.Entity;
-import lifesim.game.entities.components.sprites.AnimatedSprite;
-import lifesim.game.entities.components.sprites.Animation;
+import lifesim.util.sprites.AnimatedSprite;
+import lifesim.util.sprites.Animation;
 import lifesim.util.geom.Vector2D;
 
 

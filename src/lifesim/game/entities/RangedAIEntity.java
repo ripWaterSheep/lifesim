@@ -1,10 +1,10 @@
 package lifesim.game.entities;
 
-import lifesim.game.entities.components.sprites.Sprite;
+import lifesim.util.sprites.Sprite;
 import lifesim.game.entities.types.Launchable;
 import lifesim.game.handlers.World;
-import lifesim.game.entities.components.stats.Alliance;
-import lifesim.game.entities.components.stats.Stats;
+import lifesim.game.entities.stats.Alliance;
+import lifesim.game.entities.stats.Stats;
 
 
 public class RangedAIEntity extends AIEntity {

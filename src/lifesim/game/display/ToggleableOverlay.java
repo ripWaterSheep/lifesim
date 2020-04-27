@@ -1,6 +1,6 @@
 package lifesim.game.display;
 
-public abstract class ToggleableDisplay extends GameDisplay {
+public abstract class ToggleableOverlay extends Overlay {
 
     private boolean showing = false;
 

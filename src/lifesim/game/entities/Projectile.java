@@ -1,8 +1,8 @@
 package lifesim.game.entities;
 
-import lifesim.game.entities.components.sprites.Sprite;
+import lifesim.util.sprites.Sprite;
 import lifesim.game.handlers.World;
-import lifesim.game.entities.components.stats.Stats;
+import lifesim.game.entities.stats.Stats;
 import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 
@@ -19,22 +19,24 @@ public class Projectile extends MovementEntity {
     private double distanceTravelled;
 
     private final boolean penetrate;
+    private final double knockBack;
 
     private final boolean matchSpriteAngle;
     private final double displayAngle;
 
 
     public Projectile(String name, Sprite sprite, Stats stats, Entity owner, double speed, double angle, double range,
-                      boolean penetrate, boolean matchSpriteAngle) {
+                      boolean penetrate, double knockBack, boolean matchSpriteAngle) {
         super(name, sprite, stats, speed, angle);
 
         this.owner = owner;
         push(owner.getVelocity().translate(0, 0)); //Transfer owner's momentum to this projectile.
 
-        this.displayAngle = angle;
+        displayAngle = angle;
         this.range = range;
-        this.matchSpriteAngle = matchSpriteAngle;
         this.penetrate = penetrate;
+        this.knockBack = knockBack;
+        this.matchSpriteAngle = matchSpriteAngle;
     }
 
     @Override
@@ -70,13 +72,15 @@ public class Projectile extends MovementEntity {
         }
     }
 
+
+
     @Override
     public void handleCollision(Entity entity, World world) {
         super.handleCollision(entity, world);
 
         if (canDamage(entity)) {
             eventOnHit(entity);
-
+            entity.push(getVelocity().normalize().scale(knockBack));
             if (!penetrate) removeFromWorld();
         }
     }

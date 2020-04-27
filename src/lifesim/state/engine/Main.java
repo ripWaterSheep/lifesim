@@ -75,6 +75,9 @@ public class Main {
         setState(settingsMenu);
     }
 
+    public static void exit() {
+        System.exit(0);
+    }
 
 
     public static void manageState() {

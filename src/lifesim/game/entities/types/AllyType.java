@@ -2,11 +2,10 @@ package lifesim.game.entities.types;
 
 import lifesim.game.entities.AIEntity;
 import lifesim.game.entities.Entity;
-import lifesim.game.entities.Projectile;
 import lifesim.game.entities.RangedAIEntity;
-import lifesim.game.entities.components.sprites.ShapeSprite;
-import lifesim.game.entities.components.stats.Alliance;
-import lifesim.game.entities.components.stats.HealthStats;
+import lifesim.util.sprites.ShapeSprite;
+import lifesim.game.entities.stats.Alliance;
+import lifesim.game.entities.stats.HealthStats;
 
 import java.awt.*;
 

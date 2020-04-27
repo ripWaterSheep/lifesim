@@ -1,8 +1,8 @@
 package lifesim.game.display;
 
 import lifesim.game.entities.Player;
-import lifesim.game.entities.components.sprites.ImageSprite;
-import lifesim.game.entities.components.sprites.Sprite;
+import lifesim.util.sprites.ImageSprite;
+import lifesim.util.sprites.Sprite;
 import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
 import lifesim.util.geom.Rect;
@@ -19,7 +19,7 @@ import static lifesim.game.items.inventory.Inventory.NULL_SLOT;
 import static lifesim.game.items.inventory.Inventory.WIDTH;
 
 
-public class InventoryGUI extends ToggleableDisplay {
+public class InventoryGUI extends ToggleableOverlay {
 
     public static final int GRID_SIZE = 12;
     public static final double DISPLAY_SCALE = 1.5;

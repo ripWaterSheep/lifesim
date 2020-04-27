@@ -1,4 +1,4 @@
-package lifesim.game.entities.components.sprites;
+package lifesim.util.sprites;
 
 import lifesim.util.fileIO.ImageLoader;
 import lifesim.util.geom.Rect;

@@ -1,8 +1,8 @@
 package lifesim.game.entities;
 
-import lifesim.game.entities.components.sprites.Sprite;
+import lifesim.util.sprites.Sprite;
 import lifesim.game.handlers.World;
-import lifesim.game.entities.components.stats.Stats;
+import lifesim.game.entities.stats.Stats;
 import lifesim.util.geom.Vector2D;
 
 public abstract class MovementEntity extends Entity {
@@ -33,20 +33,11 @@ public abstract class MovementEntity extends Entity {
     }
 
     @Override
-    public void push(Entity entity, double forceScale) {
-        Vector2D force = entity.getVelocity().scale(forceScale);
-        // Make sure velocity doesn't accelerate rapidly due to both entities pushing on each other perpetually.
-        //force.clampMagnitude(defaultSpeed);
-        push(force);
-    }
-
-
-    @Override
     public void handleCollision(Entity entity, World world) {
         super.handleCollision(entity, world);
         // Transfer momentum between entities.
         if (canDamage(entity)) {
-            entity.push(this, 0.2);
+            entity.push(getVelocity().normalize().scale(0.2));
         }
     }
 

@@ -1,10 +1,10 @@
 package lifesim.game.entities;
 
-import lifesim.game.entities.components.sprites.Sprite;
-import lifesim.game.entities.components.stats.Alliance;
-import lifesim.game.entities.components.stats.InanimateStats;
-import lifesim.game.entities.components.stats.PlayerStats;
-import lifesim.game.entities.components.stats.Stats;
+import lifesim.util.sprites.Sprite;
+import lifesim.game.entities.stats.Alliance;
+import lifesim.game.entities.stats.InanimateStats;
+import lifesim.game.entities.stats.PlayerStats;
+import lifesim.game.entities.stats.Stats;
 import lifesim.game.handlers.World;
 import lifesim.state.Game;
 import lifesim.state.engine.Main;
@@ -103,9 +103,6 @@ public class Entity {
     }
 
     public void push(Vector2D vector2D) {
-    }
-
-    public void push(Entity entity, double forceScale) {
     }
 
 

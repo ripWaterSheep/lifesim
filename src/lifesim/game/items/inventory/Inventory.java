@@ -5,6 +5,7 @@ import lifesim.game.handlers.World;
 import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
 import lifesim.game.items.Item;
+import lifesim.state.Game;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,15 +20,16 @@ public class Inventory {
     // Null pointer exception prevention
     public static final InventorySlot NULL_SLOT = new InventorySlot();
 
-
     private final Player player;
+    private final Game game;
 
     private final ArrayList<InventorySlot> slots = new ArrayList<>();
     private InventorySlot selectedSlot;
 
 
-    public Inventory(Player player) {
+    public Inventory(Player player, Game game) {
         this.player = player;
+        this.game = game;
 
         for (int i = 0; i < SIZE; i++) {
             slots.add(new InventorySlot());
@@ -49,6 +51,7 @@ public class Inventory {
         if (slot.equals(NULL_SLOT)) {
             // If no empty slot exists, throw the item out.
             dropItemInWorld(slot);
+            game.displayMessage("Inventory is full!");
             return;
         }
         if (isEmpty()) selectSlot(slot);

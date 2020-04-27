@@ -3,6 +3,7 @@ package lifesim.game.handlers;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.types.Spawnable;
+import lifesim.state.Game;
 
 import java.util.ArrayList;
 
@@ -12,8 +13,8 @@ public class RegenerativeSpawningSystem extends SpawningSystem {
     private final int maxSpawn;
 
     /** Spawns an entity only when a previously spawned entity is removed. */
-    public RegenerativeSpawningSystem(Spawnable spawnable, long spawnInterval, int maxSpawn) {
-        super(spawnable, spawnInterval);
+    public RegenerativeSpawningSystem(Spawnable spawnable, long spawnInterval, int maxSpawn, Game game) {
+        super(spawnable, spawnInterval, game);
         this.maxSpawn = maxSpawn;
     }
 

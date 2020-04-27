@@ -1,13 +1,13 @@
 package lifesim.game.entities.types;
 
-import lifesim.game.entities.components.sprites.AnimatedSprite;
-import lifesim.game.entities.components.sprites.Animation;
+import lifesim.util.sprites.AnimatedSprite;
+import lifesim.util.sprites.Animation;
 import lifesim.game.entities.AIEntity;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.RangedAIEntity;
 import lifesim.util.geom.Vector2D;
-import lifesim.game.entities.components.stats.Alliance;
-import lifesim.game.entities.components.stats.HealthStats;
+import lifesim.game.entities.stats.Alliance;
+import lifesim.game.entities.stats.HealthStats;
 
 
 public enum EnemyType implements Spawnable {

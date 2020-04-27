@@ -1,8 +1,8 @@
 package lifesim.game.entities.itemEntites;
 
-import lifesim.game.entities.components.sprites.Sprite;
+import lifesim.util.sprites.Sprite;
 import lifesim.game.entities.Entity;
-import lifesim.game.entities.components.stats.Stats;
+import lifesim.game.entities.stats.Stats;
 
 public class ItemPackage extends Entity {
 

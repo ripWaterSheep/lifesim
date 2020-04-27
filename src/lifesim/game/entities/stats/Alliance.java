@@ -1,4 +1,4 @@
-package lifesim.game.entities.components.stats;
+package lifesim.game.entities.stats;
 
 import java.awt.*;
 

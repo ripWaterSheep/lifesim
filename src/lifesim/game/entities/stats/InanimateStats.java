@@ -1,4 +1,4 @@
-package lifesim.game.entities.components.stats;
+package lifesim.game.entities.stats;
 
 import lifesim.game.entities.Entity;
 import lifesim.game.handlers.World;

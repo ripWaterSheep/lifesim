@@ -3,7 +3,7 @@ package lifesim.game.handlers;
 import lifesim.state.engine.Main;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
-import lifesim.game.entities.components.sprites.ShapeSprite;
+import lifesim.util.sprites.ShapeSprite;
 import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 
@@ -89,6 +89,7 @@ public class World {
         Collections.reverse(entities);
 
         for (Entity entity: entities) {
+
             entity.update(this);
 
             for (Entity entity2: entities) {

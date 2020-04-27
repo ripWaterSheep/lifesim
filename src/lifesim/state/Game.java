@@ -1,8 +1,9 @@
 package lifesim.state;
 
 import lifesim.game.entities.Player;
-import lifesim.game.entities.components.stats.PlayerStats;
+import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.handlers.Layout;
+import lifesim.game.handlers.MyLayout;
 import lifesim.game.handlers.World;
 import lifesim.game.input.KeyInput;
 import lifesim.game.display.*;
@@ -18,13 +19,13 @@ import static lifesim.util.GraphicsMethods.createGraphics;
 
 public final class Game implements GameState {
 
-    private final Layout layout = new Layout();
+    private final Layout layout = new MyLayout(this);
     private final Player player;
 
-    private final ArrayList<GameDisplay> displays = new ArrayList<>();
+    private final ArrayList<Overlay> overlays = new ArrayList<>();
     private final MessageDisplay messageDisplay;
-    private final ToggleableDisplay inventoryGUI;
-    private final ToggleableDisplay deathScreen = new DeathScreen();
+    private final ToggleableOverlay inventoryGUI;
+    private final ToggleableOverlay deathScreen = new DeathScreen();
 
     private boolean canBePaused = true;
 
@@ -32,17 +33,20 @@ public final class Game implements GameState {
 
 
     public Game() {
+        layout.init();
         player = new Player(this, layout.getWorlds().get(0));
 
-        displays.add(new StatBar(player));
+        overlays.add(new StatBar(player));
         messageDisplay = new MessageDisplay(6, Color.WHITE, new Vector2D(0, -player.sprite.getSize().y));
-        displays.add(messageDisplay);
+        overlays.add(messageDisplay);
 
         inventoryGUI = new InventoryGUI(player);
-        displays.add(inventoryGUI);
-        displays.add(new Hotbar(player));
+        overlays.add(inventoryGUI);
+        overlays.add(new Hotbar(player));
 
-        displays.add(deathScreen);
+        overlays.add(deathScreen);
+
+        player.init();
     }
 
     public boolean canBePaused() {
@@ -124,7 +128,7 @@ public final class Game implements GameState {
         player.getWorld().update(player);
 
 
-        for (GameDisplay display : displays) {
+        for (Overlay display : overlays) {
             if (display.isShowing()) {
                 display.update();
             }
@@ -135,7 +139,7 @@ public final class Game implements GameState {
     public void render(Graphics2D g2d) {
         player.getWorld().render(createGraphics(g2d));
 
-        for (GameDisplay display : displays) {
+        for (Overlay display : overlays) {
             if (display.isShowing()) {
                 display.render(createGraphics(g2d));
             }

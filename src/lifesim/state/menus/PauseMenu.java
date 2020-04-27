@@ -1,6 +1,6 @@
 package lifesim.state.menus;
 
-import lifesim.game.entities.components.sprites.ShapeSprite;
+import lifesim.util.sprites.ShapeSprite;
 import lifesim.state.Game;
 import lifesim.state.engine.Main;
 import lifesim.state.menus.ui.Button;
@@ -28,13 +28,13 @@ public class PauseMenu extends Menu {
                 Main.resumeGame();
             }
         });
-        buttons.add(new Button("Exit", new Vector2D(0, 75), ButtonSize.MID) {
+        buttons.add(new Button("Exit", new Vector2D(0, 60), ButtonSize.MID) {
             @Override
             public void onClick() {
                 Main.goToTitle();
             }
         });
-        buttons.add(new Button("Settings",  new Vector2D(0, 50), ButtonSize.MID) {
+        buttons.add(new Button("Settings",  new Vector2D(0, 90), ButtonSize.MID) {
             @Override
             protected void onClick() {
                 Main.goToSettings();

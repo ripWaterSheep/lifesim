@@ -14,7 +14,25 @@ import static lifesim.util.GraphicsMethods.createGraphics;
 
 public class GamePanel extends JPanel {
 
-    private static final double GRAPHICS_SCALE = 3.75;
+    // Fit screen size to screen resolution.
+    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+    // Define dimensions of game pixels (not 1:1 pixels) on screen.
+    public static final int WIDTH = 512;
+    public static final int HEIGHT = 288;
+
+    // Set graphics scale to fit window's width so it shows the same content even if screen is a different size;
+    private static final double GRAPHICS_SCALE = (double) (screenSize.width)/WIDTH;
+
+
+    public static void scalePos(Vector2D pos) {
+        pos.scale(1.0/ GRAPHICS_SCALE).translate(getScaledSize().scale(-0.5));
+    }
+
+    public static Vector2D getScaledSize() {
+        return new Vector2D(WIDTH, HEIGHT);
+    }
+
 
     private GameState currentState;
 
@@ -31,37 +49,17 @@ public class GamePanel extends JPanel {
 
     public void init() {
         JFrame frame = new JFrame("");
-        //frame.setUndecorated(true);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setSize(screenSize);
-        frame.setMinimumSize(screenSize);
-        frame.setMaximumSize(screenSize);
-        frame.setPreferredSize(screenSize);
+        frame.setResizable(false);
+        frame.setUndecorated(true);
+
         frame.setContentPane(this);
         frame.setVisible(true);
         requestFocusInWindow();
-    }
-
-
-    public void scalePos(Vector2D pos) {
-        pos.scale(1.0/ GRAPHICS_SCALE).translate(getScaledSize().scale(-0.5));
-    }
-
-
-    public int getScaledWidth() {
-        return (int) (getWidth()/GRAPHICS_SCALE);
-    }
-
-    public int getScaledHeight() {
-        return (int) (getHeight()/GRAPHICS_SCALE);
-    }
-
-    public Vector2D getScaledSize() {
-        return new Vector2D(getScaledWidth(), getScaledHeight());
     }
 
 
@@ -81,6 +79,7 @@ public class GamePanel extends JPanel {
         run(g);
         repaint();
     }
+
 
 
     private void update() {
@@ -117,6 +116,7 @@ public class GamePanel extends JPanel {
             delta--;
         }
         render(g);
+        System.out.println(getScaledSize().toStringComponents());
         frames++;
 
         if (System.currentTimeMillis() - timer > 1000) {

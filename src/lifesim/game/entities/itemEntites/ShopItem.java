@@ -2,7 +2,7 @@ package lifesim.game.entities.itemEntites;
 
 import lifesim.state.Game;
 import lifesim.game.entities.Player;
-import lifesim.game.entities.components.stats.PlayerStats;
+import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.items.Item;
 import lifesim.util.MyMath;
 

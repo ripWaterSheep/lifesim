@@ -1,4 +1,4 @@
-package lifesim.game.entities.components;
+package lifesim.game.entities.stats;
 
 import lifesim.game.entities.itemEntites.DroppedItem;
 import lifesim.game.handlers.World;

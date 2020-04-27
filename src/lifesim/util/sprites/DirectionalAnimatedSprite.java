@@ -1,4 +1,4 @@
-package lifesim.game.entities.components.sprites;
+package lifesim.util.sprites;
 
 import lifesim.util.geom.Vector2D;
 

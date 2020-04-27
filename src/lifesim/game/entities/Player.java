@@ -1,10 +1,10 @@
 package lifesim.game.entities;
 
-import lifesim.game.entities.components.sprites.Animation;
-import lifesim.game.entities.components.sprites.DirectionalAnimatedSprite;
+import lifesim.util.sprites.Animation;
+import lifesim.util.sprites.DirectionalAnimatedSprite;
 import lifesim.game.handlers.World;
 import lifesim.state.Game;
-import lifesim.game.entities.components.stats.PlayerStats;
+import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
 import lifesim.game.items.ItemTypes;
@@ -37,14 +37,17 @@ public final class Player extends MovementEntity {
         velocity.set(0, 0);
         this.game = game;
         setWorld(startingWorld);
-        inventory = new Inventory(this);
+        inventory = new Inventory(this, game);
+    }
 
+
+    public void init() {
         acquireItem(ItemTypes.laserGun, 100);
-        acquireItem(ItemTypes.bread, 100);
+        //acquireItem(ItemTypes.bread, 100);
         acquireItem(ItemTypes.waterGun, 100);
         acquireItem(ItemTypes.banana, 100);
-        acquireItem(ItemTypes.mysteriousPill, 100);
-        acquireItem(ItemTypes.virtualCoin, 100);
+        //acquireItem(ItemTypes.mysteriousPill, 100);
+        //acquireItem(ItemTypes.virtualCoin, 100);
         acquireItem(ItemTypes.bomb, 100);
         acquireItem(ItemTypes.jetPack, 100);
         acquireItem(ItemTypes.allyTest, 50);

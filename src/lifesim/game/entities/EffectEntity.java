@@ -1,7 +1,7 @@
 package lifesim.game.entities;
 
-import lifesim.game.entities.components.sprites.AnimatedSprite;
-import lifesim.game.entities.components.stats.Stats;
+import lifesim.util.sprites.AnimatedSprite;
+import lifesim.game.entities.stats.Stats;
 
 import java.awt.*;
 

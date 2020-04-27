@@ -1,10 +1,10 @@
 package lifesim.game.items;
 
 import lifesim.game.entities.Player;
-import lifesim.game.entities.components.sprites.AnimatedSprite;
-import lifesim.game.entities.components.sprites.Animation;
-import lifesim.game.entities.components.sprites.ShapeSprite;
-import lifesim.game.entities.components.stats.PlayerStats;
+import lifesim.util.sprites.AnimatedSprite;
+import lifesim.util.sprites.Animation;
+import lifesim.util.sprites.ShapeSprite;
+import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.types.AllyType;
 import lifesim.game.entities.types.ProjectileType;
 import lifesim.game.handlers.World;

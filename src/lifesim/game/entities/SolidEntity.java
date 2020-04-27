@@ -1,8 +1,8 @@
 package lifesim.game.entities;
 
-import lifesim.game.entities.components.sprites.Sprite;
+import lifesim.util.sprites.Sprite;
 import lifesim.game.handlers.World;
-import lifesim.game.entities.components.stats.Stats;
+import lifesim.game.entities.stats.Stats;
 import lifesim.util.geom.Rect;
 
 public class SolidEntity extends Entity {

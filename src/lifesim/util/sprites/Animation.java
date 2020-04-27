@@ -1,5 +1,6 @@
-package lifesim.game.entities.components.sprites;
+package lifesim.util.sprites;
 
+import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.fileIO.ImageLoader;
 
@@ -36,6 +37,16 @@ public class Animation {
         int numFrames = spriteSheet.getWidth() / spriteSize.intX();
         for (int i = 0; i < numFrames; i++) {
             frames.add(spriteSheet.getSubimage(i * spriteSize.intX(), row*spriteSize.intY(), spriteSize.intX(), spriteSize.intY()));
+        }
+    }
+
+    /** Use a row on a sprite sheet for the frames of the animation. */
+    public Animation(String spriteSheetName, int frameInterval, Vector2D spriteSize, Vector2D... cornerPositions) {
+        this.frameInterval = frameInterval;
+        BufferedImage spriteSheet = ImageLoader.loadImage(spriteSheetName);
+
+        for (Vector2D pos: cornerPositions) {
+            frames.add(spriteSheet.getSubimage(pos.intX(), pos.intY(), spriteSize.intX(), spriteSize.intY()));
         }
     }
 

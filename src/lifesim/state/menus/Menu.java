@@ -1,6 +1,6 @@
 package lifesim.state.menus;
 
-import lifesim.game.entities.components.sprites.Sprite;
+import lifesim.util.sprites.Sprite;
 import lifesim.game.input.MouseInput;
 import lifesim.state.Game;
 import lifesim.state.GameState;

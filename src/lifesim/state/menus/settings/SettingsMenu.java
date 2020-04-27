@@ -1,6 +1,6 @@
 package lifesim.state.menus.settings;
 
-import lifesim.game.entities.components.sprites.ImageSprite;
+import lifesim.util.sprites.ImageSprite;
 import lifesim.state.Game;
 import lifesim.state.engine.Main;
 import lifesim.state.menus.Menu;

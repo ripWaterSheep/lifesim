@@ -10,7 +10,7 @@ import lifesim.util.fileIO.FontLoader;
 import java.awt.*;
 
 
-public class DeathScreen extends ToggleableDisplay {
+public class DeathScreen extends ToggleableOverlay {
 
     private static final Color bgColor = new Color(215, 26, 26);
     private static final Color textColor = new Color(125, 20, 26);

@@ -1,6 +1,6 @@
 package lifesim.state.menus.ui;
 
-import lifesim.game.entities.components.sprites.Sprite;
+import lifesim.util.sprites.Sprite;
 import lifesim.game.input.MouseInput;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;

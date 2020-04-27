@@ -7,7 +7,7 @@ import lifesim.util.fileIO.FontLoader;
 import java.awt.*;
 
 
-public class MessageDisplay extends GameDisplay {
+public class MessageDisplay extends Overlay {
 
     private final Font font;
     private final Color textColor;

@@ -1,7 +1,8 @@
 package lifesim.state.menus.ui;
 
-import lifesim.game.entities.components.sprites.ImageSprite;
-import lifesim.game.entities.components.sprites.Sprite;
+import lifesim.util.geom.Rect;
+import lifesim.util.sprites.ImageSprite;
+import lifesim.util.sprites.Sprite;
 import lifesim.util.geom.Vector2D;
 
 

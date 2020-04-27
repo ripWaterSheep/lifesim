@@ -1,9 +1,10 @@
 package lifesim.game.display;
 
+import lifesim.state.engine.GamePanel;
 import lifesim.state.engine.Main;
 import lifesim.game.entities.Player;
-import lifesim.game.entities.components.stats.PlayerStats;
-import lifesim.game.entities.components.stats.StatsColors;
+import lifesim.game.entities.stats.PlayerStats;
+import lifesim.game.entities.stats.StatsColors;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.geom.Rect;
@@ -15,7 +16,7 @@ import static java.lang.Math.min;
 import static lifesim.util.MyMath.betterRound;
 
 
-public class StatBar extends GameDisplay {
+public class StatBar extends Overlay {
 
     private static final int LEFT_PADDING = 2;
     private static final int BOTTOM_PADDING = 2;
@@ -58,8 +59,7 @@ public class StatBar extends GameDisplay {
 
 
     private Vector2D getPos() {
-        Vector2D panelSize = Main.getPanel().getScaledSize();
-        Vector2D pos = panelSize.scale(-0.5, 0.5);
+        Vector2D pos = GamePanel.getScaledSize().scale(-0.5, 0.5);
         pos.translate(LEFT_PADDING, -(getCurrentBarNum()*BAR_HEIGHT) - BOTTOM_PADDING);
         return pos;
     }
