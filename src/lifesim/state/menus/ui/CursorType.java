@@ -11,7 +11,7 @@ public enum CursorType {
     HIDDEN("blank", new Point(0, 0));
 
 
-    public Cursor cursor;
+    public final Cursor cursor;
 
     CursorType(String imageName, Point clickOffset) {
         Image image = ImageLoader.loadImage(imageName);

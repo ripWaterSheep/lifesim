@@ -8,8 +8,7 @@ import lifesim.state.menus.Menu;
 import lifesim.state.menus.PauseMenu;
 import lifesim.state.menus.TitleMenu;
 import lifesim.state.menus.settings.SettingsMenu;
-
-import java.awt.*;
+import lifesim.util.fileIO.FontLoader;
 
 
 public class Main {
@@ -17,11 +16,11 @@ public class Main {
     private static Window window;
     private static GamePanel gamePanel;
 
-    private static Game currentGame;
-    private static Menu titleMenu;
-    private static Menu settingsMenu;
+    private static Game currentGame = new Game();
+    private static Menu titleMenu = new TitleMenu();
+    private static Menu settingsMenu = new SettingsMenu(currentGame);
 
-    private static GameState lastState = titleMenu;
+    private static GameState lastState;
 
 
     public static Window getWindow() {
@@ -40,11 +39,18 @@ public class Main {
 
     public static void main(String[] args) {
         window = new Window();
-        newGame();
+        FontLoader.init();
         gamePanel = new GamePanel(window, titleMenu);
-        window.init(gamePanel);
     }
 
+
+
+    public static void newGame() {
+        currentGame = new Game();
+        titleMenu = new TitleMenu();
+        settingsMenu = new SettingsMenu(currentGame);
+        gamePanel.setCurrentState(currentGame);
+    }
 
     private static void setState(GameState gs) {
         lastState = gamePanel.getCurrentState();
@@ -58,14 +64,6 @@ public class Main {
             setState(gs1);
         }
     }
-
-
-    public static void newGame() {
-        currentGame = new Game();
-        titleMenu = new TitleMenu(currentGame);
-        settingsMenu = new SettingsMenu(currentGame);
-    }
-
 
     public static void resumeGame() {
         setState(currentGame);

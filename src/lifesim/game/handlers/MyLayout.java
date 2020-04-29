@@ -2,7 +2,6 @@ package lifesim.game.handlers;
 
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
-import lifesim.game.entities.SolidEntity;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.types.EnemyType;
 import lifesim.state.Game;
@@ -22,8 +21,9 @@ public class MyLayout extends Layout {
     public void init() {
         worlds.add(
             new World("Town", 2250, 2250, new Color(60, 175, 90), new Color(200, 190, 125))
-                .add(new Entity("vRoad", new ShapeSprite(75, 2250, Color.DARK_GRAY)), 0, 0)
-                .add(new Entity("hRoad", new ShapeSprite(2250, 75, Color.DARK_GRAY)), 0, 0)
+                .add(new Entity("vRoad", new ShapeSprite(100, 2250, Color.DARK_GRAY)), 0, 0)
+                .add(new Entity("hRoad", new ShapeSprite(2250, 100, Color.DARK_GRAY)), 0, 0)
+
                 .add(new Entity("House", new ShapeSprite(200, 175, new Color(100, 80, 50))) {
                     @Override
                     public void interact(Game game, Player player, PlayerStats stats) {
@@ -61,16 +61,16 @@ public class MyLayout extends Layout {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         if (stats.attemptToPay(0.5)) {
-                            stats.energize(0.25);
+                            stats.energize(0.1);
                         }
                     }
                 }, -250, -225)
 
-                .add(new SolidEntity("Hospital", new ShapeSprite(200, 200, new Color(210, 210, 210))) {
+                .add(new Entity("Hospital", new ShapeSprite(200, 200, new Color(210, 210, 210))) {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
-                        if (stats.attemptToPay(0.25)) {
-                            if (stats.getHealth() < 1000) stats.heal(0.5);
+                        if (stats.attemptToPay(0.75)) {
+                            if (stats.getHealth() < 1000) stats.heal(1);
                         }
                     }
                 }, -250, -550)

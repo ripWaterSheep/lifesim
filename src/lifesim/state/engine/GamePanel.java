@@ -1,30 +1,31 @@
 package lifesim.state.engine;
 
-import lifesim.game.input.KeyInput;
-import lifesim.game.input.MouseInput;
 import lifesim.state.GameState;
 import lifesim.util.geom.Vector2D;
-import lifesim.util.fileIO.FontLoader;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static lifesim.state.engine.Window.getScaledSize;
 import static lifesim.util.GraphicsMethods.createGraphics;
 
 
 public class GamePanel extends JPanel {
 
-    private static final double GRAPHICS_SCALE = 3.75;
+    private static final double GRAPHICS_SCALE = 4;
+
+    // Define dimensions of game pixels (not 1:1 pixels) on screen.
+    public static final int WIDTH = 480;
+    public static final int HEIGHT = 270;
+
+    public static Vector2D getScaledSize() {
+        return new Vector2D(WIDTH, HEIGHT);
+    }
 
     public static void scalePos(Vector2D pos) {
         pos.scale(1.0 / GRAPHICS_SCALE).translate(getScaledSize().scale(-0.5));
     }
 
-
     private final Window window;
-
-
     private GameState currentState;
 
     public GamePanel(Window window, GameState gameState) {
@@ -32,13 +33,7 @@ public class GamePanel extends JPanel {
         this.window = window;
 
         setVisible(true);
-        setFocusable(true);
-        window.setContentPane(this);
-        requestFocusInWindow();
-
-        KeyInput.init(this);
-        MouseInput.init(this);
-        FontLoader.init();
+        window.init(this);
     }
 
 
@@ -58,15 +53,11 @@ public class GamePanel extends JPanel {
         repaint();
     }
 
-
     private void update() {
-        window.run();
         currentState.update();
+        window.run();
         Main.manageState();
-        KeyInput.update();
-        MouseInput.update();
     }
-
 
     private void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;

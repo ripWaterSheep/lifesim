@@ -35,11 +35,6 @@ public class World {
         this.outerColor = outerColor;
     }
 
-
-    public Rect getRect() {
-        return rect.copy();
-    }
-
     public ArrayList<Entity> getEntities() {
         return new ArrayList<>(entities);
     }

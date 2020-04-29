@@ -1,11 +1,9 @@
 package lifesim.game.input;
 
 import lifesim.state.engine.GamePanel;
-import lifesim.state.engine.Main;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.MyMath;
 
-import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -41,10 +39,10 @@ public final class MouseInput {
     }
 
 
-    public static void init(JPanel panel) {
-        panel.addMouseListener(mouseAdapter);
-        panel.addMouseMotionListener(mouseAdapter);
-        panel.addMouseWheelListener(mouseAdapter);
+    public static void init(Component c) {
+        c.addMouseListener(mouseAdapter);
+        c.addMouseMotionListener(mouseAdapter);
+        c.addMouseWheelListener(mouseAdapter);
 
         buttons.add(left);
         buttons.add(middle);
@@ -61,15 +59,11 @@ public final class MouseInput {
 
 
     public static InputListener checkForOverride(InputListener button) {
-        InputListener checkedButton;
         // Use right click functionality is left click is pressed alongside control.
-        if (button.equals(left) && KeyInput.k_ctrl.isClicked()) {
-            checkedButton = right;
-            System.out.println("dab");
-        } else {
-            checkedButton = button;
+        if (button.equals(left) && KeyInput.k_ctrl.isPressed()) {
+            button = right;
         }
-        return checkedButton;
+        return button;
     }
 
 

@@ -1,12 +1,10 @@
 package lifesim.game.items.inventory;
 
 import lifesim.game.entities.Player;
-import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
 import lifesim.game.items.Item;
 import lifesim.state.Game;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 

@@ -33,17 +33,13 @@ public class InventoryGUI extends ToggleableOverlay {
     private static final Font INFO_FONT = FontLoader.getMainFont(4);
 
 
-    private final Player player;
-
     private final Inventory inventory;
     private final ArrayList<InventorySlot> slots;
 
-    private boolean dragging = false;
     private InventorySlot lastDraggedSlot = new InventorySlot();
 
 
     public InventoryGUI(Player player) {
-        this.player = player;
         inventory = player.inventory;
         slots = inventory.getSlots();
     }

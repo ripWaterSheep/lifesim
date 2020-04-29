@@ -9,7 +9,6 @@ import java.awt.*;
 public interface Stats {
 
     boolean isAlive();
-    double getHealth();
 
     boolean hasHealth();
     void heal(double amount);

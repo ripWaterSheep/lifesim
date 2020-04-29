@@ -22,7 +22,7 @@ public abstract class MovementEntity extends Entity {
         return velocity.copy();
     }
 
-    @Override
+    
     protected void stop() {
         velocity.scale(0.7); // Slow down due to friction, approaching zero.
     }

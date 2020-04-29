@@ -9,7 +9,6 @@ import lifesim.util.geom.Vector2D;
 import lifesim.game.items.Item;
 import lifesim.game.items.ItemTypes;
 
-import javax.xml.namespace.QName;
 import java.awt.*;
 
 
@@ -37,11 +36,6 @@ public class InventorySlot {
     public void setItem(Item newItem, int newAmount) {
          item = newItem;
          amount = newAmount;
-    }
-
-
-    public int getAmount() {
-        return amount;
     }
 
     public void changeAmount(int amount) {

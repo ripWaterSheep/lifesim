@@ -16,15 +16,9 @@ public class InanimateStats implements Stats {
 
 
     @Override
-    public double getHealth() {
-        return 1;
-    }
-
-    @Override
     public boolean hasHealth() {
         return false;
     }
-
 
     @Override
     public void heal(double amount) {

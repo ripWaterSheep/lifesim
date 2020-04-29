@@ -44,11 +44,6 @@ public class Projectile extends MovementEntity {
         return owner;
     }
 
-    @Override
-    public Rect getHitBox() {
-        return super.getHitBox();
-    }
-
 
     public double getRange() {
         return range;
@@ -56,12 +51,6 @@ public class Projectile extends MovementEntity {
 
     public boolean canDamage(Entity entity) {
     return super.canDamage(entity) && !getOwner().equals(entity);
-    }
-
-
-
-    /** When this entity hits another entity that it can attack, this customizable function is called. */
-    public void eventOnHit(Entity entity) {
     }
 
 
@@ -73,13 +62,11 @@ public class Projectile extends MovementEntity {
     }
 
 
-
     @Override
     public void handleCollision(Entity entity, World world) {
         super.handleCollision(entity, world);
 
         if (canDamage(entity)) {
-            eventOnHit(entity);
             entity.push(getVelocity().normalize().scale(knockBack));
             if (!penetrate) removeFromWorld();
         }

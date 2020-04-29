@@ -29,12 +29,6 @@ public class BasicStats implements Stats {
         return false;
     }
 
-
-    @Override
-    public double getHealth() {
-        return 0;
-    }
-
     @Override
     public void heal(double amount) {
     }

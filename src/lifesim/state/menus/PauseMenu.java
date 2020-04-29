@@ -19,7 +19,7 @@ public class PauseMenu extends Menu {
 
 
     public PauseMenu(Game game) {
-        super(new ShapeSprite(100, 100, new Color(0, 0, 0, 0)), game);
+        super(new ShapeSprite(100, 100, new Color(0, 0, 0, 0)));
         this.game = game;
 
         buttons.add(new Button("Resume", new Vector2D(0, 25), ButtonSize.WIDE) {

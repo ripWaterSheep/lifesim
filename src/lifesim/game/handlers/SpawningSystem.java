@@ -30,10 +30,11 @@ public class SpawningSystem {
         //Vector2D spawnPos = world.getSize();
         //spawnPos.set(world.getSize().scale(getRand(-0.5, 0.5), getRand(-0.5, 0.5)));
         // Spawn entities around player in a circle.
+
         Vector2D spawnPos = player.getPos();
-        Vector2D distFromPlayer = new Vector2D(0, 0);
-        distFromPlayer.setMagDir(MyMath.getRand(MIN_SPAWN_RADIUS, MAX_SPAWN_RADIUS), MyMath.getRand(0, 360));
-        spawnPos.translate(distFromPlayer);
+        double distance = MyMath.getRand(MIN_SPAWN_RADIUS, MAX_SPAWN_RADIUS);
+        Vector2D spawnOffset = Vector2D.newMagDir(distance, MyMath.getRand(0, 360));
+        spawnPos.translate(spawnOffset);
 
         Entity entity = spawnable.spawnEntity();
         world.add(entity, spawnPos);

@@ -1,8 +1,6 @@
 package lifesim.util;
 
 import lifesim.state.engine.GamePanel;
-import lifesim.state.engine.Main;
-import lifesim.state.engine.Window;
 import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 
@@ -17,8 +15,9 @@ public class GraphicsMethods {
 
 
     public static void setOpacity(Graphics2D g2d, double opacity) {
-        float inRangeOpacity = (float) MyMath.clamp(opacity, 0, 1);
-        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, inRangeOpacity);
+        // Clamp opacity between 0 and 1, the range of alpha composite opacity
+        float clampedOpacity = (float) MyMath.clamp(opacity, 0, 1);
+        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, clampedOpacity);
         g2d.setComposite(ac);
     }
 
@@ -45,7 +44,7 @@ public class GraphicsMethods {
 
     public static void fillPanel(Graphics2D g2d, Color color) {
         g2d.setColor(color);
-        g2d.fill(new Rect(new Vector2D(0, 0), Window.getScaledSize().scale(1.1)));
+        g2d.fill(new Rect(new Vector2D(0, 0), GamePanel.getScaledSize().scale(1.1)));
     }
 
 }

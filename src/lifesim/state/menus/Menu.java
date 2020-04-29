@@ -2,7 +2,6 @@ package lifesim.state.menus;
 
 import lifesim.util.sprites.Sprite;
 import lifesim.game.input.MouseInput;
-import lifesim.state.Game;
 import lifesim.state.GameState;
 import lifesim.state.menus.ui.Button;
 import lifesim.util.geom.Vector2D;
@@ -16,13 +15,9 @@ public abstract class Menu implements GameState {
     private final Sprite bg;
     protected final ArrayList<Button> buttons = new ArrayList<>();
 
-    protected final Game game;
-
-    protected Menu(Sprite bg, Game game) {
+    protected Menu(Sprite bg) {
         this.bg = bg;
-        this.game = game;
     }
-
 
     @Override
     public void update() {

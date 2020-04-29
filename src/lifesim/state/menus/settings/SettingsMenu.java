@@ -13,7 +13,7 @@ import lifesim.util.geom.Vector2D;
 public class SettingsMenu extends Menu {
 
     public SettingsMenu(Game game) {
-        super(new ImageSprite("settings_test"), game);
+        super(new ImageSprite("settings_test"));
         buttons.add(new MultiStateButton("Difficulty", new Vector2D(-200, -60), ButtonSize.WIDE, 4) {
             @Override
             public void evaluateState(int state) {

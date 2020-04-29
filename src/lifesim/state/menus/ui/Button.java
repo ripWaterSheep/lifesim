@@ -18,14 +18,12 @@ public class Button {
     private String label;
     private final Sprite sprite;
     private final Vector2D pos;
-    private final ButtonSize sizeType;
 
 
-    public Button(String label, Vector2D pos, ButtonSize sizeType) {
+    public Button(String label, Vector2D pos, ButtonSize size) {
         this.label = label;
         this.pos = pos;
-        this.sizeType = sizeType;
-        this.sprite = sizeType.sprite;
+        this.sprite = size.sprite;
     }
 
     public void setLabel(String label) {

@@ -1,6 +1,5 @@
 package lifesim.game.entities;
 
-import lifesim.state.menus.ui.CursorType;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.InanimateStats;
@@ -78,7 +77,7 @@ public class Entity {
     }
 
     public boolean canDamage(Entity entity) {
-        if (equals(entity)) return false;
+        if (equals(entity) || getOwner().equals(entity)) return false;
         return stats.getAlliance().opposes(entity.stats.getAlliance());
     }
 
@@ -97,10 +96,6 @@ public class Entity {
 
     /** If the mouse is clicked when the player is touching this entity, this customizable function is called. */
     public void interact(Game game, Player player, PlayerStats stats) {
-    }
-
-
-    protected void stop() {
     }
 
     public void push(Vector2D vector2D) {

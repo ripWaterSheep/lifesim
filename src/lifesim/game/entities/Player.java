@@ -1,8 +1,5 @@
 package lifesim.game.entities;
 
-import lifesim.state.engine.GamePanel;
-import lifesim.state.engine.Main;
-import lifesim.state.menus.ui.CursorType;
 import lifesim.util.sprites.Animation;
 import lifesim.util.sprites.DirectionalAnimatedSprite;
 import lifesim.game.handlers.World;

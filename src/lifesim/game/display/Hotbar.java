@@ -1,9 +1,7 @@
 package lifesim.game.display;
 
 import lifesim.state.engine.GamePanel;
-import lifesim.state.engine.Main;
 import lifesim.game.entities.Player;
-import lifesim.state.engine.Window;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.input.KeyInput;
@@ -18,7 +16,7 @@ import java.util.ArrayList;
 
 public class Hotbar extends Overlay {
 
-    private final Vector2D displayPos = new Vector2D(0, Window.HEIGHT/2.0 - 10);
+    private final Vector2D displayPos = new Vector2D(0, GamePanel.HEIGHT/2.0 - 10);
     private static final Sprite SLOT_SELECTION = new ImageSprite("slot_selection");
 
 

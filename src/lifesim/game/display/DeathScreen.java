@@ -20,8 +20,7 @@ public class DeathScreen extends ToggleableOverlay {
 
     private static final long fadeDuration = 1500;
 
-    private static String deathReason = "";
-
+    private static final String deathReason = "";
 
     private double opacity = 0;
     private long fadeStartTime = 0;
@@ -36,8 +35,9 @@ public class DeathScreen extends ToggleableOverlay {
     @Override
     public void update() {
         if ((MouseInput.left.isClicked() || KeyInput.isAnyKeyClicked()) && opacity >= 1) {
-            hide();
             Main.newGame();
+            System.out.println(isShowing());
+            hide();
         }
 
         opacity = (double) (System.currentTimeMillis()-fadeStartTime) / fadeDuration;

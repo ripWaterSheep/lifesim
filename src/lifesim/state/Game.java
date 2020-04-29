@@ -40,9 +40,9 @@ public final class Game implements GameState {
         messageDisplay = new MessageDisplay(6, Color.WHITE, new Vector2D(0, -player.sprite.getSize().y));
         overlays.add(messageDisplay);
 
+        overlays.add(new Hotbar(player));
         inventoryGUI = new InventoryGUI(player);
         overlays.add(inventoryGUI);
-        overlays.add(new Hotbar(player));
 
         overlays.add(deathScreen);
 
@@ -124,15 +124,14 @@ public final class Game implements GameState {
 
 
     public void update() {
-        control();
         player.getWorld().update(player);
-
 
         for (Overlay display : overlays) {
             if (display.isShowing()) {
                 display.update();
             }
         }
+        control();
     }
 
     @Override

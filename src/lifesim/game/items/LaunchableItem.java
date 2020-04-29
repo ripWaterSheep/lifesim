@@ -15,11 +15,10 @@ import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
+import static lifesim.game.entities.types.EffectType.BIG_BOOM;
+
 
 public class LaunchableItem extends ClickableItem {
-
-    private static final Sprite reticle = new ImageSprite("reticle");
-
 
     private final Launchable launchable;
     private final double recoilMagnitude;
@@ -43,6 +42,8 @@ public class LaunchableItem extends ClickableItem {
             player.push(recoil);
         }
         world.add(projectile, player.getPos());
+
+        System.out.println(BIG_BOOM.spawnEntity().canDamage(projectile));
     }
 
 

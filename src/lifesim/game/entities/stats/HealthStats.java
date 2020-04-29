@@ -30,14 +30,11 @@ public class HealthStats extends BasicStats implements Stats {
         return health > 0;
     }
 
-
     @Override
     public boolean hasHealth() {
         return true;
     }
 
-
-    @Override
     public double getHealth() {
         return health;
     }
@@ -51,6 +48,7 @@ public class HealthStats extends BasicStats implements Stats {
     public void takeDamage(double damage) {
         health -= damage;
     }
+
 
     @Override
     public void update(Entity entity, World world) {

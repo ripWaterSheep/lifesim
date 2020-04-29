@@ -1,6 +1,5 @@
 package lifesim.state.menus.ui;
 
-import lifesim.util.geom.Rect;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.Sprite;
 import lifesim.util.geom.Vector2D;

@@ -1,6 +1,6 @@
 package lifesim.game.input;
 
-import javax.swing.*;
+import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
@@ -72,9 +72,9 @@ public final class KeyInput {
     }
 
 
-    public static void init(JPanel panel) {
-        panel.addKeyListener(keyAdapter);
-        panel.addFocusListener(AFKKeyPrevention);
+    public static void init(Component c) {
+        c.addKeyListener(keyAdapter);
+        c.addFocusListener(AFKKeyPrevention);
 
         keys.add(k_a);
         keys.add(k_b);

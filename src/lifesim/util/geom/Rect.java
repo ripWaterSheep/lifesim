@@ -20,16 +20,6 @@ public class Rect extends Rectangle2D.Double {
         this(new Vector2D(r.x, r.y), new Vector2D(r.width, r.height));
     }
 
-
-    public Rect copy() {
-        return new Rect(getCenterPos(), getDims());
-    }
-
-
-    public Vector2D getCornerPos() {
-        return new Vector2D(x, y);
-    }
-
     public Vector2D getCenterPos() {
         return new Vector2D(getCenterX(), getCenterY());
     }

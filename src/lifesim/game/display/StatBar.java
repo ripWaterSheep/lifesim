@@ -1,11 +1,9 @@
 package lifesim.game.display;
 
 import lifesim.state.engine.GamePanel;
-import lifesim.state.engine.Main;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.stats.StatsColors;
-import lifesim.state.engine.Window;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.geom.Rect;
@@ -60,30 +58,26 @@ public class StatBar extends Overlay {
 
 
     private Vector2D getPos() {
-        Vector2D pos = Window.getScaledSize().scale(-0.5, 0.5);
-        pos.translate(LEFT_PADDING, -(getCurrentBarNum()*BAR_HEIGHT) - BOTTOM_PADDING);
+        Vector2D pos = GamePanel.getScaledSize().scale(-0.5, 0.5);
+        pos.translate(LEFT_PADDING, -(getCurrentBarNum() * BAR_HEIGHT) - BOTTOM_PADDING);
         return pos;
     }
-
 
     private int getCurrentBarNum() {
         return currentBarNum;
     }
 
-
     private String format(String label, String data) {
         return label + ": " + data;
     }
 
-
     private <T> void writeValue(String label, T data) {
-        String formattedString = format(label, data+"");
+        String formattedString = format(label, data + "");
 
         GraphicsMethods.verticallyCenteredString(g2d, formattedString, getPos().x + TEXT_LEFT_PADDING,
-                getPos().y + BAR_HEIGHT/2.0, STAT_FONT, Color.WHITE);
+                getPos().y + BAR_HEIGHT/2.0 + 1, STAT_FONT, Color.WHITE);
         currentBarNum += 1;
     }
-
 
     private void writeRoundedVal(String label, double data) {
         writeValue(label, betterRound(data));
