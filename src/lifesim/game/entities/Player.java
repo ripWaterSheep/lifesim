@@ -158,13 +158,11 @@ public final class Player extends MovementEntity {
     public void update(World world) {
         super.update(world);
         controlMovement();
-        inventory.control();
     }
 
 
     @Override
     public void render(Graphics2D g2d) {
         super.render(g2d);
-        inventory.renderHoldingItem(g2d);
     }
 }

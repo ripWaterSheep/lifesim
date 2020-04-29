@@ -27,8 +27,8 @@ public class SpawnableItem extends ClickableItem {
     }
 
     @Override
-    public void renderWhileHolding(Graphics2D g2d, Player player) {
-        super.renderWhileHolding(g2d, player);
+    public void renderOnPlayer(Graphics2D g2d, Player player) {
+        super.renderOnPlayer(g2d, player);
         GraphicsMethods.setOpacity(g2d, 0.35);
         spawnable.spawnEntity().sprite.render(g2d, MouseInput.getCursorPos(), new Vector2D(0, 0));
     }

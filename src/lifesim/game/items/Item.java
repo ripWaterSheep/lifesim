@@ -28,7 +28,7 @@ public abstract class Item {
 
     public abstract void use(World world, Player player, PlayerStats stats);
 
-    public abstract void renderWhileHolding(Graphics2D g2d, Player player);
+    public abstract void renderOnPlayer(Graphics2D g2d, Player player);
 
     public void renderIcon(Graphics2D g2d, Vector2D pos) {
         icon.render(g2d, pos, new Vector2D(0, 0));

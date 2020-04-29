@@ -9,6 +9,7 @@ import lifesim.util.geom.Vector2D;
 import lifesim.game.items.Item;
 import lifesim.game.items.ItemTypes;
 
+import javax.xml.namespace.QName;
 import java.awt.*;
 
 

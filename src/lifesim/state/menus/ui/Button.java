@@ -39,7 +39,7 @@ public class Button {
 
     public void listen() {
         if (mouseHovering()) {
-            Main.getPanel().changeCursor(CursorType.POINTER);
+            Main.getWindow().changeCursor(CursorType.POINTER);
             if (MouseInput.left.isClicked()) {
                 onClick();
             }

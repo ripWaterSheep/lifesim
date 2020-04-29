@@ -47,10 +47,10 @@ public class LaunchableItem extends ClickableItem {
 
 
     @Override
-    public void renderWhileHolding(Graphics2D g2d, Player player) {
-        super.renderWhileHolding(g2d, player);
+    public void renderOnPlayer(Graphics2D g2d, Player player) {
+        super.renderOnPlayer(g2d, player);
         if (showReticle) {
-            Main.getPanel().changeCursor(CursorType.RETICLE);
+            Main.getWindow().changeCursor(CursorType.RETICLE);
         }
     }
 }

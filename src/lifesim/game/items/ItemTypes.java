@@ -36,7 +36,7 @@ public class ItemTypes {
             new ShapeSprite(18, 18, new Color(255, 255, 0, 100)), 250) {
         @Override
         public void use(World world, Player player, PlayerStats stats) {
-            stats.protect(0.2);
+            stats.protect(0.15);
         }
     };
 

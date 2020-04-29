@@ -28,7 +28,7 @@ public class DeathScreen extends ToggleableOverlay {
 
 
     @Override
-    public void whenFirstShown() {
+    public void start() {
         fadeStartTime = System.currentTimeMillis();
     }
 

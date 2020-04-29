@@ -9,16 +9,24 @@ import lifesim.state.menus.PauseMenu;
 import lifesim.state.menus.TitleMenu;
 import lifesim.state.menus.settings.SettingsMenu;
 
+import java.awt.*;
+
 
 public class Main {
 
+    private static Window window;
     private static GamePanel gamePanel;
 
-    private static Game currentGame = new Game();
-    private static Menu titleMenu = new TitleMenu(currentGame);
-    private static Menu settingsMenu = new SettingsMenu(currentGame);
+    private static Game currentGame;
+    private static Menu titleMenu;
+    private static Menu settingsMenu;
 
     private static GameState lastState = titleMenu;
+
+
+    public static Window getWindow() {
+        return window;
+    }
 
 
     public static GamePanel getPanel() {
@@ -31,8 +39,10 @@ public class Main {
 
 
     public static void main(String[] args) {
-        gamePanel = new GamePanel(titleMenu);
-        gamePanel.init();
+        window = new Window();
+        newGame();
+        gamePanel = new GamePanel(window, titleMenu);
+        window.init(gamePanel);
     }
 
 
@@ -54,7 +64,6 @@ public class Main {
         currentGame = new Game();
         titleMenu = new TitleMenu(currentGame);
         settingsMenu = new SettingsMenu(currentGame);
-        resumeGame();
     }
 
 

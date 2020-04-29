@@ -49,7 +49,7 @@ public abstract class PressableItem extends Item {
     }
 
     @Override
-    public void renderWhileHolding(Graphics2D g2d, Player player) {
+    public void renderOnPlayer(Graphics2D g2d, Player player) {
         if (shouldBeUsed())
         effectSprite.render(g2d, player.getDisplayPos(), player.getVelocity());
     }

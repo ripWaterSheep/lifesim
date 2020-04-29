@@ -5,6 +5,7 @@ import lifesim.state.engine.Main;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.stats.StatsColors;
+import lifesim.state.engine.Window;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.geom.Rect;
@@ -59,7 +60,7 @@ public class StatBar extends Overlay {
 
 
     private Vector2D getPos() {
-        Vector2D pos = GamePanel.getScaledSize().scale(-0.5, 0.5);
+        Vector2D pos = Window.getScaledSize().scale(-0.5, 0.5);
         pos.translate(LEFT_PADDING, -(getCurrentBarNum()*BAR_HEIGHT) - BOTTOM_PADDING);
         return pos;
     }

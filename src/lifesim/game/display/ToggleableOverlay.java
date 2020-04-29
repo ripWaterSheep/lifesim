@@ -5,7 +5,7 @@ public abstract class ToggleableOverlay extends Overlay {
     private boolean showing = false;
 
     public void show() {
-        if (!showing) whenFirstShown();
+        if (!showing) start();
         showing = true;
     }
 
@@ -15,7 +15,7 @@ public abstract class ToggleableOverlay extends Overlay {
 
     public void toggle() {
         showing = !showing;
-        if (showing) whenFirstShown();
+        if (showing) start();
     }
 
     @Override
@@ -23,5 +23,5 @@ public abstract class ToggleableOverlay extends Overlay {
         return showing;
     }
 
-    public abstract void whenFirstShown();
+    public abstract void start();
 }

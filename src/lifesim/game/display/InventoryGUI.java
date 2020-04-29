@@ -17,7 +17,6 @@ import lifesim.util.fileIO.FontLoader;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static lifesim.game.items.inventory.Inventory.NULL_SLOT;
 import static lifesim.game.items.inventory.Inventory.WIDTH;
 
 
@@ -39,7 +38,8 @@ public class InventoryGUI extends ToggleableOverlay {
     private final Inventory inventory;
     private final ArrayList<InventorySlot> slots;
 
-    private InventorySlot lastDraggedSlot = NULL_SLOT;
+    private boolean dragging = false;
+    private InventorySlot lastDraggedSlot = new InventorySlot();
 
 
     public InventoryGUI(Player player) {
@@ -70,7 +70,7 @@ public class InventoryGUI extends ToggleableOverlay {
 
     // Get the slot that contains the mouse cursor in its hit box.
     public InventorySlot getMouseHoveringSlot() {
-        InventorySlot mouseOverSlot = NULL_SLOT;
+        InventorySlot mouseOverSlot = new InventorySlot();
         for (InventorySlot slot: inventory.getSlots()) {
             if (getSlotHitBox(slot).contains(MouseInput.getCursorPos().toPoint())) {
                 mouseOverSlot = slot;
@@ -83,34 +83,34 @@ public class InventoryGUI extends ToggleableOverlay {
 
     private void moveItems() {
         InventorySlot hoveringSlot = getMouseHoveringSlot();
-        if (!hoveringSlot.equals(NULL_SLOT)) {
 
+        if (slots.contains(hoveringSlot)) {
             if (!hoveringSlot.isEmpty()) { // Show interaction mouse cursor only if the slot contains an item to move.
-                Main.getPanel().changeCursor(CursorType.POINTER);
-            }
+                Main.getWindow().changeCursor(CursorType.POINTER);
 
-            if (MouseInput.left.isClicked() && !hoveringSlot.isEmpty()) {
-                lastDraggedSlot = hoveringSlot;
-                if (KeyInput.k_shift.isPressed()) {
-                    lastDraggedSlot.swapItem(inventory.getFirstEmptySlot());
+                if (MouseInput.left.isClicked()) {
+                    lastDraggedSlot = hoveringSlot;
+
+                    if (KeyInput.k_shift.isPressed()) {
+                        lastDraggedSlot.swapItem(inventory.getFirstEmptySlot());
+                    }
                 }
             }
 
             if (MouseInput.left.isReleased()) {
-                getMouseHoveringSlot().swapItem(lastDraggedSlot);
-                lastDraggedSlot = NULL_SLOT;
+                hoveringSlot.swapItem(lastDraggedSlot);
+                lastDraggedSlot = new InventorySlot();
             }
+
         } else if (MouseInput.left.isReleased()) {
-            inventory.selectSlot(lastDraggedSlot);
-            lastDraggedSlot = NULL_SLOT;
-            inventory.getSelectedSlot().dropItem(player.getWorld(), player.getPos().translate(MouseInput.getCursorPos()));
+            inventory.dropItemInWorld(lastDraggedSlot);
+            lastDraggedSlot = new InventorySlot();
         }
     }
 
 
     @Override
-    public void whenFirstShown() {
-
+    public void start() {
     }
 
 
