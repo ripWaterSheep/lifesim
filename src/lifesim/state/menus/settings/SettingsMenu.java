@@ -1,5 +1,7 @@
 package lifesim.state.menus.settings;
 
+import lifesim.state.engine.GameWindow;
+import lifesim.state.engine.StateManager;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.state.Game;
 import lifesim.state.engine.Main;
@@ -12,9 +14,11 @@ import lifesim.util.geom.Vector2D;
 
 public class SettingsMenu extends Menu {
 
-    public SettingsMenu(Game game) {
+    public SettingsMenu(Game game, GameWindow window, StateManager stateManager) {
         super(new ImageSprite("settings_test"));
-        buttons.add(new MultiStateButton("Difficulty", new Vector2D(-200, -60), ButtonSize.WIDE, 4) {
+
+        buttons.add(new MultiStateButton("Difficulty", new Vector2D(-200, -60), ButtonSize.WIDE, window, 4) {
+
             @Override
             public void evaluateState(int state) {
                 switch (state) {
@@ -37,12 +41,12 @@ public class SettingsMenu extends Menu {
                 }
             }
         });
-        buttons.add(new Button("Exit", new Vector2D(220, -120), ButtonSize.MID) {
+
+        buttons.add(new Button("Exit", new Vector2D(200, -120), ButtonSize.MID, window) {
             @Override
             protected void onClick() {
-                Main.goToPrevious();
+                stateManager.goToPrevious();
             }
         });
     }
-
 }

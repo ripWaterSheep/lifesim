@@ -1,7 +1,6 @@
 package lifesim.state.engine;
 
 import lifesim.state.GameState;
-import lifesim.util.geom.Vector2D;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,26 +10,16 @@ import static lifesim.util.GraphicsMethods.createGraphics;
 
 public class GamePanel extends JPanel {
 
-    private static final double GRAPHICS_SCALE = 4;
+    private final GameWindow window;
+    private final StateManager stateManager;
 
-    // Define dimensions of game pixels (not 1:1 pixels) on screen.
-    public static final int WIDTH = 480;
-    public static final int HEIGHT = 270;
-
-    public static Vector2D getScaledSize() {
-        return new Vector2D(WIDTH, HEIGHT);
-    }
-
-    public static void scalePos(Vector2D pos) {
-        pos.scale(1.0 / GRAPHICS_SCALE).translate(getScaledSize().scale(-0.5));
-    }
-
-    private final Window window;
     private GameState currentState;
 
-    public GamePanel(Window window, GameState gameState) {
-        this.currentState = gameState;
+    public GamePanel(GameWindow window, StateManager stateManager, GameState gameState) {
+        this.stateManager = stateManager;
         this.window = window;
+
+        this.currentState = gameState;
 
         setVisible(true);
         window.init(this);
@@ -56,13 +45,15 @@ public class GamePanel extends JPanel {
     private void update() {
         currentState.update();
         window.run();
-        Main.manageState();
+        stateManager.manageState();
     }
 
     private void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.translate(getWidth()/2, getHeight()/2);
-        g2d.scale(GRAPHICS_SCALE, GRAPHICS_SCALE);
+
+        double scale = GameWindow.getGraphicsScale();
+        g2d.scale(scale, scale);
 
         currentState.render(createGraphics(g));
     }

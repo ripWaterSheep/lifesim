@@ -1,5 +1,6 @@
 package lifesim.state.menus;
 
+import lifesim.state.engine.StateManager;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.input.MouseInput;
 import lifesim.state.GameState;
@@ -14,6 +15,7 @@ public abstract class Menu implements GameState {
 
     private final Sprite bg;
     protected final ArrayList<Button> buttons = new ArrayList<>();
+
 
     protected Menu(Sprite bg) {
         this.bg = bg;

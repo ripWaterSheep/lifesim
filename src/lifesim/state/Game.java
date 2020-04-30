@@ -7,7 +7,8 @@ import lifesim.game.handlers.MyLayout;
 import lifesim.game.handlers.World;
 import lifesim.game.input.KeyInput;
 import lifesim.game.display.*;
-import lifesim.state.engine.Main;
+import lifesim.state.engine.GameWindow;
+import lifesim.state.engine.StateManager;
 import lifesim.state.menus.settings.Difficulty;
 import lifesim.util.geom.Vector2D;
 
@@ -25,14 +26,17 @@ public final class Game implements GameState {
     private final ArrayList<Overlay> overlays = new ArrayList<>();
     private final MessageDisplay messageDisplay;
     private final ToggleableOverlay inventoryGUI;
-    private final ToggleableOverlay deathScreen = new DeathScreen();
+    private final ToggleableOverlay deathScreen;
 
     private boolean canBePaused = true;
 
     private Difficulty currentDifficulty = Difficulty.MEDIUM;
 
+    private final StateManager stateManager;
 
-    public Game() {
+
+    public Game(GameWindow window, StateManager stateManager) {
+        this.stateManager = stateManager;
         layout.init();
         player = new Player(this, layout.getWorlds().get(0));
 
@@ -40,10 +44,11 @@ public final class Game implements GameState {
         messageDisplay = new MessageDisplay(6, Color.WHITE, new Vector2D(0, -player.sprite.getSize().y));
         overlays.add(messageDisplay);
 
-        overlays.add(new Hotbar(player));
+        overlays.add(new Hotbar(player, window));
         inventoryGUI = new InventoryGUI(player);
         overlays.add(inventoryGUI);
 
+        deathScreen = new DeathScreen(stateManager);
         overlays.add(deathScreen);
 
         player.init();
@@ -97,7 +102,7 @@ public final class Game implements GameState {
             if (KeyInput.k_4.isPressed()) stats.gainMoney(10);
             if (KeyInput.k_5.isPressed()) stats.gainIntellect(10);
             if (KeyInput.k_k.isClicked()) stats.takeDamage(10000);
-            if (KeyInput.k_r.isClicked()) Main.newGame();
+            if (KeyInput.k_r.isClicked()) stateManager.newGame();
         }
     }
 

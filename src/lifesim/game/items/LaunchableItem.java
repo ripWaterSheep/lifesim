@@ -2,9 +2,8 @@ package lifesim.game.items;
 
 import lifesim.game.entities.Player;
 import lifesim.game.entities.Projectile;
-import lifesim.state.engine.Main;
+import lifesim.state.engine.GameWindow;
 import lifesim.state.menus.ui.CursorType;
-import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.PlayerStats;
@@ -48,10 +47,10 @@ public class LaunchableItem extends ClickableItem {
 
 
     @Override
-    public void renderOnPlayer(Graphics2D g2d, Player player) {
-        super.renderOnPlayer(g2d, player);
+    public void renderOnPlayer(Graphics2D g2d, Player player, GameWindow window) {
+        super.renderOnPlayer(g2d, player, window);
         if (showReticle) {
-            Main.getWindow().changeCursor(CursorType.RETICLE);
+            window.changeCursor(CursorType.RETICLE);
         }
     }
 }

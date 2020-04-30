@@ -48,7 +48,7 @@ public class Entity {
     }
 
     public Vector2D getDisplayPos() {
-        return getPos().translate(Main.getCurrentGame().getPlayer().getPos().negate());
+        return getPos().translate(Main.getCurrentPlayer().getPos().negate());
     }
 
     public Rect getHitBox() {

@@ -1,6 +1,7 @@
 package lifesim.game.items;
 
 import lifesim.game.entities.Player;
+import lifesim.state.engine.GameWindow;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.handlers.World;
@@ -30,7 +31,7 @@ public abstract class ClickableItem extends Item {
 
 
     @Override
-    public void renderOnPlayer(Graphics2D g2d, Player player) {
+    public void renderOnPlayer(Graphics2D g2d, Player player, GameWindow window) {
         //icon.render(g2d, player.getDisplayPos(), player.getVelocity());
     }
 

@@ -1,6 +1,7 @@
 package lifesim.game.items;
 
 import lifesim.game.entities.Player;
+import lifesim.state.engine.GameWindow;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.itemEntites.DroppedItem;
@@ -20,6 +21,9 @@ public abstract class Item {
         this.icon = icon;
     }
 
+    public DroppedItem getDroppedEntity(int amount) {
+        return new DroppedItem(this, amount);
+    }
 
     public abstract boolean shouldBeUsed();
 
@@ -28,14 +32,10 @@ public abstract class Item {
 
     public abstract void use(World world, Player player, PlayerStats stats);
 
-    public abstract void renderOnPlayer(Graphics2D g2d, Player player);
+    public abstract void renderOnPlayer(Graphics2D g2d, Player player, GameWindow window);
 
     public void renderIcon(Graphics2D g2d, Vector2D pos) {
         icon.render(g2d, pos, new Vector2D(0, 0));
-    }
-
-    public DroppedItem getDroppedEntity(int amount) {
-        return new DroppedItem(this, amount);
     }
 
 }

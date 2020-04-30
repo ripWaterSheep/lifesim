@@ -1,8 +1,8 @@
 package lifesim.game.handlers;
 
-import lifesim.state.engine.Main;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
+import lifesim.util.GraphicsMethods;
 import lifesim.util.sprites.ShapeSprite;
 import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
@@ -100,11 +100,11 @@ public class World {
     }
 
 
-    public void render(Graphics g) {
-        Main.getPanel().setBackground(outerColor);
+    public void render(Graphics2D g2d) {
+        GraphicsMethods.fillPanel(g2d, outerColor);
 
         for (Entity entity: entities) {
-            entity.render(createGraphics(g));
+            entity.render(createGraphics(g2d));
         }
     }
 

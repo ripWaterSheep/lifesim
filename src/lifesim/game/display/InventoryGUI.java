@@ -17,7 +17,6 @@ import lifesim.util.fileIO.FontLoader;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static lifesim.game.items.inventory.Inventory.WIDTH;
 
 
 public class InventoryGUI extends ToggleableOverlay {
@@ -26,8 +25,6 @@ public class InventoryGUI extends ToggleableOverlay {
     public static final double DISPLAY_SCALE = 1.5;
 
     private static final Vector2D DISPLAY_POS = new Vector2D(0, 0);
-    private static final Vector2D ITEM_OFFSET = new Vector2D(0.5 - (Inventory.WIDTH*0.5), -1);
-
     private static final Sprite BG = new ImageSprite("inventory_bg");
     private static final Sprite FG = new ImageSprite("inventory_fg");
     private static final Font INFO_FONT = FontLoader.getMainFont(4);
@@ -47,11 +44,11 @@ public class InventoryGUI extends ToggleableOverlay {
     // Get the position a slot should be displayed at based on it's index in the inventory's slots.
     private Vector2D getSlotDisplayPos(InventorySlot slot) {
         int index = slots.indexOf(slot);
-        int x = index % WIDTH;
-        int y = index / WIDTH;
+        int x = index % inventory.width;
+        int y = index / inventory.width;
 
         Vector2D pos = new Vector2D(x, y);
-        pos.translate(ITEM_OFFSET);
+        pos.translate(0.5 - (inventory.width *0.5), -1); // Make position start in corner of inventory.
         pos.scale(GRID_SIZE);
         pos.translate(DISPLAY_POS);
         return pos;

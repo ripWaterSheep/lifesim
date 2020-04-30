@@ -1,21 +1,21 @@
 package lifesim.state.menus.ui;
 
+import lifesim.state.engine.GameWindow;
 import lifesim.util.geom.Vector2D;
 
-public class MultiStateButton extends Button {
+public abstract class MultiStateButton extends Button {
 
     private final int numStates;
     private int currentState = 0;
 
-    public MultiStateButton(String label, Vector2D pos, ButtonSize sizeType, int numStates) {
-        super(label, pos, sizeType);
+    public MultiStateButton(String label, Vector2D pos, ButtonSize sizeType, GameWindow window, int numStates) {
+        super(label, pos, sizeType, window);
         this.numStates = numStates;
     }
 
 
     @Override
     protected void onClick() {
-        super.onClick();
         currentState++;
         if (currentState >= numStates) {
             currentState = 0;
@@ -23,7 +23,7 @@ public class MultiStateButton extends Button {
         evaluateState(currentState);
     }
 
-    public void evaluateState(int state) {
-    }
+
+    public abstract void evaluateState(int state);
 
 }

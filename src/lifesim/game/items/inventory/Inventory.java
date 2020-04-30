@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class Inventory {
 
-    public static final int WIDTH = 3;
-    public static final int HEIGHT = 3;
-    public static final int SIZE = WIDTH * HEIGHT;
+    public final int width = 3;
+    public final int height = 3;
+    public final int size = width * height;
 
     private final Player player;
     private final Game game;
@@ -24,7 +24,7 @@ public class Inventory {
         this.player = player;
         this.game = game;
 
-        for (int i = 0; i < SIZE; i++) {
+        for (int i = 0; i < size; i++) {
             slots.add(new InventorySlot());
         }
     }

@@ -7,13 +7,13 @@ import lifesim.state.Game;
 
 import java.util.ArrayList;
 
-public class RegenerativeSpawningSystem extends SpawningSystem {
+public class BalancedSpawningSystem extends SpawningSystem {
 
     private final ArrayList<Entity> spawn = new ArrayList<>();
     private final int maxSpawn;
 
     /** Spawns an entity only when a previously spawned entity is removed. */
-    public RegenerativeSpawningSystem(Spawnable spawnable, long spawnInterval, int maxSpawn, Game game) {
+    public BalancedSpawningSystem(Spawnable spawnable, long spawnInterval, int maxSpawn, Game game) {
         super(spawnable, spawnInterval, game);
         this.maxSpawn = maxSpawn;
     }

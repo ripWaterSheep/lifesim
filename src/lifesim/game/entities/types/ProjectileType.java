@@ -22,7 +22,7 @@ public enum ProjectileType implements Launchable {
     FIST {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
-            double strength = Main.getCurrentGame().getPlayer().getStats().getStrength();
+            double strength = Main.getCurrentPlayer().getStats().getStrength();
 
             return new Projectile(owner.name + "'s Fist", new ImageSprite("fist"), new BasicStats(1 + (strength/100),
                     Alliance.PLAYER), owner, 6, angle, 30, true, 10, true) {

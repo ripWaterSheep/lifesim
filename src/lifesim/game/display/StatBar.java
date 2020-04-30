@@ -1,9 +1,9 @@
 package lifesim.game.display;
 
-import lifesim.state.engine.GamePanel;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.stats.StatsColors;
+import lifesim.state.engine.GameWindow;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.geom.Rect;
@@ -17,8 +17,8 @@ import static lifesim.util.MyMath.betterRound;
 
 public class StatBar extends Overlay {
 
-    private static final int LEFT_PADDING = 2;
-    private static final int BOTTOM_PADDING = 2;
+    private static final int LEFT_PADDING = 0;
+    private static final int BOTTOM_PADDING = 0;
     private static final int BAR_HEIGHT = 8;
 
     private static final Font STAT_FONT = FontLoader.getMainFont(6);
@@ -58,7 +58,7 @@ public class StatBar extends Overlay {
 
 
     private Vector2D getPos() {
-        Vector2D pos = GamePanel.getScaledSize().scale(-0.5, 0.5);
+        Vector2D pos = GameWindow.getScaledSize().scale(-0.5, 0.5);
         pos.translate(LEFT_PADDING, -(getCurrentBarNum() * BAR_HEIGHT) - BOTTOM_PADDING);
         return pos;
     }

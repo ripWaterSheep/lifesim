@@ -62,16 +62,6 @@ public final class KeyInput {
     public static final InputListener k_ctrl = new InputListener(VK_CONTROL);
 
 
-    public static boolean isAnyKeyClicked() {
-        boolean anyClicked = false;
-        for (InputListener key: keys) {
-            if (key.isClicked())
-                anyClicked = true;
-        }
-        return anyClicked;
-    }
-
-
     public static void init(Component c) {
         c.addKeyListener(keyAdapter);
         c.addFocusListener(AFKKeyPrevention);
@@ -123,7 +113,18 @@ public final class KeyInput {
     }
 
 
-   public static void update() {
+    public static boolean isAnyKeyClicked() {
+        boolean anyClicked = false;
+        for (InputListener key: keys) {
+            if (key.isClicked())
+                anyClicked = true;
+        }
+        return anyClicked;
+    }
+
+
+
+    public static void update() {
         for (InputListener key: keys) {
             key.update();
         }

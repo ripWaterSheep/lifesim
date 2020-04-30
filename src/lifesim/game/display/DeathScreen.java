@@ -1,8 +1,8 @@
 package lifesim.game.display;
 
-import lifesim.state.engine.Main;
 import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
+import lifesim.state.engine.StateManager;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
@@ -25,6 +25,12 @@ public class DeathScreen extends ToggleableOverlay {
     private double opacity = 0;
     private long fadeStartTime = 0;
 
+    private final StateManager stateManager;
+
+    public DeathScreen(StateManager stateManager) {
+        this.stateManager = stateManager;
+    }
+
 
     @Override
     public void start() {
@@ -35,8 +41,7 @@ public class DeathScreen extends ToggleableOverlay {
     @Override
     public void update() {
         if ((MouseInput.left.isClicked() || KeyInput.isAnyKeyClicked()) && opacity >= 1) {
-            Main.newGame();
-            System.out.println(isShowing());
+            stateManager.newGame();
             hide();
         }
 

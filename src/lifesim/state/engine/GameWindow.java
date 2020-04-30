@@ -3,15 +3,34 @@ package lifesim.state.engine;
 import lifesim.game.input.KeyInput;
 import lifesim.game.input.MouseInput;
 import lifesim.state.menus.ui.CursorType;
+import lifesim.util.geom.Rect;
+import lifesim.util.geom.Vector2D;
 
 import javax.swing.*;
 import java.awt.*;
 
 
-public class Window extends JFrame {
+public class GameWindow extends JFrame {
 
-    // Fit screen size to screen resolution.
-    private static final Dimension screenSize = new Dimension(1920, 1080);
+    // Dimensions of game pixels (not 1:1 pixels) on screen.
+    public static final int WIDTH = 480;
+    public static final int HEIGHT = 270;
+
+    // How big each game pixel is in real pixels.
+    private static final int graphicsScale = 4;
+
+    static double getGraphicsScale() {
+        return graphicsScale;
+    }
+
+
+    public static Vector2D getScaledSize() {
+        return new Vector2D(WIDTH, HEIGHT);
+    }
+
+    public static void scalePos(Vector2D pos) {
+        pos.scale(1.0 / graphicsScale).translate(getScaledSize().scale(-0.5));
+    }
 
 
     private CursorType currentCursor = CursorType.DEFAULT;
@@ -31,19 +50,16 @@ public class Window extends JFrame {
 
 
     void init(JPanel panel) {
-        setTitle("");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setSize(screenSize);
-        setResizable(false);
         setUndecorated(true);
-        setContentPane(panel);
-        setLocationRelativeTo(null);
-        setVisible(true);
+        setSize(1920, 1080);
 
         MouseInput.init(this);
         KeyInput.init(this);
+
+        setContentPane(panel);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setVisible(true);
         setFocusable(true);
         requestFocusInWindow();
     }

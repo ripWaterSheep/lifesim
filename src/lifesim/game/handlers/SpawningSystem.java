@@ -18,6 +18,7 @@ public class SpawningSystem {
     private final long spawnInterval;
     private long lastSpawnTime = System.currentTimeMillis();
 
+
     /** Spawns entities of a certain type around the player after a certain interval passes. */
     public SpawningSystem(Spawnable spawnable, long spawnInterval, Game game) {
         this.spawnable = spawnable;
@@ -47,7 +48,7 @@ public class SpawningSystem {
         double currentInterval = spawnInterval;
 
         if (spawnable.spawnEntity().isEnemy()) { // Make only enemy spawn rate affected by difficulty.
-            currentInterval = (long) (spawnInterval * game.getDifficulty().spawnRate);
+            currentInterval = (long) (spawnInterval*game.getDifficulty().spawnInterval);
         }
 
         if (System.currentTimeMillis() - lastSpawnTime > currentInterval) {

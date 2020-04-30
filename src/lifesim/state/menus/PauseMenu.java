@@ -1,5 +1,7 @@
 package lifesim.state.menus;
 
+import lifesim.state.engine.GameWindow;
+import lifesim.state.engine.StateManager;
 import lifesim.util.sprites.ShapeSprite;
 import lifesim.state.Game;
 import lifesim.state.engine.Main;
@@ -18,26 +20,26 @@ public class PauseMenu extends Menu {
     private final Font font = FontLoader.getMainFont(18);
 
 
-    public PauseMenu(Game game) {
+    public PauseMenu(Game game, GameWindow window, StateManager stateManager) {
         super(new ShapeSprite(100, 100, new Color(0, 0, 0, 0)));
         this.game = game;
 
-        buttons.add(new Button("Resume", new Vector2D(0, 25), ButtonSize.WIDE) {
+        buttons.add(new Button("Resume", new Vector2D(0, 25), ButtonSize.WIDE, window) {
             @Override
             public void onClick() {
-                Main.resumeGame();
+                stateManager.resumeGame();
             }
         });
-        buttons.add(new Button("Settings",  new Vector2D(0, 50), ButtonSize.MID) {
+        buttons.add(new Button("Settings",  new Vector2D(0, 50), ButtonSize.MID, window) {
             @Override
             protected void onClick() {
-                Main.goToSettings();
+                stateManager.goToSettings();
             }
         });
-        buttons.add(new Button("Exit", new Vector2D(0, 75), ButtonSize.MID) {
+        buttons.add(new Button("Exit", new Vector2D(0, 75), ButtonSize.MID, window) {
             @Override
             public void onClick() {
-                Main.goToTitle();
+                stateManager.goToTitle();
             }
         });
     }
