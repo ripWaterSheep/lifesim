@@ -17,6 +17,7 @@ public class StateManager {
     private Game currentGame;
     private Menu titleMenu;
     private Menu settingsMenu;
+    private Menu pauseMenu;
 
     private GameState lastState;
 
@@ -24,17 +25,25 @@ public class StateManager {
     public StateManager(GameWindow window) {
         this.window = window;
 
-        currentGame = new Game(window, this);
-        titleMenu = new TitleMenu(window, this);
-        settingsMenu = new SettingsMenu(currentGame, window, this);
-
-        this.panel = new GamePanel(window, this, titleMenu);
+        init();
+        panel = new GamePanel(window, this, titleMenu);
     }
 
-    public void newGame() {
+    Player getCurrentPlayer() {
+        return currentGame.getPlayer();
+    }
+
+
+    public void init() {
         currentGame = new Game(window, this);
         titleMenu = new TitleMenu(window, this);
+        pauseMenu = new PauseMenu(currentGame, window, this);
         settingsMenu = new SettingsMenu(currentGame, window, this);
+    }
+
+
+    public void newGame() {
+        init();
         panel.setCurrentState(currentGame);
     }
 
@@ -43,21 +52,6 @@ public class StateManager {
         lastState = panel.getCurrentState();
         panel.setCurrentState(gs);
     }
-
-
-    private void toggleStateType(GameState gs1, GameState gs2) {
-        if (panel.getCurrentState().getClass().equals(gs1.getClass())) {
-            setState(gs2);
-        } else if (panel.getCurrentState().getClass().equals(gs2.getClass())) {
-            setState(gs1);
-        }
-    }
-
-
-    Player getCurrentPlayer() {
-        return currentGame.getPlayer();
-    }
-
 
     public void resumeGame() {
         setState(currentGame);
@@ -82,8 +76,16 @@ public class StateManager {
 
 
     public void manageState() {
-        if (KeyInput.k_esc.isClicked() && currentGame.canBePaused()) {
-            toggleStateType(currentGame, new PauseMenu(currentGame, window, this));
+        GameState state = panel.getCurrentState();
+
+        if (KeyInput.k_esc.isClicked()) {
+            if (state.equals(currentGame) && currentGame.canBePaused()) {
+                setState(pauseMenu);
+            } else {
+                if (state.equals(pauseMenu)) {
+                    setState(currentGame);
+                }
+            }
         }
     }
 

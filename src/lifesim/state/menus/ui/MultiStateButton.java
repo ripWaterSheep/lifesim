@@ -8,7 +8,7 @@ public abstract class MultiStateButton extends Button {
     private final int numStates;
     private int currentState = 0;
 
-    public MultiStateButton(String label, Vector2D pos, ButtonSize sizeType, GameWindow window, int numStates) {
+    public MultiStateButton(String label, Vector2D pos, ButtonType sizeType, GameWindow window, int numStates) {
         super(label, pos, sizeType, window);
         this.numStates = numStates;
     }

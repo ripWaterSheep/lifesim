@@ -21,7 +21,7 @@ public abstract class Button {
     private final GameWindow window;
 
 
-    public Button(String label, Vector2D pos, ButtonSize size, GameWindow window) {
+    public Button(String label, Vector2D pos, ButtonType size, GameWindow window) {
         this.label = label;
         this.pos = pos;
         this.sprite = size.sprite;
