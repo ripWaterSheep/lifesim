@@ -1,7 +1,7 @@
 package lifesim.game.display;
 
-import lifesim.game.input.KeyInput;
-import lifesim.game.input.MouseInput;
+import lifesim.input.KeyInput;
+import lifesim.input.MouseInput;
 import lifesim.state.engine.StateManager;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.GraphicsMethods;

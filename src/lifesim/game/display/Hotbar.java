@@ -1,10 +1,11 @@
 package lifesim.game.display;
 
 import lifesim.game.entities.Player;
+import lifesim.state.engine.GamePanel;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.Sprite;
-import lifesim.game.input.KeyInput;
-import lifesim.game.input.MouseInput;
+import lifesim.input.KeyInput;
+import lifesim.input.MouseInput;
 import lifesim.game.items.inventory.Inventory;
 import lifesim.game.items.inventory.InventorySlot;
 import lifesim.util.geom.Vector2D;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class Hotbar extends Overlay {
 
-    private final Vector2D displayPos = new Vector2D(0, GameWindow.HEIGHT/2.0 - 10);
+    private final Vector2D displayPos = new Vector2D(0, GamePanel.HEIGHT/2.0 - 10);
     private static final Sprite SLOT_SELECTION = new ImageSprite("slot_selection");
 
 
@@ -72,7 +73,10 @@ public class Hotbar extends Overlay {
     public void render(Graphics2D g2d) {
 
         for (int i = minIndex; i < maxIndex + 1; i++) {
-            Vector2D itemPos = displayPos.copy().translate(((i % inventory.width) - inventory.width *0.5 + 0.5) * InventoryGUI.GRID_SIZE, 0);
+            double itemX = ((i % inventory.width) - inventory.width/2.0) + 0.5;
+            itemX *= InventoryGUI.GRID_SIZE;
+            Vector2D itemPos = displayPos.copy().translate(itemX, 0);
+
             InventorySlot slot = slots.get(i);
 
             if (selectedSlot.equals(slot)) {

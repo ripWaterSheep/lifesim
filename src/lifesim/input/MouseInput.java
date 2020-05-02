@@ -1,8 +1,8 @@
-package lifesim.game.input;
+package lifesim.input;
 
+import lifesim.state.engine.GamePanel;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.MyMath;
-import lifesim.state.engine.GameWindow;
 
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
@@ -10,7 +10,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
-import java.util.Locale;
 
 
 public final class MouseInput {
@@ -83,7 +82,7 @@ public final class MouseInput {
         public void mouseMoved(MouseEvent e) {
             lastCursorPos.set(cursorPos);
             cursorPos.set(e.getX(), e.getY());
-            GameWindow.scalePos(cursorPos);
+            GamePanel.scalePos(cursorPos);
         }
 
         @Override

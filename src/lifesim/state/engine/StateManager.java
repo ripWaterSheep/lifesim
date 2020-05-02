@@ -1,7 +1,7 @@
 package lifesim.state.engine;
 
 import lifesim.game.entities.Player;
-import lifesim.game.input.KeyInput;
+import lifesim.input.KeyInput;
 import lifesim.state.Game;
 import lifesim.state.GameState;
 import lifesim.state.menus.Menu;

@@ -1,6 +1,9 @@
 package lifesim.state.engine;
 
+import lifesim.input.KeyInput;
+import lifesim.input.MouseInput;
 import lifesim.state.GameState;
+import lifesim.util.geom.Vector2D;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +12,22 @@ import static lifesim.util.GraphicsMethods.createGraphics;
 
 
 public class GamePanel extends JPanel {
+
+    // Dimensions of game pixels (not 1:1 pixels) on screen.
+    public static final int WIDTH = 480;
+    public static final int HEIGHT = 270;
+
+    // How big each game pixel is in real pixels.
+    private static final double graphicsScale = 4;
+
+    public static Vector2D getScaledSize() {
+        return new Vector2D(WIDTH, HEIGHT);
+    }
+
+    public static void scalePos(Vector2D pos) {
+        pos.scale(1/graphicsScale).translate(getScaledSize().scale(-0.5));
+    }
+
 
     private final GameWindow window;
     private final StateManager stateManager;
@@ -21,8 +40,14 @@ public class GamePanel extends JPanel {
 
         this.currentState = gameState;
 
+        Dimension size = new Dimension(1920, 1080);
+        setPreferredSize(size);
+        setSize(size);
+        setFocusable(true);
         setVisible(true);
+
         window.init(this);
+        requestFocusInWindow();
     }
 
 
@@ -39,20 +64,21 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         run(g);
+        requestFocusInWindow();
         repaint();
     }
 
     private void update() {
         currentState.update();
-        window.run();
         stateManager.manageState();
+        window.run();
     }
 
     private void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.translate(getWidth()/2, getHeight()/2);
 
-        double scale = GameWindow.getGraphicsScale();
+        double scale = graphicsScale;
         g2d.scale(scale, scale);
 
         currentState.render(createGraphics(g));

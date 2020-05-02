@@ -1,8 +1,7 @@
 package lifesim.state.menus;
 
-import lifesim.state.engine.StateManager;
 import lifesim.util.sprites.Sprite;
-import lifesim.game.input.MouseInput;
+import lifesim.input.MouseInput;
 import lifesim.state.GameState;
 import lifesim.state.menus.ui.Button;
 import lifesim.util.geom.Vector2D;

@@ -5,7 +5,7 @@ import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.handlers.Layout;
 import lifesim.game.handlers.MyLayout;
 import lifesim.game.handlers.World;
-import lifesim.game.input.KeyInput;
+import lifesim.input.KeyInput;
 import lifesim.game.display.*;
 import lifesim.state.engine.GameWindow;
 import lifesim.state.engine.StateManager;

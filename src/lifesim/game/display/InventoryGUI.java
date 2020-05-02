@@ -5,8 +5,8 @@ import lifesim.state.engine.Main;
 import lifesim.state.menus.ui.CursorType;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.Sprite;
-import lifesim.game.input.KeyInput;
-import lifesim.game.input.MouseInput;
+import lifesim.input.KeyInput;
+import lifesim.input.MouseInput;
 import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 import lifesim.game.items.inventory.Inventory;
@@ -76,7 +76,6 @@ public class InventoryGUI extends ToggleableOverlay {
 
     private void moveItems() {
         InventorySlot hoveringSlot = getMouseHoveringSlot();
-
         if (slots.contains(hoveringSlot)) {
             if (!hoveringSlot.isEmpty()) { // Show interaction mouse cursor only if the slot contains an item to move.
                 Main.getWindow().changeCursor(CursorType.POINTER);
@@ -128,12 +127,13 @@ public class InventoryGUI extends ToggleableOverlay {
         }
         FG.render(g2d, DISPLAY_POS, new Vector2D(0, 0));
 
-        if (!lastDraggedSlot.isEmpty()) {
-            lastDraggedSlot.getItem().renderIcon(g2d, MouseInput.getCursorPos().scale(1.0/DISPLAY_SCALE));
-        }
-
         GraphicsMethods.centeredString(g2d, lastDraggedSlot.getInfo(),
                 DISPLAY_POS.copy().translate(0, 20 * DISPLAY_SCALE), INFO_FONT, Color.WHITE);
+
+        if (!lastDraggedSlot.isEmpty()) {
+            lastDraggedSlot.getItem().renderIcon(g2d, MouseInput.getCursorPos().scale(1.0 / DISPLAY_SCALE));
+        }
     }
+
 
 }
