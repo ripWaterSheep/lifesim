@@ -15,9 +15,6 @@ public class HealthStats extends BasicStats implements Stats {
     protected double maxHealth;
 
 
-    private final Drops drops = new Drops();
-
-
     public HealthStats(double damage, Alliance alliance, double health) {
         super(damage, alliance);
         this.health = health;
@@ -56,7 +53,6 @@ public class HealthStats extends BasicStats implements Stats {
 
         if (health <= 0 && alive) {
             alive = false;
-            drops.dropAt(entity.getPos(), world);
             entity.removeFromWorld();
         }
 

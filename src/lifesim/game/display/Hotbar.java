@@ -85,7 +85,7 @@ public class Hotbar extends Overlay {
 
             slot.render(g2d, itemPos, selectedSlot.equals(slot));
         }
-        selectedSlot.getItem().renderOnPlayer(g2d, player, window);
+        selectedSlot.getItem().render(g2d, player, window);
     }
 
 }

@@ -1,6 +1,5 @@
 package lifesim.state.engine;
 
-import lifesim.input.KeyInput;
 import lifesim.input.MouseInput;
 import lifesim.state.GameState;
 import lifesim.util.geom.Vector2D;
@@ -18,14 +17,14 @@ public class GamePanel extends JPanel {
     public static final int HEIGHT = 270;
 
     // How big each game pixel is in real pixels.
-    private static final double graphicsScale = 4;
+    private static final int graphicsScale = 4;
 
-    public static Vector2D getScaledSize() {
+    public static Vector2D getPixelDims() {
         return new Vector2D(WIDTH, HEIGHT);
     }
 
     public static void scalePos(Vector2D pos) {
-        pos.scale(1/graphicsScale).translate(getScaledSize().scale(-0.5));
+        pos.translate(getPixelDims().scale(-2)).scale(1.0/graphicsScale);
     }
 
 
@@ -66,6 +65,7 @@ public class GamePanel extends JPanel {
         run(g);
         requestFocusInWindow();
         repaint();
+        System.out.println(MouseInput.getCursorPos().toStringComponents());
     }
 
     private void update() {

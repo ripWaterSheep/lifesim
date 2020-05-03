@@ -1,4 +1,4 @@
-package lifesim.game.items;
+package lifesim.game.items.OLD;
 
 import lifesim.game.entities.Player;
 import lifesim.state.engine.GameWindow;
@@ -11,7 +11,7 @@ import lifesim.util.geom.Vector2D;
 import java.awt.*;
 
 
-public abstract class PressableItem extends Item {
+public abstract class PressableItem extends OLDItem {
 
     private final Sprite effectSprite;
 
@@ -50,7 +50,7 @@ public abstract class PressableItem extends Item {
     }
 
     @Override
-    public void renderOnPlayer(Graphics2D g2d, Player player, GameWindow window) {
+    public void render(Graphics2D g2d, Player player, GameWindow window) {
         if (shouldBeUsed())
         effectSprite.render(g2d, player.getDisplayPos(), player.getVelocity());
     }

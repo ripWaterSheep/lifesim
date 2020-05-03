@@ -13,7 +13,7 @@ import java.awt.*;
 public abstract class Button {
 
     private static final Color labelColor = new Color(120, 180, 200);
-    private static final Font labelFont = FontLoader.getMainFont(11);
+    private static final Font labelFont = FontLoader.getMainFont(13);
 
     private String label;
     private final Sprite sprite;

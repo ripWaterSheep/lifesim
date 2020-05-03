@@ -78,9 +78,9 @@ public class MyLayout extends Layout {
                 .add(new Entity("Shop", new ShapeSprite(250, 200, new Color(200, 110, 75))), -675, 250)
                 .add(new Entity("Cave", new ShapeSprite(200, 75, Color.LIGHT_GRAY)), -800, -800)
 
-                .addSpawner(new SpawningSystem(EnemyType.MELEE_1, 4500, game))
+                .addSpawner(new SpawningSystem(EnemyType.MELEE_1, 4500))
 
-                .addSpawner(new SpawningSystem(EnemyType.RANGED_1, 6500, game))
+                .addSpawner(new SpawningSystem(EnemyType.RANGED_1, 6500))
         );
 
         worlds.add(new World("Home", 300, 225, new Color(230, 210, 140), new Color(100, 80, 50))

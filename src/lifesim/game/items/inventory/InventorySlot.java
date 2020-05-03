@@ -3,23 +3,23 @@ package lifesim.game.items.inventory;
 import lifesim.game.entities.Player;
 import lifesim.game.handlers.World;
 import lifesim.game.display.InventoryGUI;
+import lifesim.game.items.ItemType;
+import lifesim.input.MouseInput;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.geom.Vector2D;
-import lifesim.game.items.Item;
-import lifesim.game.items.ItemTypes;
 
 import java.awt.*;
 
 
 public class InventorySlot {
 
-    private static final Item EMPTY_ITEM =  ItemTypes.hand;
+    private static final ItemType EMPTY_ITEM = ItemType.HAND;
 
     private static final Font AMOUNT_FONT = FontLoader.getMainFont(4);
 
 
-    private Item item;
+    private ItemType item;
     private int amount;
 
 
@@ -29,11 +29,11 @@ public class InventorySlot {
     }
 
 
-    public Item getItem() {
+    public ItemType getItem() {
         return item;
     }
 
-    public void setItem(Item newItem, int newAmount) {
+    public void setItem(ItemType newItem, int newAmount) {
          item = newItem;
          amount = newAmount;
     }
@@ -58,7 +58,7 @@ public class InventorySlot {
     }
 
     public void swapItem(InventorySlot slot) {
-        Item tempItem = item;
+        ItemType tempItem = item;
         int tempAmount = amount;
 
         setItem(slot.item, slot.amount);
@@ -72,10 +72,9 @@ public class InventorySlot {
 
 
     public void useItem(Player player) {
-        if (item.shouldBeUsed() && (amount > 0 || isEmpty())) {
-            item.use(player.getWorld(), player, player.getStats());
-
-            if (item.shouldBeDepleted()) {
+        if (amount > 0 || isEmpty()) {
+            if (MouseInput.right.isClicked()) {
+                item.use(player.getWorld(), player, player.getStats());
                 amount -= 1;
             }
         }
@@ -89,7 +88,8 @@ public class InventorySlot {
             item.renderIcon(g2d, pos);
 
             if (doRenderText) {
-                GraphicsMethods.centeredString(g2d, amount+"", pos.translate(InventoryGUI.GRID_SIZE/2.0, InventoryGUI.GRID_SIZE/2.0), AMOUNT_FONT, Color.WHITE);
+                GraphicsMethods.centeredString(g2d, amount+"", pos.translate(InventoryGUI.GRID_SIZE/2.0,
+                        InventoryGUI.GRID_SIZE/2.0), AMOUNT_FONT, Color.WHITE);
             }
         }
     }

@@ -4,6 +4,7 @@ import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
+
 public class DirectionalAnimatedSprite extends AnimatedSprite {
 
     private final Animation idle;

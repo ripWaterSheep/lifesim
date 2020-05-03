@@ -1,16 +1,17 @@
 package lifesim.game.entities.itemEntites;
 
+import lifesim.game.items.ItemType;
 import lifesim.state.Game;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.stats.PlayerStats;
-import lifesim.game.items.Item;
+import lifesim.game.items.OLD.OLDItem;
 import lifesim.util.MyMath;
 
 public class ShopItem extends DroppedItem {
 
     private final double price;
 
-    public ShopItem(Item item, int amount, double price) {
+    public ShopItem(ItemType item, int amount, double price) {
         super(item, amount);
         this.price = price;
     }

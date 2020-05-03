@@ -3,6 +3,9 @@ package lifesim.game.entities.types;
 import lifesim.game.entities.AIEntity;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.RangedAIEntity;
+import lifesim.util.geom.Vector2D;
+import lifesim.util.sprites.Animation;
+import lifesim.util.sprites.DirectionalAnimatedSprite;
 import lifesim.util.sprites.ShapeSprite;
 import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.HealthStats;
@@ -24,6 +27,18 @@ public enum AllyType implements Spawnable{
         public Entity spawnEntity() {
             return new AIEntity("Dabifer", new ShapeSprite(16, 16, new Color(113, 135, 103)),
                     new HealthStats(4, Alliance.PLAYER, 100), 4, 200);
-        }}
+    }},
+
+
+    UNIBOT {
+        @Override
+        public Entity spawnEntity() {
+            return new AIEntity("Unibot", new DirectionalAnimatedSprite(
+                    new Animation("unibot", 200, new Vector2D(0, 0), new Vector2D(8, 14)),
+                    new Animation("unibot", 200, new Vector2D(0, 14), new Vector2D(8, 14)),
+                    new Animation("unibot", 100, new Vector2D(0, 14), new Vector2D(8, 14))),
+                    new HealthStats(4, Alliance.PLAYER, 75), 4, 200);
+        }
+    }
 
 }

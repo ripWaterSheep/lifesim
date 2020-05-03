@@ -1,6 +1,8 @@
-package lifesim.game.items;
+package lifesim.game.items.OLD;
 
+import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
+import lifesim.game.items.OLD.ClickableItem;
 import lifesim.state.engine.GameWindow;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.entities.stats.PlayerStats;
@@ -8,7 +10,6 @@ import lifesim.game.entities.types.Spawnable;
 import lifesim.game.handlers.World;
 import lifesim.input.MouseInput;
 import lifesim.util.GraphicsMethods;
-import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
@@ -28,9 +29,12 @@ public class SpawnableItem extends ClickableItem {
     }
 
     @Override
-    public void renderOnPlayer(Graphics2D g2d, Player player, GameWindow window) {
-        super.renderOnPlayer(g2d, player, window);
+    public void render(Graphics2D g2d, Player player, GameWindow window) {
+        super.render(g2d, player, window);
         GraphicsMethods.setOpacity(g2d, 0.35);
-        spawnable.spawnEntity().sprite.render(g2d, MouseInput.getCursorPos(), new Vector2D(0, 0));
+
+        Entity shownEntity = spawnable.spawnEntity();
+        shownEntity.setPos(MouseInput.getCursorPos().translate(player.getPos()));
+        shownEntity.render(g2d);
     }
 }

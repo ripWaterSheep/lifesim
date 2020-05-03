@@ -18,7 +18,7 @@ import java.awt.*;
 public class Entity {
 
     public final String name;
-    public final Sprite sprite;
+    protected final Sprite sprite;
     protected final Stats stats;
 
     protected final Vector2D pos;

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static lifesim.util.GraphicsMethods.createGraphics;
+import static lifesim.util.MyMath.getRand;
 
 
 public class World {
@@ -76,8 +77,10 @@ public class World {
 
     public void update(Player player) {
         if (entities.size() < MAX_ENTITIES*0.6) {
-            for (SpawningSystem spawningSystem : spawningSystems)
-                spawningSystem.update(this, player);
+            for (SpawningSystem spawningSystem : spawningSystems) {
+                Vector2D spawnPos = rect.getDims().scale(getRand(0, 1), getRand(0, 1));
+                spawningSystem.update(this, spawnPos);
+            }
         }
 
         ArrayList<Entity> entities = new ArrayList<>(this.entities);

@@ -1,4 +1,4 @@
-package lifesim.game.items;
+package lifesim.game.items.OLD;
 
 import lifesim.game.entities.Player;
 import lifesim.state.engine.GameWindow;
@@ -11,19 +11,19 @@ import lifesim.util.geom.Vector2D;
 import java.awt.*;
 
 
-public abstract class Item {
+public abstract class OLDItem {
 
     public final String name;
     public final Sprite icon;
 
-    public Item(String name, Sprite icon) {
+    public OLDItem(String name, Sprite icon) {
         this.name = name;
         this.icon = icon;
     }
-
+/*
     public DroppedItem getDroppedEntity(int amount) {
         return new DroppedItem(this, amount);
-    }
+    }*/
 
     public abstract boolean shouldBeUsed();
 
@@ -32,7 +32,7 @@ public abstract class Item {
 
     public abstract void use(World world, Player player, PlayerStats stats);
 
-    public abstract void renderOnPlayer(Graphics2D g2d, Player player, GameWindow window);
+    public abstract void render(Graphics2D g2d, Player player, GameWindow window);
 
     public void renderIcon(Graphics2D g2d, Vector2D pos) {
         icon.render(g2d, pos, new Vector2D(0, 0));

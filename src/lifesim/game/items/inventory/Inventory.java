@@ -1,8 +1,9 @@
 package lifesim.game.items.inventory;
 
 import lifesim.game.entities.Player;
+import lifesim.game.items.ItemType;
 import lifesim.input.MouseInput;
-import lifesim.game.items.Item;
+import lifesim.game.items.OLD.OLDItem;
 import lifesim.state.Game;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class Inventory {
     }
 
 
-    public void addItem(Item item, int amount) {
+    public void addItem(ItemType item, int amount) {
         for (InventorySlot slot: slots) {
             if (slot.getItem().equals(item)) {
                 slot.changeAmount(amount);

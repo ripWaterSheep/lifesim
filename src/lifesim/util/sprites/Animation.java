@@ -17,24 +17,18 @@ public class Animation {
     private long lastFrameTime = System.currentTimeMillis();
     private int currentCycles = 0;
 
+
     /** Use a row on a sprite sheet for the frames of the animation. */
-    public Animation(String spriteSheetName, int frameInterval, Vector2D spriteSize, int row) {
+    public Animation(String spriteSheetName, int frameInterval, Vector2D cornerPos, Vector2D spriteSize) {
         this.frameInterval = frameInterval;
         BufferedImage spriteSheet = ImageLoader.loadImage(spriteSheetName);
 
-        int numFrames = spriteSheet.getWidth() / spriteSize.intX();
-        for (int i = 0; i < numFrames; i++) {
-            frames.add(spriteSheet.getSubimage(i * spriteSize.intX(), row*spriteSize.intY(), spriteSize.intX(), spriteSize.intY()));
-        }
-    }
+        // Calculate number of columns to the right of the corner position that will be used as frames of the animation.
+        int columns = (spriteSheet.getWidth() / spriteSize.intX()) - cornerPos.intX();
 
-    /** Use positions on a spritesheet for the frames of the animation. */
-    public Animation(String spriteSheetName, int frameInterval, Vector2D spriteSize, Vector2D... cornerPositions) {
-        this.frameInterval = frameInterval;
-        BufferedImage spriteSheet = ImageLoader.loadImage(spriteSheetName);
-
-        for (Vector2D pos: cornerPositions) {
-            frames.add(spriteSheet.getSubimage(pos.intX(), pos.intY(), spriteSize.intX(), spriteSize.intY()));
+        // For every column to the right of the corner position, create a frame.
+        for (int i = 0; i < columns; i++) {
+            frames.add(spriteSheet.getSubimage(i * spriteSize.intX(), cornerPos.intY(), spriteSize.intX(), spriteSize.intY()));
         }
     }
 

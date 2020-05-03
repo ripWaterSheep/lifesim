@@ -57,7 +57,7 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new ExplosiveProjectile("Bomb", new AnimatedSprite(new Animation("bomb",
-                    75, new Vector2D(9, 16), 0)), new BasicStats(0, alliance),
+                    75, new Vector2D(0, 0), new Vector2D(9, 16))), new BasicStats(0, alliance),
                     owner, 0, angle, 500, 100, false, EffectType.BIG_BOOM);
     }},
 
@@ -65,7 +65,7 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Cannon Ball", new AnimatedSprite(new Animation("weapons",
-                    75, new Vector2D(8, 8), 1)), new BasicStats(20, alliance), owner,
+                    75, new Vector2D(0, 0), new Vector2D(8, 8))), new BasicStats(20, alliance), owner,
                     12, angle, 125, false, 25, false);
     }},
 

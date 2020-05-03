@@ -1,5 +1,6 @@
 package lifesim.game.entities;
 
+import lifesim.game.items.ItemType;
 import lifesim.util.sprites.Animation;
 import lifesim.util.sprites.DirectionalAnimatedSprite;
 import lifesim.game.handlers.World;
@@ -7,8 +8,8 @@ import lifesim.state.Game;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.input.KeyInput;
 import lifesim.input.MouseInput;
-import lifesim.game.items.ItemTypes;
-import lifesim.game.items.Item;
+import lifesim.game.items.OLD.ItemTypes;
+import lifesim.game.items.OLD.OLDItem;
 import lifesim.game.items.inventory.Inventory;
 import lifesim.util.geom.Vector2D;
 
@@ -27,11 +28,11 @@ public final class Player extends MovementEntity {
 
     public Player(Game game, World startingWorld) {
         super("Player", new DirectionalAnimatedSprite(
-                new Animation("player", 200, new Vector2D(12, 16), 0),
-                new Animation("player", 100, new Vector2D(12, 16), 1),
-                new Animation("player", 100, new Vector2D(12, 16), 2),
-                new Animation("player", 100, new Vector2D(12, 16), 3),
-                new Animation("player", 100, new Vector2D(12, 16), 4)
+                new Animation("player", 200, new Vector2D(0, 0), new Vector2D(12, 16)),
+                new Animation("player", 100, new Vector2D(0, 16), new Vector2D(12, 16)),
+                new Animation("player", 100, new Vector2D(0, 32), new Vector2D(12, 16)),
+                new Animation("player", 100, new Vector2D(0, 48), new Vector2D(12, 16)),
+                new Animation("player", 100, new Vector2D(0, 64), new Vector2D(12, 16))
                 ),
             new PlayerStats(1000, 1000, 0, 0, 0, game), 5, 0);
         velocity.set(0, 0);
@@ -42,6 +43,8 @@ public final class Player extends MovementEntity {
 
 
     public void init() {
+        acquireItem(ItemType.STARTER_FACTORY, 25);
+        /*
         acquireItem(ItemTypes.laserGun, 100);
         //acquireItem(ItemTypes.bread, 100);
         acquireItem(ItemTypes.waterGun, 100);
@@ -54,7 +57,7 @@ public final class Player extends MovementEntity {
         acquireItem(ItemTypes.allyTest2, 50);
         acquireItem(ItemTypes.healer, 100);
         acquireItem(ItemTypes.physicsTest, 100);
-        acquireItem(ItemTypes.shield, 100);
+        acquireItem(ItemTypes.shield, 100);*/
     }
 
 
@@ -96,7 +99,7 @@ public final class Player extends MovementEntity {
     }
 
 
-    public void acquireItem(Item item, int amount) {
+    public void acquireItem(ItemType item, int amount) {
         inventory.addItem(item, amount);
     }
 
