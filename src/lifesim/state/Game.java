@@ -6,10 +6,9 @@ import lifesim.game.handlers.Layout;
 import lifesim.game.handlers.MyLayout;
 import lifesim.game.handlers.World;
 import lifesim.input.KeyInput;
-import lifesim.game.display.*;
+import lifesim.game.overlay.*;
 import lifesim.state.engine.GameWindow;
 import lifesim.state.engine.StateManager;
-import lifesim.state.menus.settings.Difficulty;
 import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
@@ -29,8 +28,6 @@ public final class Game implements GameState {
     private final ToggleableOverlay deathScreen;
 
     private boolean canBePaused = true;
-
-    private Difficulty currentDifficulty = Difficulty.MEDIUM;
 
     private final StateManager stateManager;
 
@@ -69,15 +66,6 @@ public final class Game implements GameState {
 
     public ArrayList<World> getWorlds() {
         return layout.getWorlds();
-    }
-
-
-    public Difficulty getDifficulty() {
-        return currentDifficulty;
-    }
-
-    public void setDifficulty(Difficulty dif) {
-        currentDifficulty = dif;
     }
 
 

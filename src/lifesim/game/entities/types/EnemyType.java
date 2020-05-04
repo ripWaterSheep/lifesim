@@ -13,17 +13,17 @@ import lifesim.util.sprites.DirectionalAnimatedSprite;
 
 public enum EnemyType implements Spawnable {
 
-    MELEE_1() {
+    MELEEBORG() {
         @Override
         public Entity spawnEntity() {
-            return new AIEntity("Melee Basic", new DirectionalAnimatedSprite(
-                    new Animation("melee", 200, new Vector2D(0, 0), new Vector2D(12, 18)),
-                    new Animation("melee", 100, new Vector2D(0, 18), new Vector2D(12, 18)),
-                    new Animation("melee", 100, new Vector2D(0, 36), new Vector2D(12, 18)),
-                    new Animation("melee", 100, new Vector2D(0, 54), new Vector2D(12, 18)),
-                    new Animation("melee", 100, new Vector2D(0, 72), new Vector2D(12, 18))
+            return new AIEntity("Meleeborg", new DirectionalAnimatedSprite(
+                    new Animation("meleeborg", 200, new Vector2D(0, 0), new Vector2D(10, 18)),
+                    new Animation("meleeborg", 100, new Vector2D(0, 18), new Vector2D(10, 18)),
+                    new Animation("meleeborg", 100, new Vector2D(0, 36), new Vector2D(10, 18)),
+                    new Animation("meleeborg", 100, new Vector2D(0, 54), new Vector2D(10, 18)),
+                    new Animation("meleeborg", 100, new Vector2D(0, 72), new Vector2D(10, 18))
             ),
-                    new HealthStats(4, Alliance.ENEMY, 35), 3, 175);
+                    new HealthStats(2, Alliance.ENEMY, 35), 3, 200);
     }},
 
 
@@ -32,7 +32,7 @@ public enum EnemyType implements Spawnable {
         public Entity spawnEntity() {
             return new RangedAIEntity("Nerd", new AnimatedSprite(new Animation("nerd", 300,
                     new Vector2D(0, 0), new Vector2D(7, 16))),
-                    new HealthStats(0, Alliance.ENEMY, 25), 3.5, 225, 1000, ProjectileType.CANNONBALL);
+                    new HealthStats(0, Alliance.ENEMY, 25), 3.25, 250, 1000, ProjectileType.CANNONBALL);
     }}
 
 

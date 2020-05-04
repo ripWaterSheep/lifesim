@@ -15,8 +15,6 @@ public class PlayerStats extends HealthStats {
 
     private final Game game;
 
-    private double protectionFactor = 1;
-
     private double energy;
     private double strength;
     private double money;
@@ -31,17 +29,6 @@ public class PlayerStats extends HealthStats {
         this.intellect = intellect;
         this.game = game;
     }
-
-
-    public void protect(double factor) {
-        protectionFactor *= factor;
-    }
-
-    @Override
-    public void takeDamage(double damage) {
-        super.takeDamage(damage * protectionFactor);
-    }
-
 
     public double getEnergy() {
         return energy;
@@ -101,14 +88,12 @@ public class PlayerStats extends HealthStats {
         energy = max(0, energy);
         strength = max(0, strength);
         intellect = max(0, intellect);
-        protectionFactor = 1;
 
         energy -= 0.05 + sqrt(player.getVelocity().getMagnitude()/500);
     }
 
     @Override
     public void renderInfo(Graphics2D g2d, Vector2D pos) {
-
     }
 
 }

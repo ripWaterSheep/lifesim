@@ -75,22 +75,24 @@ public class World {
     }
 
 
+    public void sortEntities() {
+        Collections.sort(entities);
+    }
+
+
     public void update(Player player) {
-        if (entities.size() < MAX_ENTITIES*0.6) {
+        if (entities.size() < MAX_ENTITIES * 0.9) {
             for (SpawningSystem spawningSystem : spawningSystems) {
-                Vector2D spawnPos = rect.getDims().scale(getRand(0, 1), getRand(0, 1));
+                Vector2D spawnPos = rect.getDims().scale(getRand(-0.5, 0.5), getRand(-0.5, 0.5));
                 spawningSystem.update(this, spawnPos);
             }
         }
 
-        ArrayList<Entity> entities = new ArrayList<>(this.entities);
-        Collections.reverse(entities);
-
-        for (Entity entity: entities) {
+        for (Entity entity: getEntities()) {
 
             entity.update(this);
 
-            for (Entity entity2: entities) {
+            for (Entity entity2: getEntities()) {
                 if (entity.isTouching(entity2) && entity != entity2)
                     entity.handleCollision(entity2, this);
             }
@@ -100,6 +102,7 @@ public class World {
         for (Entity entity: entities) {
             entity.keepInWorld(rect);
         }
+        sortEntities();
     }
 
 

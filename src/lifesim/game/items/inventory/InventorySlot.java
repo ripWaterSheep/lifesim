@@ -2,7 +2,7 @@ package lifesim.game.items.inventory;
 
 import lifesim.game.entities.Player;
 import lifesim.game.handlers.World;
-import lifesim.game.display.InventoryGUI;
+import lifesim.game.overlay.InventoryGUI;
 import lifesim.game.items.ItemType;
 import lifesim.input.MouseInput;
 import lifesim.util.GraphicsMethods;

@@ -37,8 +37,4 @@ public class MyMath {
         return min + (max - min) * new Random().nextDouble();
     }
 
-
-    public static int getRandInt(int a, int b) {
-        return (int) getRand(a, b);
-    }
 }

@@ -1,4 +1,4 @@
-package lifesim.game.display;
+package lifesim.game.overlay;
 
 import lifesim.game.entities.Player;
 import lifesim.game.entities.stats.PlayerStats;
@@ -8,18 +8,24 @@ import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
+import lifesim.util.sprites.ImageSprite;
+import lifesim.util.sprites.Sprite;
 
 import java.awt.*;
 
+import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static lifesim.util.MyMath.betterRound;
 
 
 public class StatBar extends Overlay {
 
-    private static final int LEFT_PADDING = 0;
-    private static final int BOTTOM_PADDING = 0;
-    private static final int BAR_HEIGHT = 8;
+    private static final int LEFT_PADDING = 2;
+    private static final int BOTTOM_PADDING = 2;
+    private static final int BAR_WIDTH = 52;
+    private static final int BAR_HEIGHT = 10;
+
+    private static final Sprite STAT_OUTLINE = new ImageSprite("stat_outline");
 
     private static final Font STAT_FONT = FontLoader.getMainFont(6);
     private static final int TEXT_LEFT_PADDING = 2;
@@ -43,11 +49,11 @@ public class StatBar extends Overlay {
         this.g2d = g2d;
         PlayerStats stats = player.getStats();
 
-        drawBar("Intellect", stats.getIntellect(), 0.05, 1000, StatsColors.intellectColor);
-        drawBar("Money", stats.getMoney(), 0.005, 10000, StatsColors.moneyColor);
-        drawBar("Strength", stats.getStrength(), 0.05, 1000, StatsColors.strengthColor);
-        drawBar("Energy", stats.getEnergy(), 0.05, 1000, StatsColors.energyColor);
-        drawBar("Health", stats.getHealth(), 0.05, 1000, StatsColors.healthColor);
+        drawBar("Intellect", stats.getIntellect(), 1000, StatsColors.intellectColor);
+        drawBar("Money", stats.getMoney(), 10000, StatsColors.moneyColor);
+        drawBar("Strength", stats.getStrength(), 1000, StatsColors.strengthColor);
+        drawBar("Energy", stats.getEnergy(), 1000, StatsColors.energyColor);
+        drawBar("Health", stats.getHealth(), 1000, StatsColors.healthColor);
 
         writeValue("World", player.getWorld().name);
         writeRoundedVal("Y", player.getPos().y);
@@ -84,15 +90,14 @@ public class StatBar extends Overlay {
     }
 
 
-    private void drawBar(String label, double data, double scale, double maxDataVal, Color color) {
-        int dataWidth = betterRound(min(data, maxDataVal) * scale);
+    private void drawBar(String label, double data, double dataMax, Color color) {
+        int dataWidth = betterRound((data / dataMax) * BAR_WIDTH);
+        dataWidth = (int) min(dataWidth, dataMax * BAR_WIDTH);
         // Draw data display bar.
         g2d.setColor(color);
-        g2d.fill(Rect.fromCorner(getPos(), new Vector2D(dataWidth, BAR_HEIGHT)));
-
-        // Draw outline for bar
-        g2d.setColor(Color.BLACK);
-        g2d.draw(Rect.fromCorner(getPos(), new Vector2D(betterRound(maxDataVal * scale), BAR_HEIGHT)));
+        g2d.fill(Rect.fromCorner(getPos().translate(1, 0), new Vector2D(dataWidth, BAR_HEIGHT)));
+        // Draw outline for bar.
+        STAT_OUTLINE.render(g2d, getPos().translate(STAT_OUTLINE.getSize().scale(0.5)), new Vector2D(0, 0));
 
         writeRoundedVal(label, data);
     }

@@ -1,4 +1,4 @@
-package lifesim.game.display;
+package lifesim.game.overlay;
 
 import lifesim.game.entities.Player;
 import lifesim.state.engine.Main;
@@ -21,13 +21,11 @@ import java.util.ArrayList;
 
 public class InventoryGUI extends ToggleableOverlay {
 
-    public static final int GRID_SIZE = 12;
-    public static final double DISPLAY_SCALE = 1.5;
+    public static final int GRID_SIZE = 20;
 
     private static final Vector2D DISPLAY_POS = new Vector2D(0, 0);
-    private static final Sprite BG = new ImageSprite("inventory_bg");
-    private static final Sprite FG = new ImageSprite("inventory_fg");
-    private static final Font INFO_FONT = FontLoader.getMainFont(4);
+    private static final Sprite BG = new ImageSprite("toolbox");
+    private static final Font INFO_FONT = FontLoader.getMainFont(8);
 
 
     private final Inventory inventory;
@@ -57,7 +55,7 @@ public class InventoryGUI extends ToggleableOverlay {
 
     private Rect getSlotHitBox(InventorySlot slot) {
         Vector2D pos = getSlotDisplayPos(slot);
-        return new Rect(pos.scale(DISPLAY_SCALE), new Vector2D(GRID_SIZE, GRID_SIZE).scale(DISPLAY_SCALE));
+        return new Rect(pos, new Vector2D(GRID_SIZE, GRID_SIZE));
 
     }
 
@@ -118,20 +116,18 @@ public class InventoryGUI extends ToggleableOverlay {
     @Override
     public void render(Graphics2D g2d) {
         GraphicsMethods.fillPanel(g2d, new Color(0, 0, 0, 75));
-        g2d.scale(DISPLAY_SCALE, DISPLAY_SCALE);
 
         BG.render(g2d, DISPLAY_POS, new Vector2D(0, 0));
 
         for (InventorySlot slot : inventory.getSlots()) {
             slot.render(g2d, getSlotDisplayPos(slot), false);
         }
-        FG.render(g2d, DISPLAY_POS, new Vector2D(0, 0));
 
         GraphicsMethods.centeredString(g2d, lastDraggedSlot.getInfo(),
-                DISPLAY_POS.copy().translate(0, 20 * DISPLAY_SCALE), INFO_FONT, Color.WHITE);
+                DISPLAY_POS.copy().translate(0, BG.getSize().intY()/2.0 + 8), INFO_FONT, Color.WHITE);
 
         if (!lastDraggedSlot.isEmpty()) {
-            lastDraggedSlot.getItem().renderIcon(g2d, MouseInput.getCursorPos().scale(1.0 / DISPLAY_SCALE));
+            lastDraggedSlot.getItem().renderIcon(g2d, MouseInput.getCursorPos());
         }
     }
 

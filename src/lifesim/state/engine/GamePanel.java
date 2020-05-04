@@ -1,6 +1,5 @@
 package lifesim.state.engine;
 
-import lifesim.input.MouseInput;
 import lifesim.state.GameState;
 import lifesim.util.geom.Vector2D;
 
@@ -65,7 +64,6 @@ public class GamePanel extends JPanel {
         run(g);
         requestFocusInWindow();
         repaint();
-        System.out.println(MouseInput.getCursorPos().toStringComponents());
     }
 
     private void update() {

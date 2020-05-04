@@ -30,29 +30,27 @@ public class Rect extends Rectangle2D.Double {
 
 
     public Vector2D getPosClampedOutside(Rect rect) {
-        final Vector2D pos = rect.getCenterPos();
+        final Vector2D pos2 = rect.getCenterPos();
         final double midWidth1 = getDims().x / 2;
         final double midHeight1 = getDims().y / 2;
         final double midWidth2 = rect.getDims().x / 2;
         final double midHeight2 = rect.getDims().y / 2;
 
-        final double sumMidWidths = midWidth1 + midWidth2;
-        final double sumMidHeights = midHeight2 + midHeight1;
-
         double x = getCenterX();
         double y =getCenterY();
-        if (x - midWidth1 > pos.x - midWidth2 && x + midWidth1 < pos.x + midWidth2) {
-            if (y > pos.y) {
-                y = max(y, pos.y + sumMidHeights);
+        // If left bound 1 < right bound 2 and right bound 1 > left bound 2.
+        if (x - midWidth1 < pos2.x + midWidth2 && x + midWidth1 > pos2.x - midWidth2) {
+            if (y > pos2.y) {
+                y = max(y, pos2.y + midHeight1 + midHeight2);
             } else {
-                y = min(y, pos.y - sumMidHeights);
+                y = min(y, pos2.y - midHeight1 - midHeight2);
             }
         }
-        if (y - midHeight1 > pos.y - midHeight2 && y + midHeight1 < pos.y + midHeight2) {
-            if (x > pos.x) {
-                x = max(x, pos.x + sumMidWidths);
+        if (y - midHeight1 < pos2.y + midHeight2 && y + midHeight1 > pos2.y - midHeight2) {
+            if (x > pos2.x) {
+                x = max(x, pos2.x + midWidth1 + midWidth2);
             } else {
-                x = min(x, pos.x - sumMidWidths);
+                x = min(x, pos2.x - midWidth1 - midWidth2);
             }
         }
         return new Vector2D(x, y);

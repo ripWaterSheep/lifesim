@@ -7,7 +7,7 @@ import lifesim.state.GameState;
 import lifesim.state.menus.Menu;
 import lifesim.state.menus.PauseMenu;
 import lifesim.state.menus.TitleMenu;
-import lifesim.state.menus.settings.SettingsMenu;
+import lifesim.state.menus.SettingsMenu;
 
 public class StateManager {
 

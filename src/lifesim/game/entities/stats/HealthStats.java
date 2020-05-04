@@ -61,7 +61,7 @@ public class HealthStats extends BasicStats implements Stats {
 
 
     protected void renderStatBar(Graphics2D g2d, Vector2D pos, double currentVal, double maxVal, Color c1) {
-        final double widthScale = 0.3;
+        final double widthScale = 0.15;
         final int height = 1;
 
         Rect rect = new Rect(pos, new Vector2D(maxVal*widthScale, height));

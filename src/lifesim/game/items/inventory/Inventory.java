@@ -3,7 +3,6 @@ package lifesim.game.items.inventory;
 import lifesim.game.entities.Player;
 import lifesim.game.items.ItemType;
 import lifesim.input.MouseInput;
-import lifesim.game.items.OLD.OLDItem;
 import lifesim.state.Game;
 
 import java.util.ArrayList;
@@ -11,9 +10,8 @@ import java.util.ArrayList;
 
 public class Inventory {
 
-    public final int width = 3;
+    public final int width = 4;
     public final int height = 3;
-    public final int size = width * height;
 
     private final Player player;
     private final Game game;
@@ -25,7 +23,7 @@ public class Inventory {
         this.player = player;
         this.game = game;
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < width * height; i++) {
             slots.add(new InventorySlot());
         }
     }

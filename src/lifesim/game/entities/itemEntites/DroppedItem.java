@@ -5,7 +5,6 @@ import lifesim.state.Game;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.stats.PlayerStats;
-import lifesim.game.items.OLD.OLDItem;
 
 public class DroppedItem extends Entity {
 

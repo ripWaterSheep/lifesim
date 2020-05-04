@@ -1,4 +1,4 @@
-package lifesim.game.display;
+package lifesim.game.overlay;
 
 import lifesim.util.geom.Vector2D;
 import lifesim.util.GraphicsMethods;

@@ -11,11 +11,12 @@ import lifesim.state.engine.Main;
 import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.geom.Geometry;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
 
-public class Entity {
+public class Entity implements Comparable<Entity> {
 
     public final String name;
     protected final Sprite sprite;
@@ -121,4 +122,15 @@ public class Entity {
         stats.renderInfo(g2d, getDisplayPos().translate(0, -(sprite.getSize().y*0.5) - 3));
     }
 
+    /** Entities are sorted by y position by the world.
+     * Only entities that can move may be reorganized so the order of stationary objects doesn't get messed up.
+         */
+    @Override
+    public int compareTo(@NotNull Entity entity) {
+        // Don't sort really big things (like the floor of the world) idk how to fix it since some things are flat and some are isometric.
+        if (getHitBox().getHeight() > 75 || entity.getHitBox().getHeight() > 75) return 0;
+        // Compare y positions bottoms of the hit boxes.
+        boolean comparison = getHitBox().y + (getHitBox().height) < entity.getHitBox().y + (entity.getHitBox().height);
+        return comparison? -1 : 1;
+    }
 }

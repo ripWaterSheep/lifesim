@@ -20,9 +20,9 @@ public class MyLayout extends Layout {
     @Override
     public void init() {
         worlds.add(
-            new World("Town", 2250, 2250, new Color(60, 175, 90), new Color(200, 190, 125))
-                .add(new Entity("vRoad", new ShapeSprite(100, 2250, Color.DARK_GRAY)), 0, 0)
-                .add(new Entity("hRoad", new ShapeSprite(2250, 100, Color.DARK_GRAY)), 0, 0)
+            new World("Town", 2000, 2000, new Color(60, 175, 90), new Color(200, 190, 125))
+                .add(new Entity("vRoad", new ShapeSprite(100, 2000, Color.DARK_GRAY)), 0, 0)
+                .add(new Entity("hRoad", new ShapeSprite(2000, 100, Color.DARK_GRAY)), 0, 0)
 
                 .add(new Entity("House", new ShapeSprite(200, 175, new Color(100, 80, 50))) {
                     @Override
@@ -78,9 +78,9 @@ public class MyLayout extends Layout {
                 .add(new Entity("Shop", new ShapeSprite(250, 200, new Color(200, 110, 75))), -675, 250)
                 .add(new Entity("Cave", new ShapeSprite(200, 75, Color.LIGHT_GRAY)), -800, -800)
 
-                .addSpawner(new SpawningSystem(EnemyType.MELEE_1, 4500))
+                .addSpawner(new SpawningSystem(EnemyType.MELEEBORG, 1000))
 
-                .addSpawner(new SpawningSystem(EnemyType.RANGED_1, 6500))
+                //.addSpawner(new SpawningSystem(EnemyType.RANGED_1, 3000))
         );
 
         worlds.add(new World("Home", 300, 225, new Color(230, 210, 140), new Color(100, 80, 50))

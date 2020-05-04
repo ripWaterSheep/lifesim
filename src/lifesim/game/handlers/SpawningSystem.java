@@ -8,10 +8,6 @@ import lifesim.game.entities.types.Spawnable;
 import lifesim.util.MyMath;
 
 public class SpawningSystem {
-
-    private static final int MIN_SPAWN_RADIUS = 250;
-    private static final int MAX_SPAWN_RADIUS = 400;
-
     private final Spawnable spawnable;
 
     private final long spawnInterval;
@@ -26,9 +22,6 @@ public class SpawningSystem {
 
 
     public Entity attemptSpawn(World world, Vector2D pos) {
-        //Vector2D spawnPos = world.getSize();
-        //spawnPos.set(world.getSize().scale(getRand(-0.5, 0.5), getRand(-0.5, 0.5)));
-        // Spawn entities around player in a circle.
         Entity entity = spawnable.spawnEntity();
         world.add(entity, pos);
         lastSpawnTime = System.currentTimeMillis();
@@ -41,6 +34,5 @@ public class SpawningSystem {
             attemptSpawn(world, pos);
         }
     }
-
 
 }

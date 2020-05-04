@@ -12,12 +12,12 @@ import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
-public class LaunchableFunctionality extends ItemFunctionality {
+public class LaunchFunctionality extends ItemFunctionality {
 
     private final Launchable launchable;
     private final double recoilMagnitude;
 
-    public LaunchableFunctionality(Launchable launchable, double recoilMagnitude) {
+    public LaunchFunctionality(Launchable launchable, double recoilMagnitude) {
         this.launchable = launchable;
         this.recoilMagnitude = recoilMagnitude;
     }

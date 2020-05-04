@@ -1,4 +1,4 @@
-package lifesim.game.display;
+package lifesim.game.overlay;
 
 public abstract class ToggleableOverlay extends Overlay {
 

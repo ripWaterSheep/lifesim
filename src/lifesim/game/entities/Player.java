@@ -8,8 +8,6 @@ import lifesim.state.Game;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.input.KeyInput;
 import lifesim.input.MouseInput;
-import lifesim.game.items.OLD.ItemTypes;
-import lifesim.game.items.OLD.OLDItem;
 import lifesim.game.items.inventory.Inventory;
 import lifesim.util.geom.Vector2D;
 
@@ -34,7 +32,7 @@ public final class Player extends MovementEntity {
                 new Animation("player", 100, new Vector2D(0, 48), new Vector2D(12, 16)),
                 new Animation("player", 100, new Vector2D(0, 64), new Vector2D(12, 16))
                 ),
-            new PlayerStats(1000, 1000, 0, 0, 0, game), 5, 0);
+            new PlayerStats(1000, 1000, 0, 0, 0, game), 4, 0);
         velocity.set(0, 0);
         this.game = game;
         setWorld(startingWorld);
@@ -44,20 +42,8 @@ public final class Player extends MovementEntity {
 
     public void init() {
         acquireItem(ItemType.STARTER_FACTORY, 25);
-        /*
-        acquireItem(ItemTypes.laserGun, 100);
-        //acquireItem(ItemTypes.bread, 100);
-        acquireItem(ItemTypes.waterGun, 100);
-        acquireItem(ItemTypes.banana, 100);
-        //acquireItem(ItemTypes.mysteriousPill, 100);
-        //acquireItem(ItemTypes.virtualCoin, 100);
-        acquireItem(ItemTypes.bomb, 100);
-        acquireItem(ItemTypes.jetPack, 100);
-        acquireItem(ItemTypes.allyTest, 50);
-        acquireItem(ItemTypes.allyTest2, 50);
-        acquireItem(ItemTypes.healer, 100);
-        acquireItem(ItemTypes.physicsTest, 100);
-        acquireItem(ItemTypes.shield, 100);*/
+        acquireItem(ItemType.WALLBOT, 25);
+        acquireItem(ItemType.BOMB, 25);
     }
 
 
@@ -112,7 +98,7 @@ public final class Player extends MovementEntity {
 
     private double getCurrentSpeed() {
         double currentSpeed = defaultSpeed;
-        currentSpeed *= (getStats().getEnergy()/5000) + 0.8;
+        currentSpeed *= (getStats().getEnergy() / 5000) + 0.8;
         return currentSpeed;
     }
 
@@ -138,7 +124,7 @@ public final class Player extends MovementEntity {
         if (abs(velocity.x) > 0 && tempVel.x == 0) tempVel.x = velocity.x;
         if (abs(velocity.y) > 0 && tempVel.y == 0) tempVel.y = velocity.y;
 
-        // Make sure that
+        // Make sure that speed stays the same even if going diagonally.
         tempVel.clampMagnitude(speed);
         velocity.set(tempVel);
     }
