@@ -12,7 +12,7 @@ public class HealthStats extends BasicStats implements Stats {
 
     boolean alive = true;
     protected double health;
-    protected double maxHealth;
+    protected final double maxHealth;
 
 
     public HealthStats(double damage, Alliance alliance, double health) {

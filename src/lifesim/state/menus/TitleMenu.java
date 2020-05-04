@@ -6,7 +6,6 @@ import lifesim.state.engine.StateManager;
 import lifesim.state.menus.ui.Button;
 import lifesim.state.menus.ui.ButtonType;
 import lifesim.util.sprites.ImageSprite;
-import lifesim.util.geom.Vector2D;
 
 
 public class TitleMenu extends Menu {

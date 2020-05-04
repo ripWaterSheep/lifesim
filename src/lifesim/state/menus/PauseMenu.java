@@ -9,7 +9,6 @@ import lifesim.state.menus.ui.Button;
 import lifesim.state.menus.ui.ButtonType;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
-import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 

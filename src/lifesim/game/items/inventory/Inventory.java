@@ -69,8 +69,7 @@ public class Inventory {
 
 
     public void dropItemInWorld(InventorySlot slot) {
-        slot.dropItem(player.getWorld(), player.getPos().translate(MouseInput.getCursorPos()));
+        slot.dropItem(player.getWorld(), MouseInput.getCursorPosFrom(player.getPos()));
     }
-
 
 }

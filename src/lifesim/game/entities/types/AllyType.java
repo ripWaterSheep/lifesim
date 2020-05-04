@@ -11,7 +11,6 @@ import lifesim.util.sprites.DirectionalAnimatedSprite;
 import lifesim.util.sprites.ShapeSprite;
 import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.HealthStats;
-import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
@@ -51,7 +50,7 @@ public enum AllyType implements Spawnable{
         @Override
         public Entity spawnEntity() {
             return new SolidEntity("Wallbot", new AnimatedSprite(new Animation("wallbot", 75,
-                    new Vector2D(0, 0), new Vector2D(64, 16))), new HealthStats(0.25, Alliance.PLAYER, 500), 5);
+                    new Vector2D(0, 0), new Vector2D(64, 16))), new HealthStats(0, Alliance.PLAYER, 500), 5);
         }
     }
 

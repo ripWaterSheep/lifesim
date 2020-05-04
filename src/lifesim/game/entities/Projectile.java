@@ -3,7 +3,6 @@ package lifesim.game.entities;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.handlers.World;
 import lifesim.game.entities.stats.Stats;
-import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 
 import java.awt.*;

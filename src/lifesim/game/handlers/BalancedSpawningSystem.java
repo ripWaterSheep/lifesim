@@ -1,9 +1,7 @@
 package lifesim.game.handlers;
 
 import lifesim.game.entities.Entity;
-import lifesim.game.entities.Player;
 import lifesim.game.entities.types.Spawnable;
-import lifesim.state.Game;
 import lifesim.util.geom.Vector2D;
 
 import java.util.ArrayList;

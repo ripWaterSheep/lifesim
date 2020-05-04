@@ -1,7 +1,6 @@
 package lifesim.game.overlay;
 
 import lifesim.game.entities.Player;
-import lifesim.state.engine.GamePanel;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.Sprite;
 import lifesim.input.KeyInput;

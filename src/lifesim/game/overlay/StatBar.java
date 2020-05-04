@@ -13,7 +13,6 @@ import lifesim.util.sprites.Sprite;
 
 import java.awt.*;
 
-import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static lifesim.util.MyMath.betterRound;
 
