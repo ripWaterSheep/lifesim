@@ -24,8 +24,8 @@ public enum ProjectileType implements Launchable {
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             double strength = Main.getCurrentPlayer().getStats().getStrength();
 
-            return new Projectile(owner.name + "'s Fist", new ImageSprite("fist"), new BasicStats(1 + (strength/100),
-                    Alliance.PLAYER), owner, 6, angle, 30, true, 10, true) {
+            return new Projectile("Player Fist", new ImageSprite("fist"), new BasicStats(1 + (strength/200),
+                    Alliance.PLAYER), owner, 8, angle, 35, true, 10, true) {
             };
         }
     },
@@ -52,7 +52,6 @@ public enum ProjectileType implements Launchable {
                     new BasicStats(5, alliance), owner, 10, angle, 175, 10, true, EffectType.SMALL_BOOM);
     }},
 
-
     BOMB {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
@@ -69,6 +68,13 @@ public enum ProjectileType implements Launchable {
                     12, angle, 125, false, 25, false);
     }},
 
+    // Hammer is pretty much a debug tool to clear allies away.
+    HAMMER {
+        @Override
+        public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
+            return new Projectile("Hammer", new ImageSprite("utilities", new Vector2D(0, 48), new Vector2D(16, 16)),
+                    new BasicStats(10000, Alliance.NEUTRAL), owner, 30, angle, 300, true, 0, true);
+    }},
 
     HEAL_SPELL {
         @Override
@@ -77,13 +83,13 @@ public enum ProjectileType implements Launchable {
                     new HealerStats(0, alliance, 15), owner, 9, angle, 175, true, 0, false);
     }},
 
-
     THROWABLE_WALL {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Throwable Wall", new ShapeSprite(8, 32, new Color(100, 150, 200)),
                     new BasicStats(0, alliance), owner, 15, angle, 300, true, 50, true);
-    }}
+    }};
+
 
 
 }

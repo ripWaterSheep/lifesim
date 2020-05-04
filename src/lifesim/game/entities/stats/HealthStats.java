@@ -64,11 +64,11 @@ public class HealthStats extends BasicStats implements Stats {
         final double widthScale = 0.15;
         final int height = 1;
 
-        Rect rect = new Rect(pos, new Vector2D(maxVal*widthScale, height));
+        Rect rect = new Rect(pos, new Vector2D(maxVal * widthScale, height));
         g2d.setColor(Color.BLACK);
         g2d.fill(rect);
 
-        rect.width = (int) (currentVal*widthScale);//Rect.fromCorner(rect.getCornerPos(), currentVal*widthScale, height);
+        rect.width = (int) (currentVal * widthScale);
         g2d.setColor(c1);
         g2d.fill(rect);
     }

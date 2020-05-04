@@ -17,7 +17,7 @@ import java.awt.*;
 import static java.lang.Math.abs;
 
 
-public final class Player extends MovementEntity {
+public class Player extends MovementEntity {
 
     private final Game game;
     private World world;
@@ -42,9 +42,10 @@ public final class Player extends MovementEntity {
 
 
     public void init() {
-        acquireItem(ItemType.STARTER_FACTORY, 25);
-        acquireItem(ItemType.WALLBOT, 25);
-        acquireItem(ItemType.BOMB, 25);
+        //acquireItem(ItemType.STARTER_FACTORY, 25);
+        //acquireItem(ItemType.WALLBOT, 25);
+        //acquireItem(ItemType.BOMB, 25);
+        //acquireItem(ItemType.HAMMER, 50);
     }
 
 

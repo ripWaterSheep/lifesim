@@ -13,19 +13,20 @@ import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import static lifesim.state.engine.GamePanel.HEIGHT;
 import static lifesim.state.engine.GamePanel.WIDTH;
 import static lifesim.util.GraphicsMethods.createGraphics;
 
 
-public final class Game implements GameState {
+public class Game implements GameState {
 
     private final Layout layout = new MyLayout(this);
     private final Player player;
 
-    private final ArrayList<Overlay> overlays = new ArrayList<>();
-    private final MessageDisplay messageDisplay;
+    private final List<Overlay>     overlays = new ArrayList<>();
+    private final MessageDisplay    messageDisplay;
     private final ToggleableOverlay inventoryGUI;
     private final ToggleableOverlay deathScreen;
 
@@ -66,7 +67,7 @@ public final class Game implements GameState {
         return player;
     }
 
-    public ArrayList<World> getWorlds() {
+    public List<World> getWorlds() {
         return layout.getWorlds();
     }
 
@@ -101,7 +102,7 @@ public final class Game implements GameState {
      * Make player go to the next or previous world declared in the layout's list of worlds
      */
     private void cycleWorlds(int index) {
-        ArrayList<World> allWorlds = getWorlds();
+        List<World> allWorlds = getWorlds();
         World newWorld = player.getWorld();
         int currentIndex = allWorlds.indexOf(newWorld);
 

@@ -31,7 +31,7 @@ public class InanimateStats implements Stats {
 
     @Override
     public Alliance getAlliance() {
-        return Alliance.NEUTRAL;
+        return Alliance.INVINCIBLE;
     }
 
     @Override

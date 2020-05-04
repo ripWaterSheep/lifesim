@@ -4,6 +4,7 @@ import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.types.EnemyType;
+import lifesim.game.entities.types.ResourceTypes;
 import lifesim.state.Game;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.ShapeSprite;
@@ -42,7 +43,7 @@ public class MyLayout extends Layout {
                 .add(new Entity("Office", new ShapeSprite(200, 200, new Color(150, 150, 160))) {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
-                        stats.gainMoney(stats.getIntellect()/250);
+                        stats.gainMoney(stats.getIntellect()/200);
                         stats.tire(0.1);
                     }
                 }, -250, 250)
@@ -51,7 +52,7 @@ public class MyLayout extends Layout {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         if (stats.attemptToPay(0.75)) {
-                            stats.strengthen(0.75);
+                            stats.strengthen(0.5);
                             stats.tire(0.5);
                         }
                     }
@@ -61,7 +62,7 @@ public class MyLayout extends Layout {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         if (stats.attemptToPay(0.5)) {
-                            stats.energize(0.1);
+                            stats.energize(0.75);
                         }
                     }
                 }, -250, -225)
@@ -78,9 +79,9 @@ public class MyLayout extends Layout {
                 .add(new Entity("Shop", new ShapeSprite(250, 200, new Color(200, 110, 75))), -675, 250)
                 .add(new Entity("Cave", new ShapeSprite(200, 75, Color.LIGHT_GRAY)), -800, -800)
 
-                .addSpawner(new SpawningSystem(EnemyType.MELEEBORG, 1000))
+                .addSpawner(new SpawningSystem(EnemyType.MELEEBORG, 2500))
 
-                //.addSpawner(new SpawningSystem(EnemyType.RANGED_1, 3000))
+                .addSpawner(new BalancedSpawningSystem(ResourceTypes.ITEM_PACKAGE, 0, 4))
         );
 
         worlds.add(new World("Home", 300, 225, new Color(230, 210, 140), new Color(100, 80, 50))
@@ -94,8 +95,8 @@ public class MyLayout extends Layout {
         );
 
 
-        worlds.add(new World("City", 3000, 3000, new Color(180, 180, 180), new Color(100, 205, 131))
-
+        worlds.add(new World("City", 200, 200, new Color(180, 180, 180), new Color(100, 205, 131))
+                .addSpawner(new BalancedSpawningSystem(ResourceTypes.ITEM_PACKAGE, 5000, 1))
         );
 
     }

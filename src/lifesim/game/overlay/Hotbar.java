@@ -11,7 +11,7 @@ import lifesim.util.geom.Vector2D;
 import lifesim.state.engine.GameWindow;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
 
 import static lifesim.state.engine.GamePanel.WIDTH;
 
@@ -26,7 +26,7 @@ public class Hotbar extends Overlay {
 
     private final Player player;
     private final Inventory inventory;
-    private final ArrayList<InventorySlot> slots;
+    private final List<InventorySlot> slots;
 
     private final int minIndex;
     private final int maxIndex;

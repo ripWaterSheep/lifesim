@@ -9,12 +9,13 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.util.List;
 import java.util.ArrayList;
 
 
-public final class MouseInput {
+public class MouseInput {
 
-    static final ArrayList<InputListener> buttons = new ArrayList<>();
+    static final List<InputListener> buttons = new ArrayList<>();
 
     public static final InputListener left = new InputListener(MouseEvent.BUTTON1);
     public static final InputListener middle = new InputListener(MouseEvent.BUTTON2);

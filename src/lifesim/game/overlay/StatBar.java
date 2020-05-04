@@ -91,7 +91,7 @@ public class StatBar extends Overlay {
 
     private void drawBar(String label, double data, double dataMax, Color color) {
         int dataWidth = betterRound((data / dataMax) * BAR_WIDTH);
-        dataWidth = (int) min(dataWidth, dataMax * BAR_WIDTH);
+        dataWidth = min(dataWidth, BAR_WIDTH);
         // Draw data display bar.
         g2d.setColor(color);
         g2d.fill(Rect.fromCorner(getPos().translate(1, 0), new Vector2D(dataWidth, BAR_HEIGHT)));

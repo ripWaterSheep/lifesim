@@ -5,10 +5,12 @@ import lifesim.game.entities.types.Spawnable;
 import lifesim.util.geom.Vector2D;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class BalancedSpawningSystem extends SpawningSystem {
 
-    private final ArrayList<Entity> spawn = new ArrayList<>();
+    private final List<Entity> spawn = new ArrayList<>();
     private final int maxSpawn;
 
     /** Spawns an entity only when a previously spawned entity is removed. */

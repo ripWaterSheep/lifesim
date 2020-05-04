@@ -5,14 +5,16 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import java.util.List;
 import java.util.ArrayList;
 
 import static java.awt.event.KeyEvent.*;
 
 
-public final class KeyInput {
+public class KeyInput {
 
-    static final ArrayList<InputListener> keys = new ArrayList<>();
+    static final List<InputListener> keys = new ArrayList<>();
 
     public static final InputListener k_a = new InputListener(VK_A);
     public static final InputListener k_b = new InputListener(VK_B);

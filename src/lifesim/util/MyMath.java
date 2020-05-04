@@ -2,8 +2,7 @@ package lifesim.util;
 
 import java.util.Random;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
+import static java.lang.Math.*;
 
 
 public class MyMath {
@@ -35,6 +34,10 @@ public class MyMath {
         double min = min(a, b);
         double max = max(a, b);
         return min + (max - min) * new Random().nextDouble();
+    }
+
+    public static int getRandInt(int a, int b) {
+        return (int) getRand(a, b);
     }
 
 }

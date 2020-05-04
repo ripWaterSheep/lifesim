@@ -8,7 +8,8 @@ public enum Alliance {
 
     PLAYER(Color.GREEN), // Can attack or be attacked by entities on enemy alliance.
     ENEMY(Color.RED), // Can attack or be attacked by entities on player alliance.
-    NEUTRAL(Color.GRAY); // Can attack but cannot be attacked on any alliance.
+    NEUTRAL(Color.GRAY), // Can attack or be attacked by anything.
+    INVINCIBLE(Color.GRAY); // Can attack any other alliance but cannot be attacked or targeted.
 
 
     Alliance(Color teamColor) {
@@ -16,7 +17,7 @@ public enum Alliance {
     }
 
     public boolean opposes(Alliance otherAlliance) {
-        return (!equals(otherAlliance) || equals(NEUTRAL)) && !otherAlliance.equals(NEUTRAL);
+        return (!equals(otherAlliance) || equals(INVINCIBLE) || equals(NEUTRAL)) && !otherAlliance.equals(INVINCIBLE);
     }
 
     public final Color teamColor;

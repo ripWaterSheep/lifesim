@@ -3,15 +3,16 @@ package lifesim.game.handlers;
 import lifesim.state.Game;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public abstract class Layout {
 
     protected final Game game;
 
-    protected final ArrayList<World> worlds = new ArrayList<>();
+    protected final List<World> worlds = new ArrayList<>();
 
-    public final ArrayList<World> getWorlds() {
+    public final List<World> getWorlds() {
         return worlds;
     }
 

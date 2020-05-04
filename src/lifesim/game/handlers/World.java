@@ -10,6 +10,7 @@ import lifesim.util.geom.Vector2D;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import static lifesim.util.GraphicsMethods.createGraphics;
 import static lifesim.util.MyMath.getRand;
@@ -23,9 +24,9 @@ public class World {
     private final Rect rect;
     private final Color outerColor;
 
-    private final ArrayList<Entity> entities = new ArrayList<>();
+    private final List<Entity> entities = new ArrayList<>();
 
-    private final ArrayList<SpawningSystem> spawningSystems = new ArrayList<>();
+    private final List<SpawningSystem> spawningSystems = new ArrayList<>();
 
 
     public World(String name, double width, double height, Color color, Color outerColor) {
@@ -36,10 +37,9 @@ public class World {
         this.outerColor = outerColor;
     }
 
-    public ArrayList<Entity> getEntities() {
+    public List<Entity> getEntities() {
         return new ArrayList<>(entities);
     }
-
 
     public World add(Entity entity, Vector2D pos) {
         if (entities.size() < MAX_ENTITIES) {
@@ -66,12 +66,10 @@ public class World {
     public void doGarbageCollection(Entity entity, Player player) {
         // Remove enemies outside large range to prevent lag.
         if (entity.isEnemy() && player.getPos().getDistanceFrom(entity.getPos()) > 1000 && entities.size() > MAX_ENTITIES/2) {
-            entity.removeFromWorld();
-        }
-        // Remove entity from world if requested, effectively destroying the entity.
-        if (entity.isRemoveRequested()) {
             entities.remove(entity);
         }
+        // Remove entity from world if requested, effectively destroying the entity.
+        entities.removeIf(Entity::isRemoveRequested);
     }
 
 
@@ -81,7 +79,7 @@ public class World {
 
 
     public void update(Player player) {
-        if (entities.size() < MAX_ENTITIES * 0.9) {
+        if (entities.size() < MAX_ENTITIES * 0.8) {
             for (SpawningSystem spawningSystem : spawningSystems) {
                 Vector2D spawnPos = rect.getDims().scale(getRand(-0.5, 0.5), getRand(-0.5, 0.5));
                 spawningSystem.update(this, spawnPos);

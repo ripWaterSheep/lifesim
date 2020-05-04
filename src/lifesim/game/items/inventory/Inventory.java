@@ -5,6 +5,7 @@ import lifesim.game.items.ItemType;
 import lifesim.input.MouseInput;
 import lifesim.state.Game;
 
+import java.util.List;
 import java.util.ArrayList;
 
 
@@ -16,7 +17,7 @@ public class Inventory {
     private final Player player;
     private final Game game;
 
-    private final ArrayList<InventorySlot> slots = new ArrayList<>();
+    private final List<InventorySlot> slots = new ArrayList<>();
 
 
     public Inventory(Player player, Game game) {
@@ -32,7 +33,7 @@ public class Inventory {
     public void addItem(ItemType item, int amount) {
         for (InventorySlot slot: slots) {
             if (slot.getItem().equals(item)) {
-                slot.changeAmount(amount);
+                slot.increase(amount);
                 return;
             }
         }
@@ -48,7 +49,7 @@ public class Inventory {
     }
 
 
-    public ArrayList<InventorySlot> getSlots() {
+    public List<InventorySlot> getSlots() {
         return new ArrayList<>(slots);
     }
 

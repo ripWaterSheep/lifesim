@@ -16,8 +16,7 @@ import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 
 import java.awt.*;
-import java.util.ArrayList;
-
+import java.util.List;
 
 
 public class InventoryGUI extends ToggleableOverlay {
@@ -30,7 +29,7 @@ public class InventoryGUI extends ToggleableOverlay {
 
 
     private final Inventory inventory;
-    private final ArrayList<InventorySlot> slots;
+    private final List<InventorySlot> slots;
 
     private InventorySlot lastDraggedSlot = new InventorySlot();
 

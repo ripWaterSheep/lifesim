@@ -5,12 +5,11 @@ import lifesim.util.fileIO.ImageLoader;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 
 public class Animation {
 
-    private final ArrayList<Image> frames = new ArrayList<>();
+    private final Image[] frames;
     private final int frameInterval;
 
     protected int currentFrameIndex = 0;
@@ -26,9 +25,11 @@ public class Animation {
         // Calculate number of columns to the right of the corner position that will be used as frames of the animation.
         int columns = (spriteSheet.getWidth() / spriteSize.intX()) - cornerPos.intX();
 
+        frames = new Image[columns];
+
         // For every column to the right of the corner position, create a frame.
         for (int i = 0; i < columns; i++) {
-            frames.add(spriteSheet.getSubimage(i * spriteSize.intX(), cornerPos.intY(), spriteSize.intX(), spriteSize.intY()));
+            frames[i] = spriteSheet.getSubimage(i * spriteSize.intX(), cornerPos.intY(), spriteSize.intX(), spriteSize.intY());
         }
     }
 
@@ -39,18 +40,18 @@ public class Animation {
 
 
     public Image getNextFrame() {
-        Image currentFrame = frames.get(currentFrameIndex);
+        Image currentFrame = frames[currentFrameIndex];
 
         if (System.currentTimeMillis() - lastFrameTime > frameInterval) {
-            currentFrame = frames.get(currentFrameIndex);
+            currentFrame = frames[currentFrameIndex];
 
             currentFrameIndex++;
 
-            if (currentFrameIndex > frames.size() - 1) {
+            if (currentFrameIndex > frames.length - 1) {
                 currentFrameIndex = 0;
                 currentCycles++;
             }
-            else currentFrame = frames.get(currentFrameIndex);
+            else currentFrame = frames[currentFrameIndex];
 
             lastFrameTime = System.currentTimeMillis();
         }

@@ -11,13 +11,13 @@ import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
+import static java.lang.Math.max;
+
 
 public class InventorySlot {
 
     private static final ItemType EMPTY_ITEM = ItemType.HAND;
-
     private static final Font AMOUNT_FONT = FontLoader.getMainFont(4);
-
 
     private ItemType item;
     private int amount;
@@ -38,7 +38,7 @@ public class InventorySlot {
          amount = newAmount;
     }
 
-    public void changeAmount(int amount) {
+    public void increase(int amount) {
         this.amount += amount;
     }
 
@@ -66,8 +66,10 @@ public class InventorySlot {
     }
 
     public void dropItem(World world, Vector2D pos) {
-        world.add(item.getDroppedEntity(amount), pos);
-        becomeEmpty();
+        if (!isEmpty()) {
+            world.add(item.getDroppedEntity(amount), pos);
+            becomeEmpty();
+        }
     }
 
 
@@ -79,8 +81,9 @@ public class InventorySlot {
             }
         }
 
-        if (amount <= 0)
+        if (amount <= 0) {
             becomeEmpty();
+        }
     }
 
     public void render(Graphics2D g2d, Vector2D pos, boolean doRenderText) {

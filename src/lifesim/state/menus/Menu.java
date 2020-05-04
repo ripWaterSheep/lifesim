@@ -7,13 +7,14 @@ import lifesim.state.GameState;
 import lifesim.state.menus.ui.Button;
 
 import java.awt.*;
+import java.util.List;
 import java.util.ArrayList;
 
 
 public abstract class Menu implements GameState {
 
     private final Sprite bg;
-    protected final ArrayList<Button> buttons = new ArrayList<>();
+    protected final List<Button> buttons = new ArrayList<>();
 
 
     protected Menu(Sprite bg) {
