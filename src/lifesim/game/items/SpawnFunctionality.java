@@ -26,7 +26,7 @@ public class SpawnFunctionality extends ItemFunctionality {
 
     @Override
     public void use(World world, Player player , PlayerStats stats) {
-        world.add(spawnable.spawnEntity(), MouseInput.getCursorPos().translate(player.getPos()));
+        world.add(spawnable.spawnEntity(), MouseInput.getCursorPosFrom(player.getPos()));
     }
 
     @Override
@@ -35,7 +35,7 @@ public class SpawnFunctionality extends ItemFunctionality {
 
         // Show translucent hint at what the entity looks like at the mouse cursor.
         Entity shownEntity = spawnable.spawnEntity();
-        shownEntity.setPos(MouseInput.getCursorPos().translate(player.getPos()));
+        shownEntity.setPos(MouseInput.getCursorPosFrom(player.getPos()));
         shownEntity.render(g2d);
     }
 }

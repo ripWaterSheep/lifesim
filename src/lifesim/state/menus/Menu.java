@@ -1,5 +1,6 @@
 package lifesim.state.menus;
 
+import lifesim.state.engine.GamePanel;
 import lifesim.util.sprites.Sprite;
 import lifesim.input.MouseInput;
 import lifesim.state.GameState;
@@ -29,7 +30,7 @@ public abstract class Menu implements GameState {
 
     @Override
     public void render(Graphics2D g2d) {
-        bg.render(g2d, new Vector2D(0, 0), MouseInput.getCursorVelocity());
+        bg.render(g2d, GamePanel.getCenterPos(), MouseInput.getCursorVelocity());
 
         for (Button button: buttons) {
             button.render(g2d);

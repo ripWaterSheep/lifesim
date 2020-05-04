@@ -1,5 +1,6 @@
 package lifesim.state.menus;
 
+import lifesim.state.engine.GamePanel;
 import lifesim.state.engine.GameWindow;
 import lifesim.state.engine.StateManager;
 import lifesim.util.sprites.ShapeSprite;
@@ -23,19 +24,19 @@ public class PauseMenu extends Menu {
         super(new ShapeSprite(100, 100, new Color(0, 0, 0, 0)));
         this.game = game;
 
-        buttons.add(new Button("Resume", new Vector2D(0, 30), ButtonType.WIDE, window) {
+        buttons.add(new Button("Resume", GamePanel.getCenterPos().translate(0, 30), ButtonType.WIDE, window) {
             @Override
             public void onClick() {
                 stateManager.resumeGame();
             }
         });
-        buttons.add(new Button("Settings",  new Vector2D(0, 60), ButtonType.MID, window) {
+        buttons.add(new Button("Settings", GamePanel.getCenterPos().translate(0, 60), ButtonType.MID, window) {
             @Override
             protected void onClick() {
                 stateManager.goToSettings();
             }
         });
-        buttons.add(new Button("Exit", new Vector2D(0, 90), ButtonType.MID, window) {
+        buttons.add(new Button("Exit", GamePanel.getCenterPos().translate(0, 90), ButtonType.MID, window) {
             @Override
             public void onClick() {
                 stateManager.goToTitle();
@@ -48,6 +49,6 @@ public class PauseMenu extends Menu {
         game.render(g2d);
         super.render(g2d);
         GraphicsMethods.fillPanel(g2d, new Color(0, 0, 0, 75));
-        GraphicsMethods.centeredString(g2d, "PAUSED", new Vector2D(0, -30), font, Color.WHITE);
+        GraphicsMethods.centeredString(g2d, "PAUSED", GamePanel.getCenterPos().translate(0, -30), font, Color.WHITE);
     }
 }

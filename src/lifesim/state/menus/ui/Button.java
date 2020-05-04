@@ -23,7 +23,7 @@ public abstract class Button {
 
     public Button(String label, Vector2D pos, ButtonType size, GameWindow window) {
         this.label = label;
-        this.pos = pos;
+        this.pos = pos.copy(); // Copy position vector to new reference to not be affected by external modification of original reference.
         this.sprite = size.sprite;
         this.window = window;
     }

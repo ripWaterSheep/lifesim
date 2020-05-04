@@ -1,5 +1,6 @@
 package lifesim.game.entities;
 
+import lifesim.state.engine.GamePanel;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.InanimateStats;
@@ -49,7 +50,9 @@ public class Entity implements Comparable<Entity> {
     }
 
     public Vector2D getDisplayPos() {
-        return getPos().translate(Main.getCurrentPlayer().getPos().negate());
+        // Translate position by GamePanel center and translate it backwards by player position
+        return getPos().translate(GamePanel.getCenterPos())
+                .translate(Main.getCurrentPlayer().getPos().negate());
     }
 
     public Rect getHitBox() {
@@ -118,6 +121,13 @@ public class Entity implements Comparable<Entity> {
     }
 
     public void render(Graphics2D g2d) {
+        // Draw shadow under entity
+        /*
+        g2d.setColor(new Color(0, 0, 0, 100));
+        int width = (int) getHitBox().width;
+        int height = (int) getHitBox().height;
+        g2d.fillRect((int) getDisplayPos().x - width/2, (int) getDisplayPos().y + height/2, width, height/2);*/
+
         sprite.render(g2d, getDisplayPos(), getVelocity());
         stats.renderInfo(g2d, getDisplayPos().translate(0, -(sprite.getSize().y*0.5) - 3));
     }

@@ -19,10 +19,9 @@ public class SolidEntity extends Entity {
     public Rect getHitBox() {
         Rect hitBox = super.getHitBox();
         // Center the position around center of base bottom.
-        //Vector2D pos = new Vector2D(hitBox.getCenterX(), hitBox.getCenterY() + hitBox.height/2 - baseDepth/2.0);
-        //Vector2D dims = new Vector2D(hitBox.width, baseDepth);
-        //return new Rect(pos, dims);
-        return hitBox;
+        Vector2D pos = new Vector2D(hitBox.getCenterX(), hitBox.getCenterY() + hitBox.height/2 - baseDepth/2.0);
+        Vector2D dims = new Vector2D(hitBox.width, baseDepth);
+        return new Rect(pos, dims);
     }
 
     @Override

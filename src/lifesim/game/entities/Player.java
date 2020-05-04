@@ -1,6 +1,7 @@
 package lifesim.game.entities;
 
 import lifesim.game.items.ItemType;
+import lifesim.state.engine.GamePanel;
 import lifesim.util.sprites.Animation;
 import lifesim.util.sprites.DirectionalAnimatedSprite;
 import lifesim.game.handlers.World;
@@ -48,7 +49,7 @@ public final class Player extends MovementEntity {
 
 
     public Vector2D getDisplayPos() {
-        return new Vector2D(0, 0);
+        return GamePanel.getCenterPos();
     }
 
 

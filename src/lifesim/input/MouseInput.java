@@ -30,6 +30,10 @@ public final class MouseInput {
         return cursorPos.copy();
     }
 
+    public static Vector2D getCursorPosFrom(Vector2D pos) {
+        return getCursorPos().translate(pos.copy()).translate(GamePanel.getCenterPos().negate());
+    }
+
     public static Vector2D getCursorVelocity() {
        return getCursorPos().translate(lastCursorPos.copy().negate());
     }

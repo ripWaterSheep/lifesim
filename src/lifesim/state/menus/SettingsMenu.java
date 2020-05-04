@@ -4,19 +4,19 @@ import lifesim.state.engine.GameWindow;
 import lifesim.state.engine.StateManager;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.state.Game;
-import lifesim.state.menus.Menu;
 import lifesim.state.menus.ui.Button;
 import lifesim.state.menus.ui.ButtonType;
-import lifesim.state.menus.ui.MultiStateButton;
 import lifesim.util.geom.Vector2D;
+
+import static lifesim.state.engine.GamePanel.WIDTH;
 
 
 public class SettingsMenu extends Menu {
 
     public SettingsMenu(Game game, GameWindow window, StateManager stateManager) {
-        super(new ImageSprite("settings_test"));
+        super(new ImageSprite("ui/settings"));
 
-        buttons.add(new Button("Exit", new Vector2D(200, -120), ButtonType.MID, window) {
+        buttons.add(new Button("Exit", new Vector2D(WIDTH - 50, 25), ButtonType.MID, window) {
             @Override
             protected void onClick() {
                 stateManager.goToPrevious();

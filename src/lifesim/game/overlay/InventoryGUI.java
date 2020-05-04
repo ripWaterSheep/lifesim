@@ -1,6 +1,7 @@
 package lifesim.game.overlay;
 
 import lifesim.game.entities.Player;
+import lifesim.state.engine.GamePanel;
 import lifesim.state.engine.Main;
 import lifesim.state.menus.ui.CursorType;
 import lifesim.util.sprites.ImageSprite;
@@ -23,8 +24,8 @@ public class InventoryGUI extends ToggleableOverlay {
 
     public static final int GRID_SIZE = 20;
 
-    private static final Vector2D DISPLAY_POS = new Vector2D(0, 0);
-    private static final Sprite BG = new ImageSprite("toolbox");
+    private static final Vector2D DISPLAY_POS = GamePanel.getCenterPos();
+    private static final Sprite BG = new ImageSprite("ui/inventory");
     private static final Font INFO_FONT = FontLoader.getMainFont(8);
 
 

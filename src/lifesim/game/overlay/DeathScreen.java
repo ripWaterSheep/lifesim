@@ -2,6 +2,7 @@ package lifesim.game.overlay;
 
 import lifesim.input.KeyInput;
 import lifesim.input.MouseInput;
+import lifesim.state.engine.GamePanel;
 import lifesim.state.engine.StateManager;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.GraphicsMethods;
@@ -56,8 +57,8 @@ public class DeathScreen extends ToggleableOverlay {
         g2d.setColor(bgColor);
         GraphicsMethods.fillPanel(g2d, bgColor);
 
-        GraphicsMethods.centeredString(g2d, "OOF, YOU DIED!", new Vector2D(0, 0), font, textColor);
-        GraphicsMethods.centeredString(g2d, deathReason, new Vector2D(0, 25), subtitleFont, textColor);
+        GraphicsMethods.centeredString(g2d, "OOF, YOU DIED!", GamePanel.getCenterPos(), font, textColor);
+        GraphicsMethods.centeredString(g2d, deathReason, GamePanel.getCenterPos().translate(0, 30), subtitleFont, textColor);
     }
 
 }

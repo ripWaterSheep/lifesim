@@ -14,13 +14,15 @@ import lifesim.state.engine.GameWindow;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static lifesim.state.engine.GamePanel.WIDTH;
+
 
 public class Hotbar extends Overlay {
 
-    private static final Sprite BG = new ImageSprite("hotbar");
-    private static final Sprite SLOT_SELECTION = new ImageSprite("slot_selection");
+    private static final Sprite BG = new ImageSprite("ui/hotbar");
+    private static final Sprite SLOT_SELECTION = new ImageSprite("ui/slot_selection");
 
-    private static final Vector2D DISPLAY_POS = new Vector2D(0, GamePanel.HEIGHT/2.0 - BG.getSize().y/2 - 1);
+    private static final Vector2D DISPLAY_POS = new Vector2D(WIDTH/2.0, BG.getSize().y/2 - 1);
 
 
     private final Player player;

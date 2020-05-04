@@ -1,5 +1,6 @@
 package lifesim.state.engine;
 
+import lifesim.input.MouseInput;
 import lifesim.state.GameState;
 import lifesim.util.geom.Vector2D;
 
@@ -8,7 +9,7 @@ import java.awt.*;
 
 import static lifesim.util.GraphicsMethods.createGraphics;
 
-
+/** This class manages the graphical display of the current game state. */
 public class GamePanel extends JPanel {
 
     // Dimensions of game pixels (not 1:1 pixels) on screen.
@@ -22,8 +23,12 @@ public class GamePanel extends JPanel {
         return new Vector2D(WIDTH, HEIGHT);
     }
 
+    public static Vector2D getCenterPos() {
+        return new Vector2D(WIDTH/2.0, HEIGHT/2.0);
+    }
+
     public static void scalePos(Vector2D pos) {
-        pos.translate(getPixelDims().scale(-2)).scale(1.0/graphicsScale);
+        pos.scale(1.0/graphicsScale);
     }
 
 
@@ -74,7 +79,6 @@ public class GamePanel extends JPanel {
 
     private void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.translate(getWidth()/2, getHeight()/2);
 
         double scale = graphicsScale;
         g2d.scale(scale, scale);

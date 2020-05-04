@@ -42,7 +42,7 @@ public enum AllyType implements Spawnable{
                     new Animation("unibot", 100, new Vector2D(0, 28), new Vector2D(6, 14)),
                     new Animation("unibot", 100, new Vector2D(0, 42), new Vector2D(6, 14)),
                     new Animation("unibot", 100, new Vector2D(0, 56), new Vector2D(6, 14))),
-                    new HealthStats(2.5, Alliance.PLAYER, 50), 2, 200);
+                    new HealthStats(2, Alliance.PLAYER, 50), 2, 150);
         }
     },
 

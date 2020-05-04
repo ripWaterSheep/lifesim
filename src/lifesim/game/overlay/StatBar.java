@@ -25,7 +25,7 @@ public class StatBar extends Overlay {
     private static final int BAR_WIDTH = 52;
     private static final int BAR_HEIGHT = 10;
 
-    private static final Sprite STAT_OUTLINE = new ImageSprite("stat_outline");
+    private static final Sprite STAT_BORDER = new ImageSprite("ui/stat_border");
 
     private static final Font STAT_FONT = FontLoader.getMainFont(6);
     private static final int TEXT_LEFT_PADDING = 2;
@@ -64,8 +64,8 @@ public class StatBar extends Overlay {
 
 
     private Vector2D getPos() {
-        Vector2D pos = GamePanel.getPixelDims().scale(-0.5, 0.5);
-        pos.translate(LEFT_PADDING, -(getCurrentBarNum() * BAR_HEIGHT) - BOTTOM_PADDING);
+        Vector2D pos = new Vector2D(LEFT_PADDING, GamePanel.HEIGHT - BOTTOM_PADDING);
+        pos.translate(0, -getCurrentBarNum() * BAR_HEIGHT);
         return pos;
     }
 
@@ -97,7 +97,7 @@ public class StatBar extends Overlay {
         g2d.setColor(color);
         g2d.fill(Rect.fromCorner(getPos().translate(1, 0), new Vector2D(dataWidth, BAR_HEIGHT)));
         // Draw outline for bar.
-        STAT_OUTLINE.render(g2d, getPos().translate(STAT_OUTLINE.getSize().scale(0.5)), new Vector2D(0, 0));
+        STAT_BORDER.render(g2d, getPos().translate(STAT_BORDER.getSize().scale(0.5)), new Vector2D(0, 0));
 
         writeRoundedVal(label, data);
     }
