@@ -9,6 +9,9 @@ import lifesim.util.geom.Vector2D;
 import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.HealthStats;
 import lifesim.util.sprites.DirectionalAnimatedSprite;
+import lifesim.util.sprites.ImageSprite;
+
+import java.awt.*;
 
 
 public enum EnemyType implements Spawnable {
@@ -27,12 +30,11 @@ public enum EnemyType implements Spawnable {
     }},
 
 
-    RANGED_1() {
+    RANGED() {
         @Override
         public Entity spawnEntity() {
-            return new RangedAIEntity("Nerd", new AnimatedSprite(new Animation("nerd", 300,
-                    new Vector2D(0, 0), new Vector2D(7, 16))),
-                    new HealthStats(0, Alliance.ENEMY, 25), 3.25, 250, 1000, ProjectileType.CANNONBALL);
+            return new RangedAIEntity("Ranged", new ImageSprite("ranged"), new HealthStats(0,
+                    Alliance.ENEMY, 50), 3.25, 250, 1000, ProjectileType.LASER);
     }}
 
 

@@ -33,7 +33,7 @@ public class Player extends MovementEntity {
                 new Animation("player", 100, new Vector2D(0, 48), new Vector2D(12, 16)),
                 new Animation("player", 100, new Vector2D(0, 64), new Vector2D(12, 16))
                 ),
-            new PlayerStats(1000, 1000, 0, 0, 0, game), 4, 0);
+            new PlayerStats(1000, 1000, 0, 0, 0, game), 5, 0);
         velocity.set(0, 0);
         this.game = game;
         setWorld(startingWorld);
@@ -44,7 +44,7 @@ public class Player extends MovementEntity {
     public void init() {
         //acquireItem(ItemType.STARTER_FACTORY, 25);
         //acquireItem(ItemType.WALLBOT, 25);
-        //acquireItem(ItemType.BOMB, 25);
+        acquireItem(ItemType.BOMB, 25);
         //acquireItem(ItemType.HAMMER, 50);
     }
 
@@ -100,7 +100,8 @@ public class Player extends MovementEntity {
 
     private double getCurrentSpeed() {
         double currentSpeed = defaultSpeed;
-        currentSpeed *= (getStats().getEnergy() / 5000) + 0.8;
+        // Speed ranges from 100% to 75% depending on energy level.
+        currentSpeed *= (getStats().getEnergy() / 4000) + 0.75;
         return currentSpeed;
     }
 
@@ -110,9 +111,7 @@ public class Player extends MovementEntity {
         double speed = getCurrentSpeed();
 
         if (KeyInput.k_shift.isPressed()) {
-            speed *= 0.3;
-        } else if (KeyInput.k_space.isPressed() && getStats().getEnergy() > 0) {
-            speed *= 1.45;
+            speed *= 0.35;
         }
 
         Vector2D tempVel = new Vector2D(0, 0);
@@ -136,7 +135,7 @@ public class Player extends MovementEntity {
     @Override
     public void handleCollision(Entity entity, World world) {
     super.handleCollision(entity, world);
-        // Do special events for touching or clicking while touching the entity.
+        // Do special events for touching or pressing interact while touching the entity.
         entity.playerCollision(game, this, getStats());
         if (MouseInput.left.isClicked())
             entity.interact(game, this, getStats());

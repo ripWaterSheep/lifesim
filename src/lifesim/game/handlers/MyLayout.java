@@ -80,6 +80,7 @@ public class MyLayout extends Layout {
                 .add(new Entity("Cave", new ShapeSprite(200, 75, Color.LIGHT_GRAY)), -800, -800)
 
                 .addSpawner(new SpawningSystem(EnemyType.MELEEBORG, 2500))
+                .addSpawner(new SpawningSystem(EnemyType.RANGED, 3500))
 
                 .addSpawner(new BalancedSpawningSystem(ResourceTypes.ITEM_PACKAGE, 0, 4))
         );

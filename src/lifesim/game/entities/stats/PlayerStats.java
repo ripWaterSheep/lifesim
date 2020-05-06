@@ -89,7 +89,7 @@ public class PlayerStats extends HealthStats {
         strength = max(0, strength);
         intellect = max(0, intellect);
 
-        energy -= 0.05 + sqrt(player.getVelocity().getMagnitude()/500);
+        energy -= 0.05 + sqrt(player.getVelocity().getMagnitude()/600);
     }
 
     @Override

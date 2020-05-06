@@ -87,7 +87,6 @@ public class World {
         }
 
         for (Entity entity: getEntities()) {
-
             entity.update(this);
 
             for (Entity entity2: getEntities()) {
