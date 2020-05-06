@@ -110,8 +110,14 @@ public class Entity implements Comparable<Entity> {
         stats.onCollision(this, entity);
     }
 
-    public final void keepInWorld(Rect worldRect) {
-        Rect rect = new Rect(worldRect.getCenterPos(), worldRect.getDims().translate(sprite.getSize().negate()));
+    public final void clampPosInRect(Rect rect) {
+        // Scoot the rect down so only the entity's feet (bottom bound) must stay inside.
+        // This way, the entity's body can overlap the outside to give the illusion of 3D.
+        Vector2D rectCenter = rect.getCenterPos().translate(0, -getHitBox().height/2);
+        Vector2D rectDims = rect.getDims().translate(-getHitBox().width, 0);
+        rectDims.translate(0, -1);
+
+        rect = new Rect(rectCenter, rectDims);
         pos.clampInRect(rect);
     }
 

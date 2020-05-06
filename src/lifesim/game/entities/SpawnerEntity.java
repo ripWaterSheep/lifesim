@@ -5,13 +5,13 @@ import lifesim.game.handlers.SpawningSystem;
 import lifesim.game.handlers.World;
 import lifesim.util.sprites.Sprite;
 
-public class SpawnerEntity extends Entity {
+public class SpawnerEntity extends SolidEntity {
 
     private final SpawningSystem spawningSystem;
 
 
-    public SpawnerEntity(String name, Sprite sprite, Stats stats, SpawningSystem spawningSystem) {
-        super(name, sprite, stats);
+    public SpawnerEntity(String name, Sprite sprite, Stats stats, SpawningSystem spawningSystem, int baseDepth) {
+        super(name, sprite, stats, baseDepth);
         this.spawningSystem = spawningSystem;
     }
 

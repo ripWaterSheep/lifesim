@@ -120,7 +120,7 @@ public class Game implements GameState {
 
 
     public void update() {
-        player.getWorld().update(player);
+        player.getWorld().update();
 
         for (Overlay display : overlays) {
             if (display.isShowing()) {

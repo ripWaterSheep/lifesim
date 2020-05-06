@@ -21,7 +21,7 @@ public class MyLayout extends Layout {
     @Override
     public void init() {
         worlds.add(
-            new World("Town", 2000, 2000, new Color(60, 175, 90), new Color(200, 190, 125))
+            new World("Town", 2500, 2500, new Color(60, 175, 90), new Color(200, 190, 125))
                 .add(new Entity("vRoad", new ShapeSprite(100, 2000, Color.DARK_GRAY)), 0, 0)
                 .add(new Entity("hRoad", new ShapeSprite(2000, 100, Color.DARK_GRAY)), 0, 0)
 
@@ -96,7 +96,7 @@ public class MyLayout extends Layout {
         );
 
 
-        worlds.add(new World("City", 200, 200, new Color(180, 180, 180), new Color(100, 205, 131))
+        worlds.add(new World("City", 3000, 3000, new Color(180, 180, 180), new Color(100, 205, 131))
                 .addSpawner(new BalancedSpawningSystem(ResourceTypes.ITEM_PACKAGE, 5000, 1))
         );
 

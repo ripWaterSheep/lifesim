@@ -1,6 +1,5 @@
 package lifesim.util.geom;
 
-import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 import static java.lang.Math.*;
@@ -16,10 +15,6 @@ public class Rect extends Rectangle2D.Double {
         super(centerPos.x - dims.x/2, centerPos.y - dims.y/2, dims.x, dims.y);
     }
 
-    public Rect(Rectangle r) {
-        this(new Vector2D(r.x, r.y), new Vector2D(r.width, r.height));
-    }
-
     public Vector2D getCenterPos() {
         return new Vector2D(getCenterX(), getCenterY());
     }
@@ -29,25 +24,36 @@ public class Rect extends Rectangle2D.Double {
     }
 
 
-    public Vector2D getPosClampedOutside(Rectangle2D.Double rect) {
-        /* If one of this rect's horizontal bounds intersects the other rect's,
-          don't let this rect intersect the other rect's vertical bounds (and vice versa).
-        */
-        if (getMinX() > rect.getMinX() && getMaxX() < rect.getMaxX()) {
-            if (getMaxY() >= rect.getMaxY()) {
-                y = max(y, rect.y + rect.height);
-            } else if (getMinY() <= getMinY()) {
-                y = min(y, rect.y - height);
+    public void translatePos(Vector2D v) {
+        Vector2D pos = getCenterPos();
+        pos.translate(v);
+        Rect rect = new Rect(pos, getDims());
+        setRect(rect);
+    }
+
+
+    public void clampBottomOutside(Rectangle2D.Double rect) {
+        /* If this rect's bottom bound is inside the other rect, keep it outside.
+        This method is used to allow entities to overlap solid entities to give the illusion of 3D
+        without letting them walk over it with their feet. */
+        double bottom = getMaxY() - 1;
+
+        if (getMinX() < rect.getMaxX() && getMaxX() > rect.getMinX()) {
+            if (bottom > rect.getCenterY()) {
+                bottom = max(bottom, rect.getMaxY());
+            } else {
+                bottom = min(bottom, rect.getMinY());
             }
-        }
-        if (getMinY() > rect.getMinY() && getMaxY() < rect.getMaxY()) {
+       }
+
+        if (getMinY() > rect.getMinY() && bottom < rect.getMaxY()) {
             if (getMaxX() >= rect.getMaxX()) {
                 x = max(x, rect.x + rect.width);
             } else if (getMinX() <= getMinX()) {
                 x = min(x, rect.x - width);
             }
         }
-        return getCenterPos().copy();
+        y = bottom + 1 - height;
     }
 
 }

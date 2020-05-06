@@ -50,7 +50,8 @@ public enum AllyType implements Spawnable{
         @Override
         public Entity spawnEntity() {
             return new SolidEntity("Wallbot", new AnimatedSprite(new Animation("wallbot", 75,
-                    new Vector2D(0, 0), new Vector2D(64, 16))), new HealthStats(0, Alliance.PLAYER, 1000), 5);
+                    new Vector2D(0, 0), new Vector2D(64, 36))), new HealthStats(0, Alliance.PLAYER, 1000),
+                    13);
         }
     }
 

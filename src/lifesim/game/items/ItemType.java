@@ -1,7 +1,6 @@
 package lifesim.game.items;
 
 import lifesim.game.entities.Player;
-import lifesim.game.entities.Projectile;
 import lifesim.game.entities.itemEntites.DroppedItem;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.types.AllyType;
@@ -32,7 +31,7 @@ public enum ItemType {
 
     BOMB("Bomb", new AnimatedSprite(new Animation("weapons", 75,
             new Vector2D(0, 0), new Vector2D(16, 16))), new LaunchFunctionality(ProjectileType.BOMB, 0),
-            8, 3),
+            8, 2),
 
     HAMMER("Hammer", new ImageSprite("utilities", new Vector2D(0, 48), new Vector2D(16, 16)),
             new LaunchFunctionality(ProjectileType.HAMMER, 0), 0, 1);
@@ -48,7 +47,7 @@ public enum ItemType {
 
         for (ItemType itemType: values()) {
             // More common item types appear more frequently in list and are more likely to be chosen.
-            for (int i = 0; i < itemType.relativeRarity; i++) {
+            for (int i = 0; i < itemType.relativeFrequency; i++) {
                 selectionPool.add(itemType);
             }
         }
@@ -61,15 +60,15 @@ public enum ItemType {
     public final Sprite icon;
     private final ItemFunctionality functionality;
     public final int avgLootAmount; // How many items of this type will tend to appear together in package loot.
-    private final int relativeRarity; // How many times item will appear in a list that will be selected from during loot generation.
+    private final int relativeFrequency; // How many times item will appear in a list that will be selected from during loot generation.
 
 
-    ItemType(String name, Sprite icon, ItemFunctionality functionality, int avgLootAmount, int relativeRarity) {
+    ItemType(String name, Sprite icon, ItemFunctionality functionality, int avgLootAmount, int relativeFrequency) {
         this.name = name;
         this.icon = icon;
         this.functionality = functionality;
         this.avgLootAmount = avgLootAmount;
-        this.relativeRarity = relativeRarity;
+        this.relativeFrequency = relativeFrequency;
     }
 
     public DroppedItem getDroppedEntity(int amount) {

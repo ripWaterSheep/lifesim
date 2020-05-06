@@ -1,7 +1,6 @@
 package lifesim.game.handlers;
 
 import lifesim.game.entities.Entity;
-import lifesim.game.entities.Player;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.sprites.ShapeSprite;
 import lifesim.util.geom.Rect;
@@ -63,43 +62,33 @@ public class World {
     }
 
 
-    public void doGarbageCollection(Entity entity, Player player) {
-        // Remove enemies outside large range to prevent lag.
-        if (entity.isEnemy() && player.getPos().getDistanceFrom(entity.getPos()) > 1000 && entities.size() > MAX_ENTITIES/2) {
-            entities.remove(entity);
-        }
-        // Remove entity from world if requested, effectively destroying the entity.
-        entities.removeIf(Entity::isRemoveRequested);
-    }
-
-
-    public void sortEntities() {
-        Collections.sort(entities);
-    }
-
-
-    public void update(Player player) {
+    public void update() {
         if (entities.size() < MAX_ENTITIES * 0.8) {
             for (SpawningSystem spawningSystem : spawningSystems) {
                 Vector2D spawnPos = rect.getDims().scale(getRand(-0.5, 0.5), getRand(-0.5, 0.5));
                 spawningSystem.update(this, spawnPos);
             }
         }
+        try {
+            Collections.sort(entities);
+        } catch (Exception e) {}
 
-        for (Entity entity: getEntities()) {
+        entities.removeIf(Entity::isRemoveRequested);
+
+        // Update in reverse so that player doesn't glitch out when they are in front of a solid entity.
+        List<Entity> reversedEntities = getEntities();
+        Collections.reverse(reversedEntities);
+
+        for (Entity entity: reversedEntities) {
             entity.update(this);
 
             for (Entity entity2: getEntities()) {
-                if (entity.isTouching(entity2) && entity != entity2)
+                if (entity.isTouching(entity2) && entity != entity2) {
                     entity.handleCollision(entity2, this);
+                }
             }
-            doGarbageCollection(entity, player);
+            entity.clampPosInRect(rect);
         }
-
-        for (Entity entity: entities) {
-            entity.keepInWorld(rect);
-        }
-        sortEntities();
     }
 
 

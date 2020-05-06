@@ -34,7 +34,7 @@ public enum EnemyType implements Spawnable {
         @Override
         public Entity spawnEntity() {
             return new RangedAIEntity("Ranged", new ImageSprite("ranged"), new HealthStats(0,
-                    Alliance.ENEMY, 50), 3.25, 250, 1000, ProjectileType.LASER);
+                    Alliance.ENEMY, 50), 3.25, 250, 750, ProjectileType.LASER);
     }}
 
 
