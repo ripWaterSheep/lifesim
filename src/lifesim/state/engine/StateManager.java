@@ -44,13 +44,13 @@ public class StateManager {
 
     public void newGame() {
         init();
-        panel.setCurrentState(currentGame);
+        panel.setState(currentGame);
     }
 
 
     private void setState(GameState gs) {
         lastState = panel.getCurrentState();
-        panel.setCurrentState(gs);
+        panel.setState(gs);
     }
 
     public void resumeGame() {

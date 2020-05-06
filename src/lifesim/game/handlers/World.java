@@ -1,6 +1,9 @@
 package lifesim.game.handlers;
 
 import lifesim.game.entities.Entity;
+import lifesim.game.entities.FlatEntity;
+import lifesim.state.Chapter;
+import lifesim.state.Game;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.sprites.ShapeSprite;
 import lifesim.util.geom.Rect;
@@ -23,17 +26,21 @@ public class World {
     private final Rect rect;
     private final Color outerColor;
 
-    private final List<Entity> entities = new ArrayList<>();
+    // Spawners will only work when the game's current chapter equals this chapter
+    private final Chapter chapter;
 
+    private final List<Entity> entities = new ArrayList<>();
     private final List<SpawningSystem> spawningSystems = new ArrayList<>();
 
 
-    public World(String name, double width, double height, Color color, Color outerColor) {
+    public World(String name, double width, double height, Color color, Color outerColor, Chapter chapter) {
         this.name = name;
         rect = new Rect(new Vector2D(0, 0), new Vector2D(width, height));
 
-        add(new Entity("Floor", new ShapeSprite(width, height, color)), 0, 0);
+        add(new FlatEntity("Floor", new ShapeSprite(width, height, color)), 0, 0);
         this.outerColor = outerColor;
+        this.chapter = chapter;
+
     }
 
     public List<Entity> getEntities() {
@@ -62,18 +69,38 @@ public class World {
     }
 
 
-    public void update() {
+    private void doSpawning() {
         if (entities.size() < MAX_ENTITIES * 0.8) {
+
             for (SpawningSystem spawningSystem : spawningSystems) {
                 Vector2D spawnPos = rect.getDims().scale(getRand(-0.5, 0.5), getRand(-0.5, 0.5));
                 spawningSystem.update(this, spawnPos);
             }
         }
+    }
+
+    private void sortEntities() {
+        // Sort entities so that ones closer to camera overlap ones further away.
+        List<Entity> sortedEntities = new ArrayList<>(entities);
+
+        /* Separate entities to sort (3D) ones separately and add them back to the entities list
+         to preserve the flat entities' indexes in the list.
+         */
+        sortedEntities.removeIf(Entity::isFlat);
+        entities.removeIf(entity -> !entity.isFlat());
+
         try {
-            Collections.sort(entities);
+            Collections.sort(sortedEntities);
         } catch (Exception e) {}
 
-        entities.removeIf(Entity::isRemoveRequested);
+        entities.addAll(sortedEntities);
+    }
+
+    public void update(Game game) {
+        if (game.getCurrentChapter().equals(chapter)) {
+            doSpawning();
+        }
+        sortEntities();
 
         // Update in reverse so that player doesn't glitch out when they are in front of a solid entity.
         List<Entity> reversedEntities = getEntities();
@@ -89,6 +116,7 @@ public class World {
             }
             entity.clampPosInRect(rect);
         }
+        entities.removeIf(Entity::isRemoveRequested);
     }
 
 
@@ -99,6 +127,5 @@ public class World {
             entity.render(createGraphics(g2d));
         }
     }
-
 
 }

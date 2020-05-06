@@ -11,7 +11,7 @@ import static lifesim.util.GraphicsMethods.createGraphics;
 /** This class manages the graphical display of the current game state. */
 public class GamePanel extends JPanel {
 
-    // Dimensions of game pixels (not 1:1 pixels) on screen.
+    // Dimensions of game pixels (not 1:1 pixels) on scree, since this game uses pixel art.
     public static final int WIDTH = 480;
     public static final int HEIGHT = 270;
 
@@ -53,7 +53,7 @@ public class GamePanel extends JPanel {
     }
 
 
-    void setCurrentState(GameState gameState) {
+    void setState(GameState gameState) {
         this.currentState = gameState;
     }
 
@@ -77,12 +77,10 @@ public class GamePanel extends JPanel {
     }
 
     private void render(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-
-        double scale = graphicsScale;
-        g2d.scale(scale, scale);
-
-        currentState.render(createGraphics(g));
+        Graphics2D g2d = createGraphics(g);
+        // Scale the graphics so that pixels are large enough to see.
+        g2d.scale(graphicsScale, graphicsScale);
+        currentState.render(g2d);
     }
 
 

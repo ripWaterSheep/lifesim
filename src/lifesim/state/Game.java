@@ -34,6 +34,8 @@ public class Game implements GameState {
 
     private final StateManager stateManager;
 
+    private final Chapter currentChapter = Chapter.CHAPTER_1;
+
 
     public Game(GameWindow window, StateManager stateManager) {
         this.stateManager = stateManager;
@@ -69,6 +71,10 @@ public class Game implements GameState {
 
     public List<World> getWorlds() {
         return layout.getWorlds();
+    }
+
+    public Chapter getCurrentChapter() {
+        return currentChapter;
     }
 
 
@@ -120,7 +126,7 @@ public class Game implements GameState {
 
 
     public void update() {
-        player.getWorld().update();
+        player.getWorld().update(this);
 
         for (Overlay display : overlays) {
             if (display.isShowing()) {

@@ -8,6 +8,7 @@ import lifesim.util.geom.Vector2D;
 import java.awt.*;
 
 import static java.lang.Math.*;
+import static lifesim.util.GraphicsMethods.createGraphics;
 
 
 public class Projectile extends MovementEntity {
@@ -74,14 +75,18 @@ public class Projectile extends MovementEntity {
     @Override
     public void update(World world) {
         super.update(world);
+        // Add up total distance traveled, and remove this entity if it is out of range.
         distanceTravelled += abs(velocity.x) + abs(velocity.y);
+
         if (distanceTravelled > range) {
             removeFromWorld();
         }
     }
 
+
     @Override
     public void render(Graphics2D g2d) {
+        // Rotate graphics around center position to show this projectile's angle.
         if (matchSpriteAngle){
             g2d.rotate(toRadians(displayAngle), getDisplayPos().x, getDisplayPos().y);
         }

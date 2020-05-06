@@ -1,5 +1,7 @@
 package lifesim.game.entities;
 
+import lifesim.game.entities.stats.InanimateStats;
+import lifesim.util.GraphicsMethods;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.handlers.World;
@@ -13,11 +15,23 @@ public class SolidEntity extends Entity {
 
     private final int baseDepth; // The actual "floor" of the object that cannot be passed.
 
+    // The entity will be drawn at partial opacity if this is true.
+    private boolean semiTransparent = false;
+
     public SolidEntity(String name, Sprite sprite, Stats stats, int baseDepth) {
         super(name, sprite, stats);
         this.baseDepth = baseDepth;
     }
 
+    public SolidEntity(String name, Sprite sprite, int baseDepth) {
+        this(name, sprite, new InanimateStats(), baseDepth);
+    }
+
+
+    @Override
+    public void becomeSemiTransparent() {
+        semiTransparent = true;
+    }
 
     /** Get the hitbox that other entities cannot cross with their feet.
      * It is at the bottom of this sprite's actual hitbox.
@@ -38,12 +52,37 @@ public class SolidEntity extends Entity {
     @Override
     public void handleCollision(Entity entity, World world) {
         super.handleCollision(entity, world);
-        if (entity.getVelocity().getMagnitude() == 0) return;
-        Rect entityRect = entity.getHitBox();
 
+        if (entity.getVelocity().getMagnitude() == 0) return;
+
+        Rect entityRect = entity.getHitBox();
         // Keep entity's bottom bound (AKA feet) outside of this entity's base.
         entityRect.clampBottomOutside(getBaseHitbox());
         entity.setPos(entityRect.getCenterPos());
     }
 
+    @Override
+    public void update(World world) {
+        super.update(world);
+        semiTransparent = false;
+    }
+
+
+    @Override
+    protected void renderShadow(Graphics2D g2d) {
+        // Draw shadow under sprite that is half as tall as it.
+        g2d.setColor(new Color(0, 0, 0, 100));
+        int width = (int) getHitBox().width;
+        int height = (int) getHitBox().height;
+        g2d.fillRect((int) getDisplayPos().x - width/2, (int) getDisplayPos().y + height/2 -1, width, height/2 + 2);
+
+    }
+
+    @Override
+    public void render(Graphics2D g2d) {
+        if (semiTransparent) {
+            GraphicsMethods.setOpacity(g2d, 0.5);
+        }
+        super.render(g2d);
+    }
 }

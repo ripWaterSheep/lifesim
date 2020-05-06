@@ -1,25 +1,24 @@
 package lifesim.game.entities.itemEntites;
 
 import lifesim.game.entities.Player;
+import lifesim.game.entities.SolidEntity;
 import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.HealthStats;
 import lifesim.game.entities.stats.PlayerStats;
-import lifesim.game.entities.types.Spawnable;
 import lifesim.game.handlers.World;
 import lifesim.game.items.ItemType;
 import lifesim.state.Game;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.Sprite;
-import lifesim.game.entities.Entity;
-import lifesim.game.entities.stats.Stats;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static lifesim.util.MyMath.*;
 
-public class ItemPackage extends Entity {
+
+public class ItemPackage extends SolidEntity {
 
     private static final Sprite SPRITE = new ImageSprite("package");
 
@@ -30,7 +29,7 @@ public class ItemPackage extends Entity {
     private final int lootCount = getRandInt(2, 4);
 
     public ItemPackage() {
-        super("Package", SPRITE, new HealthStats(0, Alliance.NEUTRAL, 1));
+        super("Package", SPRITE, new HealthStats(0, Alliance.NEUTRAL, 1), 8);
         generateLoot();
     }
 
@@ -54,7 +53,7 @@ public class ItemPackage extends Entity {
     private void dropLoot(World world) {
         // Drop loot in a circle spread around this package's position.
         for (DroppedItem item : loot) {
-            Vector2D spread = Vector2D.newMagDir(getRand(1, 20), getRand(0, 360));
+            Vector2D spread = Vector2D.newMagDir(getRand(15, 25), getRand(0, 360));
             world.add(item, getPos().translate(spread));
         }
     }

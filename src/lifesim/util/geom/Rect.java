@@ -38,7 +38,7 @@ public class Rect extends Rectangle2D.Double {
         without letting them walk over it with their feet. */
         double bottom = getMaxY() - 1;
 
-        if (getMinX() < rect.getMaxX() && getMaxX() > rect.getMinX()) {
+        if (getMinX() > rect.getMinX() && getMaxX() < rect.getMaxX()) {
             if (bottom > rect.getCenterY()) {
                 bottom = max(bottom, rect.getMaxY());
             } else {

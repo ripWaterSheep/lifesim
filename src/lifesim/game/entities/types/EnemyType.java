@@ -1,6 +1,5 @@
 package lifesim.game.entities.types;
 
-import lifesim.util.sprites.AnimatedSprite;
 import lifesim.util.sprites.Animation;
 import lifesim.game.entities.AIEntity;
 import lifesim.game.entities.Entity;
@@ -11,7 +10,6 @@ import lifesim.game.entities.stats.HealthStats;
 import lifesim.util.sprites.DirectionalAnimatedSprite;
 import lifesim.util.sprites.ImageSprite;
 
-import java.awt.*;
 
 
 public enum EnemyType implements Spawnable {

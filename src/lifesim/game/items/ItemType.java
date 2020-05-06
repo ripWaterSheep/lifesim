@@ -31,10 +31,10 @@ public enum ItemType {
 
     BOMB("Bomb", new AnimatedSprite(new Animation("weapons", 75,
             new Vector2D(0, 0), new Vector2D(16, 16))), new LaunchFunctionality(ProjectileType.BOMB, 0),
-            8, 2),
+            5, 2),
 
     HAMMER("Hammer", new ImageSprite("utilities", new Vector2D(0, 48), new Vector2D(16, 16)),
-            new LaunchFunctionality(ProjectileType.HAMMER, 0), 0, 1);
+            new LaunchFunctionality(ProjectileType.HAMMER, 0), 0, 0);
 
     /*SCREWDRIVER("Screwdriver", new ImageSprite("weapons", new Vector2D(0, 32), new Vector2D(8, 8)),
             new LaunchFunctionality(ProjectileType.THROWABLE_WALL, 5), 15, 2);*/

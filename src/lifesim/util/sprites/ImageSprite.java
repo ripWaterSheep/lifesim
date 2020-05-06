@@ -38,7 +38,6 @@ public class ImageSprite extends Sprite {
     public void render(Graphics2D g2d, Vector2D pos, Vector2D velocity) {
         if (image != null) {
             Rect rect = getBoundsAt(pos);
-            //size.set(image.getWidth(null), image.getHeight(null));
             g2d.drawImage(image, betterRound(rect.x), betterRound(rect.y), betterRound(rect.width), betterRound(rect.height), null);
         }
     }

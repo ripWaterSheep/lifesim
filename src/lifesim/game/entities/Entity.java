@@ -2,7 +2,6 @@ package lifesim.game.entities;
 
 import lifesim.state.engine.GamePanel;
 import lifesim.util.sprites.Sprite;
-import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.InanimateStats;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.stats.Stats;
@@ -22,9 +21,7 @@ public class Entity implements Comparable<Entity> {
     public final String name;
     protected final Sprite sprite;
     protected final Stats stats;
-
     protected final Vector2D pos;
-
 
     // If true, the world containing the entity will remove it from the world.
     private boolean removeRequested = false;
@@ -67,7 +64,6 @@ public class Entity implements Comparable<Entity> {
         return new Vector2D(0, 0);
     }
 
-
     public Entity getOwner() {
         return this;
     }
@@ -76,14 +72,19 @@ public class Entity implements Comparable<Entity> {
         return stats;
     }
 
-    public boolean isEnemy() {
-        return stats.getAlliance().equals(Alliance.ENEMY);
-    }
-
     public boolean canDamage(Entity entity) {
         if (equals(entity) || getOwner().equals(entity)) return false;
         return stats.getAlliance().opposes(entity.stats.getAlliance());
     }
+
+    public void becomeSemiTransparent() {
+        //Overridden in SolidEntity
+    }
+
+    public boolean isFlat() {
+        return false;
+    }
+
 
     public boolean isRemoveRequested() {
         return removeRequested;
@@ -126,14 +127,18 @@ public class Entity implements Comparable<Entity> {
         stats.update(this, world);
     }
 
-    public void render(Graphics2D g2d) {
-        // Draw shadow under entity
-        /*
-        g2d.setColor(new Color(0, 0, 0, 100));
-        int width = (int) getHitBox().width;
-        int height = (int) getHitBox().height;
-        g2d.fillRect((int) getDisplayPos().x - width/2, (int) getDisplayPos().y + height/2, width, height/2);*/
+    protected void renderShadow(Graphics2D g2d) {
+        // Draw circular shadow under sprite that is as wide as it.
+        int shadowDiameter = (int) getHitBox().width;
 
+        int shadowX = (int) (getDisplayPos().x + getHitBox().width/2) - shadowDiameter;
+        int shadowY = (int) (getDisplayPos().y + getHitBox().height/2) - shadowDiameter/4;
+        g2d.setColor(new Color(0, 0, 0, 75));
+        g2d.fillRect(shadowX, shadowY, shadowDiameter, shadowDiameter/2);
+    }
+
+    public void render(Graphics2D g2d) {
+        renderShadow(g2d);
         sprite.render(g2d, getDisplayPos(), getVelocity());
         stats.renderInfo(g2d, getDisplayPos().translate(0, -(sprite.getSize().y*0.5) - 3));
     }
@@ -143,10 +148,8 @@ public class Entity implements Comparable<Entity> {
          */
     @Override
     public int compareTo(@NotNull Entity entity) {
-        // Don't sort really big things (like the floor of the world) idk how to fix it since some things are flat and some are isometric.
-        if (getHitBox().getHeight() > 75 || entity.getHitBox().getHeight() > 75) return 0;
         // Compare y positions bottoms of the hit boxes.
-        boolean comparison = getHitBox().y + (getHitBox().height) < entity.getHitBox().y + (entity.getHitBox().height);
-        return comparison? -1 : 1;
+        boolean comparison = getHitBox().getMaxY() < entity.getHitBox().getMaxY();
+        return comparison ? -1 : 1;
     }
 }

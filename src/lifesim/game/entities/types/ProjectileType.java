@@ -25,7 +25,7 @@ public enum ProjectileType implements Launchable {
             double strength = Main.getCurrentPlayer().getStats().getStrength();
 
             return new Projectile("Player Fist", new ImageSprite("fist"), new BasicStats(1 + (strength/200),
-                    Alliance.PLAYER), owner, 8, angle, 35, true, 10, true) {
+                    Alliance.PLAYER), owner, 6, angle, 30, true, 10, true) {
             };
         }
     },

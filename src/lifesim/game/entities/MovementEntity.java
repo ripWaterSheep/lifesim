@@ -5,6 +5,8 @@ import lifesim.game.handlers.World;
 import lifesim.game.entities.stats.Stats;
 import lifesim.util.geom.Vector2D;
 
+import java.awt.*;
+
 public abstract class MovementEntity extends Entity {
 
     protected final double defaultSpeed;
@@ -45,5 +47,10 @@ public abstract class MovementEntity extends Entity {
     public void update(World world) {
         super.update(world);
         pos.translate(velocity);
+    }
+
+    @Override
+    public void render(Graphics2D g2d) {
+        super.render(g2d);
     }
 }
