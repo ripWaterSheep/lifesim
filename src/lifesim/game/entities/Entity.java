@@ -1,13 +1,13 @@
 package lifesim.game.entities;
 
-import lifesim.state.engine.GamePanel;
+import lifesim.engine.output.GamePanel;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.entities.stats.InanimateStats;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.stats.Stats;
 import lifesim.game.handlers.World;
 import lifesim.state.Game;
-import lifesim.state.engine.Main;
+import lifesim.engine.Main;
 import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.geom.Geometry;
@@ -47,7 +47,7 @@ public class Entity implements Comparable<Entity> {
     }
 
     public Vector2D getDisplayPos() {
-        // Translate position by GamePanel center and translate it backwards by player position
+        // Make display position relative to player's position, since the player is always in the center.
         return getPos().translate(GamePanel.getCenterPos())
                 .translate(Main.getCurrentPlayer().getPos().negate());
     }
@@ -75,10 +75,6 @@ public class Entity implements Comparable<Entity> {
     public boolean canDamage(Entity entity) {
         if (equals(entity) || getOwner().equals(entity)) return false;
         return stats.getAlliance().opposes(entity.stats.getAlliance());
-    }
-
-    public void becomeSemiTransparent() {
-        //Overridden in SolidEntity
     }
 
     public boolean isFlat() {
@@ -128,13 +124,16 @@ public class Entity implements Comparable<Entity> {
     }
 
     protected void renderShadow(Graphics2D g2d) {
-        // Draw circular shadow under sprite that is as wide as it.
-        int shadowDiameter = (int) getHitBox().width;
+        // Get the hitbox at the actual display position rather than in-game world position to draw shadow.
+        Rect displayHitBox = sprite.getBoundsAt(getDisplayPos());
 
-        int shadowX = (int) (getDisplayPos().x + getHitBox().width/2) - shadowDiameter;
-        int shadowY = (int) (getDisplayPos().y + getHitBox().height/2) - shadowDiameter/4;
+        // Draw circular shadow under entity that is as wide as its sprite.
+        Vector2D pos = new Vector2D(displayHitBox.getCenterX(), displayHitBox.getMaxY()); // Center around bottom of sprite
+        Vector2D dims = new Vector2D(displayHitBox.width, displayHitBox.height/2);
+        Rect shadowRect = new Rect(pos, dims);
+
         g2d.setColor(new Color(0, 0, 0, 75));
-        g2d.fillRect(shadowX, shadowY, shadowDiameter, shadowDiameter/2);
+        g2d.fill(shadowRect);
     }
 
     public void render(Graphics2D g2d) {

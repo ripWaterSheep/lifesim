@@ -1,6 +1,7 @@
-package lifesim.state.engine;
+package lifesim.engine.output;
 
 import lifesim.state.GameState;
+import lifesim.state.StateManager;
 import lifesim.util.geom.Vector2D;
 
 import javax.swing.*;
@@ -53,11 +54,11 @@ public class GamePanel extends JPanel {
     }
 
 
-    void setState(GameState gameState) {
+    public void setState(GameState gameState) {
         this.currentState = gameState;
     }
 
-    GameState getCurrentState() {
+    public GameState getCurrentState() {
         return currentState;
     }
 

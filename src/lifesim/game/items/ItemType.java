@@ -7,7 +7,7 @@ import lifesim.game.entities.types.AllyType;
 import lifesim.game.entities.types.FactoryType;
 import lifesim.game.entities.types.ProjectileType;
 import lifesim.game.handlers.World;
-import lifesim.state.engine.GameWindow;
+import lifesim.engine.output.GameWindow;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.sprites.*;
 

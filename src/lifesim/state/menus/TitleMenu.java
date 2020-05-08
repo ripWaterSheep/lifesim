@@ -1,8 +1,8 @@
 package lifesim.state.menus;
 
-import lifesim.state.engine.GamePanel;
-import lifesim.state.engine.GameWindow;
-import lifesim.state.engine.StateManager;
+import lifesim.engine.output.GamePanel;
+import lifesim.engine.output.GameWindow;
+import lifesim.state.StateManager;
 import lifesim.state.menus.ui.Button;
 import lifesim.state.menus.ui.ButtonType;
 import lifesim.util.sprites.ImageSprite;

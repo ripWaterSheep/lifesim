@@ -1,8 +1,7 @@
-package lifesim.state.engine;
+package lifesim.engine.output;
 
-import lifesim.input.KeyInput;
-import lifesim.input.MouseInput;
-import lifesim.state.menus.ui.CursorType;
+import lifesim.engine.input.KeyInput;
+import lifesim.engine.input.MouseInput;
 
 import javax.swing.*;
 

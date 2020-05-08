@@ -1,6 +1,6 @@
-package lifesim.input;
+package lifesim.engine.input;
 
-import lifesim.state.engine.GamePanel;
+import lifesim.engine.output.GamePanel;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.MyMath;
 

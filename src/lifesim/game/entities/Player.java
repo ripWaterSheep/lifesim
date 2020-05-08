@@ -1,18 +1,16 @@
 package lifesim.game.entities;
 
 import lifesim.game.items.ItemType;
-import lifesim.state.engine.GamePanel;
+import lifesim.engine.output.GamePanel;
 import lifesim.util.sprites.Animation;
 import lifesim.util.sprites.DirectionalAnimatedSprite;
 import lifesim.game.handlers.World;
 import lifesim.state.Game;
 import lifesim.game.entities.stats.PlayerStats;
-import lifesim.input.KeyInput;
-import lifesim.input.MouseInput;
+import lifesim.engine.input.KeyInput;
+import lifesim.engine.input.MouseInput;
 import lifesim.game.items.inventory.Inventory;
 import lifesim.util.geom.Vector2D;
-
-import java.util.List;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.min;
@@ -43,8 +41,8 @@ public class Player extends MovementEntity {
 
 
     public void init() {
-        //acquireItem(ItemType.STARTER_FACTORY, 25);
-        //acquireItem(ItemType.WALLBOT, 25);
+        acquireItem(ItemType.STARTER_FACTORY, 25);
+        acquireItem(ItemType.WALLBOT, 25);
         //acquireItem(ItemType.BOMB, 25);
         //acquireItem(ItemType.HAMMER, 50);
     }
@@ -143,11 +141,6 @@ public class Player extends MovementEntity {
         entity.playerCollision(game, this, getStats());
         if (MouseInput.left.isClicked()) {
             entity.interact(game, this, getStats());
-        }
-
-        // If another entity is blocking this player, make the entity semitransparent.
-        if (entity.getHitBox().contains(getHitBox())) {
-            entity.becomeSemiTransparent();
         }
     }
 

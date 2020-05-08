@@ -1,4 +1,4 @@
-package lifesim.input;
+package lifesim.engine.input;
 
 import java.awt.*;
 import java.awt.event.FocusAdapter;

@@ -3,7 +3,7 @@ package lifesim.game.overlay;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.stats.StatsColors;
-import lifesim.state.engine.GamePanel;
+import lifesim.engine.output.GamePanel;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.geom.Rect;

@@ -47,10 +47,10 @@ public class Rect extends Rectangle2D.Double {
        }
 
         if (getMinY() > rect.getMinY() && bottom < rect.getMaxY()) {
-            if (getMaxX() >= rect.getMaxX()) {
-                x = max(x, rect.x + rect.width);
+            if (getMaxX() > rect.getMaxX()) {
+                x = max(x, rect.x + rect.width - 0.1);
             } else if (getMinX() <= getMinX()) {
-                x = min(x, rect.x - width);
+                x = min(x, rect.x - width + 0.1);
             }
         }
         y = bottom + 1 - height;

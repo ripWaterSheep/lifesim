@@ -5,18 +5,17 @@ import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.handlers.Layout;
 import lifesim.game.handlers.MyLayout;
 import lifesim.game.handlers.World;
-import lifesim.input.KeyInput;
+import lifesim.engine.input.KeyInput;
 import lifesim.game.overlay.*;
-import lifesim.state.engine.GameWindow;
-import lifesim.state.engine.StateManager;
+import lifesim.engine.output.GameWindow;
 import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static lifesim.state.engine.GamePanel.HEIGHT;
-import static lifesim.state.engine.GamePanel.WIDTH;
+import static lifesim.engine.output.GamePanel.HEIGHT;
+import static lifesim.engine.output.GamePanel.WIDTH;
 import static lifesim.util.GraphicsMethods.createGraphics;
 
 

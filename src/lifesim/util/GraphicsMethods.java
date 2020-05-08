@@ -1,6 +1,6 @@
 package lifesim.util;
 
-import lifesim.state.engine.GamePanel;
+import lifesim.engine.output.GamePanel;
 import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 

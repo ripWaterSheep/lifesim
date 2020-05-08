@@ -37,13 +37,13 @@ public class MyLayout extends Layout {
                     }
                 }, 250, -200)
 
-                .add(new SolidEntity("School", new ShapeSprite(150, 200, new Color(179, 96, 71)), 175) {
+                .add(new SolidEntity("School", new ShapeSprite(150, 200, new Color(179, 96, 71)), 150) {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         stats.gainIntellect(0.25);
                         stats.tire(0.1);
                     }
-                },250, 250)
+                },250, 225)
 
                 .add(new SolidEntity("Office", new ShapeSprite(200, 350, new Color(150, 150, 160)), 200) {
                     @Override

@@ -3,17 +3,17 @@ package lifesim.game.overlay;
 import lifesim.game.entities.Player;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.Sprite;
-import lifesim.input.KeyInput;
-import lifesim.input.MouseInput;
+import lifesim.engine.input.KeyInput;
+import lifesim.engine.input.MouseInput;
 import lifesim.game.items.inventory.Inventory;
 import lifesim.game.items.inventory.InventorySlot;
 import lifesim.util.geom.Vector2D;
-import lifesim.state.engine.GameWindow;
+import lifesim.engine.output.GameWindow;
 
 import java.awt.*;
 import java.util.List;
 
-import static lifesim.state.engine.GamePanel.WIDTH;
+import static lifesim.engine.output.GamePanel.WIDTH;
 
 
 public class Hotbar extends Overlay {

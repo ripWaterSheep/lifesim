@@ -107,13 +107,13 @@ public class World {
         Collections.reverse(reversedEntities);
 
         for (Entity entity: reversedEntities) {
-            entity.update(this);
-
             for (Entity entity2: getEntities()) {
                 if (entity.isTouching(entity2) && entity != entity2) {
                     entity.handleCollision(entity2, this);
                 }
             }
+            entity.update(this);
+
             entity.clampPosInRect(rect);
         }
         entities.removeIf(Entity::isRemoveRequested);

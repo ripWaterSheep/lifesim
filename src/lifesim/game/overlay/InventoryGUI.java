@@ -1,13 +1,13 @@
 package lifesim.game.overlay;
 
 import lifesim.game.entities.Player;
-import lifesim.state.engine.GamePanel;
-import lifesim.state.engine.Main;
-import lifesim.state.menus.ui.CursorType;
+import lifesim.engine.output.GamePanel;
+import lifesim.engine.Main;
+import lifesim.engine.output.CursorType;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.Sprite;
-import lifesim.input.KeyInput;
-import lifesim.input.MouseInput;
+import lifesim.engine.input.KeyInput;
+import lifesim.engine.input.MouseInput;
 import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 import lifesim.game.items.inventory.Inventory;

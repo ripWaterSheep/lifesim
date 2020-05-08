@@ -5,8 +5,8 @@ import lifesim.game.entities.Player;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.types.Spawnable;
 import lifesim.game.handlers.World;
-import lifesim.input.MouseInput;
-import lifesim.state.engine.GameWindow;
+import lifesim.engine.input.MouseInput;
+import lifesim.engine.output.GameWindow;
 import lifesim.util.GraphicsMethods;
 
 import java.awt.*;

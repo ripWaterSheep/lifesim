@@ -1,4 +1,4 @@
-package lifesim.state.menus.ui;
+package lifesim.engine.output;
 
 import lifesim.util.fileIO.ImageLoader;
 

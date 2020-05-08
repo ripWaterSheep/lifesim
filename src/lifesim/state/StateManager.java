@@ -1,9 +1,9 @@
-package lifesim.state.engine;
+package lifesim.state;
 
+import lifesim.engine.output.GamePanel;
+import lifesim.engine.output.GameWindow;
 import lifesim.game.entities.Player;
-import lifesim.input.KeyInput;
-import lifesim.state.Game;
-import lifesim.state.GameState;
+import lifesim.engine.input.KeyInput;
 import lifesim.state.menus.Menu;
 import lifesim.state.menus.PauseMenu;
 import lifesim.state.menus.TitleMenu;
@@ -29,7 +29,7 @@ public class StateManager {
         panel = new GamePanel(window, this, titleMenu);
     }
 
-    Player getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return currentGame.getPlayer();
     }
 

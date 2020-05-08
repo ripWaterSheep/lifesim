@@ -2,7 +2,7 @@ package lifesim.game.items.inventory;
 
 import lifesim.game.entities.Player;
 import lifesim.game.items.ItemType;
-import lifesim.input.MouseInput;
+import lifesim.engine.input.MouseInput;
 import lifesim.state.Game;
 
 import java.util.List;

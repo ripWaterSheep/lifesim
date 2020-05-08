@@ -6,8 +6,8 @@ import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.types.Launchable;
 import lifesim.game.handlers.World;
-import lifesim.input.MouseInput;
-import lifesim.state.engine.GameWindow;
+import lifesim.engine.input.MouseInput;
+import lifesim.engine.output.GameWindow;
 import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
