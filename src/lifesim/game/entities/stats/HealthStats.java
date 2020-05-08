@@ -76,7 +76,9 @@ public class HealthStats extends BasicStats implements Stats {
     @Override
     public void renderInfo(Graphics2D g2d, Vector2D pos) {
         super.renderInfo(g2d, pos);
-        renderStatBar(g2d, pos, health, maxHealth, alliance.teamColor);
+        if (health < maxHealth) {
+            renderStatBar(g2d, pos, health, maxHealth, alliance.teamColor);
+        }
     }
 
 }

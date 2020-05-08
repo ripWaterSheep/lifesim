@@ -25,7 +25,7 @@ public class Inventory {
         this.game = game;
 
         for (int i = 0; i < width * height; i++) {
-            slots.add(new InventorySlot());
+            slots.add(new InventorySlot(this));
         }
     }
 
@@ -56,7 +56,7 @@ public class Inventory {
 
     public InventorySlot getFirstEmptySlot() {
         // New slot is created so that the item doesn't affect the actual inventory slots.
-        InventorySlot lastVacantSlot = new InventorySlot();
+        InventorySlot lastVacantSlot = new InventorySlot(this);
 
         for (InventorySlot slot: slots) {
             if (slot.isEmpty()) {

@@ -8,6 +8,7 @@ import lifesim.game.entities.types.FactoryType;
 import lifesim.game.entities.types.ProjectileType;
 import lifesim.game.handlers.World;
 import lifesim.engine.output.GameWindow;
+import lifesim.game.items.inventory.Inventory;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.sprites.*;
 
@@ -73,6 +74,10 @@ public enum ItemType {
 
     public DroppedItem getDroppedEntity(int amount) {
         return new DroppedItem(this, amount);
+    }
+
+    public boolean canBeUsed(World world, Player player) {
+        return functionality.canBeUsed(world, player);
     }
 
     public void renderIcon(Graphics2D g2d, Vector2D pos) {

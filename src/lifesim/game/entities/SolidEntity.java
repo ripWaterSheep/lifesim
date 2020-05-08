@@ -16,18 +16,30 @@ import java.awt.*;
 /** This entity cannot be wallked over by any other entity */
 public class SolidEntity extends Entity {
 
-    private final int baseDepth; // The actual "floor" of the object that cannot be passed.
+    private final double baseDepth; // The actual "floor" of the object that cannot be passed.
 
     // The entity will be drawn at partial opacity if this is true.
     private boolean semiTransparent = false;
 
-    public SolidEntity(String name, Sprite sprite, Stats stats, int baseDepth) {
+    public SolidEntity(String name, Sprite sprite, Stats stats, double baseDepth) {
         super(name, sprite, stats);
         this.baseDepth = baseDepth;
     }
 
-    public SolidEntity(String name, Sprite sprite, int baseDepth) {
+    public SolidEntity(String name, Sprite sprite, double baseDepth) {
         this(name, sprite, new InanimateStats(), baseDepth);
+    }
+
+
+    /** If the solid entity should be completely flat, make the base that entity's feet cannot walk over the whole height of the sprite,
+     * preventing its sprite from overlapping others and making it not look like its sticking out in 3D.
+     */
+    public SolidEntity(String name, Sprite sprite, Stats stats) {
+        this(name, sprite, stats, sprite.getSize().y);
+    }
+
+    public SolidEntity(String name, Sprite sprite) {
+        this(name, sprite, new InanimateStats());
     }
 
     /** Get the hitbox that other entities cannot cross with their feet.

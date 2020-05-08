@@ -8,11 +8,12 @@ import lifesim.game.entities.types.Launchable;
 import lifesim.game.handlers.World;
 import lifesim.engine.input.MouseInput;
 import lifesim.engine.output.GameWindow;
+import lifesim.game.items.inventory.Inventory;
 import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
-public class LaunchFunctionality extends ItemFunctionality {
+public class LaunchFunctionality extends ConsumeFunctionality {
 
     private final Launchable launchable;
     private final double recoilMagnitude;

@@ -4,10 +4,13 @@ import lifesim.game.entities.Player;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.handlers.World;
 import lifesim.engine.output.GameWindow;
+import lifesim.game.items.inventory.Inventory;
 
 import java.awt.*;
 
 public abstract class ItemFunctionality {
+
+    public abstract boolean canBeUsed(World world, Player player);
 
     public abstract void use(World world, Player player, PlayerStats stats);
 

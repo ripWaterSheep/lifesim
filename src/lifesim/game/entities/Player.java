@@ -65,16 +65,21 @@ public class Player extends MovementEntity {
     public void setWorld(World newWorld) {
         if (world != null) world.remove(this);
         world = newWorld;
-        newWorld.add(this, new Vector2D(0, 0));
+        newWorld.add(this, 0, 0);
     }
 
 
-    public void goTo(String name) {
+    public void goToWorld(String name) {
         for (World world: game.getWorlds()) {
             if (world.name.equals(name)) {
                 setWorld(world);
                 return;
             }
+        }
+    }
+
+    public void goToEntity(String name) {
+        for (World world: game.getWorlds()) {
             for (Entity entity: world.getEntities()) {
                 if (entity.name.equals(name)) {
                     setWorld(world);

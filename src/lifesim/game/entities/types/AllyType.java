@@ -15,7 +15,7 @@ import lifesim.game.entities.stats.HealthStats;
 import java.awt.*;
 
 
-public enum AllyType implements Spawnable{
+public enum AllyType implements Spawnable {
 
     ALLY_TEST {
         @Override
@@ -53,6 +53,11 @@ public enum AllyType implements Spawnable{
                     new Vector2D(0, 0), new Vector2D(64, 36))), new HealthStats(0, Alliance.PLAYER, 1000),
                     13);
         }
-    }
+    };
 
+
+    @Override
+    public int getMaxPerWorld() {
+        return 12;
+    }
 }

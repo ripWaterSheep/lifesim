@@ -1,8 +1,8 @@
 package lifesim.game.overlay;
 
+import lifesim.engine.output.GameWindow;
 import lifesim.game.entities.Player;
 import lifesim.engine.output.GamePanel;
-import lifesim.engine.Main;
 import lifesim.engine.output.CursorType;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.Sprite;
@@ -27,16 +27,18 @@ public class InventoryGUI extends ToggleableOverlay {
     private static final Sprite BG = new ImageSprite("ui/inventory");
     private static final Font INFO_FONT = FontLoader.getMainFont(8);
 
-
     private final Inventory inventory;
     private final List<InventorySlot> slots;
+    private final GameWindow window;
 
-    private InventorySlot lastDraggedSlot = new InventorySlot();
+    private InventorySlot lastDraggedSlot;
 
 
-    public InventoryGUI(Player player) {
+    public InventoryGUI(Player player, GameWindow window) {
         inventory = player.inventory;
+        lastDraggedSlot = new InventorySlot(inventory);
         slots = inventory.getSlots();
+        this.window = window;
     }
 
     // Get the position a slot should be displayed at based on it's index in the inventory's slots.
@@ -61,7 +63,7 @@ public class InventoryGUI extends ToggleableOverlay {
 
     // Get the slot that contains the mouse cursor in its hit box.
     public InventorySlot getMouseHoveringSlot() {
-        InventorySlot mouseOverSlot = new InventorySlot();
+        InventorySlot mouseOverSlot = new InventorySlot(inventory);
         for (InventorySlot slot: inventory.getSlots()) {
             if (getSlotHitBox(slot).contains(MouseInput.getCursorPos().toPoint())) {
                 mouseOverSlot = slot;
@@ -76,7 +78,7 @@ public class InventoryGUI extends ToggleableOverlay {
         InventorySlot hoveringSlot = getMouseHoveringSlot();
         if (slots.contains(hoveringSlot)) {
             if (!hoveringSlot.isEmpty()) { // Show interaction mouse cursor only if the slot contains an item to move.
-                Main.getWindow().changeCursor(CursorType.POINTER);
+                window.changeCursor(CursorType.POINTER);
 
                 if (MouseInput.left.isClicked()) {
                     lastDraggedSlot = hoveringSlot;
@@ -89,12 +91,12 @@ public class InventoryGUI extends ToggleableOverlay {
 
             if (MouseInput.left.isReleased()) {
                 hoveringSlot.swapItem(lastDraggedSlot);
-                lastDraggedSlot = new InventorySlot();
+                lastDraggedSlot = new InventorySlot(inventory);
             }
 
         } else if (MouseInput.left.isReleased()) {
             inventory.dropItemInWorld(lastDraggedSlot);
-            lastDraggedSlot = new InventorySlot();
+            lastDraggedSlot = new InventorySlot(inventory);
         }
     }
 

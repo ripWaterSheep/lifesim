@@ -2,7 +2,7 @@ package lifesim.game.handlers;
 
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.FlatEntity;
-import lifesim.state.Chapter;
+import lifesim.game.entities.types.Spawnable;
 import lifesim.state.Game;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.sprites.ShapeSprite;
@@ -20,26 +20,20 @@ import static lifesim.util.MyMath.getRand;
 
 public class World {
 
-    private static final int MAX_ENTITIES = 150;
-
     public final String name;
     private final Rect rect;
     private final Color outerColor;
-
-    // Spawners will only work when the game's current chapter equals this chapter
-    private final Chapter chapter;
 
     private final List<Entity> entities = new ArrayList<>();
     private final List<SpawningSystem> spawningSystems = new ArrayList<>();
 
 
-    public World(String name, double width, double height, Color color, Color outerColor, Chapter chapter) {
+    public World(String name, double width, double height, Color color, Color outerColor) {
         this.name = name;
         rect = new Rect(new Vector2D(0, 0), new Vector2D(width, height));
 
         add(new FlatEntity("Floor", new ShapeSprite(width, height, color)), 0, 0);
         this.outerColor = outerColor;
-        this.chapter = chapter;
 
     }
 
@@ -47,17 +41,20 @@ public class World {
         return new ArrayList<>(entities);
     }
 
-    public World add(Entity entity, Vector2D pos) {
-        if (entities.size() < MAX_ENTITIES) {
-            entities.add(entity);
-            entity.setPos(pos);
-        }
+    public World add(Entity entity) {
+        entities.add(entity);
         return this;
+    }
+
+    public World add(Entity entity, Vector2D pos) {
+        entity.setPos(pos);
+        return add(entity);
     }
 
     public World add(Entity entity, double x, double y) {
         return add(entity, new Vector2D(x, y));
     }
+
 
     public void remove(Entity entity) {
         entities.remove(entity);
@@ -69,13 +66,24 @@ public class World {
     }
 
 
-    private void doSpawning() {
-        if (entities.size() < MAX_ENTITIES * 0.8) {
+    /** Return if a certain entity type appears more than its specified max in the world. This is used to balance spawning. */
+    public boolean isMaxedOut(Spawnable spawnable) {
+        int numPerType = 0;
+        String name = spawnable.spawnEntity().name;
 
-            for (SpawningSystem spawningSystem : spawningSystems) {
-                Vector2D spawnPos = rect.getDims().scale(getRand(-0.5, 0.5), getRand(-0.5, 0.5));
-                spawningSystem.update(this, spawnPos);
+        for (Entity entity: entities) {
+            if (entity.name.equals(name)) {
+                numPerType++;
             }
+        }
+        return numPerType >= spawnable.getMaxPerWorld();
+    }
+
+
+    private void doSpawning() {
+        for (SpawningSystem spawningSystem : spawningSystems) {
+            Vector2D spawnPos = rect.getDims().scale(getRand(-0.5, 0.5), getRand(-0.5, 0.5));
+            spawningSystem.update(this, spawnPos);
         }
     }
 
@@ -96,10 +104,8 @@ public class World {
         entities.addAll(sortedEntities);
     }
 
-    public void update(Game game) {
-        if (game.getCurrentChapter().equals(chapter)) {
-            doSpawning();
-        }
+    public void update() {
+        doSpawning();
         sortEntities();
 
         // Update in reverse so that player doesn't glitch out when they are in front of a solid entity.
@@ -107,16 +113,17 @@ public class World {
         Collections.reverse(reversedEntities);
 
         for (Entity entity: reversedEntities) {
+            System.out.println(entity.name);
             for (Entity entity2: getEntities()) {
                 if (entity.isTouching(entity2) && entity != entity2) {
                     entity.handleCollision(entity2, this);
                 }
             }
             entity.update(this);
-
             entity.clampPosInRect(rect);
         }
         entities.removeIf(Entity::isRemoveRequested);
+        System.out.println(entities.size());
     }
 
 

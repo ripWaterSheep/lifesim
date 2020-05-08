@@ -7,6 +7,8 @@ import lifesim.game.entities.stats.Stats;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.MyMath;
 
+import static lifesim.util.MyMath.getRand;
+
 
 public class AIEntity extends MovementEntity {
 
@@ -18,7 +20,7 @@ public class AIEntity extends MovementEntity {
 
 
     public AIEntity(String name, Sprite sprite, Stats stats, double speed, Alliance AITargetAlliance, double detectionRange) {
-        super(name, sprite, stats, speed, MyMath.getRand(0, 360));
+        super(name, sprite, stats, speed, getRand(0, 360));
         this.AITargetAlliance = AITargetAlliance;
         this.detectionRange = detectionRange;
     }
@@ -61,14 +63,14 @@ public class AIEntity extends MovementEntity {
     protected void doAI(World world) {
         // If target position is entity's own position (default), then do random ai
         if (targetPos.equals(pos)) {
-            if (MyMath.getRand(0, 1) < 0.03) {
-                velocity.setMagDir(defaultSpeed/3, MyMath.getRand(0, 360));
+            if (getRand(0, 1) < 0.03) {
+                velocity.setMagDir(defaultSpeed/3, getRand(0, 360));
             }
         } else if (attacking) {
             attack(world);
         } else {
-            // Approach target position with a bit of randomness, since it would otherwise overlap other entities targeting the same position.
-            velocity.setMagDir(defaultSpeed, targetPos.getAngleFrom(pos) + MyMath.getRand(-25, 25));
+            // Approach target position with a bit of randomness to make motion look more natural and varied from other entities pursing the same target.
+            velocity.setMagDir(defaultSpeed + getRand(-1, 1), targetPos.getAngleFrom(pos) + getRand(-5, 5));
         }
     }
 

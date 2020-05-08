@@ -4,7 +4,6 @@ import lifesim.game.entities.Player;
 import lifesim.game.handlers.World;
 import lifesim.game.overlay.InventoryGUI;
 import lifesim.game.items.ItemType;
-import lifesim.engine.input.MouseInput;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.geom.Vector2D;
@@ -19,11 +18,14 @@ public class InventorySlot {
     private static final ItemType EMPTY_ITEM = ItemType.HAND;
     private static final Font AMOUNT_FONT = FontLoader.getMainFont(4);
 
+    private final Inventory inventory;
+
     private ItemType item;
     private int amount;
 
 
-    public InventorySlot() {
+    public InventorySlot(Inventory inventory) {
+        this.inventory = inventory;
         this.item = EMPTY_ITEM;
         this.amount = 0;
     }
@@ -75,7 +77,7 @@ public class InventorySlot {
 
     public void useItem(Player player) {
         if (amount > 0 || isEmpty()) {
-            if (MouseInput.right.isClicked()) {
+            if (item.canBeUsed(player.getWorld(), player)) {
                 item.use(player.getWorld(), player, player.getStats());
                 amount -= 1;
             }

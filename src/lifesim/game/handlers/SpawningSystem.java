@@ -1,8 +1,8 @@
 package lifesim.game.handlers;
 
-import lifesim.game.entities.Entity;
 import lifesim.util.geom.Vector2D;
 import lifesim.game.entities.types.Spawnable;
+
 
 public class SpawningSystem {
     private final Spawnable spawnable;
@@ -17,18 +17,11 @@ public class SpawningSystem {
         this.spawnInterval = spawnInterval;
     }
 
-
-    public Entity attemptSpawn(World world, Vector2D pos) {
-        Entity entity = spawnable.spawnEntity();
-        world.add(entity, pos);
-        lastSpawnTime = System.currentTimeMillis();
-        return entity;
-    }
-
-
+    /** After the length of the spawn interval passes, spawn the entity if its type is not at it's world limit. */
     public void update(World world, Vector2D pos) {
-        if (System.currentTimeMillis() - lastSpawnTime > spawnInterval) {
-            attemptSpawn(world, pos);
+        if (System.currentTimeMillis() - lastSpawnTime > spawnInterval && !world.isMaxedOut(spawnable)) {
+            world.add(spawnable.spawnEntity(), pos);
+            lastSpawnTime = System.currentTimeMillis();
         }
     }
 

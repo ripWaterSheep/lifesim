@@ -33,7 +33,11 @@ public enum EnemyType implements Spawnable {
         public Entity spawnEntity() {
             return new RangedAIEntity("Ranged", new ImageSprite("ranged"), new HealthStats(0,
                     Alliance.ENEMY, 50), 3.25, 250, 750, ProjectileType.LASER);
-    }}
+    }};
 
 
+    @Override
+    public int getMaxPerWorld() {
+        return 12;
+    }
 }

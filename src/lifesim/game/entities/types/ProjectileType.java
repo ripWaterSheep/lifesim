@@ -88,8 +88,7 @@ public enum ProjectileType implements Launchable {
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Throwable Wall", new ShapeSprite(8, 32, new Color(100, 150, 200)),
                     new BasicStats(0, alliance), owner, 15, angle, 300, true, 50, true);
-    }};
-
+    }}
 
 
 }

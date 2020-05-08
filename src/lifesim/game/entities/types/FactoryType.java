@@ -19,5 +19,11 @@ public enum FactoryType implements Spawnable {
         return new SpawnerEntity("Starter Factory", new AnimatedSprite(new Animation("factories", 200,
                 new Vector2D(0, 0), new Vector2D(42, 36))), new HealthStats(0, Alliance.PLAYER, 500),
                 new SpawningSystem(AllyType.UNIBOT, 6000), 12);
-    }}
+    }};
+
+
+    @Override
+    public int getMaxPerWorld() {
+        return 25;
+    }
 }

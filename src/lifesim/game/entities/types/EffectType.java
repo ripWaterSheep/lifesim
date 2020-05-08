@@ -24,5 +24,11 @@ public enum  EffectType implements Spawnable {
             return new EffectEntity("Big Boom", new AnimatedSprite(new Animation("big_boom",
                     35, new Vector2D(0, 0), new Vector2D(32, 32))), new BasicStats(5, Alliance.INVINCIBLE));
         }},
+    ;
 
+
+    @Override
+    public int getMaxPerWorld() {
+        return 35;
+    }
 }

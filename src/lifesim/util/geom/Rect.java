@@ -38,19 +38,19 @@ public class Rect extends Rectangle2D.Double {
         without letting them walk over it with their feet. */
         double bottom = getMaxY() - 1;
 
-        if (getMinX() > rect.getMinX() && getMaxX() < rect.getMaxX()) {
+        if (getCenterX() > rect.x && getCenterX() < rect.getMaxX()) {
             if (bottom > rect.getCenterY()) {
                 bottom = max(bottom, rect.getMaxY());
             } else {
-                bottom = min(bottom, rect.getMinY());
+                bottom = min(bottom, rect.y);
             }
-       }
+        }
 
-        if (getMinY() > rect.getMinY() && bottom < rect.getMaxY()) {
-            if (getMaxX() > rect.getMaxX()) {
-                x = max(x, rect.x + rect.width - 0.1);
-            } else if (getMinX() <= getMinX()) {
-                x = min(x, rect.x - width + 0.1);
+        if (y > rect.y && bottom < rect.getMaxY()) {
+            if (getCenterX() > rect.getCenterX()) {
+                x = max(x, rect.getMaxX() - 0.01);
+            } else {
+                x = min(x, rect.x - width + 0.01);
             }
         }
         y = bottom + 1 - height;

@@ -11,4 +11,10 @@ public enum ResourceTypes implements Spawnable {
     public Entity spawnEntity() {
         return new ItemPackage();
     }
+
+    @Override
+    public int getMaxPerWorld() {
+        return 3;
+    }
+
 }
