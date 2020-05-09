@@ -6,6 +6,7 @@ import lifesim.game.handlers.Layout;
 import lifesim.game.handlers.MyLayout;
 import lifesim.game.handlers.World;
 import lifesim.engine.input.KeyInput;
+import lifesim.game.items.ItemType;
 import lifesim.game.overlay.*;
 import lifesim.engine.output.GameWindow;
 import lifesim.util.geom.Vector2D;
@@ -83,7 +84,7 @@ public class Game implements GameState {
         }
 
         PlayerStats stats = player.getStats();
-        if (KeyInput.k_shift.isPressed()) {
+        if (KeyInput.k_ctrl.isPressed()) {
             if (KeyInput.k_n.isClicked()) cycleWorlds(1);
             if (KeyInput.k_b.isClicked()) cycleWorlds(-1);
             if (KeyInput.k_1.isPressed()) stats.heal(10);
@@ -92,6 +93,7 @@ public class Game implements GameState {
             if (KeyInput.k_4.isPressed()) stats.gainMoney(10);
             if (KeyInput.k_5.isPressed()) stats.gainIntellect(10);
             if (KeyInput.k_k.isClicked()) stats.takeDamage(10000);
+            if (KeyInput.k_p.isClicked()) player.acquireItem(ItemType.HAMMER, 15);
             if (KeyInput.k_r.isClicked()) stateManager.newGame();
         }
     }

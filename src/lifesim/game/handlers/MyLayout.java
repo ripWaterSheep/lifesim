@@ -69,7 +69,7 @@ public class MyLayout extends Layout {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         if (stats.attemptToPay(0.5)) {
-                            stats.energize(0.75);
+                            stats.energize(1);
                         }
                     }
                 }, -250, -225)
