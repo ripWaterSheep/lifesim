@@ -95,7 +95,7 @@ public class MyLayout extends Layout {
                 }, -675, 200)
                 .add(new SolidEntity("Cave", new ShapeSprite(200, 75, Color.LIGHT_GRAY), new InanimateStats(), 45), -800, -800)
 
-                .addSpawner(new SpawningSystem(EnemyType.MELEEBORG, 2500))
+                .addSpawner(new SpawningSystem(EnemyType.MELEE, 2500))
                 .addSpawner(new SpawningSystem(EnemyType.RANGED, 3500))
 
                 .addSpawner(new SpawningSystem(ResourceTypes.ITEM_PACKAGE, 100))

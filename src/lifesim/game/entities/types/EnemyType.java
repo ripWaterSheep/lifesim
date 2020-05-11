@@ -1,5 +1,6 @@
 package lifesim.game.entities.types;
 
+import lifesim.util.sprites.AnimatedSprite;
 import lifesim.util.sprites.Animation;
 import lifesim.game.entities.AIEntity;
 import lifesim.game.entities.Entity;
@@ -14,30 +15,31 @@ import lifesim.util.sprites.ImageSprite;
 
 public enum EnemyType implements Spawnable {
 
-    MELEEBORG() {
+    MELEE() {
         @Override
         public Entity spawnEntity() {
-            return new AIEntity("Meleeborg", new DirectionalAnimatedSprite(
-                    new Animation("meleeborg", 200, new Vector2D(0, 0), new Vector2D(10, 18)),
-                    new Animation("meleeborg", 100, new Vector2D(0, 18), new Vector2D(10, 18)),
-                    new Animation("meleeborg", 100, new Vector2D(0, 36), new Vector2D(10, 18)),
-                    new Animation("meleeborg", 100, new Vector2D(0, 54), new Vector2D(10, 18)),
-                    new Animation("meleeborg", 100, new Vector2D(0, 72), new Vector2D(10, 18))
+            return new AIEntity("Melee enemy", new DirectionalAnimatedSprite(
+                    new Animation("bot", 200, new Vector2D(0, 0), new Vector2D(13, 16)),
+                    new Animation("bot", 100, new Vector2D(0, 16), new Vector2D(13, 16)),
+                    new Animation("bot", 100, new Vector2D(0, 32), new Vector2D(13, 16)),
+                    new Animation("bot", 100, new Vector2D(0, 48), new Vector2D(13, 16)),
+                    new Animation("bot", 100, new Vector2D(0, 64), new Vector2D(13, 16))
             ),
-                    new HealthStats(2.5, Alliance.ENEMY, 35), 3, 200);
+                    new HealthStats(2.5, Alliance.ENEMY, 50), 3.25, 200);
     }},
 
 
     RANGED() {
         @Override
         public Entity spawnEntity() {
-            return new RangedAIEntity("Ranged", new ImageSprite("ranged"), new HealthStats(0,
-                    Alliance.ENEMY, 50), 3.25, 250, 750, ProjectileType.LASER);
+            return new RangedAIEntity("Ranged", new AnimatedSprite(
+                    new Animation("ranged", 150, new Vector2D(0, 0), new Vector2D(12, 16))),
+                    new HealthStats(0, Alliance.ENEMY, 65), 3, 250, 1000, ProjectileType.LASER);
     }};
 
 
     @Override
     public int getMaxPerWorld() {
-        return 12;
+        return 10;
     }
 }

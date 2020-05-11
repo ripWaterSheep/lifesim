@@ -24,6 +24,6 @@ public enum FactoryType implements Spawnable {
 
     @Override
     public int getMaxPerWorld() {
-        return 12;
+        return 10;
     }
 }

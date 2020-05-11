@@ -23,9 +23,10 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             double strength = Main.getCurrentPlayer().getStats().getStrength();
+            double knockBack = (strength / 15) + 2;
 
             return new Projectile("Player Fist", new ImageSprite("fist"), new BasicStats(1 + (strength/200),
-                    Alliance.PLAYER), owner, 6, angle, 30, true, 10, true) {
+                    Alliance.PLAYER), owner, 6, angle, 30, true, knockBack, true) {
             };
         }
     },
@@ -35,21 +36,21 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new ExplosiveProjectile("Bullet", new ImageSprite("bullet"),
-                    new BasicStats(15, alliance), owner, 12, angle, 175, 25, true, EffectType.SMALL_BOOM);
+                    new BasicStats(15, alliance), owner, 12, angle, 175, 8, true, EffectType.SMALL_BOOM);
     }},
 
     WATER_STREAM {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Water", new ShapeSprite(3, 3, new Color(50, 80, 220, 150)),
-                    new BasicStats(2, alliance), owner, 8, angle, 135, false, 20,  true);
+                    new BasicStats(2, alliance), owner, 8, angle, 135, false, 8,  true);
     }},
 
     LASER {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new ExplosiveProjectile("Laser", new ShapeSprite(10, 2, new Color(255, 50, 25, 175)),
-                    new BasicStats(5, alliance), owner, 10, angle, 175, 10, true, EffectType.SMALL_BOOM);
+                    new BasicStats(5, alliance), owner, 10, angle, 175, 5, true, EffectType.SMALL_BOOM);
     }},
 
     BOMB {
@@ -57,7 +58,7 @@ public enum ProjectileType implements Launchable {
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new ExplosiveProjectile("Bomb", new AnimatedSprite(new Animation("bomb",
                     75, new Vector2D(0, 0), new Vector2D(9, 16))), new BasicStats(0, alliance),
-                    owner, 0, angle, 500, 100, false, EffectType.BIG_BOOM);
+                    owner, 0, angle, 500, 50, false, EffectType.BIG_BOOM);
     }},
 
     CANNONBALL {
@@ -65,7 +66,7 @@ public enum ProjectileType implements Launchable {
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Cannon Ball", new AnimatedSprite(new Animation("weapons",
                     75, new Vector2D(0, 16), new Vector2D(16, 16))), new BasicStats(20, alliance), owner,
-                    12, angle, 125, false, 25, false);
+                    12, angle, 125, false, 10, false);
     }},
 
     // Hammer is pretty much a debug tool to clear allies away.
