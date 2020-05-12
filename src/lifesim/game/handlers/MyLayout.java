@@ -93,12 +93,17 @@ public class MyLayout extends Layout {
                         player.goToWorld("Shop Interior");
                     }
                 }, -675, 200)
-                .add(new SolidEntity("Cave", new ShapeSprite(200, 75, Color.LIGHT_GRAY), new InanimateStats(), 45), -800, -800)
+                .add(new SolidEntity("Cave", new ShapeSprite(200, 75, Color.LIGHT_GRAY), new InanimateStats(),45) {
+                    @Override
+                    public void playerCollision(Game game, Player player, PlayerStats stats) {
+                        player.goToWorld("Cave World");
+                    }
+                }, -800, -800)
 
-                .addSpawner(new SpawningSystem(EnemyType.MELEE, 2500))
-                .addSpawner(new SpawningSystem(EnemyType.RANGED, 3500))
+                .addSpawningSystem(new SpawningSystem(EnemyType.MELEE, 2500))
+                .addSpawningSystem(new SpawningSystem(EnemyType.RANGED, 3500))
 
-                .addSpawner(new SpawningSystem(ResourceTypes.ITEM_PACKAGE, 100))
+                .addSpawningSystem(new SpawningSystem(ResourceTypes.ITEM_PACKAGE, 100))
         );
 
         worlds.add(new World("Home", 300, 225, new Color(230, 210, 140), new Color(100, 80, 50))
@@ -128,9 +133,13 @@ public class MyLayout extends Layout {
                 }, 0, 200)
         );
 
+        worlds.add(new World("Cave Hallway", 1000, 500, new Color(40, 40, 40), Color.GRAY)
+            .addSpawningSystem(new SpawningSystem(EnemyType.CUBORG, 5000))
+        );
+
 
         worlds.add(new World("City", 300, 300, new Color(180, 180, 180), new Color(100, 205, 131))
-                .addSpawner(new SpawningSystem(ResourceTypes.ITEM_PACKAGE, 1000))
+                .addSpawningSystem(new SpawningSystem(ResourceTypes.ITEM_PACKAGE, 1000))
         );
 
     }

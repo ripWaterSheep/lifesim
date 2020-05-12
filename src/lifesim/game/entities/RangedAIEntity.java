@@ -11,19 +11,19 @@ public class RangedAIEntity extends AIEntity {
 
     public final Launchable projectileType;
 
-    private final long shootInterval;
-    private long lastShootTime = System.currentTimeMillis();
+    private final long launchInterval;
+    private long lastLaunchTime = System.currentTimeMillis();
 
 
-    public RangedAIEntity(String name, Sprite sprite, Stats stats, double speed, Alliance AITargetAlliance, double detectionRange, long shootInterval, Launchable projectileType) {
+    public RangedAIEntity(String name, Sprite sprite, Stats stats, double speed, Alliance AITargetAlliance, double detectionRange, long launchInterval, Launchable projectileType) {
         super(name, sprite, stats, speed, AITargetAlliance, detectionRange);
-        this.shootInterval = shootInterval;
+        this.launchInterval = launchInterval;
         this.projectileType = projectileType;
     }
 
 
-    public RangedAIEntity(String name, Sprite sprite, Stats stats, double speed, double detectionRange, long shootInterval, Launchable projectileType) {
-        this(name, sprite, stats, speed, stats.getAlliance(), detectionRange, shootInterval, projectileType);
+    public RangedAIEntity(String name, Sprite sprite, Stats stats, double speed, double detectionRange, long launchInterval, Launchable projectileType) {
+        this(name, sprite, stats, speed, stats.getAlliance(), detectionRange, launchInterval, projectileType);
     }
 
 
@@ -33,9 +33,9 @@ public class RangedAIEntity extends AIEntity {
 
 
     private void attemptShot(World world) {
-        if (System.currentTimeMillis() - lastShootTime > shootInterval) {
+        if (System.currentTimeMillis() - lastLaunchTime > launchInterval) {
             world.add(getProjectile(), pos);
-            lastShootTime = System.currentTimeMillis();
+            lastLaunchTime = System.currentTimeMillis();
         }
     }
 

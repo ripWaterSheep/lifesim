@@ -8,7 +8,7 @@ import lifesim.game.items.inventory.Inventory;
 
 import java.awt.*;
 
-public abstract class ItemFunctionality {
+abstract class ItemFunctionality {
 
     public abstract boolean canBeUsed(World world, Player player);
 

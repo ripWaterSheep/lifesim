@@ -13,7 +13,7 @@ import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
-public class LaunchFunctionality extends ConsumeFunctionality {
+class LaunchFunctionality extends ConsumeFunctionality {
 
     private final Launchable launchable;
     private final double recoilMagnitude;

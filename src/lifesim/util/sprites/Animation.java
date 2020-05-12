@@ -23,13 +23,13 @@ public class Animation {
         BufferedImage spriteSheet = ImageLoader.loadImage(spriteSheetName);
 
         // Calculate number of columns to the right of the corner position that will be used as frames of the animation.
-        int columns = (spriteSheet.getWidth() / spriteSize.intX()) - cornerPos.intX();
+        int columns = ((spriteSheet.getWidth() - cornerPos.intX()) / spriteSize.intX());
 
         frames = new Image[columns];
 
         // For every column to the right of the corner position, create a frame.
         for (int i = 0; i < columns; i++) {
-            frames[i] = spriteSheet.getSubimage(i * spriteSize.intX(), cornerPos.intY(), spriteSize.intX(), spriteSize.intY());
+            frames[i] = spriteSheet.getSubimage((i * spriteSize.intX()) + cornerPos.intX(), cornerPos.intY(), spriteSize.intX(), spriteSize.intY());
         }
     }
 

@@ -60,7 +60,7 @@ public class World {
         entities.remove(entity);
     }
 
-    public World addSpawner(SpawningSystem spawningSystem) {
+    public World addSpawningSystem(SpawningSystem spawningSystem) {
         spawningSystems.add(spawningSystem);
         return this;
     }

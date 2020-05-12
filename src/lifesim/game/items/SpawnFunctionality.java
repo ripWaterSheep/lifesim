@@ -14,7 +14,7 @@ import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
-public class SpawnFunctionality extends ConsumeFunctionality {
+class SpawnFunctionality extends ConsumeFunctionality {
 
     private final Spawnable spawnable;
     private final Entity spawnHint; // Translucent sneak peak of entity when hovering mouse over somewhere when it can be used

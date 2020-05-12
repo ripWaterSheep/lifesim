@@ -8,7 +8,7 @@ import lifesim.game.handlers.World;
 import java.awt.*;
 
 
-public abstract class ConsumeFunctionality extends ItemFunctionality {
+abstract class ConsumeFunctionality extends ItemFunctionality {
 
     @Override
     public boolean canBeUsed(World world, Player player) {
