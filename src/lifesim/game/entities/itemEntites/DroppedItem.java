@@ -20,6 +20,7 @@ public class DroppedItem extends Entity {
         super("Dropped " + item.name, item.icon, new HealthStats(0, Alliance.PLAYER, 100));
         this.item = item;
         this.amount = amount;
+        assert amount > 0;
     }
 
 

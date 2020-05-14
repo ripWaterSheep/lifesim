@@ -12,12 +12,12 @@ import static lifesim.util.GraphicsMethods.createGraphics;
 /** This class manages the graphical display of the current game state. */
 public class GamePanel extends JPanel {
 
-    // Dimensions of game pixels (not 1:1 pixels) on scree, since this game uses pixel art.
+    // Dimensions of game pixels (not 1:1 pixels) on screen, since this game uses pixel art.
     public static final int WIDTH = 480;
     public static final int HEIGHT = 270;
 
     // How big each game pixel is in real pixels.
-    private static final int graphicsScale = 4;
+    private static final int graphicsScale = 4; // dimensions * graphicsScale should match actual window dimensions.
 
     public static Vector2D getPixelDims() {
         return new Vector2D(WIDTH, HEIGHT);

@@ -23,6 +23,7 @@ public class AIEntity extends MovementEntity {
         super(name, sprite, stats, speed, getRand(0, 360));
         this.AITargetAlliance = AITargetAlliance;
         this.detectionRange = detectionRange;
+        this.targetPos = pos;
     }
 
 

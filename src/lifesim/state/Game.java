@@ -9,6 +9,8 @@ import lifesim.engine.input.KeyInput;
 import lifesim.game.items.ItemType;
 import lifesim.game.overlay.*;
 import lifesim.engine.output.GameWindow;
+import lifesim.state.GameState;
+import lifesim.state.StateManager;
 import lifesim.util.geom.Vector2D;
 
 import java.awt.*;

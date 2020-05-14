@@ -19,7 +19,7 @@ import java.awt.*;
 public class Entity implements Comparable<Entity> {
 
     public final String name;
-    protected final Sprite sprite;
+    public final Sprite sprite;
     protected final Stats stats;
     protected final Vector2D pos;
 
@@ -27,6 +27,7 @@ public class Entity implements Comparable<Entity> {
     private boolean removeRequested = false;
 
     public Entity(String name, Sprite sprite, Stats stats) {
+        System.out.println(name);
         this.name = name;
         this.sprite = sprite;
         pos = new Vector2D(0, 0);
@@ -54,6 +55,10 @@ public class Entity implements Comparable<Entity> {
 
     public Rect getHitBox() {
         return sprite.getBoundsAt(getPos());
+    }
+
+    public Rect getDisplayHitBox() {
+        return sprite.getBoundsAt(getDisplayPos());
     }
 
     public boolean isTouching(Entity entity) {
@@ -125,11 +130,11 @@ public class Entity implements Comparable<Entity> {
 
     protected void renderShadow(Graphics2D g2d) {
         // Get the hitbox at the actual display position rather than in-game world position to draw shadow.
-        Rect displayHitBox = sprite.getBoundsAt(getDisplayPos());
+        Rect dhb = sprite.getBoundsAt(getDisplayPos());
 
         // Draw circular shadow under entity that is as wide as its sprite.
-        Vector2D pos = new Vector2D(displayHitBox.getCenterX(), displayHitBox.getMaxY()); // Center around bottom of sprite
-        Vector2D dims = new Vector2D(displayHitBox.width, displayHitBox.height/2);
+        Vector2D pos = new Vector2D(dhb.getCenterX(), dhb.getMaxY()); // Center around bottom of sprite
+        Vector2D dims = new Vector2D(dhb.width, dhb.height/2);
         Rect shadowRect = new Rect(pos, dims);
 
         g2d.setColor(new Color(0, 0, 0, 75));

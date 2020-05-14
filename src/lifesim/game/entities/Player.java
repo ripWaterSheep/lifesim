@@ -41,10 +41,11 @@ public class Player extends MovementEntity {
 
 
     public void init() {
-        acquireItem(ItemType.STARTER_FACTORY, 25);
-        acquireItem(ItemType.WALLBOT, 25);
+/*
+        acquireItem(ItemType.ADVANCED_FACTORY, 25);
+        //acquireItem(ItemType.WALLBOT, 25);
         //acquireItem(ItemType.BOMB, 25);
-        //acquireItem(ItemType.HAMMER, 50);
+        acquireItem(ItemType.HAMMER, 50);*/
     }
 
 

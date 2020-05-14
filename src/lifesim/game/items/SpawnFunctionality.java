@@ -3,6 +3,7 @@ package lifesim.game.items;
 import lifesim.engine.output.CursorType;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
+import lifesim.game.entities.RangedAIEntity;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.types.Spawnable;
 import lifesim.game.handlers.World;
@@ -10,6 +11,7 @@ import lifesim.engine.input.MouseInput;
 import lifesim.engine.output.GameWindow;
 import lifesim.game.items.inventory.Inventory;
 import lifesim.util.GraphicsMethods;
+import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
@@ -17,7 +19,7 @@ import java.awt.*;
 class SpawnFunctionality extends ConsumeFunctionality {
 
     private final Spawnable spawnable;
-    private final Entity spawnHint; // Translucent sneak peak of entity when hovering mouse over somewhere when it can be used
+    private final Entity spawnHint; // Translucent sneak peak of entity when hovering mouse over somewhere when it can be used.
 
     public SpawnFunctionality(Spawnable spawnable) {
         this.spawnable = spawnable;
@@ -46,7 +48,7 @@ class SpawnFunctionality extends ConsumeFunctionality {
     /** Only use the item if right-clicked, the spawn position is clear, and the world doesn't have too many of that type of entity */
     @Override
     public boolean canBeUsed(World world, Player player) {
-        return super.canBeUsed(world, player) && isSpawnPosClear(world) && !world.isMaxedOut(spawnable);
+        return super.canBeUsed(world, player) && isSpawnPosClear(world) && !world.isMaxedOut(spawnable, spawnHint.name);
     }
 
     @Override
@@ -59,12 +61,16 @@ class SpawnFunctionality extends ConsumeFunctionality {
         GraphicsMethods.setOpacity(g2d, 0.35);
 
         // Show translucent hint at what the entity looks like at the mouse cursor.
-        spawnHint.setPos(MouseInput.getCursorPosFrom(player.getPos()));
+        spawnHint.setPos(getHoveringPos(player));
 
-        if (isSpawnPosClear(player.getWorld()) && !player.getWorld().isMaxedOut(spawnable)) {
+        g2d.setColor(Color.RED);
+        if (isSpawnPosClear(player.getWorld()) && !player.getWorld().isMaxedOut(spawnable, spawnHint.name)) {
             window.changeCursor(CursorType.POINTER);
-            spawnHint.render(g2d);
+            g2d.setColor(Color.GREEN);
         }
+        Rect rect = spawnHint.getDisplayHitBox();
+        g2d.fill(rect);
+        spawnHint.render(g2d);
     }
 
 }

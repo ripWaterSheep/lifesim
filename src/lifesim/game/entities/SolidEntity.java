@@ -2,8 +2,6 @@ package lifesim.game.entities;
 
 import lifesim.engine.Main;
 import lifesim.game.entities.stats.InanimateStats;
-import lifesim.game.entities.stats.PlayerStats;
-import lifesim.state.Game;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.sprites.Sprite;
@@ -60,11 +58,20 @@ public class SolidEntity extends Entity {
     }
 
     @Override
+    public Rect getDisplayHitBox() {
+        Rect hb = getHitBox();
+
+        hb.translatePos(getDisplayPos());
+        hb.translatePos(super.getHitBox().getCenterPos().negate());
+        return hb;
+    }
+
+    @Override
     public void handleCollision(Entity entity, World world) {
         super.handleCollision(entity, world);
 
-        if (entity.getVelocity().getMagnitude() == 0) return;
-
+        // If entity is still and is nonliving, then return since those things can overlap
+        if (entity.getVelocity().getMagnitude() == 0 && !entity.getStats().hasHealth()) return;
         Rect entityRect = entity.getHitBox();
         // Keep entity's bottom bound (AKA feet) outside of this entity's base.
         entityRect.clampBottomOutside(getHitBox());

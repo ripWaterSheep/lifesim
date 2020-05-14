@@ -7,7 +7,7 @@ import lifesim.game.entities.SolidEntity;
 import lifesim.game.entities.stats.InanimateStats;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.types.EnemyType;
-import lifesim.game.entities.types.ResourceTypes;
+import lifesim.game.entities.types.PackageTypes;
 import lifesim.state.Game;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.ShapeSprite;
@@ -24,7 +24,7 @@ public class MyLayout extends Layout {
     @Override
     public void init() {
         worlds.add(
-            new World("Town", 2500, 2500, new Color(60, 175, 90), new Color(200, 190, 125))
+            new World("Town", 2500, 2000, new Color(60, 175, 90), new Color(200, 190, 125))
                 .add(new FlatEntity("vRoad", new ShapeSprite(100, 2500, Color.DARK_GRAY)), 0, 0)
                 .add(new FlatEntity("hRoad", new ShapeSprite(2500, 100, Color.DARK_GRAY)), 0, 0)
 
@@ -100,10 +100,11 @@ public class MyLayout extends Layout {
                     }
                 }, -800, -800)
 
-                .addSpawningSystem(new SpawningSystem(EnemyType.MELEE, 2500))
-                .addSpawningSystem(new SpawningSystem(EnemyType.RANGED, 3500))
+                .addSpawningSystem(new SpawningSystem(EnemyType.MELEE, 3000))
+                .addSpawningSystem(new SpawningSystem(EnemyType.RANGED, 4000))
 
-                .addSpawningSystem(new SpawningSystem(ResourceTypes.ITEM_PACKAGE, 100))
+                .addSpawningSystem(new SpawningSystem(PackageTypes.ITEM_PACKAGE, 1000))
+                .addSpawningSystem(new SpawningSystem(PackageTypes.REINFORCED_PACKAGE, 10000))
         );
 
         worlds.add(new World("Home", 300, 225, new Color(230, 210, 140), new Color(100, 80, 50))
@@ -139,7 +140,7 @@ public class MyLayout extends Layout {
 
 
         worlds.add(new World("City", 300, 300, new Color(180, 180, 180), new Color(100, 205, 131))
-                .addSpawningSystem(new SpawningSystem(ResourceTypes.ITEM_PACKAGE, 1000))
+                .addSpawningSystem(new SpawningSystem(PackageTypes.ITEM_PACKAGE, 1000))
         );
 
     }

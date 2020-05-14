@@ -1,9 +1,9 @@
 package lifesim.game.handlers;
 
+import lifesim.engine.Main;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.FlatEntity;
 import lifesim.game.entities.types.Spawnable;
-import lifesim.state.Game;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.sprites.ShapeSprite;
 import lifesim.util.geom.Rect;
@@ -66,10 +66,9 @@ public class World {
     }
 
 
-    /** Return if a certain entity type appears more than its specified max in the world. This is used to balance spawning. */
-    public boolean isMaxedOut(Spawnable spawnable) {
+    /** Return if a certain entity name appears more than its specified max in the world. This is used to balance spawning. */
+    public boolean isMaxedOut(Spawnable spawnable, String name) {
         int numPerType = 0;
-        String name = spawnable.spawnEntity().name;
 
         for (Entity entity: entities) {
             if (entity.name.equals(name)) {
@@ -113,8 +112,9 @@ public class World {
         Collections.reverse(reversedEntities);
 
         for (Entity entity: reversedEntities) {
-            System.out.println(entity.name);
             for (Entity entity2: getEntities()) {
+                if (entity.getPos().getDistanceFrom(Main.getCurrentPlayer().getPos()) > 500) break;
+
                 if (entity.isTouching(entity2) && entity != entity2) {
                     entity.handleCollision(entity2, this);
                 }
@@ -123,7 +123,6 @@ public class World {
             entity.clampPosInRect(rect);
         }
         entities.removeIf(Entity::isRemoveRequested);
-        System.out.println(entities.size());
     }
 
 
