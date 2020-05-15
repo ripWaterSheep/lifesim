@@ -18,15 +18,15 @@ import static lifesim.util.MyMath.*;
 
 public class ItemPackage extends SolidEntity {
 
-    // All of the items that are contained inside.
-    private final List<DroppedItem> loot = new ArrayList<>();
-    // Number of item types that the package contains
-    private final int lootCount = getRandInt(2, 4);
+    private final List<DroppedItem> loot = new ArrayList<>(); // All of the items that are contained inside.
+
+    private final int lootCount; // Number of item types that the package will drop when it is destroyed.
 
     private final int luck; // Increases chance of generating rarer items.
 
-    public ItemPackage(String name, Sprite sprite, Stats stats, double baseDepth, int luck) {
+    public ItemPackage(String name, Sprite sprite, Stats stats, double baseDepth, int lootMin, int lootMax, int luck) {
         super(name, sprite, stats, baseDepth);
+        lootCount = getRandInt(lootMin, lootMax);
         this.luck = luck;
     }
 
@@ -50,7 +50,7 @@ public class ItemPackage extends SolidEntity {
     private void dropLoot(World world) {
         // Drop loot in a circle spread around this package's position.
         generateLoot();
-        for (DroppedItem item : loot) {
+        for (DroppedItem item: loot) {
             Vector2D spread = Vector2D.newMagDir(getRand(15, 25), getRand(0, 360));
             world.add(item, getPos().translate(spread));
         }

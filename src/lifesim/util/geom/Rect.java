@@ -25,9 +25,12 @@ public class Rect extends Rectangle2D.Double {
 
 
     public void translatePos(Vector2D v) {
-        Vector2D pos = getCenterPos();
-        pos.translate(v);
-        Rect rect = new Rect(pos, getDims());
+        Rect rect = new Rect(getCenterPos().translate(v), getDims());
+        setRect(rect);
+    }
+
+    public void scale(double x, double y) {
+        Rect rect = new Rect(getCenterPos(), getDims().scale(x, y));
         setRect(rect);
     }
 

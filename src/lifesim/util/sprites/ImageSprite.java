@@ -1,10 +1,15 @@
 package lifesim.util.sprites;
 
+import lifesim.engine.input.KeyInput;
+import lifesim.engine.input.MouseInput;
+import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.ImageLoader;
 import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import static lifesim.util.MyMath.betterRound;
@@ -33,13 +38,19 @@ public class ImageSprite extends Sprite {
         this(ImageLoader.loadImage(imageName));
     }
 
-
     @Override
     public void render(Graphics2D g2d, Vector2D pos, Vector2D velocity) {
-        if (image != null) {
-            Rect rect = getBoundsAt(pos);
-            g2d.drawImage(image, betterRound(rect.x), betterRound(rect.y), betterRound(rect.width), betterRound(rect.height), null);
-        }
+        // Draw the image to the screen with affineTransform since its methods accept doublesw, which fixes rounding errors.
+        Rect rect = getBoundsAt(pos);
+        AffineTransform at = new AffineTransform();
+
+        at.translate(rect.x, rect.y);
+        at.scale(rect.width, rect.height);
+
+        g2d = GraphicsMethods.createGraphics(g2d);
+        g2d.transform(at);
+
+        g2d.drawImage(image, 0, 0, 1, 1, null);
     }
 
 }

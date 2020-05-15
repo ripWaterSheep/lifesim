@@ -32,7 +32,7 @@ public class Player extends MovementEntity {
                 new Animation("player", 100, new Vector2D(0, 48), new Vector2D(12, 16)),
                 new Animation("player", 100, new Vector2D(0, 64), new Vector2D(12, 16))
                 ),
-            new PlayerStats(1000, 1000, 0, 0, 0, game), 3.5, 0);
+            new PlayerStats(1000, 1000, 0, 0, 0, game), 3.25, 0);
         velocity.set(0, 0);
         this.game = game;
         setWorld(startingWorld);

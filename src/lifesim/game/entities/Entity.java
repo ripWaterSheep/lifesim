@@ -130,12 +130,9 @@ public class Entity implements Comparable<Entity> {
 
     protected void renderShadow(Graphics2D g2d) {
         // Get the hitbox at the actual display position rather than in-game world position to draw shadow.
-        Rect dhb = sprite.getBoundsAt(getDisplayPos());
-
-        // Draw circular shadow under entity that is as wide as its sprite.
-        Vector2D pos = new Vector2D(dhb.getCenterX(), dhb.getMaxY()); // Center around bottom of sprite
-        Vector2D dims = new Vector2D(dhb.width, dhb.height/2);
-        Rect shadowRect = new Rect(pos, dims);
+        Rect shadowRect = getDisplayHitBox();
+        shadowRect.translatePos(new Vector2D(0, getHitBox().height/2));
+        shadowRect.scale(1, 0.5);
 
         g2d.setColor(new Color(0, 0, 0, 75));
         g2d.fill(shadowRect);
