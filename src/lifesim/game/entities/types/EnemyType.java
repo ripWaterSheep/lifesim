@@ -23,7 +23,7 @@ public enum EnemyType implements Spawnable {
                     new Animation("bot", 100, new Vector2D(0, 48), new Vector2D(13, 16)),
                     new Animation("bot", 100, new Vector2D(0, 64), new Vector2D(13, 16))
             ),
-                    new HealthStats(2.5, Alliance.ENEMY, 50), 3, 200);
+                    new HealthStats(2.5, Alliance.ENEMY, 50), 3, 175);
     }},
 
 
@@ -32,7 +32,7 @@ public enum EnemyType implements Spawnable {
         public Entity spawnEntity() {
             return new RangedAIEntity("Ranged", new AnimatedSprite(
                     new Animation("ranged", 150, new Vector2D(0, 0), new Vector2D(12, 16))),
-                    new HealthStats(0, Alliance.ENEMY, 65), 2.75, 250, 1000, ProjectileType.LASER);
+                    new HealthStats(0, Alliance.ENEMY, 65), 2.75, 225, 1000, ProjectileType.LASER);
     }},
 
 

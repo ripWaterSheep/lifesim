@@ -11,7 +11,7 @@ public enum PackageTypes implements Spawnable {
     ITEM_PACKAGE() {
         @Override
         public Entity spawnEntity() {
-            return new ItemPackage("Package", new ImageSprite("package"), new HealthStats(0, Alliance.NEUTRAL, 3),
+            return new ItemPackage("Package", new ImageSprite("package"), new HealthStats(0, Alliance.NEUTRAL, 1),
                     8, 2, 3, 1);
         }
 

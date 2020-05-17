@@ -56,7 +56,7 @@ public class RangedAIEntity extends AIEntity {
     protected void doAI(World world) {
         super.doAI(world);
         // Stop if target position is safely in range.
-        if (pos.getDistanceFrom(targetPos) < attackRange*0.66 && !targetPos.equals(pos)) {
+        if (pos.getDistanceFrom(targetPos) < attackRange * 0.66 && !targetPos.equals(pos)) {
             stop();
         }
     }

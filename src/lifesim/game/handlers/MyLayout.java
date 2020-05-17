@@ -25,7 +25,7 @@ public class MyLayout extends Layout {
     public void init() {
         worlds.add(
             new World("Town", 2500, 2000, new Color(60, 175, 90), new Color(200, 190, 125))
-                .add(new FlatEntity("vRoad", new ShapeSprite(100, 2500, Color.DARK_GRAY)), 0, 0)
+                .add(new FlatEntity("vRoad", new ShapeSprite(100, 2000, Color.DARK_GRAY)), 0, 0)
                 .add(new FlatEntity("hRoad", new ShapeSprite(2500, 100, Color.DARK_GRAY)), 0, 0)
 
                 .add(new SolidEntity("House", new ShapeSprite(200, 175, new Color(100, 80, 50)), 125) {
@@ -101,7 +101,7 @@ public class MyLayout extends Layout {
                 }, -800, -800)
 
                 .addSpawningSystem(new SpawningSystem(EnemyType.MELEE, 3000))
-                .addSpawningSystem(new SpawningSystem(EnemyType.RANGED, 4000))
+                .addSpawningSystem(new SpawningSystem(EnemyType.RANGED, 4500))
 
                 .addSpawningSystem(new SpawningSystem(PackageTypes.ITEM_PACKAGE, 1000))
                 .addSpawningSystem(new SpawningSystem(PackageTypes.REINFORCED_PACKAGE, 10000))

@@ -62,16 +62,29 @@ public class AIEntity extends MovementEntity {
 
 
     protected void doAI(World world) {
-        // If target position is entity's own position (default), then do random ai
+        // If target position is entity's own position (default), then do random a since it doesn't detect any other entity in range.
         if (targetPos.equals(pos)) {
-            if (getRand(0, 1) < 0.03) {
-                velocity.setMagDir(defaultSpeed/3, getRand(0, 360));
+            double rand = getRand(0, 1);
+
+            if (rand < 0.03) {
+                // Occasionally switch directions.
+                velocity.setMagDir(defaultSpeed, getRand(0, 360));
+            } else if (rand < 0.07) {
+                // Occasionally idle in position.
+              stop();
             }
+
         } else if (attacking) {
             attack(world);
         } else {
-            // Approach target position with a bit of randomness to make motion look more natural and varied from other entities pursing the same target.
-            velocity.setMagDir(defaultSpeed + getRand(-1, 1), targetPos.getAngleFrom(pos) + getRand(-5, 5));
+            // Slightly delay reaction time to prevent sprite from going berserk by changing directions every frame.
+            if (getRand(0, 1) < 0.3) {
+                // Approach target position with a bit of randomness to vary motion, preventing entities from just overlapping each other.
+                double speed = defaultSpeed * getRand(0.8, 1.2);
+                double angle = targetPos.getAngleFrom(pos) + getRand(-5, 5);
+
+                velocity.setMagDir(speed, angle);
+            }
         }
     }
 

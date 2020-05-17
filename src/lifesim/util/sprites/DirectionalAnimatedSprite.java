@@ -41,10 +41,11 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
         else {
             // Set the animation to the one corresponding to the entity's direction.
             double direction = velocity.getDirection();
-            if (direction > 45 && direction < 135) animation = forward;
-            if (direction >= 135 && direction < 225) animation = left;
-            if (direction >= 225 && direction <= 315) animation = backward;
-            if (direction > 315 || direction <= 45) animation = right;
+
+            if (direction > 310 || direction < 50) animation = right;
+            else if (direction < 120) animation = forward;
+            else if (direction < 230) animation = left;
+            else animation = backward;
         }
         super.render(g2d, pos, velocity);
     }

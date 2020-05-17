@@ -74,7 +74,7 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Hammer", new ImageSprite("utilities", new Vector2D(0, 48), new Vector2D(16, 16)),
-                    new BasicStats(10000, Alliance.NEUTRAL), owner, 25, angle, 300, true, 0, true);
+                    new BasicStats(10000, Alliance.NEUTRAL), owner, 20, angle, 300, true, 0, true);
     }},
 
     HEAL_SPELL {
