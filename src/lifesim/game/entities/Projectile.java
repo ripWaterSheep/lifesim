@@ -8,7 +8,6 @@ import lifesim.util.geom.Vector2D;
 import java.awt.*;
 
 import static java.lang.Math.*;
-import static lifesim.util.GraphicsMethods.createGraphics;
 
 
 public class Projectile extends MovementEntity {

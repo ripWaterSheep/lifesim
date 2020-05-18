@@ -20,19 +20,22 @@ public enum EnemyType implements Spawnable {
                     new Animation("bot", 200, new Vector2D(0, 0), new Vector2D(13, 16)),
                     new Animation("bot", 100, new Vector2D(0, 16), new Vector2D(13, 16)),
                     new Animation("bot", 100, new Vector2D(0, 32), new Vector2D(13, 16)),
-                    new Animation("bot", 100, new Vector2D(0, 48), new Vector2D(13, 16)),
-                    new Animation("bot", 100, new Vector2D(0, 64), new Vector2D(13, 16))
-            ),
-                    new HealthStats(2.5, Alliance.ENEMY, 50), 3, 175);
+                    new Animation("bot", 100, new Vector2D(6, 48), new Vector2D(10, 16)),
+                    new Animation("bot", 100, new Vector2D(6, 64), new Vector2D(10, 16))
+            ), new HealthStats(2.5, Alliance.ENEMY, 50), 3, 175);
     }},
 
 
     RANGED() {
         @Override
         public Entity spawnEntity() {
-            return new RangedAIEntity("Ranged", new AnimatedSprite(
-                    new Animation("ranged", 150, new Vector2D(0, 0), new Vector2D(12, 16))),
-                    new HealthStats(0, Alliance.ENEMY, 65), 2.75, 225, 1000, ProjectileType.LASER);
+            return new RangedAIEntity("Ranged", new DirectionalAnimatedSprite(
+                    new Animation("ranged", 150, new Vector2D(0, 0), new Vector2D(12, 16)),
+                    new Animation("ranged", 150, new Vector2D(0, 16), new Vector2D(12, 16)),
+                    new Animation("ranged", 150, new Vector2D(0, 32), new Vector2D(12, 16)),
+                    new Animation("ranged", 150, new Vector2D(8, 48), new Vector2D(8, 16)),
+                    new Animation("ranged", 150, new Vector2D(8, 64), new Vector2D(8, 16))
+            ), new HealthStats(0, Alliance.ENEMY, 65), 2.85, 225, 1000, ProjectileType.LASER);
     }},
 
 
@@ -44,8 +47,8 @@ public enum EnemyType implements Spawnable {
                     new Animation("cuborg", 100, new Vector2D(0, 17), new Vector2D(14, 17)),
                     new Animation("cuborg", 100, new Vector2D(0, 34), new Vector2D(14, 17)),
                     new Animation("cuborg", 100, new Vector2D(4, 51), new Vector2D(12, 17)),
-                    new Animation("cuborg", 100, new Vector2D(4, 68), new Vector2D(12, 17))),
-                    new HealthStats(0, Alliance.ENEMY, 85), 2.5, 100, 500, ProjectileType.LASER);
+                    new Animation("cuborg", 100, new Vector2D(4, 68), new Vector2D(12, 17))
+            ), new HealthStats(0, Alliance.ENEMY, 85), 2.5, 100, 500, ProjectileType.LASER);
         }};
 
 

@@ -11,6 +11,7 @@ public class Animation {
 
     private final Image[] frames;
     private final int frameInterval;
+    private final Vector2D spriteSize;
 
     protected int currentFrameIndex = 0;
     private long lastFrameTime = System.currentTimeMillis();
@@ -20,6 +21,7 @@ public class Animation {
     /** Use a row on a sprite sheet for the frames of the animation. */
     public Animation(String spriteSheetName, int frameInterval, Vector2D cornerPos, Vector2D spriteSize) {
         this.frameInterval = frameInterval;
+        this.spriteSize = spriteSize;
         BufferedImage spriteSheet = ImageLoader.loadImage(spriteSheetName);
 
         // Calculate number of columns to the right of the corner position that will be used as frames of the animation.
@@ -36,6 +38,10 @@ public class Animation {
 
     public int getCurrentCycles() {
         return currentCycles;
+    }
+
+    public Vector2D getSize() {
+        return spriteSize.copy();
     }
 
 

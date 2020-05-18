@@ -1,7 +1,5 @@
 package lifesim.util.sprites;
 
-import lifesim.engine.input.KeyInput;
-import lifesim.engine.input.MouseInput;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.ImageLoader;
 import lifesim.util.geom.Rect;
@@ -9,10 +7,7 @@ import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-
-import static lifesim.util.MyMath.betterRound;
 
 public class ImageSprite extends Sprite {
 

@@ -23,14 +23,13 @@ public class DirectionalAnimatedSprite extends AnimatedSprite {
         this.right = right;
     }
 
-    public DirectionalAnimatedSprite(Animation idle, Animation forward, Animation backward) {
+    public DirectionalAnimatedSprite(Animation idle, Animation moving) {
         super(idle);
         this.idle = idle;
-        this.forward = forward;
-        this.backward = backward;
-        // Use the forward animation for left and right if not specified
-        this.left = forward;
-        this.right = forward;
+        this.forward = moving;
+        this.backward = moving;
+        this.left = moving;
+        this.right = moving;
     }
 
 

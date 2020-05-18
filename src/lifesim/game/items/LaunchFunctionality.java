@@ -8,7 +8,6 @@ import lifesim.game.entities.types.Launchable;
 import lifesim.game.handlers.World;
 import lifesim.engine.input.MouseInput;
 import lifesim.engine.output.GameWindow;
-import lifesim.game.items.inventory.Inventory;
 import lifesim.util.geom.Vector2D;
 
 import java.awt.*;

@@ -1,7 +1,6 @@
 package lifesim.game.entities.types;
 
 import lifesim.game.entities.Entity;
-import lifesim.game.entities.SolidEntity;
 import lifesim.game.entities.SpawnerEntity;
 import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.HealthStats;

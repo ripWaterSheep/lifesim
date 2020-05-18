@@ -2,7 +2,6 @@ package lifesim.game.entities;
 
 import lifesim.game.entities.stats.Stats;
 import lifesim.util.sprites.Sprite;
-import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 

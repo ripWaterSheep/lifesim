@@ -50,7 +50,7 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new ExplosiveProjectile("Laser", new ShapeSprite(10, 2, new Color(255, 50, 25, 175)),
-                    new BasicStats(5, alliance), owner, 10, angle, 175, 5, true, EffectType.SMALL_BOOM);
+                    new BasicStats(5, alliance), owner, 10, angle, 165, 5, true, EffectType.SMALL_BOOM);
     }},
 
     BOMB {

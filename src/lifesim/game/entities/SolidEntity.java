@@ -70,8 +70,8 @@ public class SolidEntity extends Entity {
     public void handleCollision(Entity entity, World world) {
         super.handleCollision(entity, world);
 
-        // If entity is still and is nonliving, then return since those things can overlap
-        if (entity.getVelocity().getMagnitude() == 0 && !entity.getStats().hasHealth()) return;
+        // If entity is flat, then it can be overlapped and therefore shouldn't be pushed away.
+        if (entity.isFlat()) return;
         Rect entityRect = entity.getHitBox();
         // Keep entity's bottom bound (AKA feet) outside of this entity's base.
         entityRect.clampBottomOutside(getHitBox());

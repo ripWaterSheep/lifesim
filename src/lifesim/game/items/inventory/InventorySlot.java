@@ -4,14 +4,11 @@ import lifesim.game.entities.Player;
 import lifesim.game.handlers.World;
 import lifesim.game.overlay.InventoryGUI;
 import lifesim.game.items.ItemType;
-import lifesim.state.Game;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
-
-import static java.lang.Math.max;
 
 
 public class InventorySlot {

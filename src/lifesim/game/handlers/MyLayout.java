@@ -105,6 +105,7 @@ public class MyLayout extends Layout {
 
                 .addSpawningSystem(new SpawningSystem(PackageTypes.ITEM_PACKAGE, 1000))
                 .addSpawningSystem(new SpawningSystem(PackageTypes.REINFORCED_PACKAGE, 10000))
+                .add(EnemyType.RANGED.spawnEntity(), 0, 0)
         );
 
         worlds.add(new World("Home", 300, 225, new Color(230, 210, 140), new Color(100, 80, 50))

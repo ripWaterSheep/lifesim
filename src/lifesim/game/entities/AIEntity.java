@@ -5,7 +5,6 @@ import lifesim.game.handlers.World;
 import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.Stats;
 import lifesim.util.geom.Vector2D;
-import lifesim.util.MyMath;
 
 import static lifesim.util.MyMath.getRand;
 

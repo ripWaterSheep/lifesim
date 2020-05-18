@@ -32,7 +32,7 @@ public enum PackageTypes implements Spawnable {
         public int getMaxPerWorld() {
             return 1;
         }
-    };
+    }
 
 
 

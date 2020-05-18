@@ -2,17 +2,13 @@ package lifesim.game.entities.types;
 
 import lifesim.game.entities.AIEntity;
 import lifesim.game.entities.Entity;
-import lifesim.game.entities.RangedAIEntity;
 import lifesim.game.entities.SolidEntity;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.sprites.AnimatedSprite;
 import lifesim.util.sprites.Animation;
 import lifesim.util.sprites.DirectionalAnimatedSprite;
-import lifesim.util.sprites.ShapeSprite;
 import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.HealthStats;
-
-import java.awt.*;
 
 
 public enum AllyType implements Spawnable {
