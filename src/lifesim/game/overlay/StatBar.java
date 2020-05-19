@@ -51,8 +51,8 @@ public class StatBar extends Overlay {
         drawBar("Intellect", stats.getIntellect(), 1000, StatsColors.intellectColor);
         drawBar("Money", stats.getMoney(), 10000, StatsColors.moneyColor);
         drawBar("Strength", stats.getStrength(), 1000, StatsColors.strengthColor);
-        drawBar("Energy", stats.getEnergy(), 1000, StatsColors.energyColor);
-        drawBar("Health", stats.getHealth(), 1000, StatsColors.healthColor);
+        drawBar("Energy", stats.getEnergy(), 100, StatsColors.energyColor);
+        drawBar("Health", stats.getHealth(), 100, StatsColors.healthColor);
 
         writeValue("World", player.getWorld().name);
         writeRoundedVal("Y", player.getPos().y);

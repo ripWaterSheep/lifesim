@@ -23,7 +23,7 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             double strength = Main.getCurrentPlayer().getStats().getStrength();
-            double knockBack = (strength / 15) + 2;
+            double knockBack = (strength / 25) + 2;
 
             return new Projectile("Player Fist", new ImageSprite("fist"), new BasicStats(1 + (strength/200),
                     Alliance.PLAYER), owner, 6, angle, 30, true, knockBack, true) {
@@ -36,21 +36,21 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new ExplosiveProjectile("Bullet", new ImageSprite("bullet"),
-                    new BasicStats(15, alliance), owner, 12, angle, 175, 8, true, EffectType.SMALL_BOOM);
+                    new BasicStats(15, alliance), owner, 12, angle, 175, 4, true, EffectType.SMALL_BOOM);
     }},
 
     WATER_STREAM {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Water", new ShapeSprite(3, 3, new Color(50, 80, 220, 150)),
-                    new BasicStats(2, alliance), owner, 8, angle, 135, false, 8,  true);
+                    new BasicStats(2, alliance), owner, 8, angle, 135, false, 5,  true);
     }},
 
     LASER {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new ExplosiveProjectile("Laser", new ShapeSprite(10, 2, new Color(255, 50, 25, 175)),
-                    new BasicStats(5, alliance), owner, 10, angle, 165, 5, true, EffectType.SMALL_BOOM);
+                    new BasicStats(5, alliance), owner, 10, angle, 165, 2, true, EffectType.SMALL_BOOM);
     }},
 
     BOMB {
@@ -77,10 +77,10 @@ public enum ProjectileType implements Launchable {
                     new BasicStats(10000, Alliance.NEUTRAL), owner, 20, angle, 300, true, 0, true);
     }},
 
-    HEAL_SPELL {
+    HEALER {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
-            return new Projectile("Heal Orb", new ShapeSprite(42, 42, new Color(255, 0, 0, 150)),
+            return new Projectile("Healer", new ShapeSprite(42, 42, new Color(255, 0, 0, 150)),
                     new HealerStats(0, alliance, 15), owner, 9, angle, 175, true, 0, false);
     }},
 
@@ -88,7 +88,7 @@ public enum ProjectileType implements Launchable {
         @Override
         public Projectile launchEntity(Entity owner, Alliance alliance, double angle) {
             return new Projectile("Throwable Wall", new ShapeSprite(8, 32, new Color(100, 150, 200)),
-                    new BasicStats(0, alliance), owner, 15, angle, 300, true, 50, true);
+                    new BasicStats(0, alliance), owner, 15, angle, 300, true, 16, true);
     }}
 
 }

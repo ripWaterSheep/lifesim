@@ -67,8 +67,9 @@ public class World {
 
 
     /** Return if a certain entity name appears more than its specified max in the world. This is used to balance spawning. */
-    public boolean isMaxedOut(Spawnable spawnable, String name) {
+    public boolean isMaxedOut(Spawnable spawnable) {
         int numPerType = 0;
+        String name = spawnable.spawnEntity().name;
 
         for (Entity entity: entities) {
             if (entity.name.equals(name)) {
@@ -113,13 +114,15 @@ public class World {
 
         for (Entity entity: reversedEntities) {
             for (Entity entity2: getEntities()) {
-                if (entity.getPos().getDistanceFrom(Main.getCurrentPlayer().getPos()) > 500) break;
 
                 if (entity.isTouching(entity2) && entity != entity2) {
                     entity.handleCollision(entity2, this);
                 }
             }
             entity.update(this);
+        }
+
+        for (Entity entity: entities) {
             entity.clampPosInRect(rect);
         }
         entities.removeIf(Entity::isRemoveRequested);

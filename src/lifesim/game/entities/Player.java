@@ -32,7 +32,7 @@ public class Player extends MovementEntity {
                 new Animation("player", 100, new Vector2D(0, 48), new Vector2D(12, 16)),
                 new Animation("player", 100, new Vector2D(0, 64), new Vector2D(12, 16))
                 ),
-            new PlayerStats(1000, 1000, 0, 0, 0, game), 3.25, 0);
+            new PlayerStats(100, 100, 0, 0, 0, game), 3.3, 0);
         velocity.set(0, 0);
         this.game = game;
         setWorld(startingWorld);
@@ -41,11 +41,11 @@ public class Player extends MovementEntity {
 
 
     public void init() {
-/*
+
         acquireItem(ItemType.ADVANCED_FACTORY, 25);
-        //acquireItem(ItemType.WALLBOT, 25);
+        acquireItem(ItemType.WALLBOT, 25);
         //acquireItem(ItemType.BOMB, 25);
-        acquireItem(ItemType.HAMMER, 50);*/
+        //acquireItem(ItemType.HAMMER, 50);
     }
 
 
@@ -76,15 +76,16 @@ public class Player extends MovementEntity {
                 setWorld(world);
                 return;
             }
+
         }
     }
 
     public void goToEntity(String name) {
         for (World world: game.getWorlds()) {
-            for (Entity entity: world.getEntities()) {
+            for (Entity entity : world.getEntities()) {
                 if (entity.name.equals(name)) {
                     setWorld(world);
-                    pos.set(entity.pos);
+                    setPos(entity.getPos());
                     return;
                 }
             }
@@ -106,7 +107,7 @@ public class Player extends MovementEntity {
     private double getCurrentSpeed() {
         double currentSpeed = defaultSpeed;
         // Speed ranges from 100% to 75% depending on energy level.
-        currentSpeed *= (getStats().getEnergy() / 4000) + 0.75;
+        currentSpeed *= (getStats().getEnergy() / 400) + 0.75;
         currentSpeed = min(currentSpeed, 7);
         return currentSpeed;
     }
@@ -119,7 +120,7 @@ public class Player extends MovementEntity {
         if (KeyInput.k_shift.isPressed()) {
             speed *= 0.35;
         } else if (KeyInput.k_space.isPressed()) {
-            speed *= 1.45;
+            speed *= 1.35;
         }
 
         Vector2D tempVel = new Vector2D(0, 0);

@@ -43,24 +43,27 @@ public class MyLayout extends Layout {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         stats.gainIntellect(0.25);
-                        stats.tire(0.1);
+                        stats.tire(0.05);
                     }
                 },250, 225)
 
                 .add(new SolidEntity("Office", new ImageSprite("office"), 150) {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
-                        stats.gainMoney(stats.getIntellect()/200);
-                        stats.tire(0.1);
+                        if (stats.getIntellect() > 0) {
+                            stats.gainMoney(stats.getIntellect() / 200);
+                            stats.tire(0.075);
+                        }
                     }
                 }, -250, 175)
 
                 .add(new SolidEntity("Gym", new ImageSprite("gym"), 80) {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
-                        if (stats.attemptToPay(0.75)) {
+                        if (stats.canAfford(0.75)) {
                             stats.strengthen(0.5);
-                            stats.tire(0.5);
+                            stats.tire(0.25);
+                            stats.loseMoney(0.75);
                         }
                     }
                 }, -600, -200)
@@ -68,8 +71,9 @@ public class MyLayout extends Layout {
                 .add(new SolidEntity("Restaurant", new ShapeSprite(200, 200, new Color(255, 215, 125)), 100) {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
-                        if (stats.attemptToPay(0.5)) {
-                            stats.energize(1);
+                        if (stats.canAfford(0.5) && stats.getEnergy() < 100) {
+                            stats.energize(0.5);
+                            stats.loseMoney(0.5);
                         }
                     }
                 }, -250, -225)
@@ -77,8 +81,9 @@ public class MyLayout extends Layout {
                 .add(new SolidEntity("Hospital", new ShapeSprite(200, 400, new Color(210, 210, 210)), 200) {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
-                        if (stats.attemptToPay(0.75)) {
-                            if (stats.getHealth() < 1000) stats.heal(1);
+                        if (stats.canAfford(0.75) && stats.getHealth() < 100) {
+                            stats.heal(0.5);
+                            stats.loseMoney(0.75);
                         }
                     }
                 }, -250, -650)
@@ -90,13 +95,13 @@ public class MyLayout extends Layout {
                     }
                     @Override
                     public void interact(Game game, Player player, PlayerStats stats) {
-                        player.goToWorld("Shop Interior");
+                        player.goToEntity("Shop Door");
                     }
                 }, -675, 200)
-                .add(new SolidEntity("Cave", new ShapeSprite(200, 75, Color.LIGHT_GRAY), new InanimateStats(),45) {
+                .add(new SolidEntity("Cave", new ShapeSprite(200, 75, new Color(150, 150, 150)), new InanimateStats(),45) {
                     @Override
-                    public void playerCollision(Game game, Player player, PlayerStats stats) {
-                        player.goToWorld("Cave World");
+                    public void interact(Game game, Player player, PlayerStats stats) {
+                        player.goToEntity("Cave Entrance");
                     }
                 }, -800, -800)
 
@@ -105,7 +110,6 @@ public class MyLayout extends Layout {
 
                 .addSpawningSystem(new SpawningSystem(PackageTypes.ITEM_PACKAGE, 1000))
                 .addSpawningSystem(new SpawningSystem(PackageTypes.REINFORCED_PACKAGE, 10000))
-                .add(EnemyType.RANGED.spawnEntity(), 0, 0)
         );
 
         worlds.add(new World("Home", 300, 225, new Color(230, 210, 140), new Color(100, 80, 50))
@@ -135,8 +139,14 @@ public class MyLayout extends Layout {
                 }, 0, 200)
         );
 
-        worlds.add(new World("Cave Hallway", 1000, 500, new Color(40, 40, 40), Color.GRAY)
-            .addSpawningSystem(new SpawningSystem(EnemyType.CUBORG, 5000))
+        worlds.add(new World("Cave Hallway", 3000, 150, new Color(75, 75, 75), new Color(25, 25, 25))
+            .add(new FlatEntity("Cave Entrance", new ShapeSprite(20, 150, Color.BLACK)) {
+                @Override
+                public void interact(Game game, Player player, PlayerStats stats) {
+                    player.goToEntity("Cave");
+                }
+            }, -1500, 0)
+            .addSpawningSystem(new SpawningSystem(EnemyType.CUBORG, 2500))
         );
 
 

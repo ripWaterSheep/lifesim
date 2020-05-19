@@ -48,7 +48,7 @@ public enum EnemyType implements Spawnable {
                     new Animation("cuborg", 100, new Vector2D(0, 34), new Vector2D(14, 17)),
                     new Animation("cuborg", 100, new Vector2D(4, 51), new Vector2D(12, 17)),
                     new Animation("cuborg", 100, new Vector2D(4, 68), new Vector2D(12, 17))
-            ), new HealthStats(0, Alliance.ENEMY, 85), 2.5, 100, 500, ProjectileType.LASER);
+            ), new HealthStats(0, Alliance.ENEMY, 65), 3.35, 175, 500, ProjectileType.LASER);
         }};
 
 

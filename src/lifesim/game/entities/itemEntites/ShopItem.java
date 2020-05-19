@@ -25,7 +25,7 @@ public class ShopItem extends DroppedItem {
 
     @Override
     public void interact(Game game, Player player, PlayerStats stats) {
-        if (stats.attemptToPay(price)) {
+        if (stats.canAfford(price)) {
             game.displayMessage(name + "++!");
         }
         collect(player);

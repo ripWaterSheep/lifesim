@@ -27,7 +27,7 @@ public class Entity implements Comparable<Entity> {
     private boolean removeRequested = false;
 
     public Entity(String name, Sprite sprite, Stats stats) {
-        System.out.println(name);
+        //System.out.println(name);
         this.name = name;
         this.sprite = sprite;
         pos = new Vector2D(0, 0);

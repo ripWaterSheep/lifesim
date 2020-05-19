@@ -46,7 +46,7 @@ class SpawnFunctionality extends ConsumeFunctionality {
     /** Only use the item if right-clicked, the spawn position is clear, and the world doesn't have too many of that type of entity */
     @Override
     public boolean canBeUsed(World world, Player player) {
-        return super.canBeUsed(world, player) && isSpawnPosClear(world) && !world.isMaxedOut(spawnable, spawnHint.name);
+        return super.canBeUsed(world, player) && isSpawnPosClear(world) && !world.isMaxedOut(spawnable);
     }
 
     @Override
@@ -62,7 +62,7 @@ class SpawnFunctionality extends ConsumeFunctionality {
         spawnHint.setPos(getHoveringPos(player));
 
         g2d.setColor(Color.RED);
-        if (isSpawnPosClear(player.getWorld()) && !player.getWorld().isMaxedOut(spawnable, spawnHint.name)) {
+        if (isSpawnPosClear(player.getWorld()) && !player.getWorld().isMaxedOut(spawnable)) {
             window.changeCursor(CursorType.POINTER);
             g2d.setColor(Color.GREEN);
         }

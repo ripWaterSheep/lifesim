@@ -64,10 +64,9 @@ public class PlayerStats extends HealthStats {
         money -= amount;
     }
 
-    public boolean attemptToPay(double amount) {
+    public boolean canAfford(double amount) {
         boolean can = money >= amount;
-        if (can) loseMoney(amount);
-        else game.displayMessage("Out of money!");
+        if (!can) game.displayMessage("Out of money!");
         return can;
     }
 
@@ -80,8 +79,6 @@ public class PlayerStats extends HealthStats {
         intellect += amount;
     }
 
-
-
     @Override
     public void update(Entity player, World world) {
         super.update(player, world);
@@ -89,7 +86,7 @@ public class PlayerStats extends HealthStats {
         strength = max(0, strength);
         intellect = max(0, intellect);
 
-        energy -= 0.05 + sqrt(player.getVelocity().getMagnitude()/600);
+        energy -= 0.005 + sqrt(player.getVelocity().getMagnitude()/4500);
     }
 
     @Override

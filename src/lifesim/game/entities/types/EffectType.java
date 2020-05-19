@@ -23,12 +23,11 @@ public enum  EffectType implements Spawnable {
         public Entity spawnEntity() {
             return new EffectEntity("Big Boom", new AnimatedSprite(new Animation("big_boom",
                     40, new Vector2D(0, 0), new Vector2D(32, 32))), new BasicStats(5, Alliance.INVINCIBLE));
-        }},
-    ;
+    }};
 
 
     @Override
     public int getMaxPerWorld() {
-        return 35;
+        return 20;
     }
 }

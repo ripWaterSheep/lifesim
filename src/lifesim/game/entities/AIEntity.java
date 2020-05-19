@@ -77,13 +77,13 @@ public class AIEntity extends MovementEntity {
             attack(world);
         } else {
             // Slightly delay reaction time to prevent sprite from going berserk by changing directions every frame.
-            if (getRand(0, 1) < 0.3) {
+            //if (getRand(0, 1) < 0.3) {
                 // Approach target position with a bit of randomness to vary motion, preventing entities from just overlapping each other.
                 double speed = defaultSpeed * getRand(0.8, 1.2);
                 double angle = targetPos.getAngleFrom(pos) + getRand(-5, 5);
 
                 velocity.setMagDir(speed, angle);
-            }
+            //}
         }
     }
 
