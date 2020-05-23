@@ -31,14 +31,20 @@ public enum ItemType {
 
 
     WALLBOT("Wallbot", new ImageSprite("utilities", new Vector2D(0, 32), new Vector2D(16, 16)),
-            new SpawnFunctionality(AllyType.WALLBOT), 3, 125),
+            new SpawnFunctionality(AllyType.WALLBOT), 3, 75),
 
     BOMB("Bomb", new AnimatedSprite(new Animation("weapons", 75,
             new Vector2D(0, 0), new Vector2D(16, 16))), new LaunchFunctionality(ProjectileType.BOMB, 0),
             4, 100),
 
     HAMMER("Hammer", new ImageSprite("utilities", new Vector2D(0, 48), new Vector2D(16, 16)),
-            new LaunchFunctionality(ProjectileType.HAMMER, 0), 1, 1);
+            new LaunchFunctionality(ProjectileType.HAMMER, 0), 0, 0),
+
+    GEAR("Gear", new AnimatedSprite(new Animation("utilities", 125, new Vector2D(0, 16), new Vector2D(16, 16))), new ConsumeFunctionality() {
+        @Override
+        public void use(World world, Player player, PlayerStats stats) {
+        }
+    }, 5, 100);
 
     /*SCREWDRIVER("Screwdriver", new ImageSprite("weapons", new Vector2D(0, 32), new Vector2D(8, 8)),
             new LaunchFunctionality(ProjectileType.THROWABLE_WALL, 5), 15, 2);*/

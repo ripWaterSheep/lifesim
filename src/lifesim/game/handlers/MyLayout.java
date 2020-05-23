@@ -28,7 +28,7 @@ public class MyLayout extends Layout {
                 .add(new FlatEntity("vRoad", new ShapeSprite(100, 2000, Color.DARK_GRAY)), 0, 0)
                 .add(new FlatEntity("hRoad", new ShapeSprite(2500, 100, Color.DARK_GRAY)), 0, 0)
 
-                .add(new SolidEntity("House", new ShapeSprite(200, 175, new Color(100, 80, 50)), 125) {
+                .add(new SolidEntity("House", new ImageSprite("house"), 125) {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         game.displayMessage("Enter home?");
@@ -39,13 +39,13 @@ public class MyLayout extends Layout {
                     }
                 }, 250, -200)
 
-                .add(new SolidEntity("School", new ShapeSprite(150, 200, new Color(179, 96, 71)), 150) {
+                .add(new SolidEntity("School", new ImageSprite("school"), 150) {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         stats.gainIntellect(0.25);
                         stats.tire(0.05);
                     }
-                },250, 225)
+                },250, 250)
 
                 .add(new SolidEntity("Office", new ImageSprite("office"), 150) {
                     @Override
@@ -112,7 +112,7 @@ public class MyLayout extends Layout {
                 .addSpawningSystem(new SpawningSystem(PackageTypes.REINFORCED_PACKAGE, 10000))
         );
 
-        worlds.add(new World("Home", 300, 225, new Color(230, 210, 140), new Color(100, 80, 50))
+        worlds.add(new World("Home", 300, 225, new Color(230, 210, 140), new Color(118, 175, 204))
                 .add(new Entity("Home Door", new ShapeSprite(2, 30, new Color(167, 155, 81))) {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
@@ -139,7 +139,7 @@ public class MyLayout extends Layout {
                 }, 0, 200)
         );
 
-        worlds.add(new World("Cave Hallway", 3000, 150, new Color(75, 75, 75), new Color(25, 25, 25))
+        worlds.add(new World("Cave Interior", 3000, 150, new Color(75, 75, 75), new Color(25, 25, 25))
             .add(new FlatEntity("Cave Entrance", new ShapeSprite(20, 150, Color.BLACK)) {
                 @Override
                 public void interact(Game game, Player player, PlayerStats stats) {

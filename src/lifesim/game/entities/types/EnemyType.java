@@ -22,7 +22,7 @@ public enum EnemyType implements Spawnable {
                     new Animation("bot", 100, new Vector2D(0, 32), new Vector2D(13, 16)),
                     new Animation("bot", 100, new Vector2D(6, 48), new Vector2D(10, 16)),
                     new Animation("bot", 100, new Vector2D(6, 64), new Vector2D(10, 16))
-            ), new HealthStats(2.5, Alliance.ENEMY, 50), 3, 175);
+            ), new HealthStats(1.25, Alliance.ENEMY, 50), 3, 175);
     }},
 
 
@@ -48,12 +48,12 @@ public enum EnemyType implements Spawnable {
                     new Animation("cuborg", 100, new Vector2D(0, 34), new Vector2D(14, 17)),
                     new Animation("cuborg", 100, new Vector2D(4, 51), new Vector2D(12, 17)),
                     new Animation("cuborg", 100, new Vector2D(4, 68), new Vector2D(12, 17))
-            ), new HealthStats(0, Alliance.ENEMY, 65), 3.35, 175, 500, ProjectileType.LASER);
+            ), new HealthStats(0, Alliance.ENEMY, 60), 3.35, 175, 500, ProjectileType.LASER);
         }};
 
 
     @Override
     public int getMaxPerWorld() {
-        return 10;
+        return 12;
     }
 }

@@ -41,9 +41,8 @@ public class Player extends MovementEntity {
 
 
     public void init() {
-
-        acquireItem(ItemType.ADVANCED_FACTORY, 25);
-        acquireItem(ItemType.WALLBOT, 25);
+        //acquireItem(ItemType.ADVANCED_FACTORY, 25);
+        //acquireItem(ItemType.WALLBOT, 25);
         //acquireItem(ItemType.BOMB, 25);
         //acquireItem(ItemType.HAMMER, 50);
     }
@@ -85,7 +84,8 @@ public class Player extends MovementEntity {
             for (Entity entity : world.getEntities()) {
                 if (entity.name.equals(name)) {
                     setWorld(world);
-                    setPos(entity.getPos());
+                    //setPos(entity.getPos());
+                    pos.set(entity.getPos().x, entity.getHitBox().getMaxY());
                     return;
                 }
             }

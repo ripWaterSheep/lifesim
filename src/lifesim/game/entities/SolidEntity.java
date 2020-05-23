@@ -103,6 +103,8 @@ public class SolidEntity extends Entity {
         if (semiTransparent) {
             GraphicsMethods.setOpacity(g2d, 0.65);
         }
+        //TODO: translate graphics to make center position of sprite in the center of the base.
         super.render(g2d);
     }
+
 }
