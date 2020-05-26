@@ -28,7 +28,7 @@ public class MyLayout extends Layout {
                 .add(new FlatEntity("vRoad", new ShapeSprite(100, 2000, Color.DARK_GRAY)), 0, 0)
                 .add(new FlatEntity("hRoad", new ShapeSprite(2500, 100, Color.DARK_GRAY)), 0, 0)
 
-                .add(new SolidEntity("House", new ImageSprite("house"), 125) {
+                .add(new SolidEntity("House", new ImageSprite("house"), 100) {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         game.displayMessage("Enter home?");
@@ -68,7 +68,7 @@ public class MyLayout extends Layout {
                     }
                 }, -600, -200)
 
-                .add(new SolidEntity("Restaurant", new ShapeSprite(200, 200, new Color(255, 215, 125)), 100) {
+                .add(new SolidEntity("Restaurant", new ShapeSprite(200, 200, new Color(255, 215, 125)), 150) {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         if (stats.canAfford(0.5) && stats.getEnergy() < 100) {

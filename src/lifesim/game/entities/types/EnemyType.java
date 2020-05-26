@@ -22,7 +22,7 @@ public enum EnemyType implements Spawnable {
                     new Animation("bot", 100, new Vector2D(0, 32), new Vector2D(13, 16)),
                     new Animation("bot", 100, new Vector2D(6, 48), new Vector2D(10, 16)),
                     new Animation("bot", 100, new Vector2D(6, 64), new Vector2D(10, 16))
-            ), new HealthStats(1.25, Alliance.ENEMY, 50), 3, 175);
+            ), new HealthStats(1, Alliance.ENEMY, 50), 3, 175);
     }},
 
 

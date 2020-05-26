@@ -39,7 +39,7 @@ public abstract class MovementEntity extends Entity {
         super.handleCollision(entity, world);
         // Transfer momentum between entities.
         if (canDamage(entity)) {
-            entity.push(getVelocity().normalize().scale(0.2));
+            entity.push(getVelocity().scale(0.25));
         }
     }
 

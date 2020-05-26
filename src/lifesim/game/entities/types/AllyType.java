@@ -46,7 +46,7 @@ public enum AllyType implements Spawnable {
                     new Animation("meleebot", 100, new Vector2D(0, 54), new Vector2D(10, 18)),
                     new Animation("meleebot", 100, new Vector2D(0, 72), new Vector2D(10, 18))
             ),
-                    new HealthStats(2.5, Alliance.PLAYER, 35), 3, 200);
+                    new HealthStats(2.5, Alliance.PLAYER, 35), 2.75, 200);
         }
     };
 

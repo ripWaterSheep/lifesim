@@ -46,6 +46,7 @@ public class ImageSprite extends Sprite {
         g2d.transform(at);
 
         g2d.drawImage(image, 0, 0, 1, 1, null);
+        size.set(image.getWidth(null), image.getHeight(null));
     }
 
 }

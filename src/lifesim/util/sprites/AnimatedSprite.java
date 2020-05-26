@@ -37,8 +37,6 @@ public class AnimatedSprite extends ImageSprite {
             animate();
         }
         super.render(g2d, pos, velocity);
-        // Resize official size to fit animation's current frame's size.
-        size.set(animation.getSize());
     }
 
 }

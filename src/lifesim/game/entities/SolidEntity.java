@@ -48,22 +48,19 @@ public class SolidEntity extends Entity {
     @Override
     public Rect getHitBox() {
         Rect hb = super.getHitBox();
+        Vector2D dims = new Vector2D(hb.width, baseDepth);// Set y so that bottom of base it at bottom of hitbox
+        return new Rect(hb.getCenterPos(), dims);
+    }
 
-        // Set y so that bottom of base it at bottom of hitbox
-        Vector2D pos = hb.getCenterPos();
-        pos.translate(0, hb.height/2 - baseDepth/2.0);
-        Vector2D dims = new Vector2D(hb.width, baseDepth);
-
-        return new Rect(pos, dims);
+    @Override
+    public Vector2D getDisplayPos() {
+        return super.getDisplayPos().translate(0, -sprite.getSize().y/2 + baseDepth/2);
     }
 
     @Override
     public Rect getDisplayHitBox() {
-        Rect hb = getHitBox();
-
-        hb.translatePos(getDisplayPos());
-        hb.translatePos(super.getHitBox().getCenterPos().negate());
-        return hb;
+        Vector2D dims = new Vector2D(super.getDisplayHitBox().width, baseDepth);
+        return new Rect(super.getDisplayPos(), dims);
     }
 
     @Override
@@ -81,21 +78,18 @@ public class SolidEntity extends Entity {
     @Override
     public void update(World world) {
         super.update(world);
-        semiTransparent = super.getHitBox().contains(Main.getCurrentPlayer().getHitBox());
+        semiTransparent = super.getDisplayHitBox().contains(Main.getCurrentPlayer().getDisplayHitBox());
     }
 
 
     @Override
     protected void renderShadow(Graphics2D g2d) {
-        // Draw shadow under sprite that is half as tall as it.
-        g2d.setColor(new Color(0, 0, 0, 100));
-        Rect displayHitBox = sprite.getBoundsAt(getDisplayPos());
+        // Put shadow in center of base
+        Rect shadowRect = super.getDisplayHitBox();
+        shadowRect.y += (sprite.getSize().y - baseDepth);
 
-        // Set y so that bottom of base it at bottom of hitbox
-        Vector2D pos = displayHitBox.getCenterPos();
-        pos.translate(0, (displayHitBox.height/2 - baseDepth) + displayHitBox.height/2);
-        Vector2D dims = new Vector2D(displayHitBox.width, displayHitBox.height);
-        g2d.fill(new Rect(pos, dims));
+        g2d.setColor(new Color(0, 0, 0, 100));
+        g2d.fill(shadowRect);
     }
 
     @Override
@@ -103,7 +97,6 @@ public class SolidEntity extends Entity {
         if (semiTransparent) {
             GraphicsMethods.setOpacity(g2d, 0.65);
         }
-        //TODO: translate graphics to make center position of sprite in the center of the base.
         super.render(g2d);
     }
 

@@ -66,8 +66,8 @@ class SpawnFunctionality extends ConsumeFunctionality {
             window.changeCursor(CursorType.POINTER);
             g2d.setColor(Color.GREEN);
         }
-        Rect rect = spawnHint.getDisplayHitBox();
-        g2d.fill(rect);
+
+        g2d.fill(spawnHint.getDisplayHitBox());
         spawnHint.render(g2d);
     }
 

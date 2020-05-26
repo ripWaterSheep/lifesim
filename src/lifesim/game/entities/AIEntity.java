@@ -68,7 +68,7 @@ public class AIEntity extends MovementEntity {
             if (rand < 0.03) {
                 // Occasionally switch directions.
                 velocity.setMagDir(defaultSpeed, getRand(0, 360));
-            } else if (rand < 0.07) {
+            } else if (rand < 0.06) {
                 // Occasionally idle in position.
               stop();
             }

@@ -32,7 +32,7 @@ public class Player extends MovementEntity {
                 new Animation("player", 100, new Vector2D(0, 48), new Vector2D(12, 16)),
                 new Animation("player", 100, new Vector2D(0, 64), new Vector2D(12, 16))
                 ),
-            new PlayerStats(100, 100, 0, 0, 0, game), 3.3, 0);
+            new PlayerStats(100, 100, 0, 0, 0, game), 3.25, 0);
         velocity.set(0, 0);
         this.game = game;
         setWorld(startingWorld);
@@ -131,7 +131,7 @@ public class Player extends MovementEntity {
         if (KeyInput.k_d.isPressed()) tempVel.translate(speed, 0);  //R
 
         // Maintain momentum even if not currently walking in direction of momentum.
-        if (abs(velocity.x) > 0 && tempVel.x == 0) tempVel.x = velocity.x;
+        if (abs(velocity.x) >  0 && tempVel.x == 0) tempVel.x = velocity.x;
         if (abs(velocity.y) > 0 && tempVel.y == 0) tempVel.y = velocity.y;
 
         // Make sure that speed stays the same even if going diagonally.
