@@ -1,12 +1,16 @@
 <component name="ProjectDictionaryState">
   <dictionary name="joshu">
     <words>
+      <w>cuborg</w>
       <w>hitbox</w>
       <w>hotbar</w>
       <w>launchable</w>
+      <w>meleebot</w>
       <w>spawnable</w>
       <w>spawner</w>
       <w>spawners</w>
+      <w>unibot</w>
+      <w>wallbot</w>
     </words>
   </dictionary>
 </component>

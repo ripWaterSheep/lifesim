@@ -85,7 +85,7 @@ public class Player extends MovementEntity {
                 if (entity.name.equals(name)) {
                     setWorld(world);
                     //setPos(entity.getPos());
-                    pos.set(entity.getPos().x, entity.getHitBox().getMaxY());
+                    pos.set(entity.getPos().x, entity.getHitbox().getMaxY());
                     return;
                 }
             }

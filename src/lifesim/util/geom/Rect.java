@@ -23,18 +23,6 @@ public class Rect extends Rectangle2D.Double {
         return new Vector2D(width, height);
     }
 
-
-    public void translatePos(Vector2D v) {
-        Rect rect = new Rect(getCenterPos().translate(v), getDims());
-        setRect(rect);
-    }
-
-    public void scale(double x, double y) {
-        Rect rect = new Rect(getCenterPos(), getDims().scale(x, y));
-        setRect(rect);
-    }
-
-
     public void clampBottomOutside(Rectangle2D.Double rect) {
         /* If this rect's bottom bound is inside the other rect, keep it outside.
         This method is used to allow entities to overlap solid entities to give the illusion of 3D

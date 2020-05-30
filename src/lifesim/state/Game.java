@@ -43,7 +43,7 @@ public class Game implements GameState {
         player = new Player(this, layout.getWorlds().get(0));
 
         overlays.add(new StatBar(player));
-        messageDisplay = new MessageDisplay(6, Color.WHITE, new Vector2D(WIDTH/2.0, HEIGHT/2.0 -player.getHitBox().height));
+        messageDisplay = new MessageDisplay(6, Color.WHITE, new Vector2D(WIDTH/2.0, HEIGHT/2.0 -player.getHitbox().height));
         overlays.add(messageDisplay);
 
         overlays.add(new Hotbar(player, window));

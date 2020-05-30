@@ -1,8 +1,6 @@
 package lifesim.game.handlers;
 
-import lifesim.engine.Main;
 import lifesim.game.entities.Entity;
-import lifesim.game.entities.FlatEntity;
 import lifesim.game.entities.types.Spawnable;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.sprites.ShapeSprite;
@@ -32,7 +30,7 @@ public class World {
         this.name = name;
         rect = new Rect(new Vector2D(0, 0), new Vector2D(width, height));
 
-        add(new FlatEntity("Floor", new ShapeSprite(width, height, color)), 0, 0);
+        add(new Entity("Floor", new ShapeSprite(width, height, color)), 0, 0);
         this.outerColor = outerColor;
 
     }
@@ -67,7 +65,7 @@ public class World {
 
 
     /** Return if a certain entity name appears more than its specified max in the world. This is used to balance spawning. */
-    public boolean isMaxedOut(Spawnable spawnable) {
+    public boolean canSpawn(Spawnable spawnable) {
         int numPerType = 0;
         String name = spawnable.spawnEntity().name;
 
@@ -76,7 +74,7 @@ public class World {
                 numPerType++;
             }
         }
-        return numPerType >= spawnable.getMaxPerWorld();
+        return numPerType < spawnable.getMaxPerWorld();
     }
 
 
@@ -94,12 +92,12 @@ public class World {
         /* Separate entities to sort (3D) ones separately and add them back to the entities list
          to preserve the flat entities' indexes in the list.
          */
-        sortedEntities.removeIf(Entity::isFlat);
-        entities.removeIf(entity -> !entity.isFlat());
+        sortedEntities.removeIf(entity1 -> !entity1.shouldBeSorted());
+        entities.removeIf(Entity::shouldBeSorted);
 
-        try {
+        //try {
             Collections.sort(sortedEntities);
-        } catch (Exception e) {}
+        //} catch (Exception e) {}
 
         entities.addAll(sortedEntities);
     }
@@ -123,7 +121,7 @@ public class World {
         }
 
         for (Entity entity: entities) {
-            entity.clampPosInRect(rect);
+            entity.keepHitboxInRect(rect);
         }
         entities.removeIf(Entity::isRemoveRequested);
     }

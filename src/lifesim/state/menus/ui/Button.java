@@ -14,7 +14,7 @@ import java.awt.*;
 public abstract class Button {
 
     private static final Color labelColor = new Color(119, 168, 173);
-    private static final Font labelFont = FontLoader.getMainFont(13);
+    private static final Font labelFont = FontLoader.getMainFont(14);
 
     private String label;
     private final Sprite sprite;

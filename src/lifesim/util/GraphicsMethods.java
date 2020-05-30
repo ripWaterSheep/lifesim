@@ -44,7 +44,8 @@ public class GraphicsMethods {
 
     public static void fillPanel(Graphics2D g2d, Color color) {
         g2d.setColor(color);
-        g2d.fill(new Rect(GamePanel.getCenterPos(), GamePanel.getPixelDims().scale(1.1)));
+        Vector2D dims = GamePanel.getPixelDims().scale(1.1);
+        g2d.fill(new Rect(GamePanel.getCenterPos(), dims));
     }
 
 }

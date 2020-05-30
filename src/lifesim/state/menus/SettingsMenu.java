@@ -16,7 +16,7 @@ public class SettingsMenu extends Menu {
     public SettingsMenu(Game game, GameWindow window, StateManager stateManager) {
         super(new ImageSprite("ui/settings"));
 
-        buttons.add(new Button("Exit", new Vector2D(WIDTH - 50, 25), ButtonType.MID, window) {
+        buttons.add(new Button("Exit", new Vector2D(WIDTH - 50, 25), ButtonType.SMALL, window) {
             @Override
             protected void onClick() {
                 stateManager.goToPrevious();

@@ -23,19 +23,19 @@ public class PauseMenu extends Menu {
         super(new ShapeSprite(100, 100, new Color(0, 0, 0, 0)));
         this.game = game;
 
-        buttons.add(new Button("Resume", GamePanel.getCenterPos().translate(0, 30), ButtonType.WIDE, window) {
+        buttons.add(new Button("Resume", GamePanel.getCenterPos().translate(0, 24), ButtonType.MID, window) {
             @Override
             public void onClick() {
                 stateManager.resumeGame();
             }
         });
-        buttons.add(new Button("Settings", GamePanel.getCenterPos().translate(0, 60), ButtonType.MID, window) {
+        /*buttons.add(new Button("Settings", GamePanel.getCenterPos().translate(0, 60), ButtonType.MID, window) {
             @Override
             protected void onClick() {
                 stateManager.goToSettings();
             }
-        });
-        buttons.add(new Button("Exit", GamePanel.getCenterPos().translate(0, 90), ButtonType.MID, window) {
+        });*/
+        buttons.add(new Button("Exit", GamePanel.getCenterPos().translate(0, 60), ButtonType.SMALL, window) {
             @Override
             public void onClick() {
                 stateManager.goToTitle();

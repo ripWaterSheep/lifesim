@@ -55,7 +55,7 @@ public class InventoryGUI extends ToggleableOverlay {
     }
 
 
-    private Rect getSlotHitBox(InventorySlot slot) {
+    private Rect getSlotHitbox(InventorySlot slot) {
         Vector2D pos = getSlotDisplayPos(slot);
         return new Rect(pos, new Vector2D(GRID_SIZE, GRID_SIZE));
 
@@ -65,7 +65,7 @@ public class InventoryGUI extends ToggleableOverlay {
     public InventorySlot getMouseHoveringSlot() {
         InventorySlot mouseOverSlot = new InventorySlot(inventory);
         for (InventorySlot slot: inventory.getSlots()) {
-            if (getSlotHitBox(slot).contains(MouseInput.getCursorPos().toPoint())) {
+            if (getSlotHitbox(slot).contains(MouseInput.getCursorPos().toPoint())) {
                 mouseOverSlot = slot;
                 break;
             }
@@ -77,15 +77,11 @@ public class InventoryGUI extends ToggleableOverlay {
     private void moveItems() {
         InventorySlot hoveringSlot = getMouseHoveringSlot();
         if (slots.contains(hoveringSlot)) {
-            if (!hoveringSlot.isEmpty()) { // Show interaction mouse cursor only if the slot contains an item to move.
-                window.changeCursor(CursorType.POINTER);
+            if (!hoveringSlot.isEmpty()) {
+                window.changeCursor(CursorType.POINTER); // Show pointer mouse cursor only if slot contains an item to move.
 
                 if (MouseInput.left.isClicked()) {
                     lastDraggedSlot = hoveringSlot;
-
-                    if (KeyInput.k_shift.isPressed()) {
-                        lastDraggedSlot.swapItem(inventory.getFirstEmptySlot());
-                    }
                 }
             }
 

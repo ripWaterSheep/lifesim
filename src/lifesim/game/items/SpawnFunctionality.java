@@ -9,7 +9,6 @@ import lifesim.game.handlers.World;
 import lifesim.engine.input.MouseInput;
 import lifesim.engine.output.GameWindow;
 import lifesim.util.GraphicsMethods;
-import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
@@ -35,7 +34,7 @@ class SpawnFunctionality extends ConsumeFunctionality {
     public boolean isSpawnPosClear(World world) {
         boolean spawnPosClear = true;
         for (Entity entity: world.getEntities()) {
-            if (!entity.isFlat() && entity.isTouching(spawnHint)) {
+            if (entity.shouldBeSorted() && entity.isTouching(spawnHint)) {
                 spawnPosClear = false;
             }
         }
@@ -46,7 +45,7 @@ class SpawnFunctionality extends ConsumeFunctionality {
     /** Only use the item if right-clicked, the spawn position is clear, and the world doesn't have too many of that type of entity */
     @Override
     public boolean canBeUsed(World world, Player player) {
-        return super.canBeUsed(world, player) && isSpawnPosClear(world) && !world.isMaxedOut(spawnable);
+        return super.canBeUsed(world, player) && isSpawnPosClear(world) && world.canSpawn(spawnable);
     }
 
     @Override
@@ -62,12 +61,12 @@ class SpawnFunctionality extends ConsumeFunctionality {
         spawnHint.setPos(getHoveringPos(player));
 
         g2d.setColor(Color.RED);
-        if (isSpawnPosClear(player.getWorld()) && !player.getWorld().isMaxedOut(spawnable)) {
+        if (isSpawnPosClear(player.getWorld()) && player.getWorld().canSpawn(spawnable)) {
             window.changeCursor(CursorType.POINTER);
             g2d.setColor(Color.GREEN);
         }
 
-        g2d.fill(spawnHint.getDisplayHitBox());
+        g2d.fill(spawnHint.getDisplayHitbox());
         spawnHint.render(g2d);
     }
 

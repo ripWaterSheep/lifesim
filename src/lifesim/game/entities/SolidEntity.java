@@ -10,9 +10,12 @@ import lifesim.game.entities.stats.Stats;
 import lifesim.util.geom.Rect;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
-/** This entity cannot be wallked over by any other entity */
-public class SolidEntity extends Entity {
+
+/** This entity has a base (area composed of certain number of pixels from sprite's bottom bounds) that cannot be walked
+ * over by any other 3D Entity. */
+public class SolidEntity extends Entity3D {
 
     private final double baseDepth; // The actual "floor" of the object that cannot be passed.
 
@@ -46,8 +49,8 @@ public class SolidEntity extends Entity {
      * without them walking over the base of this entity with their feet.
      * */
     @Override
-    public Rect getHitBox() {
-        Rect hb = super.getHitBox();
+    public Rect getHitbox() {
+        Rect hb = super.getHitbox();
         Vector2D dims = new Vector2D(hb.width, baseDepth);// Set y so that bottom of base it at bottom of hitbox
         return new Rect(hb.getCenterPos(), dims);
     }
@@ -58,8 +61,8 @@ public class SolidEntity extends Entity {
     }
 
     @Override
-    public Rect getDisplayHitBox() {
-        Vector2D dims = new Vector2D(super.getDisplayHitBox().width, baseDepth);
+    public Rect getDisplayHitbox() {
+        Vector2D dims = new Vector2D(super.getDisplayHitbox().width, baseDepth);
         return new Rect(super.getDisplayPos(), dims);
     }
 
@@ -68,25 +71,28 @@ public class SolidEntity extends Entity {
         super.handleCollision(entity, world);
 
         // If entity is flat, then it can be overlapped and therefore shouldn't be pushed away.
-        if (entity.isFlat()) return;
-        Rect entityRect = entity.getHitBox();
-        // Keep entity's bottom bound (AKA feet) outside of this entity's base.
-        entityRect.clampBottomOutside(getHitBox());
-        entity.setPos(entityRect.getCenterPos());
+        if (entity.shouldBeSorted()) {
+            Rect entityRect = entity.getHitbox();
+            // Keep entity's bottom bound (AKA feet) outside of this entity's base.
+            entityRect.clampBottomOutside(getHitbox());
+            entity.setPos(entityRect.getCenterPos());
+        }
     }
 
     @Override
     public void update(World world) {
         super.update(world);
-        semiTransparent = super.getDisplayHitBox().contains(Main.getCurrentPlayer().getDisplayHitBox());
+        Rect playerHitbox = Main.getCurrentPlayer().getDisplayHitbox();
+        semiTransparent = super.getDisplayHitbox().contains(playerHitbox);
     }
 
 
     @Override
     protected void renderShadow(Graphics2D g2d) {
-        // Put shadow in center of base
-        Rect shadowRect = super.getDisplayHitBox();
-        shadowRect.y += (sprite.getSize().y - baseDepth);
+        // Shift shadow up so that the shadow height is equal to the "side height" given by the 3d illusion.
+        Rect shadowRect = getDisplayHitbox();
+        shadowRect.y += 1;
+        shadowRect.height += (sprite.getSize().y - baseDepth)/2;
 
         g2d.setColor(new Color(0, 0, 0, 100));
         g2d.fill(shadowRect);

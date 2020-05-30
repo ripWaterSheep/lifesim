@@ -1,7 +1,6 @@
 package lifesim.game.handlers;
 
 import lifesim.game.entities.Entity;
-import lifesim.game.entities.FlatEntity;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.SolidEntity;
 import lifesim.game.entities.stats.InanimateStats;
@@ -25,8 +24,8 @@ public class MyLayout extends Layout {
     public void init() {
         worlds.add(
             new World("Town", 2500, 2000, new Color(60, 175, 90), new Color(200, 190, 125))
-                .add(new FlatEntity("vRoad", new ShapeSprite(100, 2000, Color.DARK_GRAY)), 0, 0)
-                .add(new FlatEntity("hRoad", new ShapeSprite(2500, 100, Color.DARK_GRAY)), 0, 0)
+                .add(new Entity("vRoad", new ShapeSprite(100, 2000, Color.DARK_GRAY)), 0, 0)
+                .add(new Entity("hRoad", new ShapeSprite(2500, 100, Color.DARK_GRAY)), 0, 0)
 
                 .add(new SolidEntity("House", new ImageSprite("house"), 100) {
                     @Override
@@ -140,7 +139,7 @@ public class MyLayout extends Layout {
         );
 
         worlds.add(new World("Cave Interior", 3000, 150, new Color(75, 75, 75), new Color(25, 25, 25))
-            .add(new FlatEntity("Cave Entrance", new ShapeSprite(20, 150, Color.BLACK)) {
+            .add(new Entity("Cave Entrance", new ShapeSprite(20, 150, Color.BLACK)) {
                 @Override
                 public void interact(Game game, Player player, PlayerStats stats) {
                     player.goToEntity("Cave");

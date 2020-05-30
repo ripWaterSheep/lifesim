@@ -7,7 +7,7 @@ import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
 
-public abstract class MovementEntity extends Entity {
+public abstract class MovementEntity extends Entity3D {
 
     protected final double defaultSpeed;
     protected final Vector2D velocity;

@@ -53,16 +53,16 @@ public class Entity implements Comparable<Entity> {
                 .translate(Main.getCurrentPlayer().getPos().negate());
     }
 
-    public Rect getHitBox() {
+    public Rect getHitbox() {
         return sprite.getBoundsAt(getPos());
     }
 
-    public Rect getDisplayHitBox() {
+    public Rect getDisplayHitbox() {
         return sprite.getBoundsAt(getDisplayPos());
     }
 
     public boolean isTouching(Entity entity) {
-        return Geometry.testIntersection(getHitBox(), entity.getHitBox());
+        return Geometry.testIntersection(getHitbox(), entity.getHitbox());
     }
 
     public Vector2D getVelocity() {
@@ -82,7 +82,7 @@ public class Entity implements Comparable<Entity> {
         return stats.getAlliance().opposes(entity.stats.getAlliance());
     }
 
-    public boolean isFlat() {
+    public boolean shouldBeSorted() {
         return false;
     }
 
@@ -112,15 +112,15 @@ public class Entity implements Comparable<Entity> {
         stats.onCollision(this, entity);
     }
 
-    public final void clampPosInRect(Rect rect) {
-        // Scoot the rect down so only the entity's feet (bottom bound) must stay inside.
-        // This way, the entity's body can overlap the outside to give the illusion of 3D.
-        Vector2D rectCenter = rect.getCenterPos().translate(0, -getHitBox().height/2);
-        Vector2D rectDims = rect.getDims().translate(-getHitBox().width, 0);
-        rectDims.translate(0, -1);
-
-        rect = new Rect(rectCenter, rectDims);
+    public void keepHitboxInRect(Rect rect) {
+        // Keep this entity's hitbox inside the rectangle specified, used for the world boundaries.
         pos.clampInRect(rect);
+    }
+
+    @Override
+    public int compareTo(@NotNull Entity entity) {
+        assert shouldBeSorted();
+        return 0;
     }
 
 
@@ -128,29 +128,8 @@ public class Entity implements Comparable<Entity> {
         stats.update(this, world);
     }
 
-    protected void renderShadow(Graphics2D g2d) {
-        // Get the hitbox at the actual display position rather than in-game world position to draw shadow.
-        Rect shadowRect = getDisplayHitBox();
-        shadowRect.translatePos(new Vector2D(0, getHitBox().height/2));
-        shadowRect.scale(1, 0.5);
-
-        g2d.setColor(new Color(0, 0, 0, 75));
-        g2d.fill(shadowRect);
-    }
-
     public void render(Graphics2D g2d) {
-        renderShadow(g2d);
         sprite.render(g2d, getDisplayPos(), getVelocity());
         stats.renderInfo(g2d, getDisplayPos().translate(0, -(sprite.getSize().y*0.5) - 3));
-    }
-
-    /** Entities are sorted by y position by the world.
-     * Only entities that can move may be reorganized so the order of stationary objects doesn't get messed up.
-         */
-    @Override
-    public int compareTo(@NotNull Entity entity) {
-        // Compare y positions bottoms of the hit boxes.
-        boolean comparison = getHitBox().getMaxY() < entity.getHitBox().getMaxY();
-        return comparison ? -1 : 1;
     }
 }

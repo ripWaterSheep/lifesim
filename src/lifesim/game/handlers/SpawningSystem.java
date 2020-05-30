@@ -19,7 +19,7 @@ public class SpawningSystem {
 
     /** After the length of the spawn interval passes, spawn the entity if its type is not at it's world limit. */
     public void update(World world, Vector2D pos) {
-        if (System.currentTimeMillis() - lastSpawnTime > spawnInterval && !world.isMaxedOut(spawnable)) {
+        if (System.currentTimeMillis() - lastSpawnTime > spawnInterval && world.canSpawn(spawnable)) {
             world.add(spawnable.spawnEntity(), pos);
             lastSpawnTime = System.currentTimeMillis();
         }

@@ -35,7 +35,7 @@ public class ImageSprite extends Sprite {
 
     @Override
     public void render(Graphics2D g2d, Vector2D pos, Vector2D velocity) {
-        // Draw the image to the screen with affineTransform since its methods accept doublesw, which fixes rounding errors.
+        // Draw the image to the screen with affineTransform since its methods accept doubles, which fixes rounding errors.
         Rect rect = getBoundsAt(pos);
         AffineTransform at = new AffineTransform();
 
