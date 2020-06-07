@@ -1,5 +1,6 @@
 package lifesim.game.entities;
 
+import lifesim.game.entities.types.EffectType;
 import lifesim.game.items.ItemType;
 import lifesim.engine.output.GamePanel;
 import lifesim.util.sprites.Animation;
@@ -48,6 +49,7 @@ public class Player extends MovementEntity {
     }
 
 
+
     public Vector2D getDisplayPos() {
         return GamePanel.getCenterPos();
     }
@@ -75,8 +77,8 @@ public class Player extends MovementEntity {
                 setWorld(world);
                 return;
             }
-
         }
+        System.err.println("World " + name + " not found.");
     }
 
     public void goToEntity(String name) {
@@ -84,12 +86,17 @@ public class Player extends MovementEntity {
             for (Entity entity : world.getEntities()) {
                 if (entity.name.equals(name)) {
                     setWorld(world);
-                    //setPos(entity.getPos());
-                    pos.set(entity.getPos().x, entity.getHitbox().getMaxY());
+                    // Automatically go to the front part of entity's sprite if entity is 3D.
+                    if (entity.shouldBeSorted()) {
+                        pos.set(entity.getPos().x, entity.getHitbox().getMaxY());
+                    } else { // If the entity is flat, then just go to its center.
+                        pos.set(entity.getPos());
+                    }
                     return;
                 }
             }
         }
+        System.err.println("Entity " + name + " not found.");
     }
 
 
@@ -101,7 +108,8 @@ public class Player extends MovementEntity {
     @Override
     public void removeFromWorld() {
         super.removeFromWorld();
-        // Summon some type of death effect
+        // Summon some type of death effect.
+        world.add(EffectType.SMALL_BOOM.spawnEntity(), getPos());
     }
 
     private double getCurrentSpeed() {
@@ -124,7 +132,7 @@ public class Player extends MovementEntity {
         }
 
         Vector2D tempVel = new Vector2D(0, 0);
-        // Move according to W-A-S-D key presses;
+        // Move according to WASD key presses;
         if (KeyInput.k_w.isPressed()) tempVel.translate(0, -speed); //U
         if (KeyInput.k_a.isPressed()) tempVel.translate(-speed, 0); //L
         if (KeyInput.k_s.isPressed()) tempVel.translate(0, speed);  //D

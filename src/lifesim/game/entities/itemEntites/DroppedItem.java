@@ -25,16 +25,16 @@ public class DroppedItem extends Entity {
 
 
     protected void collect(Player player) {
-        if (!collected) {
-            player.acquireItem(item, amount);
-            removeFromWorld();
-            collected = true;
-        }
+        player.acquireItem(item, amount);
     }
 
     @Override
     public void playerCollision(Game game, Player player, PlayerStats stats) {
-        collect(player);
+        if (!collected) {
+            collect(player);
+            collected = true;
+        }
+        removeFromWorld();
     }
 
     @Override

@@ -3,10 +3,13 @@ package lifesim.game.handlers;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.SolidEntity;
+import lifesim.game.entities.itemEntites.DroppedItem;
+import lifesim.game.entities.itemEntites.ShopItem;
 import lifesim.game.entities.stats.InanimateStats;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.types.EnemyType;
 import lifesim.game.entities.types.PackageTypes;
+import lifesim.game.items.ItemType;
 import lifesim.state.Game;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.ShapeSprite;
@@ -42,7 +45,7 @@ public class MyLayout extends Layout {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         stats.gainIntellect(0.25);
-                        stats.tire(0.05);
+                        stats.tire(0.03);
                     }
                 },250, 250)
 
@@ -51,7 +54,7 @@ public class MyLayout extends Layout {
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         if (stats.getIntellect() > 0) {
                             stats.gainMoney(stats.getIntellect() / 200);
-                            stats.tire(0.075);
+                            stats.tire(0.05);
                         }
                     }
                 }, -250, 175)
@@ -61,7 +64,7 @@ public class MyLayout extends Layout {
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         if (stats.canAfford(0.75)) {
                             stats.strengthen(0.5);
-                            stats.tire(0.25);
+                            stats.tire(0.075);
                             stats.loseMoney(0.75);
                         }
                     }
@@ -69,11 +72,8 @@ public class MyLayout extends Layout {
 
                 .add(new SolidEntity("Restaurant", new ShapeSprite(200, 200, new Color(255, 215, 125)), 150) {
                     @Override
-                    public void playerCollision(Game game, Player player, PlayerStats stats) {
-                        if (stats.canAfford(0.5) && stats.getEnergy() < 100) {
-                            stats.energize(0.5);
-                            stats.loseMoney(0.5);
-                        }
+                    public void interact(Game game, Player player, PlayerStats stats) {
+                        player.goToEntity("Restaurant Door");
                     }
                 }, -250, -225)
 
@@ -87,14 +87,14 @@ public class MyLayout extends Layout {
                     }
                 }, -250, -650)
 
-                .add(new SolidEntity("Shop", new ShapeSprite(250, 200, new Color(200, 110, 75)), 150) {
+                .add(new SolidEntity("Hardware Store", new ShapeSprite(250, 200, new Color(200, 110, 75)), 150) {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
-                        game.displayMessage("Enter shop?");
+                        game.displayMessage("Enter Hardware Store?");
                     }
                     @Override
                     public void interact(Game game, Player player, PlayerStats stats) {
-                        player.goToEntity("Shop Door");
+                        player.goToEntity("Hardware Store Door");
                     }
                 }, -675, 200)
                 .add(new SolidEntity("Cave", new ShapeSprite(200, 75, new Color(150, 150, 150)), new InanimateStats(),45) {
@@ -104,8 +104,8 @@ public class MyLayout extends Layout {
                     }
                 }, -800, -800)
 
-                .addSpawningSystem(new SpawningSystem(EnemyType.MELEE, 3000))
-                .addSpawningSystem(new SpawningSystem(EnemyType.RANGED, 4500))
+                .addSpawningSystem(new SpawningSystem(EnemyType.MELEE, 2500))
+                .addSpawningSystem(new SpawningSystem(EnemyType.RANGED, 4000))
 
                 .addSpawningSystem(new SpawningSystem(PackageTypes.ITEM_PACKAGE, 1000))
                 .addSpawningSystem(new SpawningSystem(PackageTypes.REINFORCED_PACKAGE, 10000))
@@ -114,10 +114,6 @@ public class MyLayout extends Layout {
         worlds.add(new World("Home", 300, 225, new Color(230, 210, 140), new Color(118, 175, 204))
                 .add(new Entity("Home Door", new ShapeSprite(2, 30, new Color(167, 155, 81))) {
                     @Override
-                    public void playerCollision(Game game, Player player, PlayerStats stats) {
-                        game.displayMessage("Leave home?");
-                    }
-                    @Override
                     public void interact(Game game, Player player, PlayerStats stats) {
                         player.goToEntity("House");
                     }
@@ -125,17 +121,24 @@ public class MyLayout extends Layout {
 
         );
 
-        worlds.add(new World("Shop Interior", 500, 400, new Color(190, 183, 121), new Color(200, 110, 75))
-                .add(new Entity("Shop Door", new ShapeSprite(40, 3, new Color(110, 102, 58))) {
-                    @Override
-                    public void playerCollision(Game game, Player player, PlayerStats stats) {
-                        game.displayMessage("Leave Shop?");
-                    }
+        worlds.add(new World("Hardware Store Interior", 500, 400, new Color(190, 183, 121), new Color(200, 110, 75))
+                .add(new Entity("Hardware Store Door", new ShapeSprite(40, 3, new Color(110, 102, 58))) {
                     @Override
                     public void interact(Game game, Player player, PlayerStats stats) {
-                        player.goToEntity("Shop");
+                        player.goToEntity("Hardware Store");
                     }
                 }, 0, 200)
+        );
+
+        worlds.add(new World("Restaurant Interior", 300, 300, new Color(131, 130, 129), new Color(255, 215, 125))
+                .add(new Entity("Restaurant Door", new ShapeSprite(40, 3, new Color(110, 102, 58))) {
+                    @Override
+                    public void interact(Game game, Player player, PlayerStats stats) {
+                        player.goToEntity("Restaurant");
+                    }
+                }, 0, 150)
+
+                .add(new ShopItem(ItemType.SANDWICH, 1, 25))
         );
 
         worlds.add(new World("Cave Interior", 3000, 150, new Color(75, 75, 75), new Color(25, 25, 25))

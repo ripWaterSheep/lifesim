@@ -9,8 +9,6 @@ import lifesim.engine.input.KeyInput;
 import lifesim.game.items.ItemType;
 import lifesim.game.overlay.*;
 import lifesim.engine.output.GameWindow;
-import lifesim.state.GameState;
-import lifesim.state.StateManager;
 import lifesim.util.geom.Vector2D;
 
 import java.awt.*;
@@ -28,7 +26,7 @@ public class Game implements GameState {
     private final Player player;
 
     private final List<Overlay>     overlays = new ArrayList<>();
-    private final MessageDisplay    messageDisplay;
+    private final MessageDisplay messageDisplay;
     private final ToggleableOverlay inventoryGUI;
     private final ToggleableOverlay deathScreen;
 
@@ -43,7 +41,7 @@ public class Game implements GameState {
         player = new Player(this, layout.getWorlds().get(0));
 
         overlays.add(new StatBar(player));
-        messageDisplay = new MessageDisplay(6, Color.WHITE, new Vector2D(WIDTH/2.0, HEIGHT/2.0 -player.getHitbox().height));
+        messageDisplay = new MessageDisplay(6, 3000, new Vector2D(WIDTH/2.0, HEIGHT/2.0 -player.getHitbox().height));
         overlays.add(messageDisplay);
 
         overlays.add(new Hotbar(player, window));

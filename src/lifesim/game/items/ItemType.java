@@ -44,11 +44,15 @@ public enum ItemType {
         @Override
         public void use(World world, Player player, PlayerStats stats) {
         }
-    }, 5, 100);
+    }, 5, 100),
 
-    /*SCREWDRIVER("Screwdriver", new ImageSprite("weapons", new Vector2D(0, 32), new Vector2D(8, 8)),
-            new LaunchFunctionality(ProjectileType.THROWABLE_WALL, 5), 15, 2);*/
-
+    SANDWICH("Cheese Sandwich", new ImageSprite("consumables", new Vector2D(0, 0), new Vector2D(16, 16)),
+            new ConsumeFunctionality() {
+                @Override
+                public void use(World world, Player player, PlayerStats stats) {
+                    stats.energize(50);
+                }
+            }, 0, 0);
 
 
     /** Get random item type to be used in generating loot for item packages.
