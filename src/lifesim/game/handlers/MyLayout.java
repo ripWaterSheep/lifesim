@@ -45,7 +45,7 @@ public class MyLayout extends Layout {
                     @Override
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         stats.gainIntellect(0.25);
-                        stats.tire(0.03);
+                        stats.tire(0.025);
                     }
                 },250, 250)
 
@@ -54,7 +54,7 @@ public class MyLayout extends Layout {
                     public void playerCollision(Game game, Player player, PlayerStats stats) {
                         if (stats.getIntellect() > 0) {
                             stats.gainMoney(stats.getIntellect() / 200);
-                            stats.tire(0.05);
+                            stats.tire(0.04);
                         }
                     }
                 }, -250, 175)

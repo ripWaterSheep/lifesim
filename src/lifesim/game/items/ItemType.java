@@ -20,7 +20,7 @@ import static lifesim.util.MyMath.getRandInt;
 
 public enum ItemType {
 
-    HAND("Hand", new ShapeSprite(0, 0, Color.BLACK), new LaunchFunctionality(ProjectileType.FIST, -3),
+    HAND("Hand", new ShapeSprite(0, 0, Color.BLACK), new LaunchFunctionality(ProjectileType.FIST, -2),
             0, 0),
 
     STARTER_FACTORY("Starter Factory", new AnimatedSprite(new Animation("utilities", 200,
