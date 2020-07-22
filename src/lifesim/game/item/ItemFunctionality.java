@@ -1,9 +1,9 @@
-package lifesim.game.items;
+package lifesim.game.item;
 
 import lifesim.game.entities.Player;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.handlers.World;
-import lifesim.engine.output.GameWindow;
+import lifesim.io.output.GameWindow;
 
 import java.awt.*;
 

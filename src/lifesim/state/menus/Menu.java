@@ -1,8 +1,8 @@
 package lifesim.state.menus;
 
-import lifesim.engine.output.GamePanel;
+import lifesim.io.output.GamePanel;
 import lifesim.util.sprites.Sprite;
-import lifesim.engine.input.MouseInput;
+import lifesim.io.input.MouseInput;
 import lifesim.state.GameState;
 import lifesim.state.menus.ui.Button;
 

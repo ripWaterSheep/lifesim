@@ -1,4 +1,4 @@
-package lifesim.engine.output;
+package lifesim.io.output;
 
 import lifesim.util.fileIO.ImageLoader;
 

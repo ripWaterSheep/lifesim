@@ -1,11 +1,11 @@
-package lifesim.game.entities.itemEntites;
+package lifesim.game.entities.item;
 
 import lifesim.game.entities.Player;
 import lifesim.game.entities.SolidEntity;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.stats.Stats;
 import lifesim.game.handlers.World;
-import lifesim.game.items.ItemType;
+import lifesim.game.item.ItemType;
 import lifesim.state.Game;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.sprites.Sprite;

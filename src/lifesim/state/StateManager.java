@@ -1,9 +1,9 @@
 package lifesim.state;
 
-import lifesim.engine.output.GamePanel;
-import lifesim.engine.output.GameWindow;
+import lifesim.io.output.GamePanel;
+import lifesim.io.output.GameWindow;
 import lifesim.game.entities.Player;
-import lifesim.engine.input.KeyInput;
+import lifesim.io.input.KeyInput;
 import lifesim.state.menus.Menu;
 import lifesim.state.menus.PauseMenu;
 import lifesim.state.menus.TitleMenu;

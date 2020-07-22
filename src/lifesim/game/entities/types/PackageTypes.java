@@ -1,7 +1,7 @@
 package lifesim.game.entities.types;
 
 import lifesim.game.entities.Entity;
-import lifesim.game.entities.itemEntites.ItemPackage;
+import lifesim.game.entities.item.ItemPackage;
 import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.HealthStats;
 import lifesim.util.sprites.ImageSprite;
@@ -17,7 +17,7 @@ public enum PackageTypes implements Spawnable {
 
         @Override
         public int getMaxPerWorld() {
-            return 4;
+            return 3;
         }
     },
 

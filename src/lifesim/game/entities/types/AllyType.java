@@ -53,6 +53,6 @@ public enum AllyType implements Spawnable {
 
     @Override
     public int getMaxPerWorld() {
-            return 15;
+            return 12;
     }
 }

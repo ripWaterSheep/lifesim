@@ -15,6 +15,7 @@ public class PlayerStats extends HealthStats {
 
     private final Game game;
 
+    private final double maxEnergy;
     private double energy;
     private double strength;
     private double money;
@@ -24,6 +25,7 @@ public class PlayerStats extends HealthStats {
     public PlayerStats(double health, double energy, double strength, double money, double intellect, Game game) {
         super(0, Alliance.PLAYER, health);
         this.energy = energy;
+        maxEnergy = energy;
         this.strength = strength;
         this.money = money;
         this.intellect = intellect;

@@ -1,13 +1,13 @@
 package lifesim.game.entities;
 
-import lifesim.engine.output.GamePanel;
+import lifesim.io.output.GamePanel;
 import lifesim.util.sprites.Sprite;
 import lifesim.game.entities.stats.InanimateStats;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.stats.Stats;
 import lifesim.game.handlers.World;
 import lifesim.state.Game;
-import lifesim.engine.Main;
+import lifesim.io.Main;
 import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
 import lifesim.util.geom.Geometry;
@@ -55,10 +55,6 @@ public class Entity implements Comparable<Entity> {
 
     public Rect getHitbox() {
         return sprite.getBoundsAt(getPos());
-    }
-
-    public Rect getDisplayHitbox() {
-        return sprite.getBoundsAt(getDisplayPos());
     }
 
     public boolean isTouching(Entity entity) {

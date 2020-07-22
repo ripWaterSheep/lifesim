@@ -1,6 +1,6 @@
-package lifesim.engine;
+package lifesim.io;
 
-import lifesim.engine.output.GameWindow;
+import lifesim.io.output.GameWindow;
 import lifesim.game.entities.Player;
 import lifesim.state.StateManager;
 import lifesim.util.fileIO.FontLoader;

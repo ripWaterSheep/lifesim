@@ -3,13 +3,12 @@ package lifesim.game.handlers;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.SolidEntity;
-import lifesim.game.entities.itemEntites.DroppedItem;
-import lifesim.game.entities.itemEntites.ShopItem;
+import lifesim.game.entities.item.ShopItem;
 import lifesim.game.entities.stats.InanimateStats;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.types.EnemyType;
 import lifesim.game.entities.types.PackageTypes;
-import lifesim.game.items.ItemType;
+import lifesim.game.item.ItemType;
 import lifesim.state.Game;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.ShapeSprite;
@@ -26,7 +25,7 @@ public class MyLayout extends Layout {
     @Override
     public void init() {
         worlds.add(
-            new World("Town", 2500, 2000, new Color(60, 175, 90), new Color(200, 190, 125))
+            new World("Town", 2500, 2000, new Color(55, 138, 73), new Color(200, 190, 125))
                 .add(new Entity("vRoad", new ShapeSprite(100, 2000, Color.DARK_GRAY)), 0, 0)
                 .add(new Entity("hRoad", new ShapeSprite(2500, 100, Color.DARK_GRAY)), 0, 0)
 

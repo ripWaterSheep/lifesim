@@ -1,13 +1,13 @@
-package lifesim.game.items;
+package lifesim.game.item;
 
-import lifesim.engine.output.CursorType;
+import lifesim.io.output.CursorType;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.Player;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.types.Spawnable;
 import lifesim.game.handlers.World;
-import lifesim.engine.input.MouseInput;
-import lifesim.engine.output.GameWindow;
+import lifesim.io.input.MouseInput;
+import lifesim.io.output.GameWindow;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.geom.Vector2D;
 
@@ -66,7 +66,7 @@ class SpawnFunctionality extends ConsumeFunctionality {
             g2d.setColor(Color.GREEN);
         }
 
-        g2d.fill(spawnHint.getDisplayHitbox());
+        g2d.fill(spawnHint.sprite.getBoundsAt(spawnHint.getDisplayPos()));
         spawnHint.render(g2d);
     }
 

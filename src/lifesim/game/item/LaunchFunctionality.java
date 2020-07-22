@@ -1,4 +1,4 @@
-package lifesim.game.items;
+package lifesim.game.item;
 
 import lifesim.game.entities.Player;
 import lifesim.game.entities.Projectile;
@@ -6,8 +6,8 @@ import lifesim.game.entities.stats.Alliance;
 import lifesim.game.entities.stats.PlayerStats;
 import lifesim.game.entities.types.Launchable;
 import lifesim.game.handlers.World;
-import lifesim.engine.input.MouseInput;
-import lifesim.engine.output.GameWindow;
+import lifesim.io.input.MouseInput;
+import lifesim.io.output.GameWindow;
 import lifesim.util.geom.Vector2D;
 
 import java.awt.*;

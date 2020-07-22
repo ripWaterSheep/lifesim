@@ -23,6 +23,10 @@ public class Projectile extends MovementEntity {
     private final boolean matchSpriteAngle;
     private final double displayAngle;
 
+    private final long despawnDelay = 30000; // Time after which projectile disappears
+    private final long spawnTime = System.currentTimeMillis();
+
+
 
     public Projectile(String name, Sprite sprite, Stats stats, Entity owner, double speed, double angle, double range,
                       boolean penetrate, double knockBack, boolean matchSpriteAngle) {
@@ -71,6 +75,10 @@ public class Projectile extends MovementEntity {
         }
     }
 
+    protected void despawn(World world) {
+        removeFromWorld();
+    }
+
     @Override
     public void update(World world) {
         super.update(world);
@@ -79,6 +87,10 @@ public class Projectile extends MovementEntity {
 
         if (distanceTravelled > range) {
             removeFromWorld();
+        }
+
+        if (System.currentTimeMillis() - spawnTime > spawnTime) {
+            despawn(world);
         }
     }
 

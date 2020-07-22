@@ -23,4 +23,10 @@ public class ExplosiveProjectile extends Projectile {
             world.add(explosion.spawnEntity(), pos);
         }
     }
+
+    @Override
+    protected void despawn(World world) {
+        world.add(explosion.spawnEntity(), pos);
+        super.despawn(world);
+    }
 }

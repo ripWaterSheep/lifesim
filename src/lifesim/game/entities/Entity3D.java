@@ -40,18 +40,4 @@ public class Entity3D extends Entity {
         return comparison ? -1 : 1;
     }
 
-    protected void renderShadow(Graphics2D g2d) {
-        Rect shadowRect = getDisplayHitbox();
-        shadowRect.y += shadowRect.height - 1;
-        shadowRect.height *= 0.5;
-
-        g2d.setColor(new Color(0, 0, 0, 100));
-        g2d.fill(shadowRect);
-    }
-
-    @Override
-    public void render(Graphics2D g2d) {
-        renderShadow(g2d);
-        super.render(g2d);
-    }
 }

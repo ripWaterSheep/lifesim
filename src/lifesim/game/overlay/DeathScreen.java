@@ -1,8 +1,8 @@
 package lifesim.game.overlay;
 
-import lifesim.engine.input.KeyInput;
-import lifesim.engine.input.MouseInput;
-import lifesim.engine.output.GamePanel;
+import lifesim.io.input.KeyInput;
+import lifesim.io.input.MouseInput;
+import lifesim.io.output.GamePanel;
 import lifesim.state.StateManager;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;

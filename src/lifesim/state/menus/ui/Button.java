@@ -1,9 +1,9 @@
 package lifesim.state.menus.ui;
 
-import lifesim.engine.output.CursorType;
-import lifesim.engine.output.GameWindow;
+import lifesim.io.output.CursorType;
+import lifesim.io.output.GameWindow;
 import lifesim.util.sprites.Sprite;
-import lifesim.engine.input.MouseInput;
+import lifesim.io.input.MouseInput;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 import lifesim.util.geom.Vector2D;

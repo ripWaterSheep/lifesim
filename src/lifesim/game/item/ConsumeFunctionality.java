@@ -1,8 +1,8 @@
-package lifesim.game.items;
+package lifesim.game.item;
 
-import lifesim.engine.input.MouseInput;
+import lifesim.io.input.MouseInput;
 import lifesim.game.entities.Player;
-import lifesim.engine.output.GameWindow;
+import lifesim.io.output.GameWindow;
 import lifesim.game.handlers.World;
 
 import java.awt.*;

@@ -1,6 +1,6 @@
 package lifesim.game.entities.types;
 
-import lifesim.engine.Main;
+import lifesim.io.Main;
 import lifesim.game.entities.Entity;
 import lifesim.game.entities.ExplosiveProjectile;
 import lifesim.game.entities.Projectile;

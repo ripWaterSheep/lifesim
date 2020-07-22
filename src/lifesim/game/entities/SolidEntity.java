@@ -1,6 +1,6 @@
 package lifesim.game.entities;
 
-import lifesim.engine.Main;
+import lifesim.io.Main;
 import lifesim.game.entities.stats.InanimateStats;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.geom.Vector2D;
@@ -10,7 +10,6 @@ import lifesim.game.entities.stats.Stats;
 import lifesim.util.geom.Rect;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 
 
 /** This entity has a base (area composed of certain number of pixels from sprite's bottom bounds) that cannot be walked
@@ -61,12 +60,6 @@ public class SolidEntity extends Entity3D {
     }
 
     @Override
-    public Rect getDisplayHitbox() {
-        Vector2D dims = new Vector2D(super.getDisplayHitbox().width, baseDepth);
-        return new Rect(super.getDisplayPos(), dims);
-    }
-
-    @Override
     public void handleCollision(Entity entity, World world) {
         super.handleCollision(entity, world);
 
@@ -82,21 +75,10 @@ public class SolidEntity extends Entity3D {
     @Override
     public void update(World world) {
         super.update(world);
-        Rect playerHitbox = Main.getCurrentPlayer().getDisplayHitbox();
-        semiTransparent = super.getDisplayHitbox().contains(playerHitbox);
+        Rect playerHitbox = Main.getCurrentPlayer().getHitbox();
+        semiTransparent = getHitbox().contains(playerHitbox);
     }
 
-
-    @Override
-    protected void renderShadow(Graphics2D g2d) {
-        // Shift shadow up so that the shadow height is equal to the "side height" given by the 3d illusion.
-        Rect shadowRect = getDisplayHitbox();
-        shadowRect.y += 1;
-        shadowRect.height += (sprite.getSize().y - baseDepth)/2;
-
-        g2d.setColor(new Color(0, 0, 0, 100));
-        g2d.fill(shadowRect);
-    }
 
     @Override
     public void render(Graphics2D g2d) {

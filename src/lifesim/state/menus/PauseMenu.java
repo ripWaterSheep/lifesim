@@ -1,7 +1,7 @@
 package lifesim.state.menus;
 
-import lifesim.engine.output.GamePanel;
-import lifesim.engine.output.GameWindow;
+import lifesim.io.output.GamePanel;
+import lifesim.io.output.GameWindow;
 import lifesim.state.StateManager;
 import lifesim.util.sprites.ShapeSprite;
 import lifesim.state.Game;

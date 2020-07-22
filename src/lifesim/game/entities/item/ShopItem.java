@@ -1,7 +1,7 @@
-package lifesim.game.entities.itemEntites;
+package lifesim.game.entities.item;
 
 import lifesim.game.handlers.World;
-import lifesim.game.items.ItemType;
+import lifesim.game.item.ItemType;
 import lifesim.game.overlay.MessageDisplay;
 import lifesim.state.Game;
 import lifesim.game.entities.Player;

@@ -1,16 +1,16 @@
 package lifesim.game.entities;
 
 import lifesim.game.entities.types.EffectType;
-import lifesim.game.items.ItemType;
-import lifesim.engine.output.GamePanel;
+import lifesim.game.item.ItemType;
+import lifesim.io.output.GamePanel;
 import lifesim.util.sprites.Animation;
 import lifesim.util.sprites.DirectionalAnimatedSprite;
 import lifesim.game.handlers.World;
 import lifesim.state.Game;
 import lifesim.game.entities.stats.PlayerStats;
-import lifesim.engine.input.KeyInput;
-import lifesim.engine.input.MouseInput;
-import lifesim.game.items.inventory.Inventory;
+import lifesim.io.input.KeyInput;
+import lifesim.io.input.MouseInput;
+import lifesim.game.item.inventory.Inventory;
 import lifesim.util.geom.Vector2D;
 
 import static java.lang.Math.abs;
@@ -33,7 +33,7 @@ public class Player extends MovementEntity {
                 new Animation("player", 100, new Vector2D(0, 48), new Vector2D(12, 16)),
                 new Animation("player", 100, new Vector2D(0, 64), new Vector2D(12, 16))
                 ),
-            new PlayerStats(100, 100, 0, 0, 0, game), 3.25, 0);
+            new PlayerStats(500, 500, 0, 0, 0, game), 3.5, 0);
         velocity.set(0, 0);
         this.game = game;
         setWorld(startingWorld);
@@ -115,7 +115,7 @@ public class Player extends MovementEntity {
     private double getCurrentSpeed() {
         double currentSpeed = defaultSpeed;
         // Speed ranges from 100% to 75% depending on energy level.
-        currentSpeed *= (getStats().getEnergy() / 400) + 0.75;
+        currentSpeed *= (getStats().getEnergy() / 4000) + 0.75;
         currentSpeed = min(currentSpeed, 7);
         return currentSpeed;
     }

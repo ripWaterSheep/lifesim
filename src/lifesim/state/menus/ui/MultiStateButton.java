@@ -1,6 +1,6 @@
 package lifesim.state.menus.ui;
 
-import lifesim.engine.output.GameWindow;
+import lifesim.io.output.GameWindow;
 import lifesim.util.geom.Vector2D;
 
 public abstract class MultiStateButton extends Button {

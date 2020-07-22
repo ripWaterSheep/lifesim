@@ -1,17 +1,17 @@
 package lifesim.game.overlay;
 
-import lifesim.engine.output.GameWindow;
+import lifesim.io.output.GameWindow;
 import lifesim.game.entities.Player;
-import lifesim.engine.output.GamePanel;
-import lifesim.engine.output.CursorType;
+import lifesim.io.output.GamePanel;
+import lifesim.io.output.CursorType;
 import lifesim.util.sprites.ImageSprite;
 import lifesim.util.sprites.Sprite;
-import lifesim.engine.input.KeyInput;
-import lifesim.engine.input.MouseInput;
+import lifesim.io.input.KeyInput;
+import lifesim.io.input.MouseInput;
 import lifesim.util.geom.Rect;
 import lifesim.util.geom.Vector2D;
-import lifesim.game.items.inventory.Inventory;
-import lifesim.game.items.inventory.InventorySlot;
+import lifesim.game.item.inventory.Inventory;
+import lifesim.game.item.inventory.InventorySlot;
 import lifesim.util.GraphicsMethods;
 import lifesim.util.fileIO.FontLoader;
 
